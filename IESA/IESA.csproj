@@ -155,11 +155,32 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\Competitions_Controller.cs" />
+    <Compile Include="Controllers\Competition_Game_Controller.cs" />
+    <Compile Include="Controllers\Gamers_Controller.cs" />
+    <Compile Include="Controllers\Gamers_Game_Controller.cs" />
+    <Compile Include="Controllers\Gamer_Competition_Controller.cs" />
+    <Compile Include="Controllers\GamesCategories_Controller.cs" />
+    <Compile Include="Controllers\Managers_Controller.cs" />
+    <Compile Include="Controllers\Manager_Post_Controller.cs" />
+    <Compile Include="Controllers\Orgenaizers_Controller.cs" />
+    <Compile Include="Controllers\Orgenaizer_Competition_Controller.cs" />
+    <Compile Include="Controllers\Posts_Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Competitions.cs" />
+    <Compile Include="Models\Competition_Game.cs" />
+    <Compile Include="Models\DAL\DBServices.cs" />
+    <Compile Include="Models\Gamers.cs" />
+    <Compile Include="Models\Gamers_Game.cs" />
+    <Compile Include="Models\Gamer_Competition.cs" />
+    <Compile Include="Models\GamesCategories.cs" />
+    <Compile Include="Models\Managers.cs" />
+    <Compile Include="Models\Manager_Post.cs" />
+    <Compile Include="Models\Orgenaizers.cs" />
+    <Compile Include="Models\Orgenaizer_Competition.cs" />
+    <Compile Include="Models\Posts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -171,8 +192,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Pages\index.html" />
-    <Content Include="Pages\index2.html" />
+    <Content Include="Pages\TemplatePage.html" />
+    <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -217,7 +238,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
