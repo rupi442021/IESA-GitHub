@@ -155,17 +155,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\Competitions_Controller.cs" />
-    <Compile Include="Controllers\Competition_Game_Controller.cs" />
-    <Compile Include="Controllers\Gamers_Controller.cs" />
-    <Compile Include="Controllers\Gamers_Game_Controller.cs" />
-    <Compile Include="Controllers\Gamer_Competition_Controller.cs" />
-    <Compile Include="Controllers\GamesCategories_Controller.cs" />
-    <Compile Include="Controllers\Managers_Controller.cs" />
-    <Compile Include="Controllers\Manager_Post_Controller.cs" />
-    <Compile Include="Controllers\Orgenaizers_Controller.cs" />
-    <Compile Include="Controllers\Orgenaizer_Competition_Controller.cs" />
-    <Compile Include="Controllers\Posts_Controller.cs" />
+    <Compile Include="Controllers\CompetitionsController.cs" />
+    <Compile Include="Controllers\Competition_GameController.cs" />
+    <Compile Include="Controllers\FileUploadController.cs" />
+    <Compile Include="Controllers\GamersController.cs" />
+    <Compile Include="Controllers\Gamers_GameController.cs" />
+    <Compile Include="Controllers\Gamer_CompetitionController.cs" />
+    <Compile Include="Controllers\GamesCategoriesController.cs" />
+    <Compile Include="Controllers\ManagersController.cs" />
+    <Compile Include="Controllers\Manager_PostController.cs" />
+    <Compile Include="Controllers\OrgenaizersController.cs" />
+    <Compile Include="Controllers\Orgenaizer_CompetitionController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -192,6 +193,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\Sign_Up.html" />
     <Content Include="Pages\TemplatePage.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\bootstrap.js" />

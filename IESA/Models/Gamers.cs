@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IESA.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,14 +8,15 @@ namespace IESA.Models
 {
     public class Gamers
     {
-        int userid; //Automatic
-        string mail;
+        int userid; //GamerCardNum
+        string email;
         string password1;
-        int gamercardnum;
         string nickname;
         string firstname;
         string lastname;
+        string gender;
         int id; //Passport id
+        string phone;
         DateTime dob;
         string address1;
         string discorduser;
@@ -24,16 +26,17 @@ namespace IESA.Models
         int license; //0 or 1
         int status1; //0 or 1
 
-        public Gamers(int userid, string mail, string password1, int gamercardnum, string nickname, string firstname, string lastname, int id, DateTime dob, string address1, string discorduser, string picture, DateTime registrationdate, DateTime outofdate, int license, int status1)
+        public Gamers(int userid, string email, string password1, string nickname, string firstname, string lastname, string gender, int id, String phone, DateTime dob, string address1, string discorduser, string picture, DateTime registrationdate, DateTime outofdate, int license, int status1)
         {
             Userid = userid;
-            Mail = mail;
+            Email = email;
             Password1 = password1;
-            Gamercardnum = gamercardnum;
             Nickname = nickname;
             Firstname = firstname;
             Lastname = lastname;
+            Gender = gender;
             Id = id;
+            Phone = phone;
             Dob = dob;
             Address1 = address1;
             Discorduser = discorduser;
@@ -47,13 +50,14 @@ namespace IESA.Models
         public Gamers() { }
 
         public int Userid { get => userid; set => userid = value; }
-        public string Mail { get => mail; set => mail = value; }
+        public string Email { get => email; set => email = value; }
         public string Password1 { get => password1; set => password1 = value; }
-        public int Gamercardnum { get => gamercardnum; set => gamercardnum = value; }
         public string Nickname { get => nickname; set => nickname = value; }
         public string Firstname { get => firstname; set => firstname = value; }
         public string Lastname { get => lastname; set => lastname = value; }
+        public string Gender { get => gender; set => gender = value; }
         public int Id { get => id; set => id = value; }
+        public string Phone { get => phone; set => phone = value; }
         public DateTime Dob { get => dob; set => dob = value; }
         public string Address1 { get => address1; set => address1 = value; }
         public string Discorduser { get => discorduser; set => discorduser = value; }
@@ -67,9 +71,30 @@ namespace IESA.Models
         //#Functions Area
 
 
+        //---Sign_Up.html--- *Open*
 
 
+        public string CheckEmail(string emailADD) //Sign_Up.html - method OG1
+        {
+            DBServices dbs = new DBServices();
+            return dbs.CheckEmailSQL(emailADD);
+        }
 
+        public int ReadID() //Sign_Up.html - method OG2
+        {
+            DBServices dbs = new DBServices();
+            int newid = dbs.GetnewId();
+            return newid;
+        }
+
+        public void InsertGamer() //Sign_Up.html - method OG3
+        {
+            DBServices dbs = new DBServices();
+            dbs.InsertGamer(this);
+        }
+
+
+        //---Sign_Up.html--- *Close*
 
 
 

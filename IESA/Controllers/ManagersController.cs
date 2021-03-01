@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace IESA.Controllers
 {
-    public class Competitions_Controller : ApiController
+    public class ManagersController : ApiController
     {
 
 

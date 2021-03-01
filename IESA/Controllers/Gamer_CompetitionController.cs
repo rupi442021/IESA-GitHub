@@ -7,9 +7,8 @@ using System.Web.Http;
 
 namespace IESA.Controllers
 {
-    public class Manager_Post_Controller : ApiController
+    public class Gamer_CompetitionController : ApiController
     {
-
 
 
 

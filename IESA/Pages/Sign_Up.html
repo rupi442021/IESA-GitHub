@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <script src="../Scripts/jquery-3.4.1.js"></script> <!--NOT THE MIN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Sign Up</title>
+
+    <style type="text/css">
+
+    </style>
+
+    <script>
+
+        var userType; //3 = Gamer | 2 = Orenaizer
+
+        $(document).ready(function () {
+
+            $("#gForm").submit(checkEmail); //Clicked on submit of gamer
+            $("#oForm").submit(checkEmail); //Clicked on submit of orgenaizer
+        });
+
+
+        
+        function init() {
+            localStorage.clear(); //If the user entered this page while was logged in
+
+            gamer_info = {};
+            orgenaizer_info = {};
+        }
+
+
+        function checkEmail(this) {
+            userType = this.id;
+
+            if (userType == 3) {
+                let emailAdd = $("#gemailTB").val();
+            }
+            else { //userType == 2
+                let emailAdd = $("#oemailTB").val();
+            }
+
+            ajaxCall("GET", "../api/gamers/mark?emailAdd=" + emailAdd, "", EmailSuccess, EmailError); //method OG1 (Gamers Controllers)
+
+            return false; //Prevent the page from being reloaded
+        }
+
+
+        function EmailSuccess(email1) {
+            console.log(email1);
+
+            if (email1 == "exist") {
+                swal("Email Exists, please choose other");
+            }
+
+            else if (email1 == "not exist") {
+                createAccount();
+            }
+        }
+
+        function EmailError(err) {
+            console.log(err);
+
+            alert("Error");
+        }
+
+
+        function createAccount() {
+
+            if (userType == 3) {
+                ajaxCall("GET", "../api/Gamers", "", getSuccessGamer, getErrorGamer); //method OG2
+            }
+            else { //userType == 2
+                ajaxCall("GET", "../api/Orgenaizers", "", getSuccessOrgenaizer, getErrorOrgenaizer); //method OO1
+            }
+
+            return false; //Prevent the page from being reloaded
+        }
+
+
+        function getSuccessGamer(id3) {
+            console.log(id3);
+
+            var userid3 = parseInt(id3);
+            addPhoto(userid3);
+        }
+
+        function getErrorGamer(err) {
+            console.log(err.responseJSON.ExceptionMessage);
+
+            alert(err.responseJSON.ExceptionMessage);
+        }
+
+
+        function getSuccessOrgenaizer(id2) {
+            console.log(id2);
+
+            var userid2 = parseInt(id2);
+            addPhoto(userid2);
+        }
+
+        function getErrorOrgenaizer(err) {
+            console.log(err.responseJSON.ExceptionMessage);
+
+            alert(err.responseJSON.ExceptionMessage);
+        }
+
+
+        function addPhoto(userid) {
+
+            var data = new FormData();
+            var files = $("#files").get(0).files;
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("userid", userid); // append what ever data you want to send along with the files. See how you extract it in the controller.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: showImages,
+                error: error
+            });
+
+            return false;
+
+        }
+
+
+        function showImages(data) { //Need to remove and change it to preview
+            console.log(data);
+
+            //var imgStr = "";
+
+            //if (Array.isArray(data)) {
+
+            //    for (var i = 0; i < data.length; i++) {
+            //        imgStr += "<img src='../" + data[i] + "'/>";
+            //    }
+
+            //}
+
+            //else {
+            //    imgStr = "<img src='../" + data + "'/>";
+            //}
+
+            //document.getElementById("ph").innerHTML = imgStr;
+
+            if (userType == 3) {
+                addGamer(data[0]);
+            }
+            else { //userType == 2
+                addOrgenaizer(data[0]);
+            }
+
+            addGamer(data[0]); //SAVE data[0] in global intiger and send him when we press on submit***
+        }
+
+        function error(err) {
+            console.log(err);
+
+            alert(err);
+        }
+
+
+        function addGamer(imageURL) {
+
+            GamerObj = {
+                Email: $("#gemailTB").val(),
+                Password: $("#gpasswordTB").val(),
+                Nickname: $("#gnicknameTB"), // **Check the nickname is not taken!**
+                Firstname: $("#gfirstnameTB").val(),
+                Lastname: $("#glastnameTB").val(),
+                Gender: $("#ggenderTB").val(),
+                Id: $("#gidTB").val(),
+                Phone: $("#gPhoneTB").val(),
+                Dob: $("#gdobTB").val(),
+                Address: $("#gaddressTB").val(),
+                Discorduser: $("#gdiscorduserTB").val(),
+                image: imageURL,
+                Registrationdate: $("#123").val(), //Do a function to get the date of today**
+                License: 0,
+                Status: 0,
+            }
+
+            ajaxCall("POST", "../api/Gamers", JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Gamers_SignUp.html - method O3
+
+        }
+
+
+        function SuccessGamer(data) {
+            console.log("in Success");
+
+            swal("Gamer has been created", "Please wait until admin confirm your account", "Thank you"); //Example***
+
+            setTimeout(function () {
+                location.replace("Sign_In.html");
+            }, 2500);
+        } //Done creating Gamer User
+
+
+        function ErrorGamer(err) {
+            console.log(err.responseJSON.ExceptionMessage);
+
+            alert(err.responseJSON.ExceptionMessage); //Message - throw new exception from the server*
+        }
+
+
+        function addOrgenaizer(imageURL) {
+
+            OrgenaizerObj = {
+                Email: $("#oemailTB").val(),
+                Password: $("#opasswordTB").val(),
+                Nickname: $("#onicknameTB"), // **Check the nickname is not taken!**
+                Firstname: $("#ofirstnameTB").val(),
+                Lastname: $("#olastnameTB").val(),
+                Gender: $("#ogenderTB").val(),
+                Id: $("#oidTB").val(),
+                Phone: $("#oPhoneTB").val(),
+                Dob: $("#odobTB").val(),
+                Address: $("#oaddressTB").val(),
+                Discorduser: $("#odiscorduserTB").val(),
+                image: imageURL,
+                Registrationdate: $("#123").val(), //Do a function to get the date of today**
+                Status: 0,
+            }
+
+            ajaxCall("POST", "../api/Orgenaizers", JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Sign_Up.html - method OO2
+
+        }
+
+
+        function SuccessOrgenaizer(data) {
+            console.log("in Success");
+
+            swal("Orgenaizer has been created", "Please wait until admin confirm your account", "Thank you"); //Example***
+
+            setTimeout(function () {
+                location.replace("Sign_In.html");
+            }, 2500);
+        } //Done creating Orgenaizer User
+
+        function ErrorGamer(err) {
+            console.log(err.responseJSON.ExceptionMessage);
+
+            alert(err.responseJSON.ExceptionMessage); //Message - throw new exception from the server*
+        }
+
+
+    </script>
+
+
+</head >
+<body onload="init()">
+
+
+
+
+
+</body>
+</html >
