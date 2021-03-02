@@ -6,6 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
 
     <title>&#x202E; הרשמת משתמשים – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
@@ -57,21 +59,22 @@
     <script>
 
         var userType; //3 = Gamer | 2 = Orenaizer
-
+        
         $(document).ready(function () {
+
+           
+            $("#oForm").submit(function (e) {
+                e.preventDefault();
+                f1(2);
+            });
 
             $("#gForm").submit(function (e) {
                 e.preventDefault();
-                checkEmail(3);
-            })
+                f1(3);
+            });
 
-            $("#oForm").submit(function (e) {
-                e.preventDefault();
-                checkEmail(2)
-            })
-
+            
         });
-
 
 
         function init() {
@@ -81,21 +84,25 @@
             orgenaizer_info = {};
         }
 
+        function f1(num) {
+            checkEmail(num);
+            return false;
+        }
 
         function checkEmail(num) {
             alert(num);
             userType = num;
 
             if (userType == 3) {
-                let emailAdd = $("#gemailTB").val();
+                 emailAdd = $("#gemailTB").val();
             }
             else { //userType == 2
-                let emailAdd = $("#oemailTB").val();
+                 emailAdd = $("#oemailTB").val();
             }
 
             ajaxCall("GET", "../api/gamers/mark1?emailAdd=" + emailAdd, "", EmailSuccess, EmailError); //method OG1 (Gamers Controllers)
 
-            return false; //Prevent the page from being reloaded
+           /* return false;*/ //Prevent the page from being reloaded
         }
 
 
@@ -109,14 +116,14 @@
             else if (email == "not exist") { //Check Nickname
 
                 if (userType == 3) {
-                    let emailAdd = $("#gnicknameTB").val();
+                    nicknameAdd = $("#gnicknameTB").val();
                 }
                 else { //userType == 2
-                    let emailAdd = $("#onicknameTB").val();
+                    nicknameAdd = $("#onicknameTB").val();
                 }
 
                 ajaxCall("GET", "../api/gamers/mark2?nicknameAdd=" + nicknameAdd, "", NicknameSuccess, NicknameError); //method OG2 (Gamers Controllers)
-
+                
                 return false;
             }
         }
@@ -286,7 +293,7 @@
                 Picture: imageURL,
                 Registrationdate: getDate(),
                 License: 0,
-                Status1: 0,
+                Status1: 0
             }
 
             ajaxCall("POST", "../api/Gamers", JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Gamers_SignUp.html - method O3
@@ -330,9 +337,9 @@
                 Dob: $("#odobTB").val(),
                 Address1: $("#oaddressTB").val(),
                 Picture: imageURL,
-                Comunityname = $("#ocomunitynameTB").val(),
-                Linktocommunity = $("#olinktocommunityTB").val(),
-                Status1: 0,
+                //Comunityname = $("#ocomunitynameTB").val(),
+                //Linktocommunity = $("#olinktocommunityTB").val(),
+                //Status1: 0
             }
 
             ajaxCall("POST", "../api/Orgenaizers", JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Sign_Up.html - method OO2
@@ -385,7 +392,7 @@
 
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <h2 style="color:red">טופס הרשמה - שחקן</h2>
-                    <form id="gform" class="was-validated">
+                    <form id="gForm" class="was-validated">
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
@@ -414,15 +421,15 @@
                                 </div>
                                 <label>מגדר:</label>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="Male" name="radio-gender-g" required>
+                                    <input type="radio" class="form-check-input" id="gMale" name="radio-gender-g" required>
                                     <label class="form-check-label" for="validationFormCheck1">זכר</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="Female" name="radio-gender-g" required>
+                                    <input type="radio" class="form-check-input" id="gFemale" name="radio-gender-g" required>
                                     <label class="form-check-label" for="validationFormCheck2">נקבה</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="None" name="radio-gender-g" required>
+                                    <input type="radio" class="form-check-input" id="gNone" name="radio-gender-g" required>
                                     <label class="form-check-label" for="validationFormCheck3">מעדיף לא לומר</label>
                                 </div>
 
@@ -436,7 +443,9 @@
                                     <label>סיסמא:</label>
                                     <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
                                            id="gpasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
-                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" oninput="this.setCustomValidity('')" required>
+                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" 
+                                           oninput="this.setCustomValidity('')" 
+                                           autocomplete="on" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>כתובת מגורים:</label>
@@ -464,7 +473,7 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-primary" type="submit">שליחת טופס</button>
+                                <input type="submit" class="btn btn-primary" value="שליחת טופס"/>
                             </div>
 
                         </div>
@@ -475,7 +484,7 @@
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
                     <h2 style="color:red">טופס הרשמה - מארגן</h2>
-                    <form id="oform" class="was-validated">
+                    <form id="oForm" class="was-validated">
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
@@ -504,15 +513,15 @@
                                 </div>
                                 <label>מגדר:</label>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="Male" name="radio-gender-o" value="Male" required>
+                                    <input type="radio" class="form-check-input" id="oMale" name="radio-gender-o" value="Male" required>
                                     <label class="form-check-label">זכר</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="Female" name="radio-gender-o" value="Female" required>
+                                    <input type="radio" class="form-check-input" id="oFemale" name="radio-gender-o" value="Female" required>
                                     <label class="form-check-label">נקבה</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="None" name="radio-gender-o" value="None" required>
+                                    <input type="radio" class="form-check-input" id="oNone" name="radio-gender-o" value="None" required>
                                     <label class="form-check-label">מעדיף לא לומר</label>
                                 </div>
 
@@ -526,7 +535,8 @@
                                     <label>סיסמא:</label>
                                     <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
                                            id="opasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
-                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" oninput="this.setCustomValidity('')" required>
+                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" 
+                                           autocomplete="on" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>כתובת מגורים:</label>
