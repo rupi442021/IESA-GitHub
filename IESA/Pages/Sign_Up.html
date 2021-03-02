@@ -5,10 +5,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
 
-    <title>הרשמת משתמשים</title>
+    <title>&#x202E; הרשמת משתמשים – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
     <style type="text/css">
+
         body {
             background-color: #212529;
             color: white;
@@ -46,8 +49,9 @@
             /*    background-color: darkred;*/
         }
 
-        .form-control {
+        /*.form-control {*/
             /*   background-color:*/
+
     </style>
 
     <script>
@@ -80,21 +84,29 @@
                 let emailAdd = $("#oemailTB").val();
             }
 
-            ajaxCall("GET", "../api/gamers/mark?emailAdd=" + emailAdd, "", EmailSuccess, EmailError); //method OG1 (Gamers Controllers)
+            ajaxCall("GET", "../api/gamers/mark1?emailAdd=" + emailAdd, "", EmailSuccess, EmailError); //method OG1 (Gamers Controllers)
 
             return false; //Prevent the page from being reloaded
         }
 
 
-        function EmailSuccess(email1) {
-            console.log(email1);
+        function EmailSuccess(email) {
+            console.log(email);
 
-            if (email1 == "exist") {
+            if (email == "exist") {
                 swal("Email Exists, please choose other");
             }
 
-            else if (email1 == "not exist") {
-                createAccount();
+            else if (email == "not exist") { //Check Nickname
+
+                if (userType == 3) {
+                    let emailAdd = $("#gnicknameTB").val();
+                }
+                else { //userType == 2
+                    let emailAdd = $("#onicknameTB").val();
+                }
+
+                ajaxCall("GET", "../api/gamers/mark2?nicknameAdd=" + nicknameAdd, "", NicknameSuccess, NicknameError); //method OG2 (Gamers Controllers)
             }
         }
 
@@ -105,10 +117,29 @@
         }
 
 
+        function NicknameSuccess(nickname) {
+            console.log(nickname);
+
+            if (nickname == "exist") {
+                swal("Email Exists, please choose other");
+            }
+
+            else if (nickname == "not exist") {
+                createAccount();
+            }
+        }
+
+        function NicknameError(err) {
+            console.log(err);
+
+            alert("Error");
+        }
+
+
         function createAccount() {
 
             if (userType == 3) {
-                ajaxCall("GET", "../api/Gamers", "", getSuccessGamer, getErrorGamer); //method OG2
+                ajaxCall("GET", "../api/Gamers", "", getSuccessGamer, getErrorGamer); //method OG3
             }
             else { //userType == 2
                 ajaxCall("GET", "../api/Orgenaizers", "", getSuccessOrgenaizer, getErrorOrgenaizer); //method OO1
@@ -118,7 +149,7 @@
         }
 
 
-        function getSuccessGamer(id3) {
+        function getSuccessGamer(id3) { //get the id of the new gamer
             console.log(id3);
 
             var userid3 = parseInt(id3);
@@ -132,7 +163,7 @@
         }
 
 
-        function getSuccessOrgenaizer(id2) {
+        function getSuccessOrgenaizer(id2) { //get the id of the new orgenaizer
             console.log(id2);
 
             var userid2 = parseInt(id2);
@@ -216,20 +247,20 @@
 
             GamerObj = {
                 Email: $("#gemailTB").val(),
-                Password: $("#gpasswordTB").val(),
-                Nickname: $("#gnicknameTB"), // **Check the nickname is not taken!**
+                Password1: $("#gpasswordTB").val(),
+                Nickname: $("#gnicknameTB").val(),
                 Firstname: $("#gfirstnameTB").val(),
                 Lastname: $("#glastnameTB").val(),
                 Gender: $("#ggenderTB").val(),
                 Id: $("#gidTB").val(),
                 Phone: $("#gPhoneTB").val(),
                 Dob: $("#gdobTB").val(),
-                Address: $("#gaddressTB").val(),
+                Address1: $("#gaddressTB").val(),
                 Discorduser: $("#gdiscorduserTB").val(),
-                image: imageURL,
-                Registrationdate: $("#123").val(), //Do a function to get the date of today**
+                Picture: imageURL,
+                Registrationdate: $("#123").val(),
                 License: 0,
-                Status: 0,
+                Status1: 0,
             }
 
             ajaxCall("POST", "../api/Gamers", JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Gamers_SignUp.html - method O3
@@ -259,19 +290,19 @@
 
             OrgenaizerObj = {
                 Email: $("#oemailTB").val(),
-                Password: $("#opasswordTB").val(),
-                Nickname: $("#onicknameTB"), // **Check the nickname is not taken!**
+                Password1: $("#opasswordTB").val(),
+                Nickname: $("#onicknameTB").val(),
                 Firstname: $("#ofirstnameTB").val(),
                 Lastname: $("#olastnameTB").val(),
                 Gender: $("#ogenderTB").val(),
                 Id: $("#oidTB").val(),
                 Phone: $("#oPhoneTB").val(),
                 Dob: $("#odobTB").val(),
-                Address: $("#oaddressTB").val(),
-                Discorduser: $("#odiscorduserTB").val(),
-                image: imageURL,
-                Registrationdate: $("#123").val(), //Do a function to get the date of today**
-                Status: 0,
+                Address1: $("#oaddressTB").val(),
+                Picture: imageURL,
+                Comunityname = $("#ocomunitynameTB").val(),
+                Linktocommunity = $("#olinktocommunityTB").val(),
+                Status1: 0,
             }
 
             ajaxCall("POST", "../api/Orgenaizers", JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Sign_Up.html - method OO2
@@ -308,7 +339,9 @@
         </div>
     </section>
 
+
     <section id="content">
+
         <div class="container">
             <h1 style="color:maroon">הרשמה לעמותה</h1>
             <nav>
@@ -498,14 +531,9 @@
                     </form>
 
                 </div>
-
-
             </div>
-
-
-
-          
         </div>
+
     </section>
 
 

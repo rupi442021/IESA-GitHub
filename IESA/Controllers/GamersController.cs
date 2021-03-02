@@ -15,20 +15,28 @@ namespace IESA.Controllers
 
 
         [HttpGet] //Sign_Up.html - method OG1
-        [Route("api/gamers/mark")]
+        [Route("api/gamers/mark1")]
         public string GetEmail(string emailAdd)
         {
-            Gamers eAddress = new Gamers();
-            return eAddress.CheckEmail(emailAdd);
+            Gamers emailc = new Gamers();
+            return emailc.CheckEmail(emailAdd);
         }
 
-        public int Get() //Sign_Up.html - method OG2
+        [HttpGet] //Sign_Up.html - method OG2
+        [Route("api/gamers/mark2")]
+        public string GetNickname(string nicknameAdd)
+        {
+            Gamers nicknamec = new Gamers();
+            return nicknamec.CheckNickname(nicknameAdd);
+        }
+
+        public int Get() //Sign_Up.html - method OG3
         {
             Gamers newid = new Gamers();
             return newid.ReadID();
         }
 
-        public void Post([FromBody] Gamers gamer) //Sign_Up.html - method OG3
+        public void Post([FromBody] Gamers gamer) //Sign_Up.html - method OG4
         {
             gamer.InsertGamer();
         }

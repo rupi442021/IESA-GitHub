@@ -15,6 +15,7 @@ namespace IESA.Models.DAL
         public DataTable dt;
 
         private string emaila;
+        private string nicknamec;
         private int userId;
 
         public DBServices() { }
@@ -55,7 +56,7 @@ namespace IESA.Models.DAL
         //---Sign_Up.html--- *Open*
 
 
-        public string CheckEmailSQL(string emailADD) //Sign_Up.html - method OG1 (Check Email: Gamer)
+        public string CheckEmailSQL(string emailADD) //Sign_Up.html - method OG1 (Check Email: Gamer/Orgenaizer)
         {
 
             SqlConnection con = null;
@@ -65,12 +66,12 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Gamers Union Orgenaizers WHERE email='" + emailADD + "'";
+                String selectSTR = "SELECT Gamers.email FROM Gamers WHERE email='" + emailADD + "' UNION SELECT Orgenaizers.email FROM Orgenaizers WHERE email='" + emailADD + "' UNION SELECT Managers.email FROM Managers WHERE email='" + emailADD + "'";
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
 
-                emaila = "null";
+                emaila = "NULL";
 
                 while (dr.Read()) //1 row
                 {
@@ -103,7 +104,55 @@ namespace IESA.Models.DAL
 
         }
 
-        public int GetnewId()  //Sign_Up.html - method OG2 (Get New Id: Gamer)
+        public string CheckNicknameSQL(string nicknameAdd) //Sign_Up.html - method OG2 (Check Nickname: Gamer/Orgenaizer)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT Gamers.nickname FROM Gamers WHERE nickname='" + nicknameAdd + "' UNION SELECT Orgenaizers.nickname FROM Orgenaizers WHERE nickname='" + nicknameAdd + "' UNION SELECT Managers.nickname FROM Managers WHERE nickname='" + nicknameAdd + "'";
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                nicknamec = "NULL";
+
+                while (dr.Read()) //1 row
+                {
+
+                    nicknamec = (string)dr["nickname"];
+                }
+
+                if (nicknamec == nicknameAdd)
+                {
+                    return "exist";
+                }
+                else
+                {
+                    return "not exist";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public int GetnewId()  //Sign_Up.html - method OG3 (Get New Id: Gamer)
         {
 
             SqlConnection con = null;
@@ -142,7 +191,7 @@ namespace IESA.Models.DAL
 
         }
 
-        public int InsertGamer(Gamers gamer) //Sign_Up.html - method OG3 (Insert: Gamer (1))
+        public int InsertGamer(Gamers gamer) //Sign_Up.html - method OG4 (Insert: Gamer (1))
         {
 
             SqlConnection con;
@@ -185,7 +234,7 @@ namespace IESA.Models.DAL
 
         }
 
-        private String BuildInsertCommand(Gamers gamer) //Sign_Up.html - method OG3 (Insert: Gamer (2))
+        private String BuildInsertCommand(Gamers gamer) //Sign_Up.html - method OG4 (Insert: Gamer (2))
         {
             String command;
 

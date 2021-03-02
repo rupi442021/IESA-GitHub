@@ -80,14 +80,20 @@ namespace IESA.Models
             return dbs.CheckEmailSQL(emailADD);
         }
 
-        public int ReadID() //Sign_Up.html - method OG2
+        public string CheckNickname(string nicknameAdd) //Sign_Up.html - method OG2
+        {
+            DBServices dbs = new DBServices();
+            return dbs.CheckNicknameSQL(nicknameAdd);
+        }
+
+        public int ReadID() //Sign_Up.html - method OG3
         {
             DBServices dbs = new DBServices();
             int newid = dbs.GetnewId();
             return newid;
         }
 
-        public void InsertGamer() //Sign_Up.html - method OG3
+        public void InsertGamer() //Sign_Up.html - method OG4
         {
             DBServices dbs = new DBServices();
             dbs.InsertGamer(this);

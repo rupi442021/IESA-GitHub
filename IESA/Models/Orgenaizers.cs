@@ -18,13 +18,12 @@ namespace IESA.Models
         string phone;
         DateTime dob;
         string address1;
-        string discorduser;
         string picture;
         string comunityname;
         string linktocommunity;
         int status1; //0 or 1
 
-        public Orgenaizers(int userid, string email, string password1, string nickname, string firstname, string lastname, string gender, int id, string phone, DateTime dob, string address1, string discorduser, string picture, string comunityname, string linktocommunity, int status1)
+        public Orgenaizers(int userid, string email, string password1, string nickname, string firstname, string lastname, string gender, int id, string phone, DateTime dob, string address1, string picture, string comunityname, string linktocommunity, int status1)
         {
             Userid = userid;
             Email = email;
@@ -37,7 +36,6 @@ namespace IESA.Models
             Phone = phone;
             Dob = dob;
             Address1 = address1;
-            Discorduser = discorduser;
             Picture = picture;
             Comunityname = comunityname;
             Linktocommunity = linktocommunity;
@@ -57,7 +55,6 @@ namespace IESA.Models
         public string Phone { get => phone; set => phone = value; }
         public DateTime Dob { get => dob; set => dob = value; }
         public string Address1 { get => address1; set => address1 = value; }
-        public string Discorduser { get => discorduser; set => discorduser = value; }
         public string Picture { get => picture; set => picture = value; }
         public string Comunityname { get => comunityname; set => comunityname = value; }
         public string Linktocommunity { get => linktocommunity; set => linktocommunity = value; }
