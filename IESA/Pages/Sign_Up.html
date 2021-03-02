@@ -60,8 +60,16 @@
 
         $(document).ready(function () {
 
-            $("#gForm").submit(checkEmail(3)); //Clicked on submit of gamer
-            $("#oForm").submit(checkEmail(2)); //Clicked on submit of orgenaizer
+            $("#gForm").submit(function (e) {
+                e.preventDefault();
+                checkEmail(3);
+            })
+
+            $("#oForm").submit(function (e) {
+                e.preventDefault();
+                checkEmail(2)
+            })
+
         });
 
 
