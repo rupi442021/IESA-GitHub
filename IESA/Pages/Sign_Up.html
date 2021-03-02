@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
@@ -52,17 +53,17 @@
         }
 
         /*.form-control {*/
-            /*   background-color:*/
+        /*   background-color:*/
 
     </style>
 
     <script>
 
         var userType; //3 = Gamer | 2 = Orenaizer
-        
+
         $(document).ready(function () {
 
-           
+
             $("#oForm").submit(function (e) {
                 e.preventDefault();
                 f1(2);
@@ -73,7 +74,7 @@
                 f1(3);
             });
 
-            
+
         });
 
 
@@ -90,19 +91,19 @@
         }
 
         function checkEmail(num) {
-            alert(num);
+
             userType = num;
 
             if (userType == 3) {
-                 emailAdd = $("#gemailTB").val();
+                emailAdd = $("#gemailTB").val();
             }
             else { //userType == 2
-                 emailAdd = $("#oemailTB").val();
+                emailAdd = $("#oemailTB").val();
             }
 
             ajaxCall("GET", "../api/gamers/mark1?emailAdd=" + emailAdd, "", EmailSuccess, EmailError); //method OG1 (Gamers Controllers)
 
-           /* return false;*/ //Prevent the page from being reloaded
+            /* return false;*/ //Prevent the page from being reloaded
         }
 
 
@@ -123,7 +124,7 @@
                 }
 
                 ajaxCall("GET", "../api/gamers/mark2?nicknameAdd=" + nicknameAdd, "", NicknameSuccess, NicknameError); //method OG2 (Gamers Controllers)
-                
+
                 return false;
             }
         }
@@ -419,6 +420,15 @@
                                     <label>תאריך לידה:</label>
                                     <input type="date" class="form-control" id="gdobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
+                                <div>
+                                <label>תעודת זהות:</label>
+                                <input type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="gidTB" pattern=".{8,9}"
+                                       oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
+                                       oninput="this.setCustomValidity('')" required>
+                                </div>
+
+                                <br /> <!--Margin bottom 10px not like <br /> too much space!-->
+
                                 <label>מגדר:</label>
                                 <div class="mb-3">
                                     <input type="radio" class="form-check-input" id="gMale" name="radio-gender-g" required>
@@ -443,8 +453,8 @@
                                     <label>סיסמא:</label>
                                     <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
                                            id="gpasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
-                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" 
-                                           oninput="this.setCustomValidity('')" 
+                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')"
+                                           oninput="this.setCustomValidity('')"
                                            autocomplete="on" required>
                                 </div>
                                 <div class="mb-3">
@@ -461,10 +471,18 @@
                                     <input type="text" class="form-control" placeholder='הכנס פרטי דיסקורד' id="gdiscorduserTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
 
-                                <div class="mb-3">
+                                <!--<div class="mb-3">
                                     <label>תמונת פרופיל:</label>
                                     <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" id="gfiles">
                                     <div class="invalid-feedback"><p>תמונת הפרופיל שלך תוצג לאחרים</p></div>
+                                </div>-->
+
+                                <div class="mb-3">
+                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                        <label for="file">תמונה: </label>
+                                        <br />
+                                        <input type="file" id="gfiles" name="files" multiple="multiple" />
+                                    </div>
                                 </div>
 
                                 <div class="img-circle">
@@ -511,6 +529,15 @@
                                     <label>תאריך לידה:</label>
                                     <input type="date" class="form-control" id="odobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
+                                <div>
+                                    <label>תעודת זהות:</label>
+                                    <input type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="oidTB" pattern=".{8,9}"
+                                           oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
+                                           oninput="this.setCustomValidity('')" required>
+                                </div>
+
+                                <br /> <!--Margin bottom 10px not like <br /> too much space!-->
+
                                 <label>מגדר:</label>
                                 <div class="mb-3">
                                     <input type="radio" class="form-check-input" id="oMale" name="radio-gender-o" value="Male" required>
@@ -535,7 +562,7 @@
                                     <label>סיסמא:</label>
                                     <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
                                            id="opasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
-                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" 
+                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')"
                                            autocomplete="on" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
@@ -556,22 +583,29 @@
                                     <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
 
-                                <div class="mb-3">
+                                <!--<div class="mb-3">
                                     <label>תמונת פרופיל:</label>
                                     <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" id="ofiles">
                                     <div class="invalid-feedback"><p>תמונת הפרופיל שלך תוצג לאחרים</p></div>
+                                </div>-->
+                                <div class="mb-3">
+                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                        <label for="file">תמונה: </label>
+                                        <br />
+                                        <input type="file" id="ofiles" name="files" multiple="multiple" />
+                                    </div>
                                 </div>
 
-                                <div class="img-circle">
-                                    <p>כאן יראו את התמונה אחרי שיעלה</p>
-                                    <!-- need to post image here -->
+                                    <div class="img-circle">
+                                        <p>כאן יראו את התמונה אחרי שיעלה</p>
+                                        <!-- need to post image here -->
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary" type="submit">שליחת טופס</button>
-                            </div>
+                                <div class="mb-3">
+                                    <button class="btn btn-primary" type="submit">שליחת טופס</button>
+                                </div>
 
-                        </div>
+                            </div>
                     </form>
 
                 </div>
