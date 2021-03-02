@@ -60,8 +60,8 @@
 
         $(document).ready(function () {
 
-            $("#gForm").submit(checkEmail); //Clicked on submit of gamer
-            $("#oForm").submit(checkEmail); //Clicked on submit of orgenaizer
+            $("#gForm").submit(checkEmail(3)); //Clicked on submit of gamer
+            $("#oForm").submit(checkEmail(2)); //Clicked on submit of orgenaizer
         });
 
 
@@ -74,8 +74,9 @@
         }
 
 
-        function checkEmail(this) {
-            userType = this.id;
+        function checkEmail(num) {
+            alert(num);
+            userType = num;
 
             if (userType == 3) {
                 let emailAdd = $("#gemailTB").val();
@@ -107,6 +108,8 @@
                 }
 
                 ajaxCall("GET", "../api/gamers/mark2?nicknameAdd=" + nicknameAdd, "", NicknameSuccess, NicknameError); //method OG2 (Gamers Controllers)
+
+                return false;
             }
         }
 
@@ -125,8 +128,10 @@
             }
 
             else if (nickname == "not exist") {
-                createAccount();
+                getNewId();
             }
+
+            return false;
         }
 
         function NicknameError(err) {
@@ -136,7 +141,7 @@
         }
 
 
-        function createAccount() {
+        function getNewId() {
 
             if (userType == 3) {
                 ajaxCall("GET", "../api/Gamers", "", getSuccessGamer, getErrorGamer); //method OG3
@@ -154,6 +159,8 @@
 
             var userid3 = parseInt(id3);
             addPhoto(userid3);
+
+            return false;
         }
 
         function getErrorGamer(err) {
@@ -168,6 +175,8 @@
 
             var userid2 = parseInt(id2);
             addPhoto(userid2);
+
+            return false;
         }
 
         function getErrorOrgenaizer(err) {
@@ -180,7 +189,13 @@
         function addPhoto(userid) {
 
             var data = new FormData();
-            var files = $("#files").get(0).files;
+
+            if (userType == 3) {
+                var files = $("#gfiles").get(0).files;
+            }
+            else { //userType == 2
+                var files = $("#ofiles").get(0).files;
+            }
 
             // Add the uploaded file to the form data collection
             if (files.length > 0) {
@@ -188,7 +203,7 @@
                     data.append("UploadedImage", files[f]);
                 }
 
-                data.append("userid", userid); // append what ever data you want to send along with the files. See how you extract it in the controller.
+                data.append("userid", userid); //append what ever data you want to send along with the files.
             }
 
             // Ajax upload
@@ -203,7 +218,6 @@
             });
 
             return false;
-
         }
 
 
@@ -233,7 +247,8 @@
                 addOrgenaizer(data[0]);
             }
 
-            addGamer(data[0]); //SAVE data[0] in global intiger and send him when we press on submit***
+            //SAVE data[0] in global intiger and send him when we press on submit***
+            return false;
         }
 
         function error(err) {
@@ -245,26 +260,30 @@
 
         function addGamer(imageURL) {
 
+            var gradio = $('input[name=radio-gender-g]:checked'); //get gender
+            var ggender = gradio.attr('id');
+
             GamerObj = {
                 Email: $("#gemailTB").val(),
                 Password1: $("#gpasswordTB").val(),
                 Nickname: $("#gnicknameTB").val(),
                 Firstname: $("#gfirstnameTB").val(),
                 Lastname: $("#glastnameTB").val(),
-                Gender: $("#ggenderTB").val(),
+                Gender: ggender,
                 Id: $("#gidTB").val(),
                 Phone: $("#gPhoneTB").val(),
                 Dob: $("#gdobTB").val(),
                 Address1: $("#gaddressTB").val(),
                 Discorduser: $("#gdiscorduserTB").val(),
                 Picture: imageURL,
-                Registrationdate: $("#123").val(),
+                Registrationdate: getDate(),
                 License: 0,
                 Status1: 0,
             }
 
             ajaxCall("POST", "../api/Gamers", JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Gamers_SignUp.html - method O3
 
+            return false;
         }
 
 
@@ -275,7 +294,7 @@
 
             setTimeout(function () {
                 location.replace("Sign_In.html");
-            }, 2500);
+            }, 3000);
         } //Done creating Gamer User
 
 
@@ -288,13 +307,16 @@
 
         function addOrgenaizer(imageURL) {
 
+            var oradio = $('input[name=radio-gender-o]:checked'); //get gender
+            var ogender = oradio.attr('id');
+
             OrgenaizerObj = {
                 Email: $("#oemailTB").val(),
                 Password1: $("#opasswordTB").val(),
                 Nickname: $("#onicknameTB").val(),
                 Firstname: $("#ofirstnameTB").val(),
                 Lastname: $("#olastnameTB").val(),
-                Gender: $("#ogenderTB").val(),
+                Gender: ogender,
                 Id: $("#oidTB").val(),
                 Phone: $("#oPhoneTB").val(),
                 Dob: $("#odobTB").val(),
@@ -307,6 +329,7 @@
 
             ajaxCall("POST", "../api/Orgenaizers", JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Sign_Up.html - method OO2
 
+            return false;
         }
 
 
@@ -317,10 +340,10 @@
 
             setTimeout(function () {
                 location.replace("Sign_In.html");
-            }, 2500);
+            }, 3000);
         } //Done creating Orgenaizer User
 
-        function ErrorGamer(err) {
+        function ErrorOrgenaizer(err) {
             console.log(err.responseJSON.ExceptionMessage);
 
             alert(err.responseJSON.ExceptionMessage); //Message - throw new exception from the server*
@@ -332,7 +355,7 @@
 
 </head>
 
-<body onload="init()">
+<body> <!--<body onload="init()">-->
 
     <section id="Nav-bar">
         <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
@@ -343,7 +366,7 @@
     <section id="content">
 
         <div class="container">
-            <h1 style="color:maroon">הרשמה לעמותה</h1>
+            <h1 style="color:white; text-align:center">הרשמה לעמותה</h1>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">הרשם כשחקן</button>
@@ -353,45 +376,45 @@
             <div class="tab-content" id="nav-tabContent">
 
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <h2 style="color:red">טופס הרשמה כשחקן</h2>
+                    <h2 style="color:red">טופס הרשמה - שחקן</h2>
                     <form id="gform" class="was-validated">
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="fname">שם פרטי:</label>
-                                    <input type="text" class="form-control" placeholder="שם פרטי" id="fnameTB" pattern=".{2,15}"
+                                    <input type="text" class="form-control" placeholder="שם פרטי" id="gfirstnameTB" pattern=".{2,15}"
                                            oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים.')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label>שם משפחה:</label>
-                                    <input type="text" class="form-control" placeholder="שם משפחה" id="lnameTB" pattern=".{2,15}"
+                                    <input type="text" class="form-control" placeholder="שם משפחה" id="glastnameTB" pattern=".{2,15}"
                                            oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים.')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>כינוי:</label>
-                                    <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="nicknameTB"
+                                    <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="gnicknameTB"
                                            pattern="^[a-zA-Z]{2,15}$"
                                            oninvalid="this.setCustomValidity('remark here')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>תאריך לידה:</label>
-                                    <input type="date" class="form-control" id="dobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="date" class="form-control" id="gdobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <label>מגדר:</label>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
-                                    <label class="form-check-label" for="validationFormCheck2">זכר</label>
+                                    <input type="radio" class="form-check-input" id="Male" name="radio-gender-g" required>
+                                    <label class="form-check-label" for="validationFormCheck1">זכר</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
+                                    <input type="radio" class="form-check-input" id="Female" name="radio-gender-g" required>
                                     <label class="form-check-label" for="validationFormCheck2">נקבה</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="validationFormCheck3" name="radio-stacked" required>
+                                    <input type="radio" class="form-check-input" id="None" name="radio-gender-g" required>
                                     <label class="form-check-label" for="validationFormCheck3">מעדיף לא לומר</label>
                                 </div>
 
@@ -399,88 +422,89 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <label>כתובת דוא"ל:</label>
-                                    <input type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="emailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                                    <input type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="gemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>סיסמא:</label>
                                     <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
-                                           id="passwordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
+                                           id="gpasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
                                            oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>כתובת מגורים:</label>
-                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="addressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="gaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>מספר נייד:</label>
-                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="cellphoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="gPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label>Discord:</label>
-                                    <input type="text" class="form-control" placeholder='הכנס פרטי דיסקורד' id="discordTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                    <input type="text" class="form-control" placeholder='הכנס פרטי דיסקורד' id="gdiscorduserTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
-
 
                                 <div class="mb-3">
                                     <label>תמונת פרופיל:</label>
-                                    <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" required>
+                                    <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" id="gfiles">
                                     <div class="invalid-feedback"><p>תמונת הפרופיל שלך תוצג לאחרים</p></div>
                                 </div>
+
                                 <div class="img-circle">
                                     <p>כאן יראו את התמונה אחרי שיעלה</p>
                                     <!-- need to post image here -->
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-primary" type="submit">הירשם לעמותה!</button>
+                                <button class="btn btn-primary" type="submit">שליחת טופס</button>
                             </div>
 
                         </div>
                     </form>
 
+
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-                    <h2 style="color:red">טופס הרשמה כמארגן</h2>
+                    <h2 style="color:red">טופס הרשמה - מארגן</h2>
                     <form id="oform" class="was-validated">
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
                                     <label for="fname">שם פרטי:</label>
-                                    <input type="text" class="form-control" placeholder="שם פרטי" id="fnameTB" pattern=".{2,15}"
+                                    <input type="text" class="form-control" placeholder="שם פרטי" id="ofirstnameTB" pattern=".{2,15}"
                                            oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים.')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label>שם משפחה:</label>
-                                    <input type="text" class="form-control" placeholder="שם משפחה" id="lnameTB" pattern=".{2,15}"
+                                    <input type="text" class="form-control" placeholder="שם משפחה" id="olastnameTB" pattern=".{2,15}"
                                            oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים.')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>כינוי:</label>
-                                    <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="nicknameTB"
+                                    <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="onicknameTB"
                                            pattern="^[a-zA-Z]{2,15}$"
                                            oninvalid="this.setCustomValidity('remark here')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>תאריך לידה:</label>
-                                    <input type="date" class="form-control" id="dobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="date" class="form-control" id="odobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <label>מגדר:</label>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="male" name="gender" value="male" required>
-                                    <label class="form-check-label" >זכר</label>
+                                    <input type="radio" class="form-check-input" id="Male" name="radio-gender-o" value="Male" required>
+                                    <label class="form-check-label">זכר</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="female" name="gender" value="female" required>
-                                    <label class="form-check-label" >נקבה</label>
+                                    <input type="radio" class="form-check-input" id="Female" name="radio-gender-o" value="Female" required>
+                                    <label class="form-check-label">נקבה</label>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="radio" class="form-check-input" id="none" name="gender" value="none" required>
+                                    <input type="radio" class="form-check-input" id="None" name="radio-gender-o" value="None" required>
                                     <label class="form-check-label">מעדיף לא לומר</label>
                                 </div>
 
@@ -488,43 +512,45 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <label>כתובת דוא"ל:</label>
-                                    <input type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="emailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                                    <input type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="oemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>סיסמא:</label>
                                     <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
-                                           id="passwordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
+                                           id="opasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
                                            oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>כתובת מגורים:</label>
-                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="addressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="oaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>מספר נייד:</label>
-                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="cellphoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="oPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label>שם הקהילה אליה שייך:</label>
-                                    <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="cummunityTB" pattern=".{2,25}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                    <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="ocomunitynameTB" pattern=".{2,25}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
                                 <div class="mb-3">
                                     <label>לינק לאתר הקהילה:</label>
-                                    <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="cummunityLinkTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                    <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
+
                                 <div class="mb-3">
                                     <label>תמונת פרופיל:</label>
-                                    <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" required>
+                                    <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" id="ofiles">
                                     <div class="invalid-feedback"><p>תמונת הפרופיל שלך תוצג לאחרים</p></div>
                                 </div>
+
                                 <div class="img-circle">
                                     <p>כאן יראו את התמונה אחרי שיעלה</p>
                                     <!-- need to post image here -->
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-primary" type="submit">הירשם לעמותה!</button>
+                                <button class="btn btn-primary" type="submit">שליחת טופס</button>
                             </div>
 
                         </div>
@@ -537,11 +563,11 @@
     </section>
 
 
-        <section id="site_footer">
-            <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-                <h2>IESA-FOOTER</h2>
-            </div>
-        </section>
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA-FOOTER</h2>
+        </div>
+    </section>
 
 
 </body>

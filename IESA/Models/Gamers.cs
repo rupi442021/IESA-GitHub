@@ -89,7 +89,7 @@ namespace IESA.Models
         public int ReadID() //Sign_Up.html - method OG3
         {
             DBServices dbs = new DBServices();
-            int newid = dbs.GetnewId();
+            int newid = dbs.GetnewIdGamer();
             return newid;
         }
 

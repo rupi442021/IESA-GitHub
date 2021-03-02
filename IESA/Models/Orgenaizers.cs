@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IESA.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -64,9 +65,18 @@ namespace IESA.Models
         //#Functions Area
 
 
+        public int ReadID() //Sign_Up.html - method OO1
+        {
+            DBServices dbs = new DBServices();
+            int newid = dbs.GetnewIdOrgenaizer();
+            return newid;
+        }
 
-
-
+        public void InsertOrgenaizer() //Sign_Up.html - method OO2
+        {
+            DBServices dbs = new DBServices();
+            dbs.InsertOrgenaizer(this);
+        }
 
 
 

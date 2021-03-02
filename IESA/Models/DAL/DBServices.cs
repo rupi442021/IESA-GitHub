@@ -152,7 +152,7 @@ namespace IESA.Models.DAL
 
         }
 
-        public int GetnewId()  //Sign_Up.html - method OG3 (Get New Id: Gamer)
+        public int GetnewIdGamer()  //Sign_Up.html - method OG3 (Get New Id: Gamer)
         {
 
             SqlConnection con = null;
@@ -163,6 +163,45 @@ namespace IESA.Models.DAL
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
                 String selectSTR = "SELECT TOP 1 * FROM Gamers ORDER BY userID DESC";
+
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read()) //1 row
+                {
+                    userId = Convert.ToInt32(dr["userID"]); //future id of the user
+                }
+
+                userId += 1;
+                return userId; //Future id of the user
+            }
+            catch (Exception)
+            {
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public int GetnewIdOrgenaizer()  //Sign_Up.html - method OO1 (Get New Id: Orgenaizer)
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT TOP 1 * FROM Orgenaizers ORDER BY userID DESC";
 
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
@@ -242,6 +281,64 @@ namespace IESA.Models.DAL
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}', '{14}')", gamer.Email, gamer.Password1, gamer.Nickname, gamer.Firstname, gamer.Lastname, gamer.Gender, gamer.Id, gamer.Phone, gamer.Dob, gamer.Address1, gamer.Discorduser, gamer.Picture, gamer.Registrationdate, gamer.License, gamer.Status1);
             String prefix = "INSERT INTO Gamers " + "(email, password1, nickname, firstname, lastname, gender, id, phone, dob, address1, discorduser, picture, registrationdate, license, status1) ";
+
+            command = prefix + sb.ToString();
+
+            return command;
+
+        }
+
+        public int InsertOrgenaizer(Orgenaizers orgenaizer) //Sign_Up.html - method OO2 (Insert: Orgenaizer (1))
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(orgenaizer);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommand(Orgenaizers orgenaizer) //Sign_Up.html - method OO2 (Insert: Orgenaizer (2))
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}')", orgenaizer.Email, orgenaizer.Password1, orgenaizer.Nickname, orgenaizer.Firstname, orgenaizer.Lastname, orgenaizer.Gender, orgenaizer.Id, orgenaizer.Phone, orgenaizer.Dob, orgenaizer.Address1, orgenaizer.Picture, orgenaizer.Comunityname, orgenaizer.Linktocommunity, orgenaizer.Status1);
+            String prefix = "INSERT INTO Orgenaizers " + "(email, password1, nickname, firstname, lastname, gender, id, phone, dob, address1, picture, communityName, linkToCommunity, status1) ";
 
             command = prefix + sb.ToString();
 
