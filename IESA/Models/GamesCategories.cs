@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IESA.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,7 +28,13 @@ namespace IESA.Models
 
         //#Functions Area
 
-
+        public List<GamesCategories> Read() //Sign_Up.html - method OO1
+        {
+            DBServices dbs = new DBServices();
+            List <GamesCategories> gamecategories = dbs.GetGameCategoriesr();
+            return gamecategories;
+        }
+        
 
 
     }

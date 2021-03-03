@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <title>&#x202E; הגשת תחרות – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+        body {
+            background-color: #212529;
+            color: white;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            height: 2000px;
+            padding-top: 15px;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #charNum{
+            direction: ltr;
+            color: dimgray;
+            font-size: 15px;
+        }
+
+        /*Template Style*/
+
+    </style>
+    <script>
+
+        $(document).ready(function () {
+
+            GetAllGameCategories();
+
+
+
+        });
+
+        function GetAllGameCategories() {
+
+            ajaxCall("GET", "../api/GamesCategories", "", getSuccessGamesCategories, getErrorGamesCategories);
+
+        }
+
+        function getSuccessGamesCategories(GamesCategories) {
+            console.log(GamesCategories)
+            strOption = "";
+            for (var i = 0; i < GamesCategories.length; i++) { //Add Games Categories to drop list
+                strOption += ' <option id="' + GamesCategories[i].Categoryid + '">' + GamesCategories[i].Categoryname + '</option> '  
+            }
+            $("#gamecategories").append(strOption);
+        }
+
+        function getErrorGamesCategories(err) {
+            console.log(err)
+        }
+
+        //Counter chars in competition descreption (text area)
+        function countChar(val) {
+            var len = val.value.length;
+            if (len >= 1001) {
+                val.value = val.value.substring(0, 1001);
+            } else {
+                str = '';
+                str = "1000/" + (len);
+                $('#charNum').text(str);
+            }
+        };
+
+    </script>
+
+</head>
+<body>
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+        <div class="container">
+
+            <h2 style="color:white">הגשת תחרות חדשה</h2><br><br>
+            <p style="color:red">תזכורת למארגנים בעניין מגבלות ההכרה</p><br>
+            <p style="color:white">בהתאם לנוהל ההכרה בתחרויות. יש לבדוק שהתחרות שאתם מגישים עומדת בקריטריונים הבאים</p><br>
+            <p style="color:white"><i class="bi bi-check2-circle" style="font-size: 1.5rem; color: white;"></i>  חוקי התחרות כתובים היטב ויש קישור אליהם בתיאוק התחרות</p>
+            <p style="color:white"><i class="bi bi-check2-circle" style="font-size: 1.5rem; color: white;"></i>  שווי פרסים בתחרות לא עולה על 5,000 ש"ח</p>
+            <p style="color:white"><i class="bi bi-check2-circle" style="font-size: 1.5rem; color: white;"></i>  התחרות אינה משודרת בטלוויזיה</p>
+            <p style="color:white"><i class="bi bi-check2-circle" style="font-size: 1.5rem; color: white;"></i>  התחרות עומדת בכל הקריטריונים של בעלת הזכויות על הכותר</p><br>
+            <h4 style="color:white">הזנת פרטי תחרות</h4><br>
+
+            <form id="gForm" class="was-validated">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label>כותרת:</label>
+                            <input type="text" class="form-control" placeholder="כותרת תחרות" id="cnameTB" pattern=".{2,100}"
+                                   oninvalid="this.setCustomValidity('עד 100 תווים.')"
+                                   oninput="this.setCustomValidity('')" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>קטגוריית משחק:</label><br />
+                            <select name="gamecategories" class="form-select" id="gamecategories" required>
+                                <option />
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>קונסולה:</label>
+
+                            <select name="gamecategories" class="form-select" id="gamecategories" required>
+                                <option></option>
+                                <option value="PS"> PS</option>
+                                <option value="XBOX"> XBOX</option>
+                                <option value="PC"> PC</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                <label for="file">באנר תחרות: </label>
+                                <br />
+                                <input type="file" id="ofiles" name="files" multiple="multiple" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                <label for="file">לוגו תחרות: </label>
+                                <br />
+                                <input type="file" id="ofiles" name="files" multiple="multiple" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>קישור לאתר התחרות:</label>
+                            <input type="url" class="form-control" placeholder='הכנס כתובת הקהילה כאן' id="urlcommunityTB" 
+                                   oninvalid="this.setCustomValidity('הכנס כתובת אתר אינטרנט')" 
+                                   oninput="this.setCustomValidity('')" required>
+                        </div>
+                        <br /> <!--Margin bottom 10px not like <br /> too much space!-->
+
+                        <label>סוג התחרות:</label>
+                        <div class="mb-3">
+                            <input type="radio" class="form-check-input" id="cPro" name="radio-type" required>
+                            <label class="form-check-label" for="validationFormCheck1">מקצועי</label>
+                        </div>
+                        <div class="mb-3">
+                            <input type="radio" class="form-check-input" id="cAma" name="radio-type" required>
+                            <label class="form-check-label" for="validationFormCheck2">חובבנים</label>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label>מועד אחרון לרישום:</label>
+                            <input type="date" class="form-control" placeholder='מועד אחרון לרישום' id="ldorTB"
+                                   oninvalid="this.setCustomValidity('בחר מועד אחרון להרשמה')"
+                                   oninput="this.setCustomValidity('')" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>תיאור התחרות:</label>
+                            <textarea class="form-control" id="cnameTB" placeholder="עד 1,000 תווים" onkeyup="countChar(this)"
+                                      oninvalid="this.setCustomValidity('עד 1000 תווים.')" required></textarea>
+                            <div id="charNum"></div>
+                        </div>
+                        <div class="row">
+                            <label>תאריך ושעת התחלה:</label>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <input type="date" class="form-control" id="startdDB"
+                                           oninvalid="this.setCustomValidity('בחר מועד לתחילת התחרות')"
+                                           oninput="this.setCustomValidity('')" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <input type="time" class="form-control" id="starttTB"
+                                           oninvalid="this.setCustomValidity('בחר שעה לתחילת התחרות')"
+                                           oninput="this.setCustomValidity('')" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label>תאריך ושעת סיום:</label>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <input type="date" class="form-control" id="enddDB"
+                                           oninvalid="this.setCustomValidity('בחר מועד לסיום התחרות')"
+                                           oninput="this.setCustomValidity('')" required>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <input type="time" class="form-control" id="endtTB"
+                                           oninvalid="this.setCustomValidity('בחר שעה לסיום התחרות')"
+                                           oninput="this.setCustomValidity('')" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label>צ'ק אין:</label>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <input type="time" class="form-control" id="checkin1TB"
+                                           oninvalid="this.setCustomValidity(`בחר שעת צ'ק אין`)"
+                                           oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <input type="time" class="form-control" id="checkin2TB"
+                                           oninvalid="this.setCustomValidity(`בחר שעת צ'ק אין`)"
+                                           oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                        </div>
+                      
+                        <div class="row">
+
+                            <div class="col">
+                                <label>תחרות און ליין:</label>
+                                <div class="mb-3">
+                                    <input type="radio" class="form-check-input" id="online" name="radio-online" required>
+                                    <label class="form-check-label" for="validationFormCheck1">כן</label>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="radio" class="form-check-input" id="offline" name="radio-online" required>
+                                    <label class="form-check-label" for="validationFormCheck2">לא</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label>תחרות בתשלום:</label>
+                                <div class="mb-3">
+                                    <input type="radio" class="form-check-input" id="payment" name="radio-payment" required>
+                                    <label class="form-check-label" for="validationFormCheck1">כן</label>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="radio" class="form-check-input" id="free" name="radio-payment" required>
+                                    <label class="form-check-label" for="validationFormCheck2">לא</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <h5>פרסים:</h5>
+                                <div class="col">
+                                    <label>מקום ראשון</label>
+                                    <input type="text" class="form-control" placeholder="₪" >
+                                </div>
+                                
+                                <div class="col">
+                                    <label>מקום שני</label>
+                                    <input type="text" class="form-control" placeholder="₪">
+                                </div>
+                                <div class="col">
+                                    <label>מקום שלישי</label>
+
+                                    <input type="text" class="form-control" placeholder="₪" >
+                                </div>
+                            </div>
+                            
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="button" class="btn btn-danger" value="תצוגה מקדימה" />
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn btn-success" value="שליחת טופס" />
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>

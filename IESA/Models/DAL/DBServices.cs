@@ -349,6 +349,54 @@ namespace IESA.Models.DAL
 
         //---Sign_Up.html--- *Close*
 
+        //---Add_New_Competition.html--- *Open*
+
+        public List<GamesCategories> GetGameCategoriesr()
+        {
+            SqlConnection con = null;
+            List<GamesCategories> gList = new List<GamesCategories>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from GamesCategories";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    GamesCategories g = new GamesCategories();
+                    g.Categoryid = Convert.ToInt32(dr["categoryID"]);
+                    g.Categoryname = (string)dr["categoryName"];
+                    g.Status1 = Convert.ToInt32(dr["status1"]);
+
+                    if(g.Status1 == 1)
+                    gList.Add(g);
+                }
+
+                return gList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+        
+        //---Add_New_Competition.html--- *Close*
+
 
 
 
