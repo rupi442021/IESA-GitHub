@@ -35,6 +35,11 @@
             margin-bottom:20px;
         }
 
+        img {
+            height:100px;
+            width:100px;
+        }
+
 
         h1 {
             margin-bottom: 30px;
@@ -69,7 +74,6 @@
 
         $(document).ready(function () {
 
-
             $("#oForm").submit(function (e) {
                 e.preventDefault();
                 f1(2);
@@ -80,6 +84,13 @@
                 f1(3);
             });
 
+            $("#gfiles").change(function () {
+                addPreview(3);
+            });
+
+            $("#ofiles").change(function () {
+                addPreview(2);
+            });
 
         });
 
@@ -246,21 +257,7 @@
         function showImages(data) { //Need to remove and change it to preview
             console.log(data);
 
-            //var imgStr = "";
-
-            //if (Array.isArray(data)) {
-
-            //    for (var i = 0; i < data.length; i++) {
-            //        imgStr += "<img src='../" + data[i] + "'/>";
-            //    }
-
-            //}
-
-            //else {
-            //    imgStr = "<img src='../" + data + "'/>";
-            //}
-
-            //document.getElementById("ph").innerHTML = imgStr;
+            addPreview(data);
 
             if (userType == 3) {
                 addGamer(data[0]);
@@ -344,9 +341,9 @@
                 Dob: $("#odobTB").val(),
                 Address1: $("#oaddressTB").val(),
                 Picture: imageURL,
-                //Comunityname = $("#ocomunitynameTB").val(),
-                //Linktocommunity = $("#olinktocommunityTB").val(),
-                //Status1: 0
+                Comunityname: $("#ocomunitynameTB").val(),
+                Linktocommunity: $("#olinktocommunityTB").val(),
+                Status1: 0,
             }
 
             ajaxCall("POST", "../api/Orgenaizers", JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Sign_Up.html - method OO2
@@ -372,6 +369,70 @@
         }
 
 
+
+        function addPreview(userType) {
+
+            previewCode = userType; //global integer
+
+            var data = new FormData();
+
+            if (userType == 3) {
+                var files = $("#gfiles").get(0).files;
+            }
+            else { //userType == 2
+                var files = $("#ofiles").get(0).files;
+            }
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("userid", userType); //append what ever data you want to send along with the files.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: imagePreview,
+                error: error
+            });
+
+            return false;
+        }
+
+
+        function imagePreview(data) {
+
+            var imgStr = "";
+
+            if (Array.isArray(data)) {
+
+                for (var i = 0; i < data.length; i++) {
+                    imgStr += "<img src='../" + data[i] + "'/>";
+                }
+
+            }
+
+            else {
+                imgStr = "<img src='../" + data + "'/>";
+            }
+
+            if (previewCode == 3) {
+                document.getElementById("gph").innerHTML = imgStr;
+            }
+            else {
+                document.getElementById("oph").innerHTML = imgStr;
+            }
+
+        }
+
+
     </script>
 
 
@@ -388,7 +449,7 @@
     <section id="content">
 
         <div class="container">
-            <h2 style="color:white; text-align:center">הרשמה לעמותה</h2>
+            <h2 style="color:white; text-align:center">הרשמה לעמותה</h2><br />
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">הרשם כשחקן</button>
@@ -405,14 +466,14 @@
                                 <div class="mb-3">
                                     <label for="fname">שם פרטי:</label>
                                     <input type="text" class="form-control" placeholder="שם פרטי" id="gfirstnameTB" pattern=".{2,15}"
-                                           oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים.')"
+                                           oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label>שם משפחה:</label>
                                     <input type="text" class="form-control" placeholder="שם משפחה" id="glastnameTB" pattern=".{2,15}"
-                                           oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים.')"
+                                           oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
@@ -429,11 +490,11 @@
                                 <div>
                                 <label>תעודת זהות:</label>
                                 <input type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="gidTB" pattern=".{8,9}"
-                                       oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
+                                       oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות')"
                                        oninput="this.setCustomValidity('')" required>
                                 </div>
 
-                                <br /> <!--Margin bottom 10px not like <br /> too much space!-->
+                                <br />
 
                                 <label>מגדר:</label>
                                 <div class="mb-3">
@@ -457,9 +518,9 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>סיסמא:</label>
-                                    <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
-                                           id="gpasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
-                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')"
+                                    <input type="password" class="form-control" placeholder="מינימום 6 תווים, ולפחות אות קטנה אחת באנגלית"
+                                           id="gpasswordTB" pattern="^(?=.*[a-z])(?=.*\d)[a-z\d]{6,}$"
+                                           oninvalid="this.setCustomValidity('מינימום 6 תווים, ולפחות אות קטנה אחת באנגלית')"
                                            oninput="this.setCustomValidity('')"
                                            autocomplete="on" required>
                                 </div>
@@ -477,27 +538,27 @@
                                     <input type="text" class="form-control" placeholder='הכנס פרטי דיסקורד' id="gdiscorduserTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
 
-                                <!--<div class="mb-3">
-                                    <label>תמונת פרופיל:</label>
-                                    <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" id="gfiles">
-                                    <div class="invalid-feedback"><p>תמונת הפרופיל שלך תוצג לאחרים</p></div>
-                                </div>-->
-
-                                <div class="mb-3">
-                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
-                                        <label for="file">תמונה: </label>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                                <label for="file">תמונה: </label>
+                                                <br />
+                                                <input type="file" id="gfiles" name="files" multiple="multiple" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
                                         <br />
-                                        <input type="file" id="gfiles" name="files" multiple="multiple" />
+                                        <div class="img-circle">
+                                            <div id="gph"></div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="img-circle">
-                                    <p>כאן יראו את התמונה אחרי שיעלה</p>
-                                    <!-- need to post image here -->
-                                </div>
                             </div>
-                            <div class="mb-3">
-                                <input type="submit" class="btn btn-primary" value="שליחת טופס"/>
+                            
+                            <div class="mb-3" style="text-align:center;">
+                                <input type="submit" class="btn btn-primary" value="שליחת טופס" />
                             </div>
 
                         </div>
@@ -566,9 +627,9 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>סיסמא:</label>
-                                    <input type="password" class="form-control" placeholder="מינימום 8 תווים, אות גדולה, קטנה, מספר"
-                                           id="opasswordTB" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$"
-                                           oninvalid="this.setCustomValidity('מינימום 8 תווים, אות גדולה, קטנה')"
+                                    <input type="password" class="form-control" placeholder="מינימום 6 תווים, ולפחות אות קטנה אחת באנגלית"
+                                           id="opasswordTB" pattern="^(?=.*[a-z])(?=.*\d)[a-z\d]{6,}$"
+                                           oninvalid="this.setCustomValidity('מינימום 6 תווים, ולפחות אות קטנה אחת באנגלית')"
                                            autocomplete="on" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
@@ -582,36 +643,38 @@
 
                                 <div class="mb-3">
                                     <label>שם הקהילה אליה שייך:</label>
-                                    <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="ocomunitynameTB" pattern=".{2,25}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                    <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="ocomunitynameTB" pattern=".{2,35}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
                                 <div class="mb-3">
                                     <label>לינק לאתר הקהילה:</label>
                                     <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                                 </div>
 
-                                <!--<div class="mb-3">
-                                    <label>תמונת פרופיל:</label>
-                                    <input type="file" class="form-control" placeholder="בחר תמונת פרופיל" id="ofiles">
-                                    <div class="invalid-feedback"><p>תמונת הפרופיל שלך תוצג לאחרים</p></div>
-                                </div>-->
-                                <div class="mb-3">
-                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
-                                        <label for="file">תמונה: </label>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                                <label for="file">תמונה: </label>
+                                                <br />
+                                                <input type="file" id="ofiles" name="files" multiple="multiple" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
                                         <br />
-                                        <input type="file" id="ofiles" name="files" multiple="multiple" />
+                                        <div class="img-circle">
+                                            <div id="oph"></div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                    <div class="img-circle">
-                                        <p>כאן יראו את התמונה אחרי שיעלה</p>
-                                        <!-- need to post image here -->
-                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <button class="btn btn-primary" type="submit">שליחת טופס</button>
-                                </div>
-
                             </div>
+
+                            <div class="mb-3" style="text-align:center;">
+                                <button class="btn btn-primary" type="submit">שליחת טופס</button>
+                            </div>
+
+                        </div>
                     </form>
 
                 </div>
