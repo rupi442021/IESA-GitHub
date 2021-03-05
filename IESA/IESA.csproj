@@ -245,7 +245,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Pages\Gamer\" />
     <Folder Include="Pages\Orgenaizer\" />
-    <Folder Include="uploadedFiles\" />
+    <Folder Include="uploadedFiles\Preview\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -32,12 +32,13 @@
             height: 70px;
             text-align: center;
             padding: 10px;
-            margin-bottom:20px;
+            margin-bottom: 20px;
         }
 
         img {
-            height:100px;
-            width:100px;
+            height: 100px;
+            width: 100px;
+            border: 2px solid #555;
         }
 
 
@@ -85,14 +86,15 @@
                 color: white;
                 background-color: transparent;
             }
-
     </style>
 
     <script>
 
-        var userType; //3 = Gamer | 2 = Orenaizer
+        var userType; //3 = Gamer | 2 = Orgenaizer
 
         $(document).ready(function () {
+
+            counterimage = 2300;
 
             $("#oForm").submit(function (e) {
                 e.preventDefault();
@@ -177,7 +179,7 @@
             console.log(nickname);
 
             if (nickname == "exist") {
-                swal("Email Exists, please choose other");
+                swal("This Nickname Exists, please choose other");
             }
 
             else if (nickname == "not exist") {
@@ -266,7 +268,7 @@
                 contentType: false,
                 processData: false,
                 data: data,
-                success: showImages,
+                success: routeImage,
                 error: error
             });
 
@@ -274,10 +276,8 @@
         }
 
 
-        function showImages(data) { //Need to remove and change it to preview
+        function routeImage(data) { //Need to remove and change it to preview
             console.log(data);
-
-            addPreview(data);
 
             if (userType == 3) {
                 addGamer(data[0]);
@@ -332,8 +332,8 @@
             swal("Gamer has been created", "Please wait until admin confirm your account", "Thank you"); //Example***
 
             setTimeout(function () {
-                location.replace("Sign_In.html");
-            }, 3000);
+                location.replace("TemplatePage.html");
+            }, 3500);
         } //Done creating Gamer User
 
 
@@ -378,8 +378,8 @@
             swal("Orgenaizer has been created", "Please wait until admin confirm your account", "Thank you"); //Example***
 
             setTimeout(function () {
-                location.replace("Sign_In.html");
-            }, 3000);
+                location.replace("TemplatePage.html");
+            }, 3500);
         } //Done creating Orgenaizer User
 
         function ErrorOrgenaizer(err) {
@@ -392,7 +392,12 @@
 
         function addPreview(userType) {
 
-            previewCode = userType; //global integer
+            previewCode = userType; //global integer for next function
+            counterimage = counterimage + 1;
+
+            if (counterimage > 2303) { //Security: User Wont be able to upload more then 3 pictures to the server
+                counterimage = 2300;
+            }
 
             var data = new FormData();
 
@@ -409,7 +414,7 @@
                     data.append("UploadedImage", files[f]);
                 }
 
-                data.append("userid", userType); //append what ever data you want to send along with the files.
+                data.append("userid", counterimage); //append what ever data you want to send along with the files.
             }
 
             // Ajax upload
@@ -432,12 +437,11 @@
             var imgStr = "";
 
             if (Array.isArray(data)) {
-
                 for (var i = 0; i < data.length; i++) {
-                    imgStr += "<img src='../" + data[i] + "'/>";
+                    imgStr = "<img src='../" + data[i] + "' class='rounded-circle' alt='Cinque Terre' width='100' height='100'/>"; //instead of +=
                 }
-
             }
+
 
             else {
                 imgStr = "<img src='../" + data + "'/>";
@@ -470,7 +474,7 @@
 
         <div class="container">
 
-            <a class="titlelink" href="https://www.w3schools.com">ראשי ></a><br />
+            <a class="titlelink" href="TemplatePage.html">ראשי ></a><br />
             <h2 style="color:white; display: inline-block">הרשמה לעמותה</h2>
             <hr />
             <br /><br /><br /><br />
@@ -575,18 +579,27 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col">
                                         <br />
                                         <div class="img-circle">
-                                            <div id="gph"></div>
+                                            <div id="gph">
+                                                <img src="https://e7.pngegg.com/pngimages/672/63/png-clipart-discord-computer-icons-online-chat-cool-discord-icon-logo-smiley.png" class="rounded-circle" alt="Cinque Terre" width="100" height="100">
+                                            </div>
 
                                         </div>
+
+                                        <br /><br />
                                     </div>
+
+
                                 </div>
 
                             </div>
 
-                            <div class="mb-3" style="text-align:left; padding-left:100px;">
+                            <!--Need to fix it to be responsive Down*-->
+
+                            <div class="mb-3" style="text-align:left; padding-left:115px;">
                                 <input type="submit" class="btn btn-primary" value="שליחת טופס" />
                             </div>
 
@@ -689,17 +702,26 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col">
                                         <br />
                                         <div class="img-circle">
-                                            <div id="oph"></div>
+                                            <div id="oph">
+                                                <img src="https://e7.pngegg.com/pngimages/672/63/png-clipart-discord-computer-icons-online-chat-cool-discord-icon-logo-smiley.png" class="rounded-circle" alt="Cinque Terre" width="100" height="100">
+                                            </div>
                                         </div>
+
+                                        <br /><br />
                                     </div>
 
+
                                 </div>
+
                             </div>
 
-                            <div class="mb-3" style="text-align:left; padding-left:100px;">
+                            <!--Need to fix it to be responsive Down*-->
+
+                            <div class="mb-3" style="text-align:left; padding-left:115px;">
                             <input type="submit" class="btn btn-primary" value="שליחת טופס" />
                             </div>
 
