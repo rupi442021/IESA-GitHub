@@ -26,7 +26,7 @@
             background-color: #292e38;
             max-width: 1110px;
             height: 2000px;
-            padding-top: 15px;
+            padding-top: 30px;
         }
 
         .jumbotron {
@@ -36,13 +36,33 @@
             margin-bottom: 20px;
         }
 
+        hr {
+            display: inline-block;
+            width: 73%;
+            margin-bottom: 0px;
+            margin-left: 5px;
+            opacity: 1;
+            height: 2px !important;
+        }
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+       .titlelink:hover {
+            color: white;
+            background-color: transparent;
+        }
+
+        /*Template Style*/
+
         #charNum{
             direction: ltr;
             color: dimgray;
             font-size: 15px;
         }
 
-        /*Template Style*/
 
     </style>
     <script>
@@ -100,7 +120,11 @@
 
         <div class="container">
 
-            <h2 style="color:white; text-align:center;">הגשת תחרות חדשה</h2><br><br>
+            <a class="titlelink" href="https://www.w3schools.com">אזור אישי ></a><br />
+            <h2 style="color:white;display: inline-block">הגשת תחרות חדשה</h2>
+            <hr />
+            <br /><br /><br />
+
             <p style="color:red">* תזכורת למארגנים בעניין מגבלות ההכרה</p><br>
             <p style="color:white">בהתאם לנוהל ההכרה בתחרויות, יש לבדוק שהתחרות שאתם מגישים עומדת בקריטריונים הבאים:</p>
             <p style="color:white"><i class="bi bi-check2-circle" style="font-size: 1.5rem; color: white;"></i>  חוקי התחרות כתובים היטב ויש קישור אליהם בתיאוק התחרות</p>
@@ -170,7 +194,7 @@
                             <input type="radio" class="form-check-input" id="cAma" name="radio-type" required>
                             <label class="form-check-label" for="validationFormCheck2">חובבנים</label>
                         </div>
-                       
+
                     </div>
                     <div class="col">
                         <div class="mb-3">
@@ -237,7 +261,7 @@
                                 </div>
                             </div>
                         </div>
-                      
+
                         <div class="row">
 
                             <div class="col">
@@ -281,7 +305,7 @@
                             </div>
 
                             <div class="row" dir="ltr">
-                                
+
                                 <div class="col">
                                     <br /><br />  <br />
                                     <input type="button" class="btn btn-danger" value="תצוגה מקדימה" />
