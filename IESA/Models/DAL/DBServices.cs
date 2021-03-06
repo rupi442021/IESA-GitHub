@@ -154,6 +154,7 @@ namespace IESA.Models.DAL
 
         public int GetnewIdGamer()  //Sign_Up.html - method OG3 (Get New Id: Gamer)
         {
+            userId = 0;
 
             SqlConnection con = null;
 
@@ -174,6 +175,7 @@ namespace IESA.Models.DAL
                 }
 
                 userId += 1;
+
                 return userId; //Future id of the user
             }
             catch (Exception)
@@ -193,6 +195,7 @@ namespace IESA.Models.DAL
 
         public int GetnewIdOrgenaizer()  //Sign_Up.html - method OO1 (Get New Id: Orgenaizer)
         {
+            userId = 0;
 
             SqlConnection con = null;
 
@@ -213,6 +216,7 @@ namespace IESA.Models.DAL
                 }
 
                 userId += 1;
+
                 return userId; //Future id of the user
             }
             catch (Exception)

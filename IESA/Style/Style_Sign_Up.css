@@ -22,4 +22,16 @@ body {
 input {
     text-align: right;
 }
+
+
+hr {
+    display: inline-block;
+    width: 73%;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    opacity: 1;
+    height: 2px !important;
+}
+
+
 /*Template Style*/
