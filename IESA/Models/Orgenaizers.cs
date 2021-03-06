@@ -65,6 +65,9 @@ namespace IESA.Models
         //#Functions Area
 
 
+        //---Sign_Up.html--- *Open*
+
+
         public int ReadID() //Sign_Up.html - method OO1
         {
             DBServices dbs = new DBServices();
@@ -79,6 +82,20 @@ namespace IESA.Models
         }
 
 
+        //---Sign_Up.html--- *Close*
+
+
+        //---Sign_In.html--- *Open*
+
+
+        public Orgenaizers getUserInfo(int id_toserver) //Sign_In.html - method OL3
+        {
+            DBServices dbs = new DBServices();
+            return dbs.getOrgenaizerSQL(id_toserver);
+        }
+
+
+        //---Sign_In.html--- *Close*
 
 
 

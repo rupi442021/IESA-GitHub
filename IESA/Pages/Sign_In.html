@@ -3,67 +3,153 @@
 <head>
     <meta charset="utf-8" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
 
     <title>&#x202E; התחברות – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
+    <script>
 
-    <style type="text/css">
+        $(document).ready(function () {
 
-        /*Template Style*/
-        body {
-            background-color: #212529;
-            color: white;
-        }
+            $("#ConnectBTN").click(checkInfo);
 
-        .container {
-            background-color: #292e38;
-            max-width: 1110px;
-            height: 2000px;
-            padding-top: 15px;
-        }
+        });
 
-        .jumbotron {
-            height: 70px;
-            text-align: center;
-            padding: 10px;
+        function init() { //If the user entered this page while was logged in
+
+            localStorage.clear();
+            user_info = {};
+
         }
 
 
-        hr {
-            display: inline-block;
-            width: 78%;
-            margin-bottom: 0px;
-            margin-left: 5px;
-            opacity: 0.8;
-            height: 2px !important;
+        function checkInfo() {
+            //Login for Gamer/Orgenaizer/Manager at Gamer's Controller
+
+            let email = $("#emailTB").val();
+            let pass = $("#passwordTB").val();
+
+            ajaxCall("GET", "../api/Gamers/" + email + "/login/" + pass, "", getIdSuccess, getIdError); //Sign_In.html - method OL1
         }
 
-        .titlelink {
-            color: #FFFFFF;
-            text-decoration: none;
+        function getIdSuccess(resultid) { //Result is the id or 0 if nothing return
+            console.log(resultid);
+
+            var restype = resultid.toString()[0];
+
+
+            if (resultid != 0 && resultid > 100) { //Here we ask what is the id of the user then we go to get information for each class
+
+                if (restype == "3") { //Manager
+
+                    ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + resultid, "", LoginSuccess, LoginError); //Sign_In.html - method OL2
+                }
+                else if (restype == "2") { //Orgenaizer
+
+                    ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + resultid, "", LoginSuccess, LoginError); //Sign_In.html - method OL3
+                }
+
+                else if (restype == "1") { //Manager
+
+                    ajaxCall("GET", "../api/Managers/login1?idtoserver=" + resultid, "", LoginSuccess, LoginError); //Sign_In.html - method OL4
+                }
+
+            }
+
+            else if (resultid == 0) {
+
+                swal("אימייל או סיסמא אינם נכונים, נא נסה שנית");
+            }
+
         }
 
-            .titlelink:hover {
-                color: white;
-                background-color: transparent;
+
+        function getIdError(err) {
+            console.log(err);
+
+            swal("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
+        }
+
+
+        function LoginSuccess(user) { //User information from the SQL Database
+            console.log(user);
+
+            if (user.Status1 != null) { //Check status for Gamer Or Orgenaizer
+
+                var status = user.Status1.toString()[0];
+
+                if (status == "0") {
+                    swal("החשבון שלך עדיין לא אומת, נא המתן לאישורו על ידי מנהלי האתר");
+
+                    return;
+                }
+
+            }
+
+            var usertype = user.Userid.toString()[0]; // 1 = Manager / 2 = Orgenaizer / 3 = Gamer
+
+            if (usertype == "3") {
+
+                localStorage["user_info"] = JSON.stringify(user);
+                localStorage["user_type"] = "3";
+            }
+            else if (usertype == "2") {
+
+                localStorage["user_info"] = JSON.stringify(user);
+                localStorage["user_type"] = "2";
+            }
+            else if (usertype == "1") {
+
+                localStorage["user_info"] = JSON.stringify(user);
+                localStorage["user_type"] = "1";
             }
 
 
+            redirectPage();
 
-        /*Template Style*/
+        }
 
+        function LoginError(err) {
+            console.log(err);
+
+            swal("בעיה בהתקשרות עם שרת, נא נסה שנית מאוחר יותר");
+        }
+
+        function redirectPage() {
+
+            swal("התחברת בהצלחה", "הינך מועבר לדף הנחיתה", "success"); //save only the is in + id of user to render the info later in each page
+
+            setTimeout(function () {
+                location.replace("TemplatePage.html");
+            }, 2500);
+        }
+
+
+    </script>
+
+
+    <style type="text/css">
 
         * {
             font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Helvetica, Arial, sans-serif;
             font-weight: 300;
             margin: 0;
-            text-align:right !important;
+        }
+
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            background: #363c4a;
         }
 
         h4 {
@@ -81,21 +167,22 @@
         }
 
         form {
-            padding: 40px 30px;
+            padding: 40px 50px;
             background: #fefefe;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             padding-bottom: 20px;
-            width: 300px;
+            width: 255px;
         }
 
             form h4 {
                 margin-bottom: 20px;
+                color: #039687;
             }
 
                 form h4 span {
-                    color: red;
+                    color: black;
                     font-weight: 700;
                 }
 
@@ -119,7 +206,7 @@
             font-weight: 300;
             transition: all 0.3s ease;
             margin-top: 40px;
-            margin-right:50px;
+            margin-right: 19px;
         }
 
             a.discrete:hover {
@@ -134,7 +221,7 @@
             text-align: center;
             padding: 15px 40px;
             margin-top: 5px;
-            background-color: dodgerblue;
+            background-color: #04b8a5;
             color: #fff;
             font-size: 14px;
             margin-left: auto;
@@ -143,7 +230,7 @@
             border: none;
             transition: all 0.3s ease;
             outline: 0;
-            margin-right:50px;
+            margin-right: 43px;
         }
 
             button:hover {
@@ -185,6 +272,7 @@
             .floating-label label {
                 position: absolute;
                 top: calc(50% - 7px);
+                /*left: 0;*/
                 opacity: 0;
                 transition: all 0.3s ease;
                 padding-left: 44px;
@@ -199,10 +287,10 @@
             .floating-label .icon {
                 position: absolute;
                 top: 0;
-                left: 0;
                 height: 56px;
                 width: 44px;
                 display: flex;
+                right: -43px;
             }
 
                 .floating-label .icon svg {
@@ -217,7 +305,7 @@
                         transition: all 0.3s ease;
                     }
 
-            input:not(:placeholder-shown) {
+            .floating-label input:not(:-moz-placeholder-shown) {
                 padding: 28px 0px 12px 0px;
             }
 
@@ -257,15 +345,15 @@
             }
 
             .floating-label input:valid:not(:-moz-placeholder-shown) + label + .icon svg path {
-                fill: #b69de6;
+                fill: #04b8a5;
             }
 
             .floating-label input:valid:not(:-ms-input-placeholder) + label + .icon svg path {
-                fill: #b69de6;
+                fill: #04b8a5;
             }
 
             .floating-label input:valid:not(:placeholder-shown) + label + .icon svg path {
-                fill: #b69de6;
+                fill: #04b8a5;
             }
 
             .floating-label input:not(:valid):not(:focus) + label + .icon {
@@ -333,8 +421,9 @@
             width: auto;
             height: auto;
             margin: auto auto;
+            background: #ffffff;
             border-radius: 4px;
-            margin-right: 280px; /*Moves the box to the center*/
+            box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.12);
         }
 
         .left {
@@ -342,7 +431,7 @@
             height: auto;
             min-height: 100%;
             position: relative;
-            background-image: url("https://i.ibb.co/BzLTT8G/Login.jpg");
+            background-image: url("https://i.postimg.cc/J7JqJhFt/login.jpg");
             background-size: cover;
             border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;
@@ -352,72 +441,81 @@
                 height: 40px;
                 width: auto;
                 margin: 20px;
-                margin-left:200px;
             }
 
+
         .st0 {
+            fill: none;
+        }
+
+        .st1 {
+            fill: #010101;
+        }
+
+        .st01 {
             fill: #fff;
         }
 
     </style>
 
-
 </head>
-<body>
+<body onload="init()">
 
-    <section id="Nav-bar">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+    <div class="session">
+
+        <div class="left">
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <svg enable-background="new 0 0 300 302.5" version="1.1" viewBox="0 0 300 302.5" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+
+            <path class="st01" d="m126 302.2c-2.3 0.7-5.7 0.2-7.7-1.2l-105-71.6c-2-1.3-3.7-4.4-3.9-6.7l-9.4-126.7c-0.2-2.4 1.1-5.6 2.8-7.2l93.2-86.4c1.7-1.6 5.1-2.6 7.4-2.3l125.6 18.9c2.3 0.4 5.2 2.3 6.4 4.4l63.5 110.1c1.2 2 1.4 5.5 0.6 7.7l-46.4 118.3c-0.9 2.2-3.4 4.6-5.7 5.3l-121.4 37.4zm63.4-102.7c2.3-0.7 4.8-3.1 5.7-5.3l19.9-50.8c0.9-2.2 0.6-5.7-0.6-7.7l-27.3-47.3c-1.2-2-4.1-4-6.4-4.4l-53.9-8c-2.3-0.4-5.7 0.7-7.4 2.3l-40 37.1c-1.7 1.6-3 4.9-2.8 7.2l4.1 54.4c0.2 2.4 1.9 5.4 3.9 6.7l45.1 30.8c2 1.3 5.4 1.9 7.7 1.2l52-16.2z" />
+
+            </svg>
         </div>
-    </section>
+        <form id="iForm" action="" class="log-in" autocomplete="off">
 
-    <section id="content">
-
-        <div class="container">
-
-            <a class="titlelink" href="TemplatePage.html">ראשי ></a><br />
-            <h2 style="color:white; display: inline-block">התחברות</h2>
-            <hr />
-            <br /><br /><br /><br />
-
-
-            <div class="session">
-                <div class="left">
+            <h4>התחברות <span>למערכת</span></h4>
+            <p>ברוך שובך, התחבר למערכת להרשמה ומעקב אחר תחרויות:</p>
+            <div class="floating-label">
+                <input placeholder="אימייל" type="email" name="email" id="emailTB" autocomplete="off">
+                <label for="email">אימייל:</label>
+                <div class="icon">
                     <?xml version="1.0" encoding="UTF-8" ?>
-                    <svg enable-background="new 0 0 300 302.5" version="1.1" viewBox="0 0 300 302.5" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-                    <path class="st0" d="m126 302.2c-2.3 0.7-5.7 0.2-7.7-1.2l-105-71.6c-2-1.3-3.7-4.4-3.9-6.7l-9.4-126.7c-0.2-2.4 1.1-5.6 2.8-7.2l93.2-86.4c1.7-1.6 5.1-2.6 7.4-2.3l125.6 18.9c2.3 0.4 5.2 2.3 6.4 4.4l63.5 110.1c1.2 2 1.4 5.5 0.6 7.7l-46.4 118.3c-0.9 2.2-3.4 4.6-5.7 5.3l-121.4 37.4zm63.4-102.7c2.3-0.7 4.8-3.1 5.7-5.3l19.9-50.8c0.9-2.2 0.6-5.7-0.6-7.7l-27.3-47.3c-1.2-2-4.1-4-6.4-4.4l-53.9-8c-2.3-0.4-5.7 0.7-7.4 2.3l-40 37.1c-1.7 1.6-3 4.9-2.8 7.2l4.1 54.4c0.2 2.4 1.9 5.4 3.9 6.7l45.1 30.8c2 1.3 5.4 1.9 7.7 1.2l52-16.2z" />
+                    <svg enable-background="new 0 0 100 100" version="1.1" viewBox="0 0 100 100" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(0 -952.36)">
+                    <path d="m17.5 977c-1.3 0-2.4 1.1-2.4 2.4v45.9c0 1.3 1.1 2.4 2.4 2.4h64.9c1.3 0 2.4-1.1 2.4-2.4v-45.9c0-1.3-1.1-2.4-2.4-2.4h-64.9zm2.4 4.8h60.2v1.2l-30.1 22-30.1-22v-1.2zm0 7l28.7 21c0.8 0.6 2 0.6 2.8 0l28.7-21v34.1h-60.2v-34.1z" />
+                    </g>
+                    <rect class="st0" width="100" height="100" />
+                    </svg>
 
-
-
-</svg>
                 </div>
-                <form action="" class="log-in" autocomplete="off">
-                    <h4>התחברות <span>למערכת</span></h4>
-                    <p>ברוך שובך, התחבר למערכת להרשמה ומעקב אחר תחרויות חדשות</p>
-                    <div class="floating-label">
-                        <input placeholder="אימייל" type="text" name="email" id="email" autocomplete="off">
-                        <label for="email">אימייל:</label>
-                    </div>
-                    <div class="floating-label">
-                        <input placeholder="סיסמא" type="password" name="password" id="password" autocomplete="off">
-                        <label for="password">סיסמא:</label>
-                    </div>
-                    <button type="submit" onClick="return false;">התחבר</button>
-                    <a href="https://codepen.io/elujambio/pen/YLMVed" class="discrete" target="_blank">הרשמה לאתר העמותה</a>
-                </form>
+            </div>
+            <div class="floating-label">
+                <input placeholder="סיסמא" type="password" name="password" id="passwordTB" autocomplete="off">
+                <label for="password">סיסמא:</label>
+                <div class="icon">
+
+                    <?xml version="1.0" encoding="UTF-8" ?>
+                    <svg enable-background="new 0 0 24 24" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+                    <rect class="st0" width="24" height="24" />
+
+                    <path class="st1" d="M19,21H5V9h14V21z M6,20h12V10H6V20z" />
+
+                    <path class="st1" d="M16.5,10h-1V7c0-1.9-1.6-3.5-3.5-3.5S8.5,5.1,8.5,7v3h-1V7c0-2.5,2-4.5,4.5-4.5s4.5,2,4.5,4.5V10z" />
+
+                    <path class="st1" d="m12 16.5c-0.8 0-1.5-0.7-1.5-1.5s0.7-1.5 1.5-1.5 1.5 0.7 1.5 1.5-0.7 1.5-1.5 1.5zm0-2c-0.3 0-0.5 0.2-0.5 0.5s0.2 0.5 0.5 0.5 0.5-0.2 0.5-0.5-0.2-0.5-0.5-0.5z" />
+
+                    </svg>
+                </div>
+
             </div>
 
+            <button type="submit" id="ConnectBTN" onclick="return false;">התחבר</button>
 
+            <a href="Sign_Up.html" class="discrete">עוד לא רשום? הירשם לאתר העמותה</a>
 
-        </div>
+        </form>
 
-    </section>
-
-
-    <section id="site_footer">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-            <h2>IESA</h2>
-        </div>
-    </section>
+    </div>
 
 
 </body>
