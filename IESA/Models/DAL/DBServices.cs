@@ -17,6 +17,9 @@ namespace IESA.Models.DAL
         private string emaila;
         private string nicknamec;
         private int userId;
+        private string emailInfo;
+        private string passInfo;
+        private int idInfo;
 
         public DBServices() { }
 
@@ -353,7 +356,239 @@ namespace IESA.Models.DAL
 
         //---Sign_Up.html--- *Close*
 
+
+        //---Sign_In.html--- *Open*
+
+
+        public int CheckInfoSQL(string email, string pass) //Sign_In.html - method OL1
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+
+                String selectSTR = "SELECT Gamers.userID, Gamers.email, Gamers.password1 FROM Gamers WHERE Gamers.email = '" + email + "' UNION SELECT Orgenaizers.userID, Orgenaizers.email, Orgenaizers.password1 FROM Orgenaizers WHERE Orgenaizers.email = '" + email + "' UNION SELECT Managers.userID, Managers.email, Managers.password1 FROM Managers WHERE Managers.email = '" + email + "' ";
+
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+
+                while (dr.Read()) //1 row
+                {
+                    idInfo = Convert.ToInt32(dr["userID"]); //We want to get the id for localstorage
+
+                    emailInfo = (string)dr["email"];
+                    passInfo = (string)dr["password1"];
+
+                }
+
+
+                if (emailInfo == email && passInfo == pass)
+                {
+                    return idInfo; //true info
+                }
+                else
+                {
+                    return 0; //false info
+                }
+
+            }
+            catch (Exception ex) //change it to a message
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public Gamers getGamerSQL(int id_toserver) //Sign_In.html - method OL2
+        {
+
+            SqlConnection con = null;
+            Gamers g = new Gamers();
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Gamers WHERE userID = " + id_toserver;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+
+                while (dr.Read()) //1 row
+                {
+
+                    g.Userid = (dr["userID"] != DBNull.Value) ? Convert.ToInt32(dr["userID"]) : default;
+                    g.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
+                    g.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
+                    g.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
+                    g.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
+                    g.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
+                    g.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
+                    g.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
+                    g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    g.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
+                    g.Discorduser = (dr["discordUser"] != DBNull.Value) ? (string)dr["discordUser"] : default;
+                    g.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
+                    g.Registrationdate = (dr["registrationDate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationDate"]) : default;
+                    g.Outofdate = (dr["outOfDate"] != DBNull.Value) ? Convert.ToDateTime(dr["outOfDate"]) : default;
+                    g.License = (dr["license"] != DBNull.Value) ? Convert.ToInt32(dr["license"]) : default;
+                    g.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
+
+                }
+
+                return g;
+
+            }
+            catch (Exception ex) //change it to a message
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public Orgenaizers getOrgenaizerSQL(int id_toserver) //Sign_In.html - method OL3
+        {
+
+            SqlConnection con = null;
+            Orgenaizers o = new Orgenaizers();
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Orgenaizers WHERE userID = " + id_toserver;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+
+                while (dr.Read()) //1 row
+                {
+
+                    o.Userid = (dr["userID"] != DBNull.Value) ? Convert.ToInt32(dr["userID"]) : default;
+                    o.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
+                    o.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
+                    o.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
+                    o.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
+                    o.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
+                    o.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
+                    o.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
+                    o.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    o.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
+                    o.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
+                    o.Comunityname = (dr["communityName"] != DBNull.Value) ? (string)dr["communityName"] : default;
+                    o.Linktocommunity = (dr["linkToCommunity"] != DBNull.Value) ? (string)dr["linkToCommunity"] : default;
+                    o.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
+
+                }
+
+                return o;
+
+            }
+            catch (Exception ex) //change it to a message
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public Managers getManagerSQL(int id_toserver) //Sign_In.html - method OL4
+        {
+
+            SqlConnection con = null;
+            Managers m = new Managers();
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Managers WHERE userID = " + id_toserver;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+
+                while (dr.Read()) //1 row
+                {
+
+                    m.Userid = (dr["userID"] != DBNull.Value) ? Convert.ToInt32(dr["userID"]) : default;
+                    m.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
+                    m.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
+                    m.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
+                    m.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
+                    m.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
+                    m.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
+                    m.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
+                    m.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    m.Role1 = (dr["role1"] != DBNull.Value) ? (string)dr["role1"] : default;
+                    m.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
+                    m.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
+
+                }
+
+                return m;
+
+            }
+            catch (Exception ex) //change it to a message
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+
+        //---Sign_In.html--- *Close*
+
+
         //---Add_New_Competition.html--- *Open*
+
 
         public List<GamesCategories> GetGameCategoriesr()
         {

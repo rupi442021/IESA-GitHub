@@ -11,6 +11,9 @@ namespace IESA.Controllers
     public class OrgenaizersController : ApiController
     {
 
+        //---Sign_Up.html--- *Open*
+
+
         public int Get() //Sign_Up.html - method OO1
         {
             Orgenaizers newid = new Orgenaizers();
@@ -22,6 +25,24 @@ namespace IESA.Controllers
             orgenaizer.InsertOrgenaizer();
         }
 
+
+        //---Sign_Up.html--- *Close*
+
+
+        //---Sign_In.html--- *Open*
+
+        [HttpGet] //Sign_In.html - method OL3
+        [Route("api/Orgenaizers/login2")]
+        public Orgenaizers GetOrgenaizer(int idtoserver)
+        {
+            Orgenaizers userin = new Orgenaizers();
+            return userin.getUserInfo(idtoserver);
+        }
+
+
+
+
+        //---Sign_In.html--- *Close*
 
     }
 }

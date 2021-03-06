@@ -103,6 +103,27 @@ namespace IESA.Models
         //---Sign_Up.html--- *Close*
 
 
+        //---Sign_In.html--- *Open*
 
+
+        public int CheckInfo(string email, string pass) //Sign_Up.html - method OL1
+        {
+            //This is General check for all users at ones*
+
+            DBServices dbs = new DBServices();
+            return dbs.CheckInfoSQL(email, pass);
+        }
+
+        public Gamers getUserInfo(int id_toserver) //Sign_In.html - method OL2
+        {
+            DBServices dbs = new DBServices();
+            return dbs.getGamerSQL(id_toserver);
+        }
+
+
+            //---Sign_In.html--- *Close*
+
+
+
+        }
     }
-}

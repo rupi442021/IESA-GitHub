@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IESA.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -58,10 +59,17 @@ namespace IESA.Models
         //#Functions Area
 
 
+        //---Sign_In.html--- *Open*
 
 
+        public Managers getUserInfo(int id_toserver) //Sign_In.html - method OL4
+        {
+            DBServices dbs = new DBServices();
+            return dbs.getManagerSQL(id_toserver);
+        }
 
 
+        //---Sign_In.html--- *Close*
 
     }
 }

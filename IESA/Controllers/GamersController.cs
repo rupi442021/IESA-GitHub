@@ -45,6 +45,34 @@ namespace IESA.Controllers
         //---Sign_Up.html--- *Close*
 
 
+        //---Sign_In.html--- *Open*
+
+
+        [HttpGet] //Sign_In.html - method OL1
+        [Route("api/Gamers/{email}/login/{pass}")]
+        public int CheckInformation(string email, string pass)
+        {
+            Gamers uinfo = new Gamers();
+            return uinfo.CheckInfo(email, pass);
+        }
+
+
+        [HttpGet] //Sign_In.html - method OL2
+        [Route("api/Gamers/login3")]
+        public Gamers GetGamer(int idtoserver)
+        {
+            Gamers userin = new Gamers();
+            return userin.getUserInfo(idtoserver);
+        }
+
+
+        //---Sign_Up.html--- *Close*
+
+
+
+
+
+
 
 
 
