@@ -13,6 +13,7 @@ namespace IESA.Models.DAL
     {
         public SqlDataAdapter da;
         public DataTable dt;
+        private int competitionId;
 
         private string emaila;
         private string nicknamec;
@@ -633,7 +634,109 @@ namespace IESA.Models.DAL
             }
         }
 
-        
+
+        public int getCompetitionId()  //Add_New_Competition.html - method OO1 (Get New Id: Competition)
+        {
+            competitionId = 0;
+
+            SqlConnection con = null;
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY CompetitionID DESC";
+
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read()) //1 row
+                {
+                    competitionId = Convert.ToInt32(dr["CompetitionID"]); //future id of the user
+                }
+
+                competitionId += 1;
+
+                return competitionId; //Future id of the user
+            }
+            catch (Exception)
+            {
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public int InsertCompetition(Competitions Competition) ////Add_New_Competition.html 
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(Competition);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+       
+
+        private String BuildInsertCommand(Competitions Competition) //Add_New_Competition.html
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}','{14}', '{15}', '{16}', '{17}', '{18}', '{19}', '{20}', '{21}')", Competition.Competitionname, Competition.Address1, Competition.Banner, Competition.Logo, Competition.Prize1, Competition.Prize2, Competition.Price3, Competition.Linkforregistration, Competition.Lastdateforregistration, Competition.Body, Competition.Startdate, Competition.Enddate, Competition.Startime, Competition.Endtime, Competition.Ispro, Competition.Discord, Competition.Console, Competition.Isiesa, Competition.Linkforstream, Competition.Competitionstatus, Competition.IsPayment, Competition.Isonline);
+            String prefix = "INSERT INTO Competitions " + "(competitionName, address1, banner, logo, prize1, prize2, prize3, linkForRegistration, lastDateForRegistration, body , startDate, endDate, startTime, endTime, isPro, discord, console, isIESA, linkForStream, competitionStatus, isPayment, isOnline) ";
+
+            command = prefix + sb.ToString();
+
+            return command;
+
+
+        }
+
+
         //---Add_New_Competition.html--- *Close*
 
 
