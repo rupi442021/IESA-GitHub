@@ -49,6 +49,10 @@
     </style>
     <script>
 
+        var competitionid = 0;
+        var logoURL = '';
+        var bannerURL = '';
+
         $(document).ready(function () {
 
             GetAllGameCategories();
@@ -58,17 +62,187 @@
                 f2();
             });
 
-
-            
+            $("#previewC").click(f1);
+ 
         });
 
+        function f1() {
+
+            var tradio = $('input[name=radio-type]:checked'); //get competition type (Pro or Amateurs)
+            var ctype = tradio.attr('id');
+            if (ctype == "cPro")
+                ctype = 1;
+            else
+                ctype = 0;
+
+            var oradio = $('input[name=radio-online]:checked'); //get is online? 
+            var conline = oradio.attr('id');
+            if (conline = "online")
+                conline = 1;
+            else
+                conline = 0;
+
+
+            var pradio = $('input[name=radio-payment]:checked'); //get need payment?
+            var cpayment = pradio.attr('id');
+            if (cpayment = "payment")
+                cpayment = 1;
+            else
+                cpayment = 0;
+
+            let p1 = {
+                Competitionname: $("#cnameTB").val(),
+                Isonline: conline,
+                Address1: $("#addressTB").val(),
+                Banner: bannerURL,
+                Logo: logoURL,
+                Prize1: $("#prize1TB").val(),
+                Prize2: $("#prize2TB").val(),
+                Price3: $("#prize3TB").val(),
+                Linkforregistration: $("#urlcommunityTB").val(),
+                Lastdateforregistration: $("#ldfrDB").val(),
+                Body: $("#descriptionTA").val(),
+                Startdate: $("#startdDB").val(),
+                Enddate: $("#enddDB").val(),
+                Startime: $("#starttTB").val(),
+                Endtime: $("#endtTB").val(),
+                Ispro: ctype,
+                Discord: $("#cdiscordTB").val(),
+                Console: $("#consoleDB").val(),
+                Isiesa: 0,
+                Competitionstatus: 'S',
+                Ispayment: cpayment
+            }
+
+
+            ajaxCall("POST", "../api/Competitions/mark2", JSON.stringify(p1), postSuccessP, postErrorP)
+            window.open("https://localhost:44318/Pages/Competition_Preview.html");
+            
+        }
+
+        function postSuccessP(data) {
+            console.log(data)
+        }
+
+        function postErrorP(err) {
+            console.log(err)
+        }
+
         function f2() {
+            getCompetitionId();
+            
+            return false;
+        }
+
+        function getCompetitionId() {
+
+            ajaxCall("GET", "../api/Competitions", "", getSuccessCompetitions, getErrorCompetitions)
+            
+            
+        }
+
+        function getSuccessCompetitions(cId) {
+            competitionid = cId
+            console.log("In success competiton: ", competitionid);
+            addBanner(competitionid);
+        }
+
+        function addBanner() {
+
+            var data = new FormData();
+            banner = $("#bannerFile").get(0).files;
+            //logo = $("#logoFile").get(0).files;
+
+            var files = banner;
+           
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("CompetitionID", competitionid + "_banner"); //append what ever data you want to send along with the files.
+
+           
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../api/FileUpload/mark1",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: routeBanner,
+                error: error
+            });
+
+            return false;
+        }
+
+        function routeBanner(data) {
+            bannerURL = data[0]
+            console.log("In url's: ", bannerURL);
+            addLogo();
+
+            return false;
+        }
+
+        function addLogo() {
+
+            var data = new FormData();
+            
+            logo = $("#logoFile").get(0).files;
+
+            var files = logo;
+
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("CompetitionID", competitionid + "_logo"); //append what ever data you want to send along with the files.
+
+
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../api/FileUpload/mark1",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: routeLogo,
+                error: error
+            });
+
+            return false;
+        }
+        
+        function routeLogo(data) {
+            logoURL = data[0]
+            console.log("In url's: ", logoURL);
             CompetitionBuilder();
             return false;
         }
 
+        function error(err) {
+            console.log(err);
+
+        }
+
+        function getErrorCompetitions(err) {
+            console.log(err);
+        }
+
         function CompetitionBuilder() {
             alert("In builder");
+            //bannerURL = data[0];
+            //logoURL = data[1];
 
             var tradio = $('input[name=radio-type]:checked'); //get competition type (Pro or Amateurs)
             var ctype = tradio.attr('id');
@@ -86,7 +260,7 @@
             
 
             var pradio = $('input[name=radio-payment]:checked'); //get need payment?
-            var cpayment = paradio.attr('id');
+            var cpayment = pradio.attr('id');
             if (cpayment = "payment")
                 cpayment = 1;
             else
@@ -94,28 +268,30 @@
             
             let c1 = {
                 Competitionname: $("#cnameTB").val(),
-                Type1: conline, 
+                Isonline: conline, 
                 Address1: $("#addressTB").val(),
-                Banner: banner,
-                Logo: logo,
+                Banner: bannerURL,
+                Logo: logoURL,
                 Prize1: $("#prize1TB").val(),
                 Prize2: $("#prize2TB").val(),
                 Price3: $("#prize3TB").val(),
                 Linkforregistration: $("#urlcommunityTB").val(),
                 Lastdateforregistration: $("#ldfrDB").val(),
-                Body: ("#descriptionTA$").val(),
-                Startdate: ("#startdDB").val(),
-                Enddate: ("#enddDB").val(),
-                Startime: ("#starttTB").val(),
-                Endtime: ("#endtTB").val(),
+                Body: $("#descriptionTA").val(),
+                Startdate: $("#startdDB").val(),
+                Enddate: $("#enddDB").val(),
+                Startime: $("#starttTB").val(),
+                Endtime: $("#endtTB").val(),
                 Ispro: ctype,
-                Discord: ("#cdiscordTB").val(),
-                Console: ("#consoleDB").val(),
+                Discord: $("#cdiscordTB").val(),
+                Console: $("#consoleDB").val(),
                 Isiesa: 0,
-                Competitionstatus: 1
+                Competitionstatus: 'S',
+                Ispayment: cpayment
             }
 
             console.log(c1);
+            ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessP, postErrorP)
             return false;
 
         }
@@ -202,11 +378,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                            <div class="form-group" method="post" enctype="multipart/form-data">
                                 <label for="file">באנר תחרות: </label>
                                 <p>צריך לכתוב כאן את הגודל המומלץ לבאנר</p>
                                 <br />
-                                <input type="file" id="ofiles" name="files" multiple="multiple" required />
+                                <input type="file" id="bannerFile" name="files" multiple="multiple" required />
                             </div>
                         </div>
 
@@ -215,7 +391,7 @@
                                 <label for="file">לוגו תחרות: </label>
                                 <p>צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
                                 <br />
-                                <input type="file" id="ofiles" name="files" multiple="multiple" required />
+                                <input type="file" id="logoFile" name="files" multiple="multiple" required />
                             </div>
                         </div>
 
@@ -368,7 +544,7 @@
 
                                 <div class="col">
                                     <br /><br />  <br />
-                                    <input type="button" class="btn btn-danger" value="תצוגה מקדימה" />
+                                    <input type="button" class="btn btn-danger" value="תצוגה מקדימה"id="previewC" />
                                     <input type="submit" class="btn btn-success" value="שליחת טופס" onsubmit="return false" />
                                 </div>
                             </div>
