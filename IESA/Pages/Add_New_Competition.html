@@ -68,7 +68,7 @@
         var bannerURL = '';
         var imgType = '';
         var counterimage = 2300; 
-
+        
         $(document).ready(function () {
 
             GetAllGameCategories();
@@ -145,24 +145,32 @@
 
         function postSuccessP(data) {
             console.log(data)
-            swal("התחרות הוגשה בהצלחה! תמתין לתשובת מנהל")
+            
         }
-
+       
         function postErrorP(err) {
             console.log(err)
         }
 
+        function postSuccessC(data) {
+            console.log(data)
+            swal("התחרות הוגשה בהצלחה! תמתין לתשובת מנהל")
+        }
+
+        function postErrorC(err) {
+            console.log(err)
+
+        }
+
         function f2() {
             getCompetitionId();
-            
             return false;
         }
 
         function getCompetitionId() {
 
             ajaxCall("GET", "../api/Competitions", "", getSuccessCompetitions, getErrorCompetitions)
-            
-            
+
         }
 
         function getSuccessCompetitions(cId) {
@@ -265,8 +273,6 @@
 
         function CompetitionBuilder() {
           
-
-
             var tradio = $('input[name=radio-type]:checked'); //get competition type (Pro or Amateurs)
             var ctype = tradio.attr('id');
             if (ctype == "cPro")
@@ -314,7 +320,7 @@
             }
 
            
-            ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessP, postErrorP)
+            ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessC, postErrorC)
             return false;
 
         }
@@ -395,7 +401,7 @@
         function imagePreview(data) {
 
             var imgStr = "";
-
+            
             if (Array.isArray(data)) {
                 for (var i = 0; i < data.length; i++) {
                     imgStr = "<img src='../" + data[i] + "' class='' alt='PreviewImg'/>"; //instead of +=
@@ -409,9 +415,11 @@
 
             if (imgType == '_logo') {
                 document.getElementById("logoph").innerHTML = imgStr;
+                logoURL = data[0];
             }
             else {
                 document.getElementById("bannerph").innerHTML = imgStr;
+                bannerURL = data[0];
             }
 
         }

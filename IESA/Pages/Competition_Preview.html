@@ -44,6 +44,31 @@
             font-size: 15px;
         }
 
+
+        .bannerimage > img {
+            width: 1024px;
+            height: 210px;
+        }
+
+        .bannerimage{
+           text-align:center;
+        }
+
+        .cName{
+            font-size: 40px;
+            text-align:center;
+            margin-top: 20px;
+            color:red;
+            
+        }
+
+        .cDisc{
+            margin-bottom:50px;
+        }
+        
+        .details{
+            text-align:center;
+        }
         /*Template Style*/
 
     </style>
@@ -56,11 +81,42 @@
         });
 
 
-         function getSuccessP(data) {
+        function getSuccessP(data) {
+            console.log(data);
+            img = data.Banner;
 
-                console.log(data);
-         }
+            buildimagestr = "<img src='../" + img + "'/>";
+            document.getElementById("banner").innerHTML = buildimagestr;
+            $("#title").html("<p><b>" + data.Competitionname + "<b/><p/>");
+            $("#discreption").html("<p>" + data.Body + "<p/>");
+            $("#cStartD").append("<br/>" + data.Startdate);
+            $("#cStartT").append("<br/>" + data.Endtime + " - ");
+            $("#cStartT").append(data.Startime);
+            $("#cLastDateR").append("<br/>" + data.Lastdateforregistration);
+            $("#prize1").append(data.Prize1);
+            $("#prize2").append(data.Prize2);
+            $("#prize3").append(data.Price3);
+            $("#linkforegistration").html("<a class='btn btn-primary' href=" + data.Linkforregistration +"role='Button'>להרשמה לחצו כאן</a>");
+            {
+                if (data.Isonline == 1)
+                    $("#cOnline").append("</br> Online")
+                else
+                    $("#cOnline").append("</br> Offline")
+            }
+            {
+                if (data.Ispro == 1)
+                    $("#cPro").append("</br> מקצועי")
+                else
+                    $("#cPro").append("</br> חובבנים")
+            }
+            {
+                if (data.Ispayment == 1)
+                    $("#cPayment").append("</br> בתשלום")
+                else
+                    $("#cPayment").append("</br> בחינם")
+            }
 
+        }
         function getErrorP(err) {
                 console.log(err)
         }
@@ -80,10 +136,65 @@
     <section id="content">
 
         <div class="container">
+            <div class="row">
+                <h2 style="color:white; text-align:center;">תצוגה מקדימה לתחרות</h2><br><br>
+                <hr class="solid">
 
-            <h2 style="color:white; text-align:center;">תצוגה מקדימה לתחרות</h2><br><br>
-          
+                <div class="row">
+                    <div class="bannerimage" id="banner"></div>
+                </div>
 
+                <div class="cName" id="title"></div>
+                <div class="cDisc" id="discreption"></div>
+                <div class="row">
+                    <div class="col-lg-9" style="border: 1px solid">
+                    <table width="100%">
+                        <tr>
+                            <td><p id="cStartD">תחילת התחרות: </p></td>
+                            <td><p id="cStartT">שעות התחרות: </p></td>
+
+                        </tr>
+                        <tr>
+                            <td><p id="cCheckIn">צ'ק אין:</p></td>
+                            <td><p id="cLastDateR">ההרשמה מסתיימת ב-</p></td>
+
+                        </tr>
+                        <tr>
+                            <td><p id="cOnline">Online/Offline? </p></td>
+                            <td><p id="cPro">Pro/Ama?</p></td>
+
+                        </tr>
+                        <tr>
+                            <td><p id="cPayment">Free/Payment?</p></td>
+                            <td>LinkForRules</td>
+                        </tr>
+                        <tr id="linkforegistration">
+
+                        </tr>
+                    </table>
+                </div>
+                    <div class="col-lg-3" style="border: 1px solid">
+                        <div class="row">
+                            <p>פרסים:</p>
+                            <div class="row">
+                                <div class="col">1ST</div>
+                                <div id="prize1" class="col prize1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col">2ND</div>
+                                <div id="prize2" class="col prize2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col">3RD</div>
+                                <div id="prize3" class="col prize3"></div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 100px;">
+                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </section>
