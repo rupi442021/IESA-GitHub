@@ -44,6 +44,20 @@
             font-size: 15px;
         }
 
+        .logofilePH > img {
+            max-height: 250px;
+            max-width: 950px;
+        }
+
+        .bannerfilePH > img {
+            max-height: 350px;
+            max-width: 300px;
+        }
+
+        .noteforfiles {
+            font-size: 12px;
+        }
+
         /*Template Style*/
 
     </style>
@@ -52,6 +66,8 @@
         var competitionid = 0;
         var logoURL = '';
         var bannerURL = '';
+        var imgType = '';
+        var counterimage = 2300; 
 
         $(document).ready(function () {
 
@@ -63,6 +79,13 @@
             });
 
             $("#previewC").click(f1);
+
+            $("#logoFile").change(function () {
+                addPreview('_logo');
+            });
+            $("#bannerFile").change(function () {
+                addPreview('_banner');
+            });
  
         });
 
@@ -116,12 +139,13 @@
 
 
             ajaxCall("POST", "../api/Competitions/mark2", JSON.stringify(p1), postSuccessP, postErrorP)
-            window.open("https://localhost:44318/Pages/Competition_Preview.html");
+            window.open("https://localhost:44318/Pages/Competition_Preview.html"); //need to change the URL after publish project
             
         }
 
         function postSuccessP(data) {
             console.log(data)
+            swal("התחרות הוגשה בהצלחה! תמתין לתשובת מנהל")
         }
 
         function postErrorP(err) {
@@ -240,9 +264,8 @@
         }
 
         function CompetitionBuilder() {
-            alert("In builder");
-            //bannerURL = data[0];
-            //logoURL = data[1];
+          
+
 
             var tradio = $('input[name=radio-type]:checked'); //get competition type (Pro or Amateurs)
             var ctype = tradio.attr('id');
@@ -290,7 +313,7 @@
                 Ispayment: cpayment
             }
 
-            console.log(c1);
+           
             ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessP, postErrorP)
             return false;
 
@@ -326,6 +349,72 @@
                 $('#charNum').text(str);
             }
         };
+
+        function addPreview(img) {
+
+            imgType = img;
+
+            counterimage = counterimage + 1;
+
+            if (counterimage > 2303) { //Security: User Wont be able to upload more then 3 pictures to the server
+                counterimage = 2300;
+            }
+
+            var data = new FormData();
+
+            if (imgType == '_logo') {
+                var files = $("#logoFile").get(0).files;
+            }
+            else { //imgType == _banner
+                var files = $("#bannerFile").get(0).files;
+            }
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("CompetitionID", counterimage); //append what ever data you want to send along with the files.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: imagePreview,
+                error: error
+            });
+
+            return false;
+        }
+
+        function imagePreview(data) {
+
+            var imgStr = "";
+
+            if (Array.isArray(data)) {
+                for (var i = 0; i < data.length; i++) {
+                    imgStr = "<img src='../" + data[i] + "' class='' alt='PreviewImg'/>"; //instead of +=
+                }
+            }
+
+
+            else {
+                imgStr = "<img src='../" + data + "'/>";
+            }
+
+            if (imgType == '_logo') {
+                document.getElementById("logoph").innerHTML = imgStr;
+            }
+            else {
+                document.getElementById("bannerph").innerHTML = imgStr;
+            }
+
+        }
 
     </script>
 
@@ -378,24 +467,6 @@
                         </div>
 
                         <div class="mb-3">
-                            <div class="form-group" method="post" enctype="multipart/form-data">
-                                <label for="file">באנר תחרות: </label>
-                                <p>צריך לכתוב כאן את הגודל המומלץ לבאנר</p>
-                                <br />
-                                <input type="file" id="bannerFile" name="files" multiple="multiple" required />
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
-                                <label for="file">לוגו תחרות: </label>
-                                <p>צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
-                                <br />
-                                <input type="file" id="logoFile" name="files" multiple="multiple" required />
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
                             <label>קישור לאתר התחרות:</label>
                             <input type="url" class="form-control" placeholder='הכנס כתובת הקהילה כאן' id="urlcommunityTB"
                                    oninvalid="this.setCustomValidity('הכנס כתובת אתר אינטרנט')"
@@ -409,23 +480,43 @@
                                    oninput="this.setCustomValidity('')">
                         </div>
 
-                        <br /> <!--Margin bottom 10px not like <br /> too much space!-->
-
-                        <label>סוג התחרות:</label>
                         <div class="mb-3">
-                            <input type="radio" class="form-check-input" id="cPro" name="radio-type" required>
-                            <label class="form-check-label" for="validationFormCheck1">מקצועי</label>
+
+                            <label>כתובת התחרות:</label>
+                            <input type="url" class="form-control" placeholder='במידה ולא אונליין' id="addressTB"
+                                   oninvalid="this.setCustomValidity('הכנס כתובת לתחרות')"
+                                   oninput="this.setCustomValidity('')">
                         </div>
 
-                        <div class="mb-3">
-                            <input type="radio" class="form-check-input" id="cAma" name="radio-type" required>
-                            <label class="form-check-label" for="validationFormCheck2">חובבנים</label>
+                        <div class="row">
+                            <div class="mb-3">
+                                <div class="form-group" method="post" enctype="multipart/form-data">
+                                    <label for="file">באנר תחרות: </label>
+                                    <br />
+                                    <input type="file" id="bannerFile" name="files" multiple="multiple" required />
+                                    <p class="noteforfiles">הגודל המומלץ לבאנר 970x250</p>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="row">
+                            <div class="mb-3">
+                                <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                    <label for="file">לוגו תחרות:  </label>
+                                    <br />
+                                    <input type="file" id="logoFile" name="files" multiple="multiple" required />
+                                    <p class="noteforfiles">צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!--Next column here: -->
 
                     <div class="col">
+
+
                         <div class="mb-3">
                             <label>מועד אחרון לרישום:</label>
                             <input type="date" class="form-control" placeholder='מועד אחרון לרישום' id="ldfrDB"
@@ -436,7 +527,7 @@
                         <div class="mb-3">
                             <label>תיאור התחרות:</label>
                             <textarea class="form-control" id="descriptionTA" placeholder="עד 1,000 תווים" onkeyup="countChar(this)"
-                             oninvalid="this.setCustomValidity('עד 1000 תווים.')" rows="3" required></textarea>
+                                      oninvalid="this.setCustomValidity('עד 1000 תווים.')" rows="3" required></textarea>
                             <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
                         </div>
 
@@ -457,6 +548,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <label>תאריך ושעת סיום:</label>
                             <div class="col">
@@ -466,6 +558,7 @@
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                             </div>
+
                             <div class="col">
                                 <div class="mb-3">
                                     <input type="time" class="form-control" id="endtTB"
@@ -484,6 +577,7 @@
                                            oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
+
                             <div class="col">
                                 <div class="mb-3">
                                     <input type="time" class="form-control" id="checkin2TB"
@@ -492,7 +586,7 @@
                                 </div>
                             </div>
                         </div>
-                      
+
                         <div class="row">
                             <div class="col">
                                 <label>תחרות און ליין:</label>
@@ -505,6 +599,7 @@
                                     <label class="form-check-label" for="validationFormCheck2">לא</label>
                                 </div>
                             </div>
+
                             <div class="col">
                                 <label>תחרות בתשלום:</label>
                                 <div class="mb-3">
@@ -516,43 +611,65 @@
                                     <label class="form-check-label" for="validationFormCheck2">לא</label>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label>כתובת התחרות:</label>
-                                <input type="url" class="form-control" placeholder='במידה ולא אונליין' id="addressTB"
-                                       oninvalid="this.setCustomValidity('הכנס כתובת לתחרות')"
-                                       oninput="this.setCustomValidity('')">
-                            </div>
 
-                            <div class="row mb-3">
-                                <h5>פרסים:</h5>
-                                <div class="col">
-                                    <label>מקום ראשון</label>
-                                    <input type="text" class="form-control" placeholder="₪" id="prize1TB">
-                                </div>
-
-                                <div class="col">
-                                    <label>מקום שני</label>
-                                    <input type="text" class="form-control" placeholder="₪" id="prize2TB">
-                                </div>
-                                <div class="col">
-                                    <label>מקום שלישי</label>
-                                    <input type="text" class="form-control" placeholder="₪" id="prize3TB">
-                                </div>
-                            </div>
-
-                            <div class="row" dir="ltr">
-
-                                <div class="col">
-                                    <br /><br />  <br />
-                                    <input type="button" class="btn btn-danger" value="תצוגה מקדימה"id="previewC" />
-                                    <input type="submit" class="btn btn-success" value="שליחת טופס" onsubmit="return false" />
+                            <div class="col">
+                                <label>סוג התחרות:</label>
+                                <div class="mb-3">
+                                    <div class="mb-3">
+                                        <input type="radio" class="form-check-input" id="cPro" name="radio-type" required>
+                                        <label class="form-check-label" for="validationFormCheck1">מקצועי</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="radio" class="form-check-input" id="cAma" name="radio-type" required>
+                                        <label class="form-check-label" for="validationFormCheck2">חובבנים</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+
+                        <div class="row mb-3">
+                            <h5>פרסים:</h5>
+                            <div class="col">
+                                <label>מקום ראשון</label>
+                                <input type="text" class="form-control" placeholder="₪" id="prize1TB">
+                            </div>
+
+                            <div class="col">
+                                <label>מקום שני</label>
+                                <input type="text" class="form-control" placeholder="₪" id="prize2TB">
+                            </div>
+
+                            <div class="col">
+                                <label>מקום שלישי</label>
+                                <input type="text" class="form-control" placeholder="₪" id="prize3TB">
+                            </div>
+                        </div>
+
+                        <div class="row" dir="ltr">
+
+                            <div class="col">
+                                <br /><br />  <br />
+                                <input type="button" class="btn btn-danger" value="תצוגה מקדימה" id="previewC" />
+                                <input type="submit" class="btn btn-success" value="שליחת טופס" onsubmit="return false" />
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </form>
+
+            <div class="mt-9 row">
+                <div class="col">
+                    <div class="col">
+                        <div class="mb-3 logofilePH" id="logoph"></div>
+                    </div>
+                    <div class="col">
+                        <div class="bannerfilePH" id="bannerph"></div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
