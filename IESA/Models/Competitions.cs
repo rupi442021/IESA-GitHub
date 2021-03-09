@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IESA.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace IESA.Models
     {
         int competitionid;
         string competitionname;
-        int type1; //0 or 1
+        int isonline; //0 or 1
         string address1;
         string banner; //nvarchar (1) - Check
         string logo; //nvarchar (1) - Check
@@ -31,12 +32,13 @@ namespace IESA.Models
         int numofparticipants;
         string competitionstatus;
         int status1; //0 or 1
+        int isPayment; //0 or 1
 
-        public Competitions(int competitionid, string competitionname, int type1, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1)
+        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment)
         {
             Competitionid = competitionid;
             Competitionname = competitionname;
-            Type1 = type1;
+            Isonline = isonline;
             Address1 = address1;
             Banner = banner;
             Logo = logo;
@@ -58,13 +60,14 @@ namespace IESA.Models
             Numofparticipants = numofparticipants;
             Competitionstatus = competitionstatus;
             Status1 = status1;
+            IsPayment = isPayment;
         }
 
         public Competitions() { }
 
         public int Competitionid { get => competitionid; set => competitionid = value; }
         public string Competitionname { get => competitionname; set => competitionname = value; }
-        public int Type1 { get => type1; set => type1 = value; }
+        public int Isonline { get => isonline; set => isonline = value; }
         public string Address1 { get => address1; set => address1 = value; }
         public string Banner { get => banner; set => banner = value; }
         public string Logo { get => logo; set => logo = value; }
@@ -86,12 +89,24 @@ namespace IESA.Models
         public int Numofparticipants { get => numofparticipants; set => numofparticipants = value; }
         public string Competitionstatus { get => competitionstatus; set => competitionstatus = value; }
         public int Status1 { get => status1; set => status1 = value; }
+        public int IsPayment { get => isPayment; set => isPayment = value; }
 
+      
 
         //#Functions Area
 
+        public int getCompetitionId() //Add_New_Competition.html - method OO1
+        {
+            DBServices dbs = new DBServices();
+            int newid = dbs.getCompetitionId();
+            return newid;
+        }
 
-
+        public void InsertCompetition() //Add_New_Competition.html
+        {
+            DBServices dbs = new DBServices();
+            dbs.InsertCompetition(this);
+        }
 
 
 
