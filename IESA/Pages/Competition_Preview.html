@@ -12,7 +12,7 @@
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
 
 
-    <title>&#x202E; הגשת תחרות – ASEI</title>
+    <title>&#x202E; תצוגה מקדימה לתחרות – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
 
@@ -58,8 +58,7 @@
             font-size: 40px;
             text-align:center;
             margin-top: 20px;
-            color:red;
-            
+
         }
 
         .cDisc{
@@ -67,6 +66,9 @@
         }
         
         .details{
+            text-align:center;
+        }
+        div{
             text-align:center;
         }
         /*Template Style*/
@@ -84,19 +86,35 @@
         function getSuccessP(data) {
             console.log(data);
             img = data.Banner;
+            let dateLast = data.Lastdateforregistration.split("T");
+            dateLast = dateLast[0].split("-");
+
+            let dateStart = data.Startdate.split("T");
+            dateStart = dateStart[0].split("-");
+
+            let timeStart = data.Startime.split(":");
+
+            let timeEnd = data.Endtime.split(":");
+
+            let startcheckin = data.Startcheckin.split(":");
+
+            let endcheckin = data.Endcheckin.split(":");
+
 
             buildimagestr = "<img src='../" + img + "'/>";
             document.getElementById("banner").innerHTML = buildimagestr;
             $("#title").html("<p><b>" + data.Competitionname + "<b/><p/>");
             $("#discreption").html("<p>" + data.Body + "<p/>");
-            $("#cStartD").append("<br/>" + data.Startdate);
-            $("#cStartT").append("<br/>" + data.Endtime + " - ");
-            $("#cStartT").append(data.Startime);
-            $("#cLastDateR").append("<br/>" + data.Lastdateforregistration);
+            $("#cStartD").append("<br/>" + dateStart[2] + '/' + dateStart[1] + '/' + dateStart[0]);
+            $("#cStartT").append("<br/>" + timeEnd[0] + ':' + timeEnd[1]+" - ");
+            $("#cStartT").append(timeStart[0] + ':' + timeStart[1]);
+            $("#cLastDateR").append("<br/>" + dateLast[2] + '/' + dateLast[1] + '/' + dateLast[0]);
             $("#prize1").append(data.Prize1);
             $("#prize2").append(data.Prize2);
             $("#prize3").append(data.Price3);
-            $("#linkforegistration").html("<a class='btn btn-primary' href=" + data.Linkforregistration +"role='Button'>להרשמה לחצו כאן</a>");
+            $("#linkforegistration").html("<a class='btn btn-primary' href=" + data.Linkforregistration + "role='Button'>להרשמה לחצו כאן</a>");
+            $("#cCheckIn").append("<br/>" + endcheckin[0] + ':' + endcheckin[1] + " - ")
+            $("#cCheckIn").append(startcheckin[0] + ':' + startcheckin[1])
             {
                 if (data.Isonline == 1)
                     $("#cOnline").append("</br> Online")
@@ -148,30 +166,34 @@
                 <div class="cDisc" id="discreption"></div>
                 <div class="row">
                     <div class="col-lg-9" style="border: 1px solid">
-                    <table width="100%">
-                        <tr>
-                            <td><p id="cStartD">תחילת התחרות: </p></td>
-                            <td><p id="cStartT">שעות התחרות: </p></td>
+                        <table width="100%">
+                            <tr>
+                                <td><i class="bi bi-calendar2-date" style="font-size: 1.5rem; color: white;"></i></td>
+                                <td>
+                                    <tr><p id="cStartD">תחילת התחרות: </p></tr>
+                                    <tr>
+                                    <p id="cStartT">שעות התחרות: </p> 
+                                    </tr>
+                                </td>
 
-                        </tr>
-                        <tr>
-                            <td><p id="cCheckIn">צ'ק אין:</p></td>
-                            <td><p id="cLastDateR">ההרשמה מסתיימת ב-</p></td>
+                            </tr>
+                            <tr>
+                                <td><p id="cCheckIn">צ'ק אין:</p></td>
+                                <td><p id="cLastDateR">ההרשמה מסתיימת ב-</p></td>
 
-                        </tr>
-                        <tr>
-                            <td><p id="cOnline">Online/Offline? </p></td>
-                            <td><p id="cPro">Pro/Ama?</p></td>
+                            </tr>
+                            <tr>
+                                <td><p id="cOnline"></p></td>
+                                <td><p id="cPro"></p></td>
 
-                        </tr>
-                        <tr>
-                            <td><p id="cPayment">Free/Payment?</p></td>
-                            <td>LinkForRules</td>
-                        </tr>
-                        <tr id="linkforegistration">
-
-                        </tr>
-                    </table>
+                            </tr>
+                            <tr>
+                                <td><p id="cPayment"></p></td>
+                                <td>LinkForRules</td>
+                            </tr>
+                            <tr id="linkforegistration">
+                            </tr>
+                        </table>
                 </div>
                     <div class="col-lg-3" style="border: 1px solid">
                         <div class="row">
@@ -190,7 +212,7 @@
                             </div>
                         </div>
                         <div class="row" style="margin-top: 100px;">
-                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>

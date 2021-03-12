@@ -33,8 +33,10 @@ namespace IESA.Models
         string competitionstatus;
         int status1; //0 or 1
         int isPayment; //0 or 1
+        TimeSpan startcheckin;
+        TimeSpan endcheckin;
 
-        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment)
+        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment, TimeSpan startcheckin, TimeSpan endcheckin)
         {
             Competitionid = competitionid;
             Competitionname = competitionname;
@@ -61,9 +63,9 @@ namespace IESA.Models
             Competitionstatus = competitionstatus;
             Status1 = status1;
             IsPayment = isPayment;
+            Startcheckin = startcheckin;
+            Endcheckin = endcheckin;
         }
-
-        public Competitions() { }
 
         public int Competitionid { get => competitionid; set => competitionid = value; }
         public string Competitionname { get => competitionname; set => competitionname = value; }
@@ -90,9 +92,10 @@ namespace IESA.Models
         public string Competitionstatus { get => competitionstatus; set => competitionstatus = value; }
         public int Status1 { get => status1; set => status1 = value; }
         public int IsPayment { get => isPayment; set => isPayment = value; }
+        public TimeSpan Startcheckin { get => startcheckin; set => startcheckin = value; }
+        public TimeSpan Endcheckin { get => endcheckin; set => endcheckin = value; }
 
-      
-
+        public Competitions() { }
         //#Functions Area
 
         public int getCompetitionId() //Add_New_Competition.html - method OO1
