@@ -195,7 +195,6 @@
     <Content Include="Global.asax" />
     <Content Include="Pages\Competition_Preview.html" />
     <Content Include="Pages\Sign_In.html" />
-    <Content Include="Pages\Sign_In_Try.html" />
     <Content Include="Pages\Sign_Up.html" />
     <Content Include="Pages\Add_New_Competition.html" />
     <Content Include="Pages\TemplatePage.html" />
