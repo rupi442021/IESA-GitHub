@@ -1,4 +1,5 @@
 ﻿using IESA.Models;
+using IESA.Models.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +18,24 @@ namespace IESA.Controllers
             return newid.getCompetitionId();
         }
 
-        public void Post([FromBody] Competitions Competition) //Sign_Up.html - method OG4
+        public void Post([FromBody] Competitions Competition) //Add_New_Competitions.html 
         {
             Competition.InsertCompetition();
         }
 
+ 
+        public void Post(int cID, int gcID) //Add_New_Competitions.html 
+        {
+            DBServices dbs = new DBServices();
+            dbs.InsertGameInC(cID, gcID);
+        }
         [HttpPost]
         [Route("api/Competitions/mark2")]
-        public void Postc([FromBody] Competitions p1) //Add_New_Competitions.html - 
+
+        public void Postc([FromBody] Competitions p1) //Add_New_Competitions.html - Preview
         {
-        
                       Pcompetitions = new Competitions();
                       Pcompetitions = p1;
-             
         }
 
         [HttpGet]

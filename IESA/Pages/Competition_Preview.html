@@ -86,7 +86,14 @@
             margin-bottom: 10px;
             text-align: right;
         }
-
+        #consoleDIV, #gameCategoryDIV {
+            place-content: center;
+            margin-top: 35px;
+            margin-bottom: -10px;
+        }
+        #consoleDIV p, #gameCategoryDIV p{
+            margin-bottom: -1px;
+        }
        
         /*Template Style*/
 
@@ -137,11 +144,13 @@
             $("#linkforegistration").html("<a class='btn btn-primary' href=" + data.Linkforregistration + "role='Button'>להרשמה לחצו כאן</a>");
             $("#cCheckIn").append("<br/>" + endcheckin[0] + ':' + endcheckin[1] + " - ")
             $("#cCheckIn").append(startcheckin[0] + ':' + startcheckin[1])
+            $("#consoleDIV").append(data.Console);
+            $("#gameCategoryDIV").append(data.Gamecategory);
             {
                 if (data.Isonline == 1)
-                    $("#cOnline").append("</br> Online")
+                    document.getElementById("cOnline").innerHTML = "</br> תחרות אונליין";
                 else
-                    $("#cOnline").append("</br> Offline")
+                    document.getElementById("cOnline").innerHTML = "</br>  כתובת: </br>" + data.Address1+ " ";
             }
             {
                 if (data.Ispro == 1)
@@ -206,7 +215,7 @@
                                 <td id="cStartT" class="details">
                                     שעות התחרות:
                                 </td>
-                                <td><i class="bi bi-geo-alt" style="font-size: 2rem"></i></td>
+                                <td><i class="bi bi-bookmark-check" style="font-size: 2rem"></i></td>
                                 <td id="cCheckIn" class="details">צ'ק אין:</td>
                             </tr>
                             <tr>
@@ -218,7 +227,7 @@
                             <tr>
                                 <td><i class="bi bi-link" style="font-size: 2rem"></i></td>
                                 <td class="details">Linkrules</td>
-                                <td><i class="bi bi-wifi" style="font-size: 2rem"></i></td>
+                                <td><i class="bi bi-geo-alt" style="font-size: 2rem"></i></td>
                                 <td id="cOnline" class="details"></td>
                             </tr>
                             <tr>
@@ -249,6 +258,12 @@
                                 <div class="col">3RD</div>
                                 <div id="prize3" class="col prize3"></div>
                             </div>
+                        </div>
+                        <div class="row" id="consoleDIV">
+                            <p>קונסולה: </p>
+                        </div>
+                        <div class="row" id="gameCategoryDIV">
+                            <p>קטגוריית משחק: </p>
                         </div>
                         <div class="row" style="margin-top: 100px;">
                             <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>

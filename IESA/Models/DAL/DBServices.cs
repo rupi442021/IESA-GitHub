@@ -728,13 +728,71 @@ namespace IESA.Models.DAL
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}','{14}', '{15}', '{16}', '{17}', '{18}', '{19}', '{20}', '{21}','{22}', '{23}')", Competition.Competitionname, Competition.Address1, Competition.Banner, Competition.Logo, Competition.Prize1, Competition.Prize2, Competition.Price3, Competition.Linkforregistration, Competition.Lastdateforregistration, Competition.Body, Competition.Startdate, Competition.Enddate, Competition.Startime, Competition.Endtime, Competition.Ispro, Competition.Discord, Competition.Console, Competition.Isiesa, Competition.Linkforstream, Competition.Competitionstatus, Competition.IsPayment, Competition.Isonline, Competition.Startcheckin, Competition.Endcheckin);
             String prefix = "INSERT INTO Competitions " + "(competitionName, address1, banner, logo, prize1, prize2, prize3, linkForRegistration, lastDateForRegistration, body , startDate, endDate, startTime, endTime, isPro, discord, console, isIESA, linkForStream, competitionStatus, isPayment, isOnline, startCheckIn, endCheckIn) ";
-
+            
             command = prefix + sb.ToString();
+            
+            return command;
+        }
+
+        
+
+        public int InsertGameInC(int cID, int gcID) //Add_New_Competition.html - Add row to game_competition 
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(cID, gcID);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+        private String BuildInsertCommand(int cID, int gcID) //Add_New_Competition.html - Add row to game_competition
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+           String prefix1 = " INSERT INTO Competition_Game VALUES (" + cID + ", " + gcID + ")";
+
+            command = prefix1;
 
             return command;
 
 
         }
+
 
 
         //---Add_New_Competition.html--- *Close*
