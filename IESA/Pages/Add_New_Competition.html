@@ -630,6 +630,9 @@
                             </div>
                         </div> <!--radio buttons (online, payment, ispro)-->
 
+                        <div class="mb-3" id="addressDIV">
+                        </div> <!--address-->
+
                     </div>
 
                     <!--Left column here: -->
@@ -709,37 +712,29 @@
                         </div> <!--check in-->
 
                         <div class="row">
-                            <div class="mb-3">
-                                <div class="form-group" method="post" enctype="multipart/form-data">
-                                    <label for="file">באנר תחרות: </label>
-                                    <br />
-                                    <input type="file" id="bannerFile" name="files" multiple="multiple" required />
-                                    <p class="noteforfiles">הגודל המומלץ לבאנר 970x250</p>
-                                </div>
-                            </div>
                             <div class="col">
-                                <div class="bannerfilePH" id="bannerph"></div>
-                            </div>
-                        </div> <!--banner-->
-
-                        <div class="row">
-                            <div class="mb-3">
-                                <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
-                                    <label for="file">לוגו תחרות:  </label>
-                                    <br />
-                                    <input type="file" id="logoFile" name="files" multiple="multiple" required />
-                                    <p class="noteforfiles">צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
+                                    <div class="form-group" method="post" enctype="multipart/form-data">
+                                        <label for="file">באנר תחרות: </label>
+                                        <br />
+                                        <input type="file" id="bannerFile" name="files" multiple="multiple" required />
+                                        <p class="noteforfiles">הגודל המומלץ לבאנר 970x250</p>
+                                    </div>
+                                <div>
+                                    <div class="bannerfilePH" id="bannerph"></div>
                                 </div>
-                            </div>
+                            </div> <!--banner-->
                             <div class="col">
-                                <div class="mb-3 logofilePH" id="logoph"></div>
-                            </div>
-                        </div> <!--logo-->
-
-                        <div class="mb-3" id="addressDIV">
-
-
-                        </div> <!--address-->
+                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                        <label for="file">לוגו תחרות:  </label>
+                                        <br />
+                                        <input type="file" id="logoFile" name="files" multiple="multiple" required />
+                                        <p class="noteforfiles">צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
+                                    </div>
+                                <div>
+                                    <div class="mb-3 logofilePH" id="logoph"></div>
+                                </div>
+                            </div> <!--logo-->
+                        </div>
 
                         <div class="row" dir="ltr">
 
