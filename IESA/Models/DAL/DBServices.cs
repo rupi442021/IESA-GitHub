@@ -13,8 +13,8 @@ namespace IESA.Models.DAL
     {
         public SqlDataAdapter da;
         public DataTable dt;
-        private int competitionId;
 
+        private int competitionId;
         private string emaila;
         private string nicknamec;
         private int userId;
@@ -828,7 +828,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public int InsertPost(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (1))
         {
 
@@ -871,7 +870,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         private String BuildInsertCommand(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (2))
         {
             String command;
@@ -893,6 +891,7 @@ namespace IESA.Models.DAL
 
         //---Orgenaizer_Main_Page.html--- *Open*
         
+
         public List<Competitions> GetOrgenaizerCompetitions(int OID)
         {
             SqlConnection con = null;
