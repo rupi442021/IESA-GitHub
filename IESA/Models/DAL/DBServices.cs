@@ -913,37 +913,35 @@ namespace IESA.Models.DAL
 
                 while (dr.Read())
                 {   // Read till the end of the data into a row
-                    Competitions c    = new Competitions();
-                    c.Competitionid   = Convert.ToInt32(dr["competitionid"]);
-                    c.Competitionname = (string)dr["competitionname"];
-                    c.Isonline        = Convert.ToInt32(dr["isonline"]);
-                    c.Address1        = (string)dr["address1"];
-                    c.Banner          = (string)dr["banner"];
-                    c.Logo            = (string)dr["logo"];
-                    c.Prize1          = (string)dr["prize1"];
-                    c.Prize2          = (string)dr["prize2"];
-                    c.Price3          = (string)dr["prize3"];
-                    c.Linkforregistration = (string)dr["linkforregistration"];
+                    Competitions c            = new Competitions();
+                    c.Competitionid           = Convert.ToInt32(dr["competitionid"]);
+                    c.Competitionname         = (string)dr["competitionname"];
+                    c.Isonline                = Convert.ToInt32(dr["isonline"]);
+                    c.Address1                = (string)dr["address1"];
+                    c.Banner                  = (string)dr["banner"];
+                    c.Logo                    = (string)dr["logo"];
+                    c.Prize1                  = (string)dr["prize1"];
+                    c.Prize2                  = (string)dr["prize2"];
+                    c.Price3                  = (string)dr["prize3"];
+                    c.Linkforregistration     = (string)dr["linkforregistration"];
                     c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
-                    c.Body = (string)dr["body"];
-                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
-                    c.Startime = ((TimeSpan)dr["starttime"]);
-                    c.Endtime = ((TimeSpan)dr["endtime"]);
-                    c.Ispro = Convert.ToInt32(dr["ispro"]);
-                    c.Discord = (string)dr["discord"];
-                    c.Console = (string)dr["console"];
-                    c.Isiesa = Convert.ToInt32(dr["isiesa"]);
-                    c.Linkforstream = (string)dr["linkforstream"];
-                    c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
-                    c.Competitionstatus = (string)dr["competitionstatus"];
-                    c.Status1 = Convert.ToInt32(dr["status1"]);
-                    c.IsPayment = Convert.ToInt32(dr["ispayment"]);
-                    c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
-                    c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
-
-                    //c.Gamecategory = (string)dr["gameCategory"]; - Missed Column in DB.
-
+                    c.Body                    = (string)dr["body"];
+                    c.Startdate               = Convert.ToDateTime(dr["startdate"]);
+                    c.Enddate                 = Convert.ToDateTime(dr["enddate"]);
+                    c.Startime                = ((TimeSpan)dr["starttime"]);
+                    c.Endtime                 = ((TimeSpan)dr["endtime"]);
+                    c.Ispro                   = Convert.ToInt32(dr["ispro"]);
+                    c.Discord                 = (string)dr["discord"];
+                    c.Console                 = (string)dr["console"];
+                    c.Isiesa                  = Convert.ToInt32(dr["isiesa"]);
+                    c.Linkforstream           = (string)dr["linkforstream"];
+                    c.Numofparticipants       = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
+                    c.Competitionstatus       = (string)dr["competitionstatus"];
+                    c.Status1                 = Convert.ToInt32(dr["status1"]);
+                    c.IsPayment               = Convert.ToInt32(dr["ispayment"]);
+                    c.Startcheckin            = ((TimeSpan)dr["startcheckin"]);
+                    c.Endcheckin              = ((TimeSpan)dr["endcheckin"]);
+                    
 
                     if (c.Status1 == 1)
                         cList.Add(c);
