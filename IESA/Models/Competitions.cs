@@ -35,8 +35,9 @@ namespace IESA.Models
         int isPayment; //0 or 1
         TimeSpan startcheckin;
         TimeSpan endcheckin;
+        string gamecategory;
 
-        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment, TimeSpan startcheckin, TimeSpan endcheckin)
+        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment, TimeSpan startcheckin, TimeSpan endcheckin, string gamecategory)
         {
             Competitionid = competitionid;
             Competitionname = competitionname;
@@ -65,6 +66,7 @@ namespace IESA.Models
             IsPayment = isPayment;
             Startcheckin = startcheckin;
             Endcheckin = endcheckin;
+            Gamecategory = gamecategory;
         }
 
         public int Competitionid { get => competitionid; set => competitionid = value; }
@@ -94,6 +96,7 @@ namespace IESA.Models
         public int IsPayment { get => isPayment; set => isPayment = value; }
         public TimeSpan Startcheckin { get => startcheckin; set => startcheckin = value; }
         public TimeSpan Endcheckin { get => endcheckin; set => endcheckin = value; }
+        public string Gamecategory { get => gamecategory; set => gamecategory = value; }
 
         public Competitions() { }
         //#Functions Area
@@ -111,6 +114,12 @@ namespace IESA.Models
             dbs.InsertCompetition(this);
         }
 
+        public List<Competitions> Read(int OID) //Sign_Up.html - method OO1
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> lCompetitions = dbs.GetOrgenaizerCompetitions(OID);
+            return lCompetitions;
+        }
 
 
 

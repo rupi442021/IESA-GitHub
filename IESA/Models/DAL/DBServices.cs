@@ -108,7 +108,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public string CheckNicknameSQL(string nicknameAdd) //Sign_Up.html - method OG2 (Check Nickname: Gamer/Orgenaizer)
         {
 
@@ -156,7 +155,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public int GetnewIdGamer()  //Sign_Up.html - method OG3 (Get New Id: Gamer)
         {
             userId = 0;
@@ -197,7 +195,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public int GetnewIdOrgenaizer()  //Sign_Up.html - method OO1 (Get New Id: Orgenaizer)
         {
             userId = 0;
@@ -238,7 +235,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public int InsertGamer(Gamers gamer) //Sign_Up.html - method OG4 (Insert: Gamer (1))
         {
 
@@ -281,7 +277,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         private String BuildInsertCommand(Gamers gamer) //Sign_Up.html - method OG4 (Insert: Gamer (2))
         {
             String command;
@@ -296,7 +291,6 @@ namespace IESA.Models.DAL
             return command;
 
         }
-
         public int InsertOrgenaizer(Orgenaizers orgenaizer) //Sign_Up.html - method OO2 (Insert: Orgenaizer (1))
         {
 
@@ -339,7 +333,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         private String BuildInsertCommand(Orgenaizers orgenaizer) //Sign_Up.html - method OO2 (Insert: Orgenaizer (2))
         {
             String command;
@@ -347,7 +340,7 @@ namespace IESA.Models.DAL
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}')", orgenaizer.Email, orgenaizer.Password1, orgenaizer.Nickname, orgenaizer.Firstname, orgenaizer.Lastname, orgenaizer.Gender, orgenaizer.Id, orgenaizer.Phone, orgenaizer.Dob, orgenaizer.Address1, orgenaizer.Picture, orgenaizer.Comunityname, orgenaizer.Linktocommunity, orgenaizer.Status1);
-            String prefix = "INSERT INTO Orgenaizers " + "(email, password1, nickname, firstname, lastname, gender, id, phone, dob, address1, picture, communityName, linkToCommunity, status1) ";
+            String prefix = "INSERT INTO Orgenaizers " + "(email, password1, nickname, firstname, lastname, gender, id, phone, dob, address1, picture, communityname, linktocommunity, status1) ";
 
             command = prefix + sb.ToString();
 
@@ -361,7 +354,6 @@ namespace IESA.Models.DAL
 
         //---Sign_In.html--- *Open*
 
-
         public int CheckInfoSQL(string email, string pass) //Sign_In.html - method OL1
         {
 
@@ -374,7 +366,11 @@ namespace IESA.Models.DAL
 
 
                 String selectSTR = "SELECT Gamers.userid, Gamers.email, Gamers.password1 FROM Gamers WHERE Gamers.email = '" + email + "' UNION SELECT Orgenaizers.userid, Orgenaizers.email, Orgenaizers.password1 FROM Orgenaizers WHERE Orgenaizers.email = '" + email + "' UNION SELECT Managers.userid, Managers.email, Managers.password1 FROM Managers WHERE Managers.email = '" + email + "' ";
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
@@ -416,7 +412,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public Gamers getGamerSQL(int id_toserver) //Sign_In.html - method OL2
         {
 
@@ -474,7 +469,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public Orgenaizers getOrgenaizerSQL(int id_toserver) //Sign_In.html - method OL3
         {
 
@@ -530,7 +524,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public Managers getManagerSQL(int id_toserver) //Sign_In.html - method OL4
         {
 
@@ -634,8 +627,12 @@ namespace IESA.Models.DAL
 
             }
         }
+<<<<<<< HEAD
 
         public int getCompetitionId() //Add_New_Competition.html - method OO1 (Get New Id: Competition)
+=======
+        public int getCompetitionId()  //Add_New_Competition.html - method OO1 (Get New Id: Competition)
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
         {
             competitionId = 0;
 
@@ -646,7 +643,11 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
+<<<<<<< HEAD
                 String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY competitionid DESC";
+=======
+                String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY Competitionid DESC";
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
 
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
@@ -654,7 +655,11 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
+<<<<<<< HEAD
                     competitionId = Convert.ToInt32(dr["competitionid"]); //future id of the user
+=======
+                    competitionId = Convert.ToInt32(dr["Competitionid"]); //future id of the user
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
                 }
 
                 competitionId += 1;
@@ -675,8 +680,12 @@ namespace IESA.Models.DAL
             }
 
         }
+<<<<<<< HEAD
 
         public int InsertCompetition(Competitions Competition) //Add_New_Competition.html 
+=======
+        public int InsertCompetition(Competitions Competition) ////Add_New_Competition.html 
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
         {
 
             SqlConnection con;
@@ -718,7 +727,10 @@ namespace IESA.Models.DAL
             }
 
         }
+<<<<<<< HEAD
        
+=======
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
         private String BuildInsertCommand(Competitions Competition) //Add_New_Competition.html
         {
             String command;
@@ -726,14 +738,74 @@ namespace IESA.Models.DAL
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}','{14}', '{15}', '{16}', '{17}', '{18}', '{19}', '{20}', '{21}','{22}', '{23}')", Competition.Competitionname, Competition.Address1, Competition.Banner, Competition.Logo, Competition.Prize1, Competition.Prize2, Competition.Price3, Competition.Linkforregistration, Competition.Lastdateforregistration, Competition.Body, Competition.Startdate, Competition.Enddate, Competition.Startime, Competition.Endtime, Competition.Ispro, Competition.Discord, Competition.Console, Competition.Isiesa, Competition.Linkforstream, Competition.Competitionstatus, Competition.IsPayment, Competition.Isonline, Competition.Startcheckin, Competition.Endcheckin);
+<<<<<<< HEAD
             String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, startTime, endTime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
 
+=======
+            String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, starttime, endtime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
+            
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
             command = prefix + sb.ToString();
+            
+            return command;
+        }
+        public int InsertGameInC(int cID, int gcID) //Add_New_Competition.html - Add row to game_competition 
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(cID, gcID);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+        private String BuildInsertCommand(int cID, int gcID) //Add_New_Competition.html - Add row to game_competition
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+           String prefix1 = " INSERT INTO Competition_Game VALUES (" + cID + ", " + gcID + ")";
+
+            command = prefix1;
 
             return command;
 
 
         }
+
 
 
         //---Add_New_Competition.html--- *Close*
@@ -842,7 +914,88 @@ namespace IESA.Models.DAL
         }
 
 
+<<<<<<< HEAD
         //---Add_New_Post.html--- *Close*
+=======
+        //---Orgenaizer_Main_Page.html--- *Open*
+        
+        public List<Competitions> GetOrgenaizerCompetitions(int OID)
+        {
+            SqlConnection con = null;
+            List<Competitions> cList = new List<Competitions>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid="+OID;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Competitions c    = new Competitions();
+                    c.Competitionid   = Convert.ToInt32(dr["competitionid"]);
+                    c.Competitionname = (string)dr["competitionname"];
+                    c.Isonline        = Convert.ToInt32(dr["isonline"]);
+                    c.Address1        = (string)dr["address1"];
+                    c.Banner          = (string)dr["banner"];
+                    c.Logo            = (string)dr["logo"];
+                    c.Prize1          = (string)dr["prize1"];
+                    c.Prize2          = (string)dr["prize2"];
+                    c.Price3          = (string)dr["prize3"];
+                    c.Linkforregistration = (string)dr["linkforregistration"];
+                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    c.Body = (string)dr["body"];
+                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
+                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    c.Startime = ((TimeSpan)dr["starttime"]);
+                    c.Endtime = ((TimeSpan)dr["endtime"]);
+                    c.Ispro = Convert.ToInt32(dr["ispro"]);
+                    c.Discord = (string)dr["discord"];
+                    c.Console = (string)dr["console"];
+                    c.Isiesa = Convert.ToInt32(dr["isiesa"]);
+                    c.Linkforstream = (string)dr["linkforstream"];
+                    c.Numofparticipants = Convert.ToInt32(dr["numofparticipants2"]);
+                    c.Competitionstatus = (string)dr["competitionstatus"];
+                    c.Status1 = Convert.ToInt32(dr["status1"]);
+                    c.IsPayment = Convert.ToInt32(dr["ispayment"]);
+                    c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
+                    c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
+
+                    //c.Gamecategory = (string)dr["gameCategory"]; - Missed Column in DB.
+
+
+
+
+                    if (c.Status1 == 1)
+                        cList.Add(c);
+                }
+
+                return cList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+
+
+        //---Orgenaizer_Main_Page.html--- *Close*
+
+>>>>>>> 6dc0116e55d55db752443324669561516251eb7f
 
 
     }
