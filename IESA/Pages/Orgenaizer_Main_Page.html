@@ -66,8 +66,9 @@
 
     <script>
 
-        var OID = 20000004;
 
+        var OID = JSON.parse(localStorage.getItem("user_info"));
+        console.log(OID.Userid);
         $(document).ready(function () {
             GetAllOrgenaizerCompetition()
 
