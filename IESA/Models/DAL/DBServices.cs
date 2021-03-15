@@ -21,6 +21,7 @@ namespace IESA.Models.DAL
         private string emailInfo;
         private string passInfo;
         private int idInfo;
+        private int postId;
 
         public DBServices() { }
 
@@ -167,7 +168,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT TOP 1 * FROM Gamers ORDER BY userID DESC";
+                String selectSTR = "SELECT TOP 1 * FROM Gamers ORDER BY userid DESC";
 
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
@@ -175,7 +176,7 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-                    userId = Convert.ToInt32(dr["userID"]); //future id of the user
+                    userId = Convert.ToInt32(dr["userid"]); //future id of the user
                 }
 
                 userId += 1;
@@ -208,7 +209,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT TOP 1 * FROM Orgenaizers ORDER BY userID DESC";
+                String selectSTR = "SELECT TOP 1 * FROM Orgenaizers ORDER BY userid DESC";
 
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
@@ -216,7 +217,7 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-                    userId = Convert.ToInt32(dr["userID"]); //future id of the user
+                    userId = Convert.ToInt32(dr["userid"]); //future id of the user
                 }
 
                 userId += 1;
@@ -372,8 +373,8 @@ namespace IESA.Models.DAL
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
 
-                String selectSTR = "SELECT Gamers.userID, Gamers.email, Gamers.password1 FROM Gamers WHERE Gamers.email = '" + email + "' UNION SELECT Orgenaizers.userID, Orgenaizers.email, Orgenaizers.password1 FROM Orgenaizers WHERE Orgenaizers.email = '" + email + "' UNION SELECT Managers.userID, Managers.email, Managers.password1 FROM Managers WHERE Managers.email = '" + email + "' ";
-
+                String selectSTR = "SELECT Gamers.userid, Gamers.email, Gamers.password1 FROM Gamers WHERE Gamers.email = '" + email + "' UNION SELECT Orgenaizers.userid, Orgenaizers.email, Orgenaizers.password1 FROM Orgenaizers WHERE Orgenaizers.email = '" + email + "' UNION SELECT Managers.userid, Managers.email, Managers.password1 FROM Managers WHERE Managers.email = '" + email + "' ";
+                
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
@@ -383,7 +384,7 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-                    idInfo = Convert.ToInt32(dr["userID"]); //We want to get the id for localstorage
+                    idInfo = Convert.ToInt32(dr["userid"]); //We want to get the id for localstorage
 
                     emailInfo = (string)dr["email"];
                     passInfo = (string)dr["password1"];
@@ -427,7 +428,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Gamers WHERE userID = " + id_toserver;
+                String selectSTR = "SELECT * FROM Gamers WHERE userid = " + id_toserver;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -437,7 +438,7 @@ namespace IESA.Models.DAL
                 while (dr.Read()) //1 row
                 {
 
-                    g.Userid = (dr["userID"] != DBNull.Value) ? Convert.ToInt32(dr["userID"]) : default;
+                    g.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
                     g.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
                     g.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
                     g.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
@@ -447,10 +448,10 @@ namespace IESA.Models.DAL
                     g.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
                     g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     g.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
-                    g.Discorduser = (dr["discordUser"] != DBNull.Value) ? (string)dr["discordUser"] : default;
+                    g.Discorduser = (dr["discorduser"] != DBNull.Value) ? (string)dr["discorduser"] : default;
                     g.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
-                    g.Registrationdate = (dr["registrationDate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationDate"]) : default;
-                    g.Outofdate = (dr["outOfDate"] != DBNull.Value) ? Convert.ToDateTime(dr["outOfDate"]) : default;
+                    g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
                     g.License = (dr["license"] != DBNull.Value) ? Convert.ToInt32(dr["license"]) : default;
                     g.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
 
@@ -485,7 +486,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Orgenaizers WHERE userID = " + id_toserver;
+                String selectSTR = "SELECT * FROM Orgenaizers WHERE userid = " + id_toserver;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -495,7 +496,7 @@ namespace IESA.Models.DAL
                 while (dr.Read()) //1 row
                 {
 
-                    o.Userid = (dr["userID"] != DBNull.Value) ? Convert.ToInt32(dr["userID"]) : default;
+                    o.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
                     o.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
                     o.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
                     o.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
@@ -506,8 +507,8 @@ namespace IESA.Models.DAL
                     o.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     o.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
                     o.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
-                    o.Comunityname = (dr["communityName"] != DBNull.Value) ? (string)dr["communityName"] : default;
-                    o.Linktocommunity = (dr["linkToCommunity"] != DBNull.Value) ? (string)dr["linkToCommunity"] : default;
+                    o.Comunityname = (dr["communityname"] != DBNull.Value) ? (string)dr["communityname"] : default;
+                    o.Linktocommunity = (dr["linktocommunity"] != DBNull.Value) ? (string)dr["linktocommunity"] : default;
                     o.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
 
                 }
@@ -541,7 +542,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Managers WHERE userID = " + id_toserver;
+                String selectSTR = "SELECT * FROM Managers WHERE userid = " + id_toserver;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -551,7 +552,7 @@ namespace IESA.Models.DAL
                 while (dr.Read()) //1 row
                 {
 
-                    m.Userid = (dr["userID"] != DBNull.Value) ? Convert.ToInt32(dr["userID"]) : default;
+                    m.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
                     m.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
                     m.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
                     m.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
@@ -609,8 +610,8 @@ namespace IESA.Models.DAL
                 while (dr.Read())
                 {   // Read till the end of the data into a row
                     GamesCategories g = new GamesCategories();
-                    g.Categoryid = Convert.ToInt32(dr["categoryID"]);
-                    g.Categoryname = (string)dr["categoryName"];
+                    g.Categoryid = Convert.ToInt32(dr["categoryid"]);
+                    g.Categoryname = (string)dr["categoryname"];
                     g.Status1 = Convert.ToInt32(dr["status1"]);
 
                     if(g.Status1 == 1)
@@ -634,8 +635,7 @@ namespace IESA.Models.DAL
             }
         }
 
-
-        public int getCompetitionId()  //Add_New_Competition.html - method OO1 (Get New Id: Competition)
+        public int getCompetitionId() //Add_New_Competition.html - method OO1 (Get New Id: Competition)
         {
             competitionId = 0;
 
@@ -646,7 +646,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY CompetitionID DESC";
+                String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY competitionid DESC";
 
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
@@ -654,7 +654,7 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-                    competitionId = Convert.ToInt32(dr["CompetitionID"]); //future id of the user
+                    competitionId = Convert.ToInt32(dr["competitionid"]); //future id of the user
                 }
 
                 competitionId += 1;
@@ -676,7 +676,7 @@ namespace IESA.Models.DAL
 
         }
 
-        public int InsertCompetition(Competitions Competition) ////Add_New_Competition.html 
+        public int InsertCompetition(Competitions Competition) //Add_New_Competition.html 
         {
 
             SqlConnection con;
@@ -719,7 +719,6 @@ namespace IESA.Models.DAL
 
         }
        
-
         private String BuildInsertCommand(Competitions Competition) //Add_New_Competition.html
         {
             String command;
@@ -727,7 +726,7 @@ namespace IESA.Models.DAL
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}','{14}', '{15}', '{16}', '{17}', '{18}', '{19}', '{20}', '{21}','{22}', '{23}')", Competition.Competitionname, Competition.Address1, Competition.Banner, Competition.Logo, Competition.Prize1, Competition.Prize2, Competition.Price3, Competition.Linkforregistration, Competition.Lastdateforregistration, Competition.Body, Competition.Startdate, Competition.Enddate, Competition.Startime, Competition.Endtime, Competition.Ispro, Competition.Discord, Competition.Console, Competition.Isiesa, Competition.Linkforstream, Competition.Competitionstatus, Competition.IsPayment, Competition.Isonline, Competition.Startcheckin, Competition.Endcheckin);
-            String prefix = "INSERT INTO Competitions " + "(competitionName, address1, banner, logo, prize1, prize2, prize3, linkForRegistration, lastDateForRegistration, body , startDate, endDate, startTime, endTime, isPro, discord, console, isIESA, linkForStream, competitionStatus, isPayment, isOnline, startCheckIn, endCheckIn) ";
+            String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, startTime, endTime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
 
             command = prefix + sb.ToString();
 
@@ -740,10 +739,110 @@ namespace IESA.Models.DAL
         //---Add_New_Competition.html--- *Close*
 
 
+        //---Add_New_Post.html--- *Open*
 
 
+        public int GetnewIdPost() //Add_New_Post.html - method OP1
+        {
+            postId = 0;
+
+            SqlConnection con = null;
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT TOP 1 * FROM Posts ORDER BY postid DESC";
 
 
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read()) //1 row
+                {
+                    postId = Convert.ToInt32(dr["postid"]); //future id of the user
+                }
+
+                postId += 1;
+
+                return postId; //Future id of the user
+            }
+            catch (Exception)
+            {
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public int InsertPost(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (1))
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(post);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommand(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (2))
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", post.Title, post.Body, post.Image1, post.Category, post.Postdate, post.Status1);
+            String prefix = "INSERT INTO Posts " + "(title, body, image1, category, postdate, status1) ";
+
+            command = prefix + sb.ToString();
+
+            return command;
+
+        }
+
+
+        //---Add_New_Post.html--- *Close*
 
 
     }
