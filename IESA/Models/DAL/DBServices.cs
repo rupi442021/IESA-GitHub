@@ -21,6 +21,7 @@ namespace IESA.Models.DAL
         private string emailInfo;
         private string passInfo;
         private int idInfo;
+        private int postId;
 
         public DBServices() { }
 
@@ -366,7 +367,6 @@ namespace IESA.Models.DAL
 
                 String selectSTR = "SELECT Gamers.userid, Gamers.email, Gamers.password1 FROM Gamers WHERE Gamers.email = '" + email + "' UNION SELECT Orgenaizers.userid, Orgenaizers.email, Orgenaizers.password1 FROM Orgenaizers WHERE Orgenaizers.email = '" + email + "' UNION SELECT Managers.userid, Managers.email, Managers.password1 FROM Managers WHERE Managers.email = '" + email + "' ";
 
-
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -475,7 +475,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Orgenaizers WHERE userID = " + id_toserver;
+                String selectSTR = "SELECT * FROM Orgenaizers WHERE userid = " + id_toserver;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -530,7 +530,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Managers WHERE userID = " + id_toserver;
+                String selectSTR = "SELECT * FROM Managers WHERE userid = " + id_toserver;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -540,7 +540,7 @@ namespace IESA.Models.DAL
                 while (dr.Read()) //1 row
                 {
 
-                    m.Userid = (dr["userID"] != DBNull.Value) ? Convert.ToInt32(dr["userID"]) : default;
+                    m.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
                     m.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
                     m.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
                     m.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
@@ -622,6 +622,7 @@ namespace IESA.Models.DAL
 
             }
         }
+
         public int getCompetitionId()  //Add_New_Competition.html - method OO1 (Get New Id: Competition)
         {
             competitionId = 0;
@@ -633,7 +634,8 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY Competitionid DESC";
+
+                String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY competitionid DESC";
 
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
@@ -641,7 +643,9 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-                    competitionId = Convert.ToInt32(dr["Competitionid"]); //future id of the user
+
+                    competitionId = Convert.ToInt32(dr["competitionid"]); //future id of the user
+
                 }
 
                 competitionId += 1;
@@ -662,6 +666,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public int InsertCompetition(Competitions Competition) ////Add_New_Competition.html 
         {
 
@@ -704,6 +709,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         private String BuildInsertCommand(Competitions Competition) //Add_New_Competition.html
         {
             String command;
@@ -711,8 +717,8 @@ namespace IESA.Models.DAL
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}','{14}', '{15}', '{16}', '{17}', '{18}', '{19}', '{20}', '{21}','{22}', '{23}')", Competition.Competitionname, Competition.Address1, Competition.Banner, Competition.Logo, Competition.Prize1, Competition.Prize2, Competition.Price3, Competition.Linkforregistration, Competition.Lastdateforregistration, Competition.Body, Competition.Startdate, Competition.Enddate, Competition.Startime, Competition.Endtime, Competition.Ispro, Competition.Discord, Competition.Console, Competition.Isiesa, Competition.Linkforstream, Competition.Competitionstatus, Competition.IsPayment, Competition.Isonline, Competition.Startcheckin, Competition.Endcheckin);
-            String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, starttime, endtime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
-            
+            String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, startTime, endTime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
+
             command = prefix + sb.ToString();
             
             return command;
@@ -782,8 +788,110 @@ namespace IESA.Models.DAL
         //---Add_New_Competition.html--- *Close*
 
 
+        //---Add_New_Post.html--- *Open*
 
 
+        public int GetnewIdPost() //Add_New_Post.html - method OP1
+        {
+            postId = 0;
+
+            SqlConnection con = null;
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT TOP 1 * FROM Posts ORDER BY postid DESC";
+
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read()) //1 row
+                {
+                    postId = Convert.ToInt32(dr["postid"]); //future id of the user
+                }
+
+                postId += 1;
+
+                return postId; //Future id of the user
+            }
+            catch (Exception)
+            {
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public int InsertPost(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (1))
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(post);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommand(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (2))
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", post.Title, post.Body, post.Image1, post.Category, post.Postdate, post.Status1);
+            String prefix = "INSERT INTO Posts " + "(title, body, image1, category, postdate, status1) ";
+
+            command = prefix + sb.ToString();
+
+            return command;
+
+        }
+
+
+        //---Add_New_Post.html--- *Close*
 
 
         //---Orgenaizer_Main_Page.html--- *Open*
@@ -835,8 +943,6 @@ namespace IESA.Models.DAL
                     c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
 
                     //c.Gamecategory = (string)dr["gameCategory"]; - Missed Column in DB.
-
-
 
 
                     if (c.Status1 == 1)

@@ -1,0 +1,381 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+
+    <title>&#x202E; הוספת פוסט – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+        body {
+            background-color: #212529;
+            color: white;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            height: 2000px;
+            padding-top: 30px;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        #charNum {
+            direction: ltr;
+            color: dimgray;
+            font-size: 15px;
+        }
+
+        .logofilePH > img {
+            max-height: 250px;
+            max-width: 950px;
+        }
+
+        .bannerfilePH > img {
+            max-height: 350px;
+            max-width: 300px;
+        }
+
+        .noteforfiles {
+            font-size: 12px;
+        }
+
+        /*Template Style*/
+
+        hr {
+            display: inline-block;
+            width: 82%;
+            margin-bottom: 0px;
+            margin-left: 5px;
+            opacity: 0.8;
+            height: 2px !important;
+        }
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+            .titlelink:hover {
+                color: white;
+                background-color: transparent;
+            }
+
+
+        img {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 3px;
+            background-color: #F0FFFF;
+            width: 100%;
+            height: 200px;
+        }
+
+
+
+
+
+
+
+
+
+
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+
+            counterimage = 3300;
+
+            $("#pForm").submit(function (e) {
+                e.preventDefault();
+                getPostId();
+            });
+
+            $("#logoFile").change(function () {
+                addPreview();
+            });
+
+        });
+
+
+        function init() {
+
+            if (localStorage["user_type"] != "1") {
+
+                location.replace("TemplatePage.html"); //wont allow other users to be on this page
+            }
+
+        }
+
+        function getPostId() {
+
+            ajaxCall("GET", "../api/Posts", "", getSuccessId, getErrorId); //method OP1
+        }
+
+        function getSuccessId(id) { //get the id of the new post
+            console.log(id);
+
+            var postid = parseInt(id);
+
+            addPhoto(postid);
+        }
+
+        function getErrorId(err) {
+            console.log(err.responseJSON.ExceptionMessage);
+
+            alert(err.responseJSON.ExceptionMessage);
+        }
+
+
+        function addPhoto(postid) {
+
+            var data = new FormData();
+
+            var files = $("#logoFile").get(0).files;
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("userid", postid); //append what ever data you want to send along with the files.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: addPost,
+                error: error
+            });
+
+        }
+
+        function addPost(imageURL) {
+
+            let photoUpload = imageURL[0];
+
+            PostObj = {
+                Title: $("#titleTB").val(),
+                Body: $("#bodyTB").val(),
+                Image1: photoUpload,
+                Category: $("#categoriesTB").val(),
+                Postdate: getDate(),
+                Status1: 1 //DEFAULT Post Active
+            }
+
+            ajaxCall("POST", "../api/Posts", JSON.stringify(PostObj), SuccessInsert, ErrorInsert); //method OP2
+        }
+
+        function SuccessInsert(data) {
+            console.log("in Success");
+
+            swal("פוסט נוסף בהצלחה", "הינך מועבר לאזור אישי", "success");
+
+            setTimeout(function () {
+                location.replace("TemplatePage.html");
+            }, 3500);
+        }
+
+
+        function ErrorInsert(err) {
+            console.log(err.responseJSON.ExceptionMessage);
+
+            alert(err.responseJSON.ExceptionMessage); //Message - throw new exception from the server*
+        }
+
+
+        function addPreview(userType) {
+
+            counterimage = counterimage + 1;
+
+            if (counterimage > 3302) { //Security: User Wont be able to upload more then 3 pictures to the server
+                counterimage = 3300;
+            }
+
+            var data = new FormData();
+
+            var files = $("#logoFile").get(0).files;
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("userid", counterimage); //append what ever data you want to send along with the files.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: imagePreview,
+                error: error
+            });
+
+
+        }
+
+
+        function imagePreview(data) {
+
+            var imgStr = "";
+
+            if (Array.isArray(data)) {
+                for (var i = 0; i < data.length; i++) {
+                    imgStr = "<img src='../" + data[i] + "' alt='Logo'/>";
+                }
+            }
+            else {
+                imgStr = "<img src='../" + data + "'/>";
+            }
+
+                document.getElementById("ph").innerHTML = imgStr;
+        }
+
+        function error(err) {
+            console.log(err);
+
+            alert(err);
+        }
+
+
+    </script>
+
+</head>
+<body onload="init()">
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+        <div class="container">
+
+            <a class="titlelink" href="TemplatePage.html">אזור אישי ></a><br />
+            <h2 style="color:white; display: inline-block">הוספת פוסט</h2>
+            <hr />
+            <br /><br /><br />
+
+            <p>* מיקום הפוסט יהיה ניתן לשינוי בדף דאשבורד מנהל</p> <br>
+
+            <h4 style="color:white">הזנת שדות פוסט</h4><br>
+
+            <form id="pForm" class="was-validated">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="mb-3">
+                            <label>כותרת:</label>
+                            <input type="text" class="form-control" id="titleTB" pattern=".{4,100}"
+                                   oninvalid="this.setCustomValidity('עד 100 תווים')"
+                                   oninput="this.setCustomValidity('')" required>
+                        </div>
+                    </div>
+                    <div class="col">
+
+
+                        <div class="mb-3">
+                            <label>קטגורייה:</label><br />
+                            <select name="gamecategories" class="form-select" id="categoriesTB" required>
+                                <option></option>
+                                <option value="כללי">כללי</option>
+                                <option value="עולמי">עולמי</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+
+
+                        <div class="mb-3">
+                            <label>גוף הפוסט:</label>
+                            <textarea class="form-control" id="bodyTB" placeholder="הזן טקסט כאן" pattern=".{4,3999}"
+                                      oninvalid="this.setCustomValidity('עד 7000 תווים')" rows="7" required></textarea>
+                            <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                <label for="file">לוגו פוסט: </label>
+                                <br />
+                                <input type="file" id="logoFile" name="files" multiple="multiple" />
+                                <p class="noteforfiles">הגודל המומלץ ללוגו 970x250</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col">
+                        <label>תצוגה מקדימה: </label>
+                        <div id="ph">
+                            <img src="https://i.imagesup.co/images2/825f9efa6c0956d118a1902c75f35529db52189f.jpg" alt="Logo">
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row" dir="ltr">
+
+                    <div class="col" style="margin-left:25px;">
+                        <br /><br />
+
+                        <input type="button" class="btn btn-danger" value="תצוגה מקדימה" id="previewC" />
+                        <input type="submit" class="btn btn-success" value="הוספת פוסט" onsubmit="return false" />
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>
