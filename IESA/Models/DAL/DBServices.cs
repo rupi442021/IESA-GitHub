@@ -366,11 +366,6 @@ namespace IESA.Models.DAL
 
 
                 String selectSTR = "SELECT Gamers.userid, Gamers.email, Gamers.password1 FROM Gamers WHERE Gamers.email = '" + email + "' UNION SELECT Orgenaizers.userid, Orgenaizers.email, Orgenaizers.password1 FROM Orgenaizers WHERE Orgenaizers.email = '" + email + "' UNION SELECT Managers.userid, Managers.email, Managers.password1 FROM Managers WHERE Managers.email = '" + email + "' ";
-<<<<<<< HEAD
-                
-=======
-
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
@@ -627,12 +622,8 @@ namespace IESA.Models.DAL
 
             }
         }
-<<<<<<< HEAD
 
-        public int getCompetitionId() //Add_New_Competition.html - method OO1 (Get New Id: Competition)
-=======
         public int getCompetitionId()  //Add_New_Competition.html - method OO1 (Get New Id: Competition)
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
         {
             competitionId = 0;
 
@@ -643,11 +634,8 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-<<<<<<< HEAD
+
                 String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY competitionid DESC";
-=======
-                String selectSTR = "SELECT TOP 1 * FROM Competitions ORDER BY Competitionid DESC";
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
 
 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
@@ -655,11 +643,9 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-<<<<<<< HEAD
+
                     competitionId = Convert.ToInt32(dr["competitionid"]); //future id of the user
-=======
-                    competitionId = Convert.ToInt32(dr["Competitionid"]); //future id of the user
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
+
                 }
 
                 competitionId += 1;
@@ -680,12 +666,8 @@ namespace IESA.Models.DAL
             }
 
         }
-<<<<<<< HEAD
 
-        public int InsertCompetition(Competitions Competition) //Add_New_Competition.html 
-=======
         public int InsertCompetition(Competitions Competition) ////Add_New_Competition.html 
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
         {
 
             SqlConnection con;
@@ -727,10 +709,7 @@ namespace IESA.Models.DAL
             }
 
         }
-<<<<<<< HEAD
-       
-=======
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
+
         private String BuildInsertCommand(Competitions Competition) //Add_New_Competition.html
         {
             String command;
@@ -738,13 +717,8 @@ namespace IESA.Models.DAL
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}','{6}', '{7}', '{8}', '{9}', '{10}', '{11}', '{12}', '{13}','{14}', '{15}', '{16}', '{17}', '{18}', '{19}', '{20}', '{21}','{22}', '{23}')", Competition.Competitionname, Competition.Address1, Competition.Banner, Competition.Logo, Competition.Prize1, Competition.Prize2, Competition.Price3, Competition.Linkforregistration, Competition.Lastdateforregistration, Competition.Body, Competition.Startdate, Competition.Enddate, Competition.Startime, Competition.Endtime, Competition.Ispro, Competition.Discord, Competition.Console, Competition.Isiesa, Competition.Linkforstream, Competition.Competitionstatus, Competition.IsPayment, Competition.Isonline, Competition.Startcheckin, Competition.Endcheckin);
-<<<<<<< HEAD
             String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, startTime, endTime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
 
-=======
-            String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, starttime, endtime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
-            
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
             command = prefix + sb.ToString();
             
             return command;
@@ -914,9 +888,9 @@ namespace IESA.Models.DAL
         }
 
 
-<<<<<<< HEAD
         //---Add_New_Post.html--- *Close*
-=======
+
+
         //---Orgenaizer_Main_Page.html--- *Open*
         
         public List<Competitions> GetOrgenaizerCompetitions(int OID)
@@ -968,8 +942,6 @@ namespace IESA.Models.DAL
                     //c.Gamecategory = (string)dr["gameCategory"]; - Missed Column in DB.
 
 
-
-
                     if (c.Status1 == 1)
                         cList.Add(c);
                 }
@@ -995,7 +967,6 @@ namespace IESA.Models.DAL
 
         //---Orgenaizer_Main_Page.html--- *Close*
 
->>>>>>> 6dc0116e55d55db752443324669561516251eb7f
 
 
     }
