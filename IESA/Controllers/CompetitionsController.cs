@@ -24,10 +24,10 @@ namespace IESA.Controllers
         }
 
  
-        public void Post(int cID, int gcID) //Add_New_Competitions.html 
+        public void Post(int cID, int gcID, int oID) //Add_New_Competitions.html 
         {
             DBServices dbs = new DBServices();
-            dbs.InsertGameInC(cID, gcID);
+            dbs.InsertGameInC(cID, gcID, oID);
         }
         [HttpPost]
         [Route("api/Competitions/mark2")]
@@ -45,9 +45,8 @@ namespace IESA.Controllers
             return (Pcompetitions);
         }
 
-        [HttpGet]
-        [Route("api/Competitions/mark3")]
-        public List<Competitions> GetOC(int OID) //Orgenaizer_Main_Page.html - 
+
+        public List<Competitions> Get(int OID) //Orgenaizer_Main_Page.html - 
         {
             Competitions lCompetitions = new Competitions();
             return lCompetitions.Read(OID);
