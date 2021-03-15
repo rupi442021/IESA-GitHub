@@ -70,12 +70,13 @@
         var OID = JSON.parse(localStorage.getItem("user_info"));
         console.log(OID.Userid);
         $(document).ready(function () {
-            GetAllOrgenaizerCompetition()
+            GetAllOrgenaizerCompetition();
 
         });
 
-        function GetAllOrgenaizerCompetition() {
-            ajaxCall("GET", "../api/Competitions/mark3?OID=" + OID, "", getSuccessOrgenaizerCompetition, getErrorOrgenaizerCompetition);
+        function GetAllOrgenaizerCompetition()
+        {
+            ajaxCall("GET", "../api/Competitions?OID=" + OID.Userid, "", getSuccessOrgenaizerCompetition, getErrorOrgenaizerCompetition);
         }
 
         function getSuccessOrgenaizerCompetition(data) {

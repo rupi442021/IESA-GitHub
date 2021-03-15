@@ -717,7 +717,7 @@ namespace IESA.Models.DAL
             
             return command;
         }
-        public int InsertGameInC(int cID, int gcID) //Add_New_Competition.html - Add row to game_competition 
+        public int InsertGameInC(int cID, int gcID, int oID) //Add_New_Competition.html - Add row to game_competition 
         {
 
             SqlConnection con;
@@ -734,7 +734,7 @@ namespace IESA.Models.DAL
                 throw new Exception("Problem inserting to the server, please try again later");
             }
 
-            String cStr = BuildInsertCommand(cID, gcID);      // helper method to build the insert string
+            String cStr = BuildInsertCommand(cID, gcID, oID);      // helper method to build the insert string
 
             cmd = CreateCommand(cStr, con);             // create the command
 
@@ -759,15 +759,18 @@ namespace IESA.Models.DAL
             }
 
         }
-        private String BuildInsertCommand(int cID, int gcID) //Add_New_Competition.html - Add row to game_competition
+        private String BuildInsertCommand(int cID, int gcID, int oID) //Add_New_Competition.html - Add row to game_competition
         {
             String command;
 
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-           String prefix1 = " INSERT INTO Competition_Game VALUES (" + cID + ", " + gcID + ")";
+            string date = DateTime.Now.ToString("dd-mm-yyyy");
+            string time = DateTime.Now.ToString("hh:mm:ss");
 
-            command = prefix1;
+            String prefix1 = "INSERT INTO Competition_Game VALUES (" + cID + ", " + gcID + ")";
+            String prefix2 = " INSERT INTO Orgenaizer_Competition VALUES (" + oID + ", " + cID + " , " + date + " , '" + time + "')";
+            command = prefix1 + prefix2;
 
             return command;
 
@@ -824,7 +827,7 @@ namespace IESA.Models.DAL
                     c.Console = (string)dr["console"];
                     c.Isiesa = Convert.ToInt32(dr["isiesa"]);
                     c.Linkforstream = (string)dr["linkforstream"];
-                    c.Numofparticipants = Convert.ToInt32(dr["numofparticipants2"]);
+                    c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
                     c.Competitionstatus = (string)dr["competitionstatus"];
                     c.Status1 = Convert.ToInt32(dr["status1"]);
                     c.IsPayment = Convert.ToInt32(dr["ispayment"]);

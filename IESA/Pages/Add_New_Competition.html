@@ -206,9 +206,10 @@
             
             var gcID = document.getElementById("ccategoriesDB").value;
             var cID = competitionid;
+            var oID = JSON.parse(localStorage.getItem("user_info"));
+            
 
-
-            ajaxCall("POST", "../api/Competitions?cID=" + cID + "&gcID=" + gcID, "", postSuccessCInG, postErrorCInG)
+            ajaxCall("POST", "../api/Competitions?cID=" + cID + "&gcID=" + gcID + "&oID=" + oID.Userid, "", postSuccessCInG, postErrorCInG)
 
 
         }
@@ -218,7 +219,7 @@
             swal("התחרות הוגשה בהצלחה! תמתין לתשובת מנהל")
 
             setTimeout(function () {
-                location.replace("TemplatePage.html");
+                location.replace("Orgenaizer_Main_Page.html");
             }, 2500);
 
         }
