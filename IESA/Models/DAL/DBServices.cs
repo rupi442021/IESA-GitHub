@@ -800,7 +800,83 @@ namespace IESA.Models.DAL
 
 
 
+        //---Orgenaizer_Main_Page.html--- *Open*
+        
+        public List<Competitions> GetOrgenaizerCompetitions(int OID)
+        {
+            SqlConnection con = null;
+            List<Competitions> cList = new List<Competitions>();
 
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionID = Orgenaizer_Competition.competitionID where Orgenaizer_Competition.orgenaizerID="+OID;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Competitions c    = new Competitions();
+                    c.Competitionid   = Convert.ToInt32(dr["competitionID"]);
+                    c.Competitionname = (string)dr["competitionName"];
+                    c.Isonline        = Convert.ToInt32(dr["isOnline"]);
+                    c.Address1        = (string)dr["address1"];
+                    c.Banner          = (string)dr["banner"];
+                    c.Logo            = (string)dr["logo"];
+                    c.Prize1          = (string)dr["prize1"];
+                    c.Prize2          = (string)dr["prize2"];
+                    c.Price3          = (string)dr["prize3"];
+                    c.Linkforregistration = (string)dr["linkForRegistration"];
+                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastDateForRegistration"]);
+                    c.Body = (string)dr["body"];
+                    c.Startdate = Convert.ToDateTime(dr["startDate"]);
+                    c.Enddate = Convert.ToDateTime(dr["endDate"]);
+                    c.Startime = ((TimeSpan)dr["startTime"]);
+                    c.Endtime = ((TimeSpan)dr["endTime"]);
+                    c.Ispro = Convert.ToInt32(dr["isPro"]);
+                    c.Discord = (string)dr["discord"];
+                    c.Console = (string)dr["console"];
+                    c.Isiesa = Convert.ToInt32(dr["isIESA"]);
+                    c.Linkforstream = (string)dr["linkForStream"];
+                    c.Numofparticipants = Convert.ToInt32(dr["numOfParticipants2"]);
+                    c.Competitionstatus = (string)dr["competitionStatus"];
+                    c.Status1 = Convert.ToInt32(dr["status1"]);
+                    c.IsPayment = Convert.ToInt32(dr["isPayment"]);
+                    c.Startcheckin = ((TimeSpan)dr["startCheckIn"]);
+                    c.Endcheckin = ((TimeSpan)dr["endCheckIn"]);
+
+                    //c.Gamecategory = (string)dr["gameCategory"]; - Missed Column in DB.
+
+
+
+
+                    if (c.Status1 == 1)
+                        cList.Add(c);
+                }
+
+                return cList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+
+
+        //---Orgenaizer_Main_Page.html--- *Close*
 
 
 

@@ -43,7 +43,15 @@ namespace IESA.Controllers
         public Competitions Getc() //Add_New_Competitions.html - 
         {
             return (Pcompetitions);
-        }   
+        }
+
+        [HttpGet]
+        [Route("api/Competitions/mark3")]
+        public List<Competitions> GetOC(int OID) //Orgenaizer_Main_Page.html - 
+        {
+            Competitions lCompetitions = new Competitions();
+            return lCompetitions.Read(OID);
+        }
 
 
     }
