@@ -12,6 +12,8 @@
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
 
 
+
+
     <title>&#x202E; הגשת תחרות – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
@@ -19,6 +21,7 @@
     <style type="text/css">
 
         /*Template Style*/
+
         body {
             background-color: #212529;
             color: white;
@@ -77,6 +80,11 @@
             font-size: 12px;
         }
 
+        .ck.ck-editor {
+            color: black;
+            direction: rtl;
+        }
+
         /*Template Style*/
 
     </style>
@@ -86,12 +94,11 @@
         var logoURL = '';
         var bannerURL = '';
         var imgType = '';
-        var counterimage = 2300; 
+        var counterimage = 2300;
         var address = '';
         var today = getDate();
-        
-        $(document).ready(function () {
 
+        $(document).ready(function () {
             GetAllGameCategories();
 
             document.getElementById("cForm").addEventListener("submit", function (event) {
@@ -112,11 +119,11 @@
                 if (this.id == 'online') {
                     document.getElementById("addressDIV").innerHTML = '';
                 }
-                else if (this.id == 'offline'){
+                else if (this.id == 'offline') {
                     document.getElementById("addressDIV").innerHTML = '<label>כתובת התחרות:</label>' +
                         '<input type = "text" class="form-control" placeholder = "במידה ולא אונליין" id = "addressTB"' +
                         + 'oninvalid="this.setCustomValidity("הכנס כתובת לתחרות")' + 'oninput="this.setCustomValidity("")" required>';
-            }
+                }
             });
             document.getElementById("ldfrDB").setAttribute("min", today);
 
@@ -139,7 +146,7 @@
                 ctype = 1;
             else
                 ctype = 0;
-            var oradio = $('input[name=radio-online]:checked'); //get is online? 
+            var oradio = $('input[name=radio-online]:checked'); //get is online?
             var conline = oradio.attr('id');
 
             if (conline == "online") {
@@ -187,27 +194,27 @@
                 Gamecategory: $("#ccategoriesDB option:selected").text()
             }
 
-            ajaxCall("POST", "../api/Competitions/mark2" , JSON.stringify(p1), postSuccessP, postErrorP);
+            ajaxCall("POST", "../api/Competitions/mark2", JSON.stringify(p1), postSuccessP, postErrorP);
             window.open("https://localhost:44318/Pages/Competition_Preview.html"); //need to change the URL after publish project
-            
+
         }
 
         function postSuccessP(data) {
             console.log(data)
         }
-       
+
         function postErrorP(err) {
             console.log(err)
         }
 
         function postSuccessC(data) {
             console.log("C Success", data);
-           
-            
+
+
             var gcID = document.getElementById("ccategoriesDB").value;
             var cID = competitionid;
             var oID = JSON.parse(localStorage.getItem("user_info"));
-            
+
 
             ajaxCall("POST", "../api/Competitions?cID=" + cID + "&gcID=" + gcID + "&oID=" + oID.Userid, "", postSuccessCInG, postErrorCInG)
 
@@ -227,7 +234,7 @@
         function postErrorCInG(err) {
             console.log("ERR ")
             console.log(err);
-            
+
         }
 
         function postErrorC(err) {
@@ -259,7 +266,7 @@
             //logo = $("#logoFile").get(0).files;
 
             var files = banner;
-           
+
 
             // Add the uploaded file to the form data collection
             if (files.length > 0) {
@@ -269,7 +276,7 @@
 
                 data.append("CompetitionID", competitionid + "_banner"); //append what ever data you want to send along with the files.
 
-           
+
             }
 
             // Ajax upload
@@ -297,7 +304,7 @@
         function addLogo() {
 
             var data = new FormData();
-            
+
             logo = $("#logoFile").get(0).files;
 
             var files = logo;
@@ -327,7 +334,7 @@
 
             return false;
         }
-        
+
         function routeLogo(data) {
             logoURL = data[0]
             console.log("In url's: ", logoURL);
@@ -345,7 +352,7 @@
         }
 
         function CompetitionBuilder() {
-          
+
             var tradio = $('input[name=radio-type]:checked'); //get competition type (Pro or Amateurs)
             var ctype = tradio.attr('id');
             if (ctype == "cPro")
@@ -353,16 +360,16 @@
             else
                 ctype = 0;
 
-            var oradio = $('input[name=radio-online]:checked'); //get is online? 
+            var oradio = $('input[name=radio-online]:checked'); //get is online?
             var conline = oradio.attr('id');
             if (conline == "online") {
                 conline = 1;
-                address = $("#addressTB").val()
+                address = "";
             }
 
             else {
                 conline = 0;
-                address = "";
+                address = $("#addressTB").val()
             }
 
             var pradio = $('input[name=radio-payment]:checked'); //get need payment?
@@ -371,10 +378,10 @@
                 cpayment = 1;
             else
                 cpayment = 0;
-            
+
             let c1 = {
                 Competitionname: $("#cnameTB").val(),
-                Isonline: conline, 
+                Isonline: conline,
                 Address1: address,
                 Banner: bannerURL,
                 Logo: logoURL,
@@ -398,7 +405,7 @@
                 Endcheckin: $("#checkin2TB").val()
             }
 
-           
+
             ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessC, postErrorC)
             return false;
 
@@ -411,7 +418,7 @@
         }
 
         function getSuccessGamesCategories(GamesCategories) {
-            console.log("GameCategories: " , GamesCategories)
+            console.log("GameCategories: ", GamesCategories)
             strOption = "";
             for (var i = 0; i < GamesCategories.length; i++) { //Add Games Categories to drop list
                 strOption += ' <option value="' + GamesCategories[i].Categoryid + '">' + GamesCategories[i].Categoryname + '</option> '
@@ -480,7 +487,7 @@
         function imagePreview(data) {
 
             var imgStr = "";
-            
+
             if (Array.isArray(data)) {
                 for (var i = 0; i < data.length; i++) {
                     imgStr = "<img src='../" + data[i] + "' class='' alt='PreviewImg'/>"; //instead of +=
@@ -503,7 +510,13 @@
 
         }
 
+        function f1() {
+
+        }
+
+
     </script>
+
 
 </head>
 <body>
@@ -714,23 +727,23 @@
 
                         <div class="row">
                             <div class="col">
-                                    <div class="form-group" method="post" enctype="multipart/form-data">
-                                        <label for="file">באנר תחרות: </label>
-                                        <br />
-                                        <input type="file" id="bannerFile" name="files" multiple="multiple" required />
-                                        <p class="noteforfiles">הגודל המומלץ לבאנר 970x250</p>
-                                    </div>
+                                <div class="form-group" method="post" enctype="multipart/form-data">
+                                    <label for="file">באנר תחרות: </label>
+                                    <br />
+                                    <input type="file" id="bannerFile" name="files" multiple="multiple" required />
+                                    <p class="noteforfiles">הגודל המומלץ לבאנר 970x250</p>
+                                </div>
                                 <div>
                                     <div class="bannerfilePH" id="bannerph"></div>
                                 </div>
                             </div> <!--banner-->
                             <div class="col">
-                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
-                                        <label for="file">לוגו תחרות:  </label>
-                                        <br />
-                                        <input type="file" id="logoFile" name="files" multiple="multiple" required />
-                                        <p class="noteforfiles">צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
-                                    </div>
+                                <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                    <label for="file">לוגו תחרות:  </label>
+                                    <br />
+                                    <input type="file" id="logoFile" name="files" multiple="multiple" required />
+                                    <p class="noteforfiles">צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
+                                </div>
                                 <div>
                                     <div class="mb-3 logofilePH" id="logoph"></div>
                                 </div>
@@ -750,20 +763,19 @@
                 </div>
             </form>
 
+            <h1>Classic editor</h1>
 
-           
-          
 
 
         </div>
 
-    </section>
+                    </section >
 
-    <section id="site_footer">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-            <h2>IESA</h2>
-        </div>
-    </section>
+                        <section id="site_footer">
+                            <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+                                <h2>IESA</h2>
+                            </div>
+                        </section>
 
-</body>
-</html>
+</body >
+</html >

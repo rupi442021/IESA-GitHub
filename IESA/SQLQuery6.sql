@@ -73,3 +73,18 @@ create table Competition_Game(
 	constraint pk4 PRIMARY KEY(competitionID,categoryID)
 )
 
+update competitions
+set competitionstatus = 4
+where competitionid=1
+update competitions
+set competitionstatus = 5
+where competitionid=2
+update competitions
+set competitionstatus = 6
+where competitionid=3
+update competitions
+set competitionstatus = 7
+where competitionid=4
+update competitions
+set competitionstatus = 8
+where competitionid=5
