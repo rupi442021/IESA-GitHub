@@ -40,6 +40,9 @@ namespace IESA.Models
         //#Functions Area
 
 
+        //---Add_New_Post.html--- *Open*
+
+
         public int ReadID() //Add_New_Post.html - method OP1
         {
             DBServices dbs = new DBServices();
@@ -54,6 +57,20 @@ namespace IESA.Models
         }
 
 
+        //---Add_New_Post.html--- *Close*
+
+
+        //---Post.html--- *Open*
+
+
+        public Posts getPost(int id_toserver) //Post.html - method OP3
+        {
+            DBServices dbs = new DBServices();
+            return dbs.getPostSQL(id_toserver);
+        }
+
+
+        //---Post.html--- *Close*
 
     }
 }

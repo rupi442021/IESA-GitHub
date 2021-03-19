@@ -11,3 +11,57 @@
 
     return date;
 }
+
+function renderDate(date) {
+
+    var day = date.substring(8, 10);
+    var month = date.substring(5, 7);
+    var hebmonth; // Month in Hebrew
+    var year = date.substring(0, 4);
+
+    switch (month) {
+        case "01":
+            hebmonth = "בינואר";
+            break;
+        case "02":
+            hebmonth = "בפברואר";
+            break;
+        case "03":
+            hebmonth = "במרץ";
+            break;
+        case "04":
+            hebmonth = "באפריל";
+            break;
+        case "05":
+            hebmonth = "במאי";
+            break;
+        case "06":
+            hebmonth = "ביוני";
+            break;
+        case "07":
+            hebmonth = "ביולי";
+            break;
+        case "08":
+            hebmonth = "באוגוסט";
+            break;
+        case "09":
+            hebmonth = "בספטמבר";
+            break;
+        case "10":
+            hebmonth = "באוקטובר";
+            break;
+        case "11":
+            hebmonth = "בנובמבר";
+            break;
+        case "12":
+            hebmonth = "בדצמבר";
+            break;
+
+        default:
+            hebmonth = "לחודש";
+    }
+
+    datestring = day + " " + hebmonth + " " + year;
+
+    return datestring;
+}

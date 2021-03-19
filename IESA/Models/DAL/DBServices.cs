@@ -108,6 +108,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public string CheckNicknameSQL(string nicknameAdd) //Sign_Up.html - method OG2 (Check Nickname: Gamer/Orgenaizer)
         {
 
@@ -155,6 +156,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public int GetnewIdGamer()  //Sign_Up.html - method OG3 (Get New Id: Gamer)
         {
             userId = 0;
@@ -195,6 +197,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public int GetnewIdOrgenaizer()  //Sign_Up.html - method OO1 (Get New Id: Orgenaizer)
         {
             userId = 0;
@@ -235,6 +238,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public int InsertGamer(Gamers gamer) //Sign_Up.html - method OG4 (Insert: Gamer (1))
         {
 
@@ -277,6 +281,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         private String BuildInsertCommand(Gamers gamer) //Sign_Up.html - method OG4 (Insert: Gamer (2))
         {
             String command;
@@ -291,6 +296,7 @@ namespace IESA.Models.DAL
             return command;
 
         }
+
         public int InsertOrgenaizer(Orgenaizers orgenaizer) //Sign_Up.html - method OO2 (Insert: Orgenaizer (1))
         {
 
@@ -333,6 +339,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         private String BuildInsertCommand(Orgenaizers orgenaizer) //Sign_Up.html - method OO2 (Insert: Orgenaizer (2))
         {
             String command;
@@ -407,6 +414,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public Gamers getGamerSQL(int id_toserver) //Sign_In.html - method OL2
         {
 
@@ -464,6 +472,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public Orgenaizers getOrgenaizerSQL(int id_toserver) //Sign_In.html - method OL3
         {
 
@@ -519,6 +528,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
         public Managers getManagerSQL(int id_toserver) //Sign_In.html - method OL4
         {
 
@@ -961,6 +971,61 @@ namespace IESA.Models.DAL
 
 
         //---Orgenaizer_Main_Page.html--- *Close*
+
+
+        //---Post.html--- *Open*
+
+        public Posts getPostSQL(int id_toserver) //Sign_In.html - method OL2
+        {
+
+            SqlConnection con = null;
+            Posts p = new Posts();
+
+            try
+            {
+
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Posts WHERE postid = " + id_toserver;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+
+                while (dr.Read()) //1 row
+                {
+
+                    p.Postid = (dr["postid"] != DBNull.Value) ? Convert.ToInt32(dr["postid"]) : default;
+                    p.Title = (dr["title"] != DBNull.Value) ? (string)dr["title"] : default;
+                    p.Body = (dr["body"] != DBNull.Value) ? (string)dr["body"] : default;
+                    p.Image1 = (dr["image1"] != DBNull.Value) ? (string)dr["image1"] : default;
+                    p.Category = (dr["category"] != DBNull.Value) ? (string)dr["category"] : default;
+                    p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+                    p.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
+
+                }
+
+                return p;
+
+            }
+            catch (Exception ex) //change it to a message
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+
+        //---Post.html--- *Close*
 
 
 
