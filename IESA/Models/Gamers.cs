@@ -121,9 +121,24 @@ namespace IESA.Models
         }
 
 
-            //---Sign_In.html--- *Close*
+        //---Sign_In.html--- *Close*
 
 
 
+        //--------Orgenaizer_Main_Page.html----------- *Open*
+        public List<Gamers> Read() 
+        {
+            DBServices dbs = new DBServices();
+            List<Gamers> lGamers = dbs.GetGamers();
+            return lGamers;
         }
+
+
+
+
+
+        //--------Orgenaizer_Main_Page.html----------- *Close*
+
+
     }
+}

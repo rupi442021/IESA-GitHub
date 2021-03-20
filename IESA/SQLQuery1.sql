@@ -1,28 +1,12 @@
-﻿update competitions
-set competitionstatus = 4
-where competitionid=1
-update competitions
-set competitionstatus = 5
-where competitionid=2
-update competitions
-set competitionstatus = 6
-where competitionid = 3
-update competitions
-set competitionstatus = 8
-where competitionid = 7
-update competitions
-set competitionstatus = 5
-where competitionid = 12
+﻿select *
+from gamers
+where gamers.status1=1 and gamers.license=1
 
-select competitionstatus
-from competitions
 
-select competitionname, competitionstatus, status1
-from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid=20000000 and Competitions.status1=1 
 
-ALTER TABLE competitions
-ADD CONSTRAINT df_competitionstatis
-DEFAULT 1 FOR competitionstatus;
+UPDATE gamers
+SET license = '1' , outofdate= '31/12/2021', status1 = 1
+WHERE userid = 30000001;
 
-ALTER TABLE Competitions
-DROP COLUMN competitionstatus 
+select *
+from Orgenaizers

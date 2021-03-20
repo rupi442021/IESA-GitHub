@@ -70,6 +70,23 @@ namespace IESA.Controllers
 
 
 
+        //---Orgenaizer_Main_Page.html-------- *Open*
+
+
+        [HttpGet] 
+        [Route("api/gamers/mark3")]
+        public List<Gamers> GetG()
+        {
+            Gamers lGamers = new Gamers();
+            return lGamers.Read();
+        }
+
+
+
+
+        //---Orgenaizer_Main_Page.html-------- *Close*
+
+
 
 
 
