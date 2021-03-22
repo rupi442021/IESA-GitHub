@@ -8,7 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
-    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
@@ -66,24 +68,29 @@
             border: 0px;
             margin-left: 0px;
         }
-        .card img{
-            max-height:200px;
-            max-width:100%;
-        }
+
+            .card img {
+                max-height: 200px;
+                max-width: 100%;
+            }
+
         .card-body {
-           padding: 0px;
-           background-color: black;
+            padding: 0px;
+            background-color: black;
         }
+
         .card p {
-                text-align: center;
-         }
-        .card i {
-                text-align: center;
-               
+            text-align: center;
         }
+
+        .card i {
+            text-align: center;
+        }
+
         .card-title {
             text-align: center;
         }
+
         #iconp {
             margin-top: 20px;
             margin-bottom: 5px;
@@ -93,19 +100,21 @@
             text-align: -webkit-center;
             display: flex;
         }
-        #PCcards{
-            margin-top:100px;
+
+        #PCcards {
+            margin-top: 100px;
         }
+
         .card {
             display: inline-block;
         }
 
         img {
-            height:168px;
+            height: 168px;
             width: 240px;
         }
 
-        .loadC{
+        .loadC {
             margin-top: auto;
         }
 
@@ -115,20 +124,28 @@
             position: absolute
         }
 
-        
+        .modal-content {
+            color: black;
+        }
+
+
 
         /*Template Style*/
 
     </style>
 
-
     <script>
-
+        var fList = [];
+        var pList = [];
+        var gList = [];
+        var gamers = '';
+        var num = 1;
 
         var OID = JSON.parse(localStorage.getItem("user_info"));
         console.log(OID.Userid);
         $(document).ready(function () {
             GetAllOrgenaizerCompetition();
+            GetAllGamers();
 
             $('#AllFCcards').hide();
             $('#AllPCcards').hide();
@@ -136,14 +153,19 @@
             $('#loadFCbtn').click(function () {
                 $('#AllFCcards').toggle()
                 $(this).text($(this).text() == 'צמצם' ? 'טען עוד' : 'צמצם');
-            }
-            );
+            });
+
 
             $('#loadPCbtn').click(function () {
                 $('#AllPCcards').toggle()
                 $(this).text($(this).text() == 'צמצם' ? 'טען עוד' : 'צמצם');
-            }
-            );
+            });
+
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            });
+
+            
 
         });
 
@@ -155,8 +177,7 @@
             console.log("In success: ", data);
             var loopFlist = 3;
             var loopPlist = 3;
-            var fList = [];
-            var pList = [];
+
 
             for (var i = 0; i < data.length; i++) {
                 if (data[i].Competitionstatus == 1 || data[i].Competitionstatus == 2 || data[i].Competitionstatus == 3)
@@ -182,7 +203,7 @@
                 let Stardate = fList[i].Startdate.split("T");
                 Stardate = Stardate[0].split("-");
                 Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
-                
+
                 var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
                 cardstr += '<img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
                 cardstr += '<div class="card-body">';
@@ -193,53 +214,16 @@
                     cardstr += '<p class="card-text">אונליין</p>';
                 else
                     cardstr += '<p class="card-text">' + fList[i].Address1 + '</p>';
-                if (fList[i].Competitionstatus == 1 )
-                        cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i></p> </div > </div ></div >';
+                if (fList[i].Competitionstatus == 1)
+                    cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i></p> </div > </div ></div >';
                 else if (fList[i].Competitionstatus == 2)
-                        cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem; color:green"></i></p> </div > </div ></div >';
+                    cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem; color:green"></i></p> </div > </div ></div >';
                 else if (fList[i].Competitionstatus == 3)
-                        cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                    cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                $("#FutureC").append(cardstr);
 
-                    $("#FutureC").append(cardstr);
-                    
             }
-            
-            for (var i = 0; i < loopPlist; i++) {
-               
-                let edat = pList[i].Enddate.split("T");
-                edat = edat[0].split("-");
-                let today = new Date(getDate())
-                let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
 
-
-                let Stardate = pList[i].Startdate.split("T");
-                Stardate = Stardate[0].split("-");
-                Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
-
-                let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0]
-
-                var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
-                    cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
-                    cardstr += '<div class="card-body">';
-                    cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
-                    cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-                    cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
-                    if (pList[i].Address1 == '' || pList[i].Address1 == null)
-                          cardstr += '<p class="card-text">אונליין</p>';
-                    else
-                    cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
-                if (pList[i].Competitionstatus == 4)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + timetorank + 'ימים להזנת התוצאות </p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 5)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary disabled">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 6)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary disabled"> הזנת תוצאות תחרות</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 7)
-                    cardstr += '<button type="button" class="btn btn-light disabled disabled">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 8)
-                    cardstr += '<button type="button" class="btn btn-light disabled disabled">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
-                $("#PastC").append(cardstr);
-            }
             if (fList.length > 3) {
                 for (var i = 3; i < fList.length; i++) {
 
@@ -251,34 +235,32 @@
                     Stardate = Stardate[0].split("-");
                     Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
 
-                    
 
-                var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
-                cardstr += '<img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
-                cardstr += '<div class="card-body">';
-                cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
+
+                    var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
+                    cardstr += '<img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
+                    cardstr += '<div class="card-body">';
+                    cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
                     cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                     cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
-                if (fList[i].Address1 == '' || fList[i].Address1 == null)
-                    cardstr += '<p class="card-text">אונליין</p>';
-                else
-                    cardstr += '<p class="card-text">' + fList[i].Address1 + '</p>';
-                if (fList[i].Competitionstatus == 1)
-                    cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
-                else if (fList[i].Competitionstatus == 2)
-                    cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem ; color:green"></i></p> </div > </div ></div >';
-                else if (fList[i].Competitionstatus == 3)
-                    cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                    if (fList[i].Address1 == '' || fList[i].Address1 == null)
+                        cardstr += '<p class="card-text">אונליין</p>';
+                    else
+                        cardstr += '<p class="card-text">' + fList[i].Address1 + '</p>';
+                    if (fList[i].Competitionstatus == 1)
+                        cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
+                    else if (fList[i].Competitionstatus == 2)
+                        cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem ; color:green"></i></p> </div > </div ></div >';
+                    else if (fList[i].Competitionstatus == 3)
+                        cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
 
-                $("#AllFutureC").append(cardstr);
+                    $("#AllFutureC").append(cardstr);
 
                 }
             }
-             
-            if (pList.length > 3) {
-                for (var i = 3; i < pList.length; i++) {
 
-              
+            for (var i = 0; i < loopPlist; i++) {
+
                 let edat = pList[i].Enddate.split("T");
                 edat = edat[0].split("-");
                 let today = new Date(getDate())
@@ -287,9 +269,9 @@
 
                 let Stardate = pList[i].Startdate.split("T");
                 Stardate = Stardate[0].split("-");
-                Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
+                Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0];
 
-                let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0]
+                let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0];
 
                 var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
                 cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
@@ -302,27 +284,110 @@
                 else
                     cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
                 if (pList[i].Competitionstatus == 4)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + timetorank + 'ימים להזנת התוצאות </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + timetorank + 'ימים להזנת התוצאות </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 5)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-outline-secondary disabled">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 6)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary"> הזנת תוצאות תחרות</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-outline-secondary disabled"> הזנת תוצאות תחרות</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 7)
-                    cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-light disabled disabled">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 8)
-                    cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
-                $("#AllPastC").append(cardstr);
-                }
+                    cardstr += '<button type="button" class="btn btn-light disabled disabled">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                $("#PastC").append(cardstr);
             }
-      
-            
-            
-           
+
+            if (pList.length > 3) {
+                for (var i = 3; i < pList.length; i++) {
+
+
+                    let edat = pList[i].Enddate.split("T");
+                    edat = edat[0].split("-");
+                    let today = new Date(getDate())
+                    let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
+
+
+                    let Stardate = pList[i].Startdate.split("T");
+                    Stardate = Stardate[0].split("-");
+                    Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
+
+                    let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0]
+
+                    var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
+                    cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
+                    cardstr += '<div class="card-body">';
+                    cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
+                    cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
+                    cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
+                    if (pList[i].Address1 == '' || pList[i].Address1 == null)
+                        cardstr += '<p class="card-text">אונליין</p>';
+                    else
+                        cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
+                    if (pList[i].Competitionstatus == 4)
+                        cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> הזנת תוצאות תחרותי</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + timetorank + 'ימים להזנת התוצאות </p> </div > </div ></div >';
+                    else if (pList[i].Competitionstatus == 5)
+                        cardstr += '<button type="button" class="btn btn-outline-secondary">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
+                    else if (pList[i].Competitionstatus == 6)
+                        cardstr += '<button type="button" class="btn btn-outline-secondary"> הזנת תוצאות תחרות</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
+                    else if (pList[i].Competitionstatus == 7)
+                        cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                    else if (pList[i].Competitionstatus == 8)
+                        cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                    $("#AllPastC").append(cardstr);
+                }
+
+            }
+
         }
 
         function getErrorOrgenaizerCompetition(err) {
             console.log(err);
         }
+
+        function GetAllGamers() {
+            ajaxCall("GET", "../api/Gamers/mark3", "", getSuccessGamers, getErrorGamers);
+        }
+
+        function getSuccessGamers(data) {
+            console.log("Gamers: ", data);
+            gList = data;
+
+
+        }
+        function getErrorGamers(err) {
+            console.log("In E: ", err);
+        }
+
+        function setrank(c) {
+            $("#exampleModalLongTitle").html(c.Competitionname);
+            $("#modal-body").text(" ");
+            g1 = "";
+            gamers = "";
+            num = 1;
+           
+            //options builder
+            for (var i = 0; i < gList.length; i++) {
+                
+                g1 = "שם פרטי: " + gList[i].Firstname + " | " ;
+                g1 += "שם משפחה: " + gList[i].Lastname + " | ";
+                g1 += "כינוי: " + gList[i].Nickname + " | ";
+                g1 += "אימייל: " + gList[i].Email + " | ";
+                g1 += "טלפון: " + gList[i].Phone ;
+
+                gamers += "<option value='" + gList[i].Userid+ "'>" + g1 + "</option>"
+            }
+            dropd = "<input onchange = 'selectrankgamers()' list = 'brow' placeholder = 'בחר שחקן'/> <datalist id='brow'> " + gamers + "</datalist>";
+            $("#modal-body").html("<table id='tblg'><tr>><td>#"+ num+"</td><td>" + dropd + "</td> </tr></table>");
+
+        }
+
+        function selectrankgamers(gamerid) {
+            num = num + 1;;
+            $("#tblg").append("<tr><td>#"+ num +"</td><td><input onchange='selectrankgamers()' list='brow' placeholder='בחר שחקן'> <datalist id='brow'> " + gamers + "</datalist></td></tr>");
+            
+        }
+
+        
+
     </script>
 </head>
 <body>
@@ -380,10 +445,31 @@
                 <div class="col-3" id=""></div>
             </div>
 
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="modal-body" class="modal-body">
 
-
+                        </div>
+                        <div id='result'></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
+
+
 
     </section>
 
