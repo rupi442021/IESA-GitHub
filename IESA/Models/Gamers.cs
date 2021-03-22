@@ -121,9 +121,21 @@ namespace IESA.Models
         }
 
 
-            //---Sign_In.html--- *Close*
+        //---Sign_In.html--- *Close*
 
 
 
+        //---Manager_Main_Page.html--- *Open*
+
+        public List<Gamers> ReadGamers() //Manager_Main_Page.html - method OM1
+        {
+            DBServices dbs = new DBServices();
+            List<Gamers> glist = dbs.ReadGamersMSQL();
+            return glist;
         }
+
+
+        //---Manager_Main_Page.html--- *Close*
+
     }
+}

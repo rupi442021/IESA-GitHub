@@ -63,7 +63,7 @@ namespace IESA.Models
         //---Post.html--- *Open*
 
 
-        public Posts getPost(int id_toserver) //Post.html - method OP3
+        public Posts GetPost(int id_toserver) //Post.html - method OP3
         {
             DBServices dbs = new DBServices();
             return dbs.getPostSQL(id_toserver);
