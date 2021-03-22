@@ -150,6 +150,9 @@
             $('#AllFCcards').hide();
             $('#AllPCcards').hide();
 
+            localStorage["competition_Id"] = "";
+            localStorage["num_competition_rank"] = "";
+
             $('#loadFCbtn').click(function () {
                 $('#AllFCcards').toggle()
                 $(this).text($(this).text() == 'צמצם' ? 'טען עוד' : 'צמצם');
@@ -165,6 +168,13 @@
                 $('#myInput').trigger('focus')
             });
 
+            $('#saverank').click(addnewrank)
+
+            $('#closerank').click(function () {
+                localStorage["competition_Id"] = "";
+                localStorage["num_competition_rank"] = "";
+            });
+          
             
 
         });
@@ -172,6 +182,7 @@
         function GetAllOrgenaizerCompetition() {
             ajaxCall("GET", "../api/Competitions?OID=" + OID.Userid, "", getSuccessOrgenaizerCompetition, getErrorOrgenaizerCompetition);
         }
+
 
         function getSuccessOrgenaizerCompetition(data) {
             console.log("In success: ", data);
@@ -359,10 +370,13 @@
 
         function setrank(c) {
             $("#exampleModalLongTitle").html(c.Competitionname);
+            localStorage["competition_Id"] = JSON.stringify(c.Competitionid);
+            
             $("#modal-body").text(" ");
             g1 = "";
             gamers = "";
             num = 1;
+            localStorage["num_competition_rank"] = JSON.stringify(num);
            
             //options builder
             for (var i = 0; i < gList.length; i++) {
@@ -375,14 +389,45 @@
 
                 gamers += "<option value='" + gList[i].Userid+ "'>" + g1 + "</option>"
             }
-            dropd = "<input onchange = 'selectrankgamers()' list = 'brow' placeholder = 'בחר שחקן'/> <datalist id='brow'> " + gamers + "</datalist>";
-            $("#modal-body").html("<table id='tblg'><tr>><td>#"+ num+"</td><td>" + dropd + "</td> </tr></table>");
+            dropd = "<input onchange = 'selectrankgamers()' list = 'brow' placeholder = 'בחר שחקן' id='selctedval"+num+"'  /> <datalist id='brow'> " + gamers + "</datalist>";
+            $("#modal-body").html("<table id='tblg'><tr>><td>#" + num + "</td><td>" + dropd + "</td> </tr></table>");
+
+            console.log("test1:", gList)
 
         }
 
-        function selectrankgamers(gamerid) {
-            num = num + 1;;
-            $("#tblg").append("<tr><td>#"+ num +"</td><td><input onchange='selectrankgamers()' list='brow' placeholder='בחר שחקן'> <datalist id='brow'> " + gamers + "</datalist></td></tr>");
+        function selectrankgamers() {
+            g1 = "";
+            gamers = "";
+
+            gList = gList.filter(gamer => gamer.Userid != $('#selctedval' + num + '').val())
+
+            console.log("test2:", gList) 
+
+            for (var i = 0; i < gList.length; i++) {
+
+                g1 = "שם פרטי: " + gList[i].Firstname + " | ";
+                g1 += "שם משפחה: " + gList[i].Lastname + " | ";
+                g1 += "כינוי: " + gList[i].Nickname + " | ";
+                g1 += "אימייל: " + gList[i].Email + " | ";
+                g1 += "טלפון: " + gList[i].Phone;
+
+                gamers += "<option value='" + gList[i].Userid + "'>" + g1 + "</option>"
+            }
+            num = num + 1;
+            localStorage["num_competition_rank"] = JSON.stringify(num);
+            $("#tblg").append("<tr><td>#" + num + "</td><td><input onchange='selectrankgamers()' list='brow' placeholder='בחר שחקן' id='selctedval" + num + "'> <datalist id='brow'> " + gamers + "</datalist></td></tr>");
+            
+        }
+
+        function addnewrank() {
+            var NumOfRanks = JSON.parse(localStorage.getItem("num_competition_rank"));
+            var CID = JSON.parse(localStorage.getItem("competition_Id"))
+            for (var i = 0; i < NumOfRanks; i++) {
+                console.log("in rank", i, $('#selctedval' + i + '').val())
+            }
+            console.log(NumOfRanks, CID)
+
             
         }
 
@@ -460,8 +505,8 @@
                         </div>
                         <div id='result'></div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closerank">Close</button>
+                            <button type="button" class="btn btn-primary" id="saverank">Save changes</button>
                         </div>
                     </div>
                 </div>
