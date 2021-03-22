@@ -69,6 +69,7 @@ namespace IESA.Controllers
         //---Sign_Up.html--- *Close*
 
 
+        //---Manager_Main_Page.html--- *Open*
 
         //---Orgenaizer_Main_Page.html-------- *Open*
 
@@ -88,9 +89,17 @@ namespace IESA.Controllers
 
 
 
+        [HttpGet] //Manager_Main_Page.html - method OM1
+        [Route("api/Gamers/tableG")]
+        public List<Gamers> GetGamers()
+        {
+            Gamers gamerslist = new Gamers();
+            return gamerslist.ReadGamers();
+        }
 
 
 
+        //---Manager_Main_Page.html--- *Close*
 
 
     }

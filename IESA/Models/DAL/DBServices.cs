@@ -1087,6 +1087,61 @@ namespace IESA.Models.DAL
         //---Post.html--- *Close*
 
 
+        //---Manager_Main_Page.html--- *Open*
+
+        public List<Gamers> ReadGamersMSQL() //Manager_Main_Page.html - method OM1
+        {
+
+            SqlConnection con = null;
+            List<Gamers> GamersList = new List<Gamers>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Gamers WHERE status1 = 'False' ";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Gamers gamer = new Gamers();
+
+                    gamer.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
+                    gamer.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
+                    gamer.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
+                    gamer.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
+                    gamer.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
+                    gamer.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
+                    gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    GamersList.Add(gamer);
+                }
+
+                return GamersList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+
+
+        //---Manager_Main_Page.html--- *Close*
 
 
         

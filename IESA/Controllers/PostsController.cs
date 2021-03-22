@@ -34,7 +34,7 @@ namespace IESA.Controllers
         public Posts GetPost(int idtoserver)
         {
             Posts post1 = new Posts();
-            return post1.getPost(idtoserver);
+            return post1.GetPost(idtoserver);
         }
 
         //---Post.html--- *Close*
