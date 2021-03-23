@@ -128,7 +128,21 @@
             color: black;
         }
 
+        table, tr, td {
+        }
 
+        #inputnumbers {
+        margin-bottom: 20px;
+        }
+        tr{
+            margin-bottom: 3px;
+        }
+
+        .errvalidation {
+        color: red;
+        font-size: 10px;
+        direction: rtl;
+        }
 
         /*Template Style*/
 
@@ -138,11 +152,16 @@
         var fList = [];
         var pList = [];
         var gList = [];
+        var cgList = [];
+        var gamersIdList = [];
+        var selectedList = [];
+      
         var gamers = '';
         var num = 1;
-
+        var numofp = 0;
         var OID = JSON.parse(localStorage.getItem("user_info"));
         console.log(OID.Userid);
+
         $(document).ready(function () {
             GetAllOrgenaizerCompetition();
             GetAllGamers();
@@ -175,7 +194,6 @@
                 localStorage["num_competition_rank"] = "";
             });
           
-            
 
         });
 
@@ -295,15 +313,15 @@
                 else
                     cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
                 if (pList[i].Competitionstatus == 4)
-                    cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + timetorank + 'ימים להזנת התוצאות </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 5)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary disabled">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 6)
-                    cardstr += '<button type="button" class="btn btn-outline-secondary disabled"> הזנת תוצאות תחרות</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 7)
-                    cardstr += '<button type="button" class="btn btn-light disabled disabled">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 8)
-                    cardstr += '<button type="button" class="btn btn-light disabled disabled">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
                 $("#PastC").append(cardstr);
             }
 
@@ -334,15 +352,15 @@
                     else
                         cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
                     if (pList[i].Competitionstatus == 4)
-                        cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> הזנת תוצאות תחרותי</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + timetorank + 'ימים להזנת התוצאות </p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו ' + " " + timetorank + " " + ' ימים להזנת התוצאות </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 5)
-                        cardstr += '<button type="button" class="btn btn-outline-secondary">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 6)
-                        cardstr += '<button type="button" class="btn btn-outline-secondary"> הזנת תוצאות תחרות</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 7)
-                        cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-light" >משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 8)
-                        cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
                     $("#AllPastC").append(cardstr);
                 }
 
@@ -371,39 +389,22 @@
         function setrank(c) {
             $("#exampleModalLongTitle").html(c.Competitionname);
             localStorage["competition_Id"] = JSON.stringify(c.Competitionid);
-            
             $("#modal-body").text(" ");
+
+            $("#modal-body").html("<div id='inputnumbers'></div><div id='renderinputs'></div>");
+
+            let tbl = "<table id=inputtbl></table>";
+
+            $("#inputnumbers").append("בחור כמות משתתפים: " + "<input type='number' id='numofparticipants' onchange='selectrankgamers()'/>");
+
+            $("#renderinputs").append(tbl);
+
+
             g1 = "";
             gamers = "";
             num = 1;
             localStorage["num_competition_rank"] = JSON.stringify(num);
-           
-            //options builder
-            for (var i = 0; i < gList.length; i++) {
-                
-                g1 = "שם פרטי: " + gList[i].Firstname + " | " ;
-                g1 += "שם משפחה: " + gList[i].Lastname + " | ";
-                g1 += "כינוי: " + gList[i].Nickname + " | ";
-                g1 += "אימייל: " + gList[i].Email + " | ";
-                g1 += "טלפון: " + gList[i].Phone ;
-
-                gamers += "<option value='" + gList[i].Userid+ "'>" + g1 + "</option>"
-            }
-            dropd = "<input onchange = 'selectrankgamers()' list = 'brow' placeholder = 'בחר שחקן' id='selctedval"+num+"'  /> <datalist id='brow'> " + gamers + "</datalist>";
-            $("#modal-body").html("<table id='tblg'><tr>><td>#" + num + "</td><td>" + dropd + "</td> </tr></table>");
-
-            console.log("test1:", gList)
-
-        }
-
-        function selectrankgamers() {
-            g1 = "";
-            gamers = "";
-
-            gList = gList.filter(gamer => gamer.Userid != $('#selctedval' + num + '').val())
-
-            console.log("test2:", gList) 
-
+             //options builder
             for (var i = 0; i < gList.length; i++) {
 
                 g1 = "שם פרטי: " + gList[i].Firstname + " | ";
@@ -412,26 +413,79 @@
                 g1 += "אימייל: " + gList[i].Email + " | ";
                 g1 += "טלפון: " + gList[i].Phone;
 
-                gamers += "<option value='" + gList[i].Userid + "'>" + g1 + "</option>"
+                gamers += "<option value='" + gList[i].Userid + "'>" + g1 + "</option> "
             }
-            num = num + 1;
-            localStorage["num_competition_rank"] = JSON.stringify(num);
-            $("#tblg").append("<tr><td>#" + num + "</td><td><input onchange='selectrankgamers()' list='brow' placeholder='בחר שחקן' id='selctedval" + num + "'> <datalist id='brow'> " + gamers + "</datalist></td></tr>");
+
+
             
+        }
+
+        function selectrankgamers() {
+            numofp = $("#numofparticipants").val();
+            $("#inputtbl").text("");
+            num = 1;
+
+            for (var j = 1; j <= numofp; j++) {
+                dropd = "<input list = 'brow' onchange='validationfunc()' placeholder = 'בחר שחקן במקום ה- " + num + "' id='selctedval" + j + "'  /> <datalist id='brow'> " + gamers + "</datalist>";
+                $("#inputtbl").append("<tr><td>#" + num + "</td> <td>" + dropd + "</td><td id='errorval" + j + "' class='errvalidation'> </td> </tr>");
+                num = num + 1;
+            }
         }
 
         function addnewrank() {
-            var NumOfRanks = JSON.parse(localStorage.getItem("num_competition_rank"));
-            var CID = JSON.parse(localStorage.getItem("competition_Id"))
-            for (var i = 0; i < NumOfRanks; i++) {
-                console.log("in rank", i, $('#selctedval' + i + '').val())
-            }
-            console.log(NumOfRanks, CID)
 
-            
+            var CID = JSON.parse(localStorage.getItem("competition_Id"))
+            for (var i = 1; i <= numofp; i++) {
+                console.log("input :", i, "gamer: ", $('#selctedval' + i + '').val())
+               
+            }
+
+            for (var i = 1; i <= numofp; i++) {
+                selectedList[i - 1] = ($('#selctedval' + i + '').val());
+            }
+
+            for (var i = 0; i < selectedList.length; i++) {
+
+                if (selectedList[i] == "")
+                    $('#errorval' + (i + 1) + '').text("לא בחרת שחקן");
+                
+            }
+
         }
 
-        
+        function validationfunc() {
+
+            var CID = JSON.parse(localStorage.getItem("competition_Id"))
+
+            for (var i = 1; i <= numofp; i++) {
+                console.log("input :", i, "gamer: ", $('#selctedval' + i + '').val())
+                selectedList[i - 1] = ($('#selctedval' + i + '').val());
+            }
+
+            for (var i = 0; i < gList.length; i++) {
+                gamersIdList[i] = JSON.stringify(gList[i].Userid)
+            }
+
+            for (var i = 0; i < selectedList.length; i++) {
+
+                if (gamersIdList.includes(selectedList[i]) == false)
+                    $('#errorval' + (i + 1) + '').text("שחקן לא קיים")
+                else
+                    $('#errorval' + (i + 1) + '').text("")
+                for (var j = i + 1; j <= selectedList.length ; j++) {
+
+                    if (selectedList[i] == selectedList[j])
+                        $('#errorval' + (i + 1) + '').text("בחרת כבר בשחקן הזה")
+                    else
+                        $('#errorval' + (i + 1) + '').append("")
+
+                }
+
+                if (selectedList[i] == "")
+                    $('#errorval' + (i + 1) + '').text("")
+            }
+
+        }
 
     </script>
 </head>
@@ -501,7 +555,6 @@
                             </button>
                         </div>
                         <div id="modal-body" class="modal-body">
-
                         </div>
                         <div id='result'></div>
                         <div class="modal-footer">

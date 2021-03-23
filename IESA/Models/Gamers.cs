@@ -125,7 +125,7 @@ namespace IESA.Models
 
 
 
-<<<<<<< HEAD
+
         //---Manager_Main_Page.html--- *Open*
 
         public List<Gamers> ReadGamers() //Manager_Main_Page.html - method OM1
@@ -137,7 +137,7 @@ namespace IESA.Models
 
 
         //---Manager_Main_Page.html--- *Close*
-=======
+
         //--------Orgenaizer_Main_Page.html----------- *Open*
         public List<Gamers> Read() 
         {
@@ -152,7 +152,7 @@ namespace IESA.Models
 
         //--------Orgenaizer_Main_Page.html----------- *Close*
 
->>>>>>> 2f58e326d1d3287ae5e423352be5489f4409e60b
+
 
     }
 }
