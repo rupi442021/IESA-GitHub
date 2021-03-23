@@ -159,6 +159,7 @@
         var gamers = '';
         var num = 1;
         var numofp = 0;
+        var cID = 0;
         var OID = JSON.parse(localStorage.getItem("user_info"));
         console.log(OID.Userid);
 
@@ -390,15 +391,16 @@
         }
 
         function setrank(c) {
+            cID = c.Competitionid;
             $("#exampleModalLongTitle").html(c.Competitionname);
             localStorage["competition_Id"] = JSON.stringify(c.Competitionid);
             $("#modal-body").text(" ");
-
+            $("#saverank").show();
             $("#modal-body").html("<div id='inputnumbers'></div><div id='renderinputs'></div>");
 
             let tbl = "<table id=inputtbl></table>";
 
-            $("#inputnumbers").append("בחור כמות משתתפים: " + "<input type='number' id='numofparticipants' onchange='selectrankgamers()'/>");
+            $("#inputnumbers").append("בחור כמות משתתפים: " + "<input type='number' id='numofparticipants' onchange='selectrankgamers("+ c.Competitionid +")'/>");
 
             $("#renderinputs").append(tbl);
 
@@ -423,7 +425,7 @@
             
         }
 
-        function selectrankgamers() {
+        function selectrankgamers(cID) {
             numofp = $("#numofparticipants").val();
             $("#inputtbl").text("");
             num = 1;
@@ -438,9 +440,11 @@
         function addnewrank() {
 
             var CID = JSON.parse(localStorage.getItem("competition_Id"))
+
+            var counter =0
+
             for (var i = 1; i <= numofp; i++) {
                 console.log("input :", i, "gamer: ", $('#selctedval' + i + '').val())
-               
             }
 
             for (var i = 1; i <= numofp; i++) {
@@ -448,12 +452,19 @@
             }
 
             for (var i = 0; i < selectedList.length; i++) {
-
                 if (selectedList[i] == "")
                     $('#errorval' + (i + 1) + '').text("לא בחרת שחקן");
-                
             }
 
+            for (var i = 0; i < selectedList.length; i++) {
+                if ($('#errorval' + (i + 1)).text() == "")
+                    counter++;      
+            }
+
+            if (counter == numofp && counter > 0) {
+                console.log("reaqdy in: ", cID)
+
+            }
         }
 
         function validationfunc() {
@@ -464,7 +475,7 @@
                 console.log("input :", i, "gamer: ", $('#selctedval' + i + '').val())
                 selectedList[i - 1] = ($('#selctedval' + i + '').val());
             }
-
+            
             for (var i = 0; i < gList.length; i++) {
                 gamersIdList[i] = JSON.stringify(gList[i].Userid)
             }
@@ -502,36 +513,23 @@
         function getSuccessGamersInC(data) {
             console.log(data);
             $("#modal-body").text('')
-            $("#modal-body").html('<table id="partisipantstbl"></table>')
-            var gamersarray = data;
-            var s = ""
-            Object.size = function (obj) {
-                var size = 0,
-                    key;
-                for (key in obj) {
-                    if (obj.hasOwnProperty(key)) size++;
-                }
-                return size;
-            };
+            $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
+            $("#saverank").hide();
+            var gamersarray = data; 
 
-            // Get the size of an object
-            
-            var size = Object.size(gamersarray);
 
-            console.log("size:",size)
-
-            //for (var i = 0; i < size.length; i++) {
-            //    s = gamersarray[i];
-            //    for (var j = 0; j < gamersarray[i].length; j++) {
-            //        console.log("shir",s)
-            //        //$("#partisipantstbl").html('<tr><td>' + gamersarray.gamersarray[i][j] +'</td></tr>')
-            //    }
-                
-            //}testformodi
            
 
-            
+            for (let key in gamersarray) {
+                $("#partisipantstbl").append('<tr id="' + key+'"><td>' + key + '</td></tr>')
+                for (var i = 0; i < gamersarray[key].length; i++) {
 
+                    console.log("shir", key, gamersarray[key][i])
+                    $("#"+key+"").append('<td>' + gamersarray[key][i]+'</td>')
+
+                }
+
+            }
         }
         function getErrorGamersInC(err) {
             console.log("in ERR: ", err);

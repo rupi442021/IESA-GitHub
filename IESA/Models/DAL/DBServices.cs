@@ -1152,7 +1152,6 @@ namespace IESA.Models.DAL
         {
 
             SqlConnection con = null;
-            List<string> details = new List<string>();
 
             try
             {
@@ -1169,16 +1168,17 @@ namespace IESA.Models.DAL
                 int score;
                 while (dr.Read())
                 {
-                    details.Add( (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default);
-                    details.Add( (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default);
-                    details.Add( (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default);
-                    rank = ((dr["rank1"] != DBNull.Value) ? Convert.ToInt32(dr["rank1"]) : default);
-                    details.Add( rank.ToString()) ;
-                    score = ((dr["score"] != DBNull.Value) ? Convert.ToInt32(dr["score"]) : default);
-                    details.Add(score.ToString());
-
-                    dict.Add((dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default, details);
-
+                    List<string> details = new List<string>();
+                    {
+                        details.Add((dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default);
+                        details.Add((dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default);
+                        details.Add((dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default);
+                        rank = ((dr["rank1"] != DBNull.Value) ? Convert.ToInt32(dr["rank1"]) : default);
+                        details.Add(rank.ToString());
+                        score = ((dr["score"] != DBNull.Value) ? Convert.ToInt32(dr["score"]) : default);
+                        details.Add(score.ToString());
+                    }
+                    dict.Add(((dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default), details);
                 }
 
                 return dict;
