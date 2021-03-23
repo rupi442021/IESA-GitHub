@@ -1148,11 +1148,11 @@ namespace IESA.Models.DAL
 
         //---Orgenzier_Mian_Page.html--- *Open*
 
-        public List<Gamers> GamersInCompetition(int CId) //Manager_Main_Page.html - method OM1
+        public Dictionary<int, List<string>> GamersInC(int CId) //Manager_Main_Page.html - method OM1
         {
 
             SqlConnection con = null;
-            List<Gamers> GamersInCList = new List<Gamers>();
+            List<string> details = new List<string>();
 
             try
             {
@@ -1161,38 +1161,31 @@ namespace IESA.Models.DAL
                 String selectSTR = "SELECT * FROM Gamer_Competition inner join Gamers on Gamer_Competition.gamerid=Gamers.userid WHERE competitionid=" + CId + " and  Gamer_Competition.status1 = '1' ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
+                Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
 
+                int rank;
+                int score;
                 while (dr.Read())
                 {
-                    Gamers g = new Gamers();
+                    details.Add( (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default);
+                    details.Add( (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default);
+                    details.Add( (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default);
+                    rank = ((dr["rank1"] != DBNull.Value) ? Convert.ToInt32(dr["rank1"]) : default);
+                    details.Add( rank.ToString()) ;
+                    score = ((dr["score"] != DBNull.Value) ? Convert.ToInt32(dr["score"]) : default);
+                    details.Add(score.ToString());
 
-                    g.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
-                    g.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
-                    g.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
-                    g.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
-                    g.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
-                    g.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
-                    g.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
-                    g.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
-                    g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
-                    g.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
-                    g.Discorduser = (dr["discorduser"] != DBNull.Value) ? (string)dr["discorduser"] : default;
-                    g.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
-                    g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
-                    g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
-                    g.License = (dr["license"] != DBNull.Value) ? Convert.ToInt32(dr["license"]) : default;
-                    g.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
+                    dict.Add((dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default, details);
 
-                    GamersInCList.Add(g);
                 }
 
-                return GamersInCList;
+                return dict;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("Problem getting the information from the server, please try again later");
+                throw (ex);
             }
             finally
             {

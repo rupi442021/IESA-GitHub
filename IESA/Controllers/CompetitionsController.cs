@@ -51,12 +51,13 @@ namespace IESA.Controllers
             Competitions lCompetitions = new Competitions();
             return lCompetitions.Read(OID);
         }
+
         [HttpGet]
         [Route("api/Competitions/mark5")]
-        public List<Gamers> GetG(int CId) //Orgenaizer_Main_Page.html - 
+        public Dictionary<int, List<string>> GetG(int CId) //Orgenaizer_Main_Page.html - 
         {
-            Competitions GamersInCompetition = new Competitions();
-            return GamersInCompetition.GamersInC(CId);
+            DBServices dbs = new DBServices();
+            return dbs.GamersInC(CId);
         }
 
 

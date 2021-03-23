@@ -25,6 +25,7 @@ namespace IESA.Models
         DateTime outofdate;
         int license; //0 or 1
         int status1; //0 or 1
+     
 
         public Gamers(int userid, string email, string password1, string nickname, string firstname, string lastname, string gender, int id, String phone, DateTime dob, string address1, string discorduser, string picture, DateTime registrationdate, DateTime outofdate, int license, int status1)
         {

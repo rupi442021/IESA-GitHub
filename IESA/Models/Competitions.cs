@@ -124,13 +124,7 @@ namespace IESA.Models
             return lCompetitions;
         }
 
-        public List<Gamers> GamersInC(int CId) //Manager_Main_Page.html -
-        {
-            DBServices dbs = new DBServices();
-            List<Gamers> Cgamers = dbs.GamersInCompetition(CId);
-            return Cgamers;
-        }
-
+        
 
 
     }
