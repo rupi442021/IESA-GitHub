@@ -60,6 +60,15 @@ namespace IESA.Controllers
             return dbs.GamersInC(CId);
         }
 
+        [HttpPost]
+        [Route("api/Competitions/mark6")]
+        public void Postg(List<Gamer_Competition> rankarr) //Add_New_Competitions.html - Preview
+        {
+            DBServices dbs = new DBServices();
+            dbs.Insertranks(rankarr);
+
+        }
+
 
     }
 }

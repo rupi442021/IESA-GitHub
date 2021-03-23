@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -132,16 +133,17 @@
         }
 
         #inputnumbers {
-        margin-bottom: 20px;
+            margin-bottom: 20px;
         }
-        tr{
+
+        tr {
             margin-bottom: 3px;
         }
 
         .errvalidation {
-        color: red;
-        font-size: 10px;
-        direction: rtl;
+            color: red;
+            font-size: 10px;
+            direction: rtl;
         }
 
         /*Template Style*/
@@ -155,7 +157,7 @@
         var cgList = [];
         var gamersIdList = [];
         var selectedList = [];
-      
+
         var gamers = '';
         var num = 1;
         var numofp = 0;
@@ -171,7 +173,7 @@
             $('#AllPCcards').hide();
 
             localStorage["competition_Id"] = "";
-            
+
 
             $('#loadFCbtn').click(function () {
                 $('#AllFCcards').toggle()
@@ -194,9 +196,9 @@
 
             $('#closerank').click(function () {
                 localStorage["competition_Id"] = "";
-               
+
             });
-          
+
 
         });
 
@@ -368,7 +370,7 @@
                 }
 
             }
-            
+
         }
 
         function getErrorOrgenaizerCompetition(err) {
@@ -400,7 +402,7 @@
 
             let tbl = "<table id=inputtbl></table>";
 
-            $("#inputnumbers").append("בחור כמות משתתפים: " + "<input type='number' id='numofparticipants' onchange='selectrankgamers("+ c.Competitionid +")'/>");
+            $("#inputnumbers").append("בחור כמות משתתפים: " + "<input type='number' id='numofparticipants' onchange='selectrankgamers(" + c.Competitionid + ")'/>");
 
             $("#renderinputs").append(tbl);
 
@@ -408,8 +410,8 @@
             g1 = "";
             gamers = "";
             num = 1;
-           
-             //options builder
+
+            //options builder
             for (var i = 0; i < gList.length; i++) {
 
                 g1 = "שם פרטי: " + gList[i].Firstname + " | ";
@@ -422,7 +424,7 @@
             }
 
 
-            
+
         }
 
         function selectrankgamers(cID) {
@@ -441,7 +443,7 @@
 
             var CID = JSON.parse(localStorage.getItem("competition_Id"))
 
-            var counter =0
+            var counter = 0
 
             for (var i = 1; i <= numofp; i++) {
                 console.log("input :", i, "gamer: ", $('#selctedval' + i + '').val())
@@ -458,13 +460,39 @@
 
             for (var i = 0; i < selectedList.length; i++) {
                 if ($('#errorval' + (i + 1)).text() == "")
-                    counter++;      
+                    counter++;
             }
 
+            var Ranksarr = []
             if (counter == numofp && counter > 0) {
+
                 console.log("reaqdy in: ", cID)
 
+                for (var i = 0; i < numofp; i++) {
+                    RanksObj = {
+                        Competitionid: cID,
+                        Gamerid: selectedList[i],
+                        Rank1: i + 1
+                    }
+                    Ranksarr.push(RanksObj)
+                }
+                console.log("rankarr: ", Ranksarr)
+
+                ajaxCall("POST", "../api/Competitions/mark6", JSON.stringify(Ranksarr), SuccessInsertRanks, ErrorInsertRanks); //method OP2
+
             }
+        }
+
+        function SuccessInsertRanks(data) {
+            console.log(data)
+            swal("דירוגים נשלחו למערכת העמותה בהצלחה!");
+            setTimeout(function () {
+                location.reload();
+            }, 3500);
+        }
+
+        function ErrorInsertRanks(ex) {
+            console.log(ex)
         }
 
         function validationfunc() {
@@ -475,7 +503,7 @@
                 console.log("input :", i, "gamer: ", $('#selctedval' + i + '').val())
                 selectedList[i - 1] = ($('#selctedval' + i + '').val());
             }
-            
+
             for (var i = 0; i < gList.length; i++) {
                 gamersIdList[i] = JSON.stringify(gList[i].Userid)
             }
@@ -486,7 +514,7 @@
                     $('#errorval' + (i + 1) + '').text("שחקן לא קיים")
                 else
                     $('#errorval' + (i + 1) + '').text("")
-                for (var j = i + 1; j <= selectedList.length ; j++) {
+                for (var j = i + 1; j <= selectedList.length; j++) {
 
                     if (selectedList[i] == selectedList[j])
                         $('#errorval' + (i + 1) + '').text("בחרת כבר בשחקן הזה")
@@ -505,7 +533,7 @@
             console.log("In render Gamers: ", c1.Competitionid);
 
             //get gamers list in specific competition
-            ajaxCall("GET", "../api/Competitions/mark5?CId=" + c1.Competitionid , "" , getSuccessGamersInC, getErrorGamersInC);
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + c1.Competitionid, "", getSuccessGamersInC, getErrorGamersInC);
             $("#exampleModalLongTitle").text(c1.Competitionname);
 
         }
@@ -515,17 +543,17 @@
             $("#modal-body").text('')
             $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
             $("#saverank").hide();
-            var gamersarray = data; 
+            var gamersarray = data;
 
 
-           
+
 
             for (let key in gamersarray) {
-                $("#partisipantstbl").append('<tr id="' + key+'"><td>' + key + '</td></tr>')
+                $("#partisipantstbl").append('<tr id="' + key + '"><td>' + key + '</td></tr>')
                 for (var i = 0; i < gamersarray[key].length; i++) {
 
                     console.log("shir", key, gamersarray[key][i])
-                    $("#"+key+"").append('<td>' + gamersarray[key][i]+'</td>')
+                    $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
 
                 }
 

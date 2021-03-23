@@ -1197,6 +1197,69 @@ namespace IESA.Models.DAL
             }
 
         }
+
+        public void Insertranks(List<Gamer_Competition> rankarray) //Add_New_Post.html - method OP2 (Insert: Post (1))
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(rankarray);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommand(List<Gamer_Competition> rankarray) //Add_New_Post.html - method OP2 (Insert: Post (2))
+        {
+            String command;
+            String command2; 
+            // use a string builder to create the dynamic string
+            StringBuilder sa = new StringBuilder();
+
+            for (int i = 0; i < rankarray.Count ; i++)
+            {
+                sa.Append (" INSERT INTO Gamer_Competition (gamerid, competitionid, rank1) ");
+                sa.Append (" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , " + rankarray[i].Rank1 +" ) ");
+            }
+
+            command2 = " UPDATE Competitions SET  competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " "; 
+            command = sa.ToString() + command2;
+
+            return command;
+        }
+
         //---Orgenzier_Mian_Page.html--- *Close*
 
 
