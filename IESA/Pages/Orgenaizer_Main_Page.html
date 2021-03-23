@@ -170,7 +170,7 @@
             $('#AllPCcards').hide();
 
             localStorage["competition_Id"] = "";
-            localStorage["num_competition_rank"] = "";
+            
 
             $('#loadFCbtn').click(function () {
                 $('#AllFCcards').toggle()
@@ -191,7 +191,7 @@
 
             $('#closerank').click(function () {
                 localStorage["competition_Id"] = "";
-                localStorage["num_competition_rank"] = "";
+               
             });
           
 
@@ -319,9 +319,9 @@
                 else if (pList[i].Competitionstatus == 6)
                     cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 7)
-                    cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-light" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 8)
-                    cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-light" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
                 $("#PastC").append(cardstr);
             }
 
@@ -358,14 +358,14 @@
                     else if (pList[i].Competitionstatus == 6)
                         cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 7)
-                        cardstr += '<button type="button" class="btn btn-light" >משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-light" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 8)
-                        cardstr += '<button type="button" class="btn btn-light">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-light" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
                     $("#AllPastC").append(cardstr);
                 }
 
             }
-
+            
         }
 
         function getErrorOrgenaizerCompetition(err) {
@@ -382,6 +382,7 @@
 
 
         }
+
         function getErrorGamers(err) {
             console.log("In E: ", err);
         }
@@ -403,7 +404,7 @@
             g1 = "";
             gamers = "";
             num = 1;
-            localStorage["num_competition_rank"] = JSON.stringify(num);
+           
              //options builder
             for (var i = 0; i < gList.length; i++) {
 
@@ -487,6 +488,24 @@
 
         }
 
+        function renderGamers(c1) {
+            console.log("In render Gamers: ", c1.Competitionid);
+
+            //get gamers list in specific competition
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + c1.Competitionid , "" , getSuccessGamersInC, getErrorGamersInC);
+            $("#exampleModalLongTitle").text(c1.Competitionname);
+
+        }
+
+        function getSuccessGamersInC(data) {
+            console.log(data);
+
+            
+
+        }
+        function getErrorGamersInC(err) {
+            console.log("in ERR: ", err);
+        }
     </script>
 </head>
 <body>

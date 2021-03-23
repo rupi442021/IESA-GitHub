@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IESA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,8 +10,6 @@ namespace IESA.Controllers
 {
     public class Gamer_CompetitionController : ApiController
     {
-
-
 
 
 

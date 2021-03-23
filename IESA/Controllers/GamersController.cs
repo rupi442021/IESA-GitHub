@@ -73,7 +73,7 @@ namespace IESA.Controllers
 
         //---Orgenaizer_Main_Page.html-------- *Open*
 
-
+        //bring all valid gamers in data base.
         [HttpGet] 
         [Route("api/gamers/mark3")]
         public List<Gamers> GetG()

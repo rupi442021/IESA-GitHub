@@ -36,8 +36,9 @@ namespace IESA.Models
         TimeSpan startcheckin;
         TimeSpan endcheckin;
         string gamecategory;
+        List<Gamers> glist;
 
-        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment, TimeSpan startcheckin, TimeSpan endcheckin, string gamecategory)
+        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment, TimeSpan startcheckin, TimeSpan endcheckin, string gamecategory, List<Gamers> glist)
         {
             Competitionid = competitionid;
             Competitionname = competitionname;
@@ -67,6 +68,7 @@ namespace IESA.Models
             Startcheckin = startcheckin;
             Endcheckin = endcheckin;
             Gamecategory = gamecategory;
+            Glist = glist;
         }
 
         public int Competitionid { get => competitionid; set => competitionid = value; }
@@ -97,6 +99,7 @@ namespace IESA.Models
         public TimeSpan Startcheckin { get => startcheckin; set => startcheckin = value; }
         public TimeSpan Endcheckin { get => endcheckin; set => endcheckin = value; }
         public string Gamecategory { get => gamecategory; set => gamecategory = value; }
+        public List<Gamers> Glist { get => glist; set => glist = value; }
 
         public Competitions() { }
         //#Functions Area
@@ -119,6 +122,13 @@ namespace IESA.Models
             DBServices dbs = new DBServices();
             List<Competitions> lCompetitions = dbs.GetOrgenaizerCompetitions(OID);
             return lCompetitions;
+        }
+
+        public List<Gamers> GamersInC(int CId) //Manager_Main_Page.html -
+        {
+            DBServices dbs = new DBServices();
+            List<Gamers> Cgamers = dbs.GamersInCompetition(CId);
+            return Cgamers;
         }
 
 
