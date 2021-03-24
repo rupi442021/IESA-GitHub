@@ -115,7 +115,7 @@ namespace IESA.Models
             return dbs.CheckInfoSQL(email, pass);
         }
 
-        public Gamers getUserInfo(int id_toserver) //Sign_In.html - method OL2
+        public Gamers GetUserInfo(int id_toserver) //Sign_In.html - method OL2
         {
             DBServices dbs = new DBServices();
             return dbs.getGamerSQL(id_toserver);
@@ -139,6 +139,10 @@ namespace IESA.Models
 
         //---Manager_Main_Page.html--- *Close*
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         //--------Orgenaizer_Main_Page.html----------- *Open*
         public List<Gamers> Read() 
         {
@@ -153,7 +157,10 @@ namespace IESA.Models
 
         //--------Orgenaizer_Main_Page.html----------- *Close*
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
     }
 }

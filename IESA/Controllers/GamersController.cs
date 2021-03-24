@@ -62,7 +62,7 @@ namespace IESA.Controllers
         public Gamers GetGamer(int idtoserver)
         {
             Gamers userin = new Gamers();
-            return userin.getUserInfo(idtoserver);
+            return userin.GetUserInfo(idtoserver);
         }
 
 
