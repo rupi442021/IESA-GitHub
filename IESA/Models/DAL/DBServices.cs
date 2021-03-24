@@ -909,7 +909,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid="+OID+ " and Competitions.status1 = 1" ; 
+                String selectSTR = " update Competitions set Competitionstatus = '4' where Competitionstatus='2' and CONVERT(date,enddate,103) > getdate() select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid=" + OID+ " and Competitions.status1 = 1 order by CONVERT(date,enddate,103) "; 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -967,8 +967,6 @@ namespace IESA.Models.DAL
 
             }
         }
-
-
 
         public List<Gamers> GetGamers()
         {
@@ -1157,7 +1155,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Gamer_Competition inner join Gamers on Gamer_Competition.gamerid=Gamers.userid WHERE competitionid=" + CId + " and  Gamer_Competition.status1 = '1' ";
+                String selectSTR = " SELECT * FROM Gamer_Competition inner join Gamers on Gamer_Competition.gamerid=Gamers.userid WHERE competitionid=" + CId + " and  Gamer_Competition.status1 = '1' ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
