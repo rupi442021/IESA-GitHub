@@ -1470,6 +1470,129 @@ namespace IESA.Models.DAL
 
 
 
+        //Get All Posts to the Archive
+
+
+
+
+        public List<Posts> GetPosts()
+        {
+            SqlConnection con = null;
+            List<Posts> gList = new List<Posts>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from Posts";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Posts g = new Posts();
+                    g.Postid = Convert.ToInt32(dr["postid"]);
+                    g.Title = (string)dr["title"];
+                    g.Body = (string)dr["body"];
+                    g.Image1 = (string)dr["image1"];
+                    g.Category = (string)dr["category"];
+                    g.Postdate = Convert.ToDateTime(dr["postdate"]);
+                    g.Status1 = Convert.ToInt32(dr["status1"]);
+
+
+
+
+
+                    gList.Add(g);
+                }
+
+                return gList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+
+
+        //END OF----Get All Posts to the Archive
+
+
+        //get fillter posts
+
+
+
+        public List<Posts> GetFillterPosts(string cat2)
+        {
+            SqlConnection con = null;
+            List<Posts> gList = new List<Posts>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+
+                String selectSTR = "select * from Posts where category Like '%" + cat2 + "%' ";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Posts g = new Posts();
+                    g.Postid = Convert.ToInt32(dr["postid"]);
+                    g.Title = (string)dr["title"];
+                    g.Body = (string)dr["body"];
+                    g.Image1 = (string)dr["image1"];
+                    g.Category = (string)dr["category"];
+                    g.Postdate = Convert.ToDateTime(dr["postdate"]);
+                    g.Status1 = Convert.ToInt32(dr["status1"]);
+
+
+
+
+
+                    gList.Add(g);
+                }
+
+                return gList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+
+
+        //END OF---get fillter posts
+
+
+
 
 
 

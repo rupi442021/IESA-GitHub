@@ -198,6 +198,7 @@
     <Content Include="Pages\Competition_Preview.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Post.html" />
+    <Content Include="Pages\Post_Archive.html" />
     <Content Include="Pages\Sign_In.html" />
     <Content Include="Pages\Sign_Up.html" />
     <Content Include="Pages\Add_New_Competition.html" />

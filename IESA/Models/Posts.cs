@@ -72,5 +72,27 @@ namespace IESA.Models
 
         //---Post.html--- *Close*
 
+
+
+
+
+        public List<Posts> Read() //Sign_Up.html - method OO1
+        {
+            DBServices dbs = new DBServices();
+            List<Posts> posts = dbs.GetPosts();
+            return posts;
+        }
+
+
+        public List<Posts> ReadFillter(string cat2) //Sign_Up.html - method OO1
+        {
+            DBServices dbs = new DBServices();
+            List<Posts> posts2 = dbs.GetFillterPosts(cat2);
+            return posts2;
+        }
+
+
+
+
     }
 }

@@ -39,5 +39,25 @@ namespace IESA.Controllers
 
         //---Post.html--- *Close*
 
+
+        [HttpGet]
+        [Route("api/Posts/mark9")]
+        public List<Posts> Gete()
+        {
+            Posts posts = new Posts();
+            return posts.Read();
+        }
+
+        public List<Posts> GET(string cat2)
+        {
+            Posts posts2 = new Posts();
+            return posts2.ReadFillter(cat2);
+        }
+
+
+
+
+
+
     }
 }
