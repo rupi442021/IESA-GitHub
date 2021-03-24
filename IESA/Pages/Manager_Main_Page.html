@@ -113,9 +113,6 @@
             background-color: #dd163b;
         }
 
-        td {
-            border-left: 1px solid #29303d;
-        }
 
         table {
             border-collapse: collapse;
@@ -146,9 +143,9 @@
         }
 
         .dataTables_paginate {
-            /*            float: right !important;*/
-            position: relative;
-            left: 80%;
+         float: left !important;
+/*            position: relative;
+            right: 63%;*/
         }
 
 
@@ -200,7 +197,37 @@
                 transition: .15s color;
             }
 
-        /*Template Style*/
+
+        .table-dark {
+            --bs-table-bg: #363c4a !important;
+            --bs-table-striped-bg: #2e333e !important;
+        }
+
+/*        .table-dark {
+            --bs-table-bg: #363c4a !important;
+            --bs-table-striped-bg: #2b303b !important;
+        }*/
+
+        tbody, td, tfoot, th, thead, tr {
+            border-color: #1d232f;
+        }
+
+
+        #RedTitle {
+            border: solid #292e38;
+            border-width: 0px 0px 1px 1px;
+        }
+
+        #GamersTable {
+            border: solid #1d232f !important;
+            border-width: 1px 0px 1px 1px !important;
+        }
+
+
+
+
+
+
 
     </style>
 
@@ -236,7 +263,7 @@
                         },
                     },
                     responsive: true,
-                    pageLength: 3,
+                    pageLength: 4,
                     columns: [
                         { data: "Userid", className: "uniqueClassName" },
                         { data: "Firstname", className: "uniqueClassName" },
@@ -327,7 +354,7 @@
                 <div class="col">
 
                     <form id="gForm">
-                        <table class="nk-table" style="width:100%">
+                        <table id="RedTitle" class="nk-table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th style="background: #dd163b">שחקנים שממתינים לאישור</th>

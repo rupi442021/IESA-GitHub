@@ -47,20 +47,12 @@
         }
         /*Template Style*/
 
-
-
         /*.nk{margin:5px;}*/
 
 
         .col-md-6 {
             padding: 20px
         }
-
-
-
-
-
-
 
 
         .sidebar-box {
@@ -85,8 +77,6 @@
             }
 
 
-
-
         #PostImg {
             width: 53%;
             height: 150px;
@@ -99,8 +89,6 @@
             right: 25%;
             width: 53%;
         }
-
-
 
 
         .titlelink {
@@ -121,11 +109,9 @@
         .headh2 {
             display: flex;
             align-items: center;
-            /margin-bottom: 55px;
-            / /#1/ font-weight: 600;
+            margin-bottom: 55px;
+            font-weight: 600;
             letter-spacing: .015em;
-            margin: 3px;
-            /#2/
         }
 
             .headh2::after {
@@ -141,7 +127,6 @@
         .divdown {
             margin-bottom: 60px;
         }
-
 
 
 
@@ -162,26 +147,20 @@
         }
 
 
-        a:hover {
-            opacity: 0.6;
-        }
-
         .bg-main-4:hover {
             color: #3bebdb;
             opacity: 1
         }
 
 
-
-
         .nk-blog-grid {
             margin: 50px;
         }
+
     </style>
 
 
     <script>
-
 
 
         $(document).ready(function () {
@@ -189,14 +168,10 @@
             //renderDate()
 
 
-
-
             $(".target").change(function () {
 
                 GetFillterCategory();
             });
-
-
 
 
         });
@@ -313,22 +288,8 @@
 
                 str += "<br/>"
                 str += "<div id='postDate'>" + Posts[i].Postdate + "</div>"
-                str += "</div >"
+                str += "</div>"
                 str += " </div>"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -338,26 +299,11 @@
             }
 
 
-
-
-
-
-
-
             str += "</div>"
             str += "</div>"
-
-
-
-
-
 
 
             $("#ph1").append(str);
-
-
-
-
 
 
 
@@ -387,15 +333,10 @@
 
 
 
-
         function getSuccessPosts(Posts) {
             console.log(Posts);
 
             RenderPosts(Posts);
-
-
-
-
 
 
 
@@ -408,8 +349,6 @@
 
 
         }
-
-
 
 
         function RenderPosts(Posts)
@@ -480,14 +419,6 @@
 
 
 
-
-
-
-
-
-
-
-
                 }
 
 
@@ -540,13 +471,11 @@
 
 
 
-
+            <br />
             <section id="page_title">
                 <a class="titlelink" href="TemplatePage.html">ראשי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-                <a class="titlelink" href="TemplatePage.html">דף קודם </a>
-                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-                <h2 class="headh2">דף לדוגמא</h2>
+                <h2 class="headh2">פוסטים</h2>
                 <div class="divdown"></div>
 
 
@@ -555,9 +484,9 @@
 
             </section>
 
-            <label>בחר קטגוריה</label>
+            <label>בחר קטגוריה:</label>
             <select class="target">
-                <option value="ללא">ללא</option>
+                <option value=""></option>
                 <option value="כללי">כללי</option>
                 <option value="עולמי">עולמי</option>
 

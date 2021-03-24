@@ -71,6 +71,13 @@ namespace IESA.Controllers
 
         //---Manager_Main_Page.html--- *Open*
 
+
+
+
+
+        //---Manager_Main_Page.html--- *Close*
+
+
         //---Orgenaizer_Main_Page.html-------- *Open*
 
         //bring all valid gamers in data base.

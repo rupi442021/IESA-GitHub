@@ -139,10 +139,8 @@ namespace IESA.Models
 
         //---Manager_Main_Page.html--- *Close*
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
+
         //--------Orgenaizer_Main_Page.html----------- *Open*
         public List<Gamers> Read() 
         {
@@ -153,14 +151,8 @@ namespace IESA.Models
 
 
 
-
-
         //--------Orgenaizer_Main_Page.html----------- *Close*
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
     }
 }
