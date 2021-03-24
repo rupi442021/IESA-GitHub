@@ -1266,5 +1266,218 @@ namespace IESA.Models.DAL
 
 
 
+
+        //Add Game Category
+
+        public int InsertGameCategory(GamesCategories GameC)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommand(GameC);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommand(GamesCategories GameC)
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat("Values('{0}', '{1}')", GameC.Categoryname, GameC.Status1);
+            String prefix = "INSERT INTO GamesCategories " + "(categoryName, status1) ";
+
+            command = prefix + sb.ToString();
+
+            return command;
+
+        }
+
+
+
+        //END OF---Add Game Category
+
+
+
+
+
+
+
+
+
+
+
+
+        // active or deactive a game category in the table
+
+        public int setNotactive(int id, string status)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildInsertCommand6(id, status);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected; //return how many row's effected.
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+
+                }
+            }
+
+        }
+
+
+        private String BuildInsertCommand6(int id, string status) //The second C
+        {
+
+            if (status == "1")
+                return ("UPDATE GamesCategories SET Status1 = 'False' WHERE categoryID= " + id);
+            else
+                return ("UPDATE GamesCategories SET Status1 = 'True' WHERE categoryID= " + id);
+
+
+        }
+
+
+        // END OF--- active or deactive a game category in the table
+
+
+
+
+        //Change the name of a mistaken category
+
+        public int ChangeName(int id, string UpdateCategoryName)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildInsertCommand7(id, UpdateCategoryName);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected; //return how many row's effected.
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+
+                }
+            }
+
+        }
+
+
+        private String BuildInsertCommand7(int id, string UpdateCategoryName) //The second C
+        {
+
+            string str = "UPDATE GamesCategories SET categoryname ='" + UpdateCategoryName + "' WHERE categoryid= " + id;
+            return (str);
+
+
+
+
+        }
+
+
+        //END OF--Change the name of a mistaken category
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

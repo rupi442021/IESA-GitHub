@@ -1,0 +1,532 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link rel="stylesheet" href=" https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+    <title>&#x202E; דף לדוגמא – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+        body {
+            background-color: #212529;
+            color: white;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            height: 2000px;
+            padding-top: 15px;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+        }
+        /*Template Style*/
+
+
+        .form-control {
+            color: white
+        }
+
+        label {
+            color: white;
+        }
+
+        .col-sm-6 {
+            position: relative;
+            left: 30%
+        }
+
+        .pagination {
+            position: relative;
+            left: -60%
+        }
+
+        #serviceTable_info {
+            color: white;
+            position: relative;
+            left: 52%;
+        }
+
+
+        #UpdateBtn {
+            margin-right: 5%
+        }
+    </style>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            GetAllGameCategories();
+
+            $("#InsertGameCategory").click(function () {
+
+                SetGameCategories();
+
+            })
+
+
+
+            $(document).on("click", ".yoyo", function () {
+
+
+
+                alert("got into UpdateBtn")
+                Categoryid = this.getAttribute('data-Categoryid');
+                console.log("Categoryid:           " + Categoryid)
+               // var Status1 = this.getAttribute('data-Status1');
+
+
+                var str = "";
+                str += "<br />"
+                str += "<br />"
+                str += "<br />"
+                str += "<label for='fname'>אנא עדכן כאן את שם הקטגוריה:</label>"
+             //   str += "<p>שם קטגוריה ישן:" + Update_Id + "</p>"
+                str+="<p>הכנס את השם החדש כאן:"
+                str += "<input type='text' id='Update_Category' name='fname'>"
+                str += "<button id='UpdateGameCategory' class='UGC  btn btn-light'>עדכן</button>"
+                document.getElementById("addrestuarantPH").innerHTML += str;
+
+
+
+
+
+
+
+
+
+            })
+
+
+
+
+
+
+
+
+
+
+            $(document).on("click", ".UGC", function () {
+                var UpdateCategoryName = $("#Update_Category").val()
+                console.log("UpdateCategoryName:  " + UpdateCategoryName + "      ID:   " + Categoryid )
+                Update_GameCategory_Name(Categoryid, UpdateCategoryName);
+
+            })
+
+
+        });
+
+
+
+        $(document).on("click", ".deleteBtn", function () {
+            // markSelected(this);
+            var Categoryid = this.getAttribute('data-Categoryid');
+            console.log("Categoryid:           " + Categoryid)
+            var Status1 = this.getAttribute('data-Status1');
+            console.log("Status1:           " + Status1)
+            swal({ // this will open a dialouge
+                title: "??אתה בטוח",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+                .then(function (willDelete) {
+                    if (willDelete) {
+                        DeleteCategory(Categoryid, Status1)
+                    }
+                    else swal("לא בוצע");
+                });
+        });
+
+
+
+
+
+        function DeleteCategory(Categoryid, Status1) {
+
+
+            if (Status1 == "פעיל") { Status1 = 1 }
+            else { Status1 = 0 }
+
+
+            ajaxCall("PUT", "../api/GamesCategories?id=" + Categoryid + "&status=" + Status1, "", deleteSuccess, deleterror);
+
+        }
+
+
+        function deleteSuccess(categorydata) {
+
+            GetAllGameCategories();
+            { swal("!הפעולה בוצעה", "בוצע", "הצלחה"); }
+            location.reload();
+            return false;
+        }
+
+        function deleterror(err) {
+            swal("Error: " + err);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //this func will help us in the Post to check value is not in array
+
+        function containsObject(obj, list) {
+            var i;
+            for (i = 0; i < list.length; i++) {
+                if (list[i].Categoryname === obj) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+
+
+
+
+
+        function GetAllGameCategories() {
+
+            ajaxCall("GET", "../api/GamesCategories", "", getSuccessGamesCategories, getErrorGamesCategories);
+
+        }
+
+
+        function getSuccessGamesCategories(GamesCategories) {
+            console.log(GamesCategories)
+
+
+
+            for (var i = 0; i < GamesCategories.length; i++) {
+
+                if (GamesCategories[i].Status1 == 1) { GamesCategories[i].Status1 = "פעיל" }
+                else { GamesCategories[i].Status1 = "מושבת" }
+
+
+
+            }
+
+            GamesCategory = GamesCategories
+
+
+
+            $('#serviceTable').DataTable({
+                "aLengthMenu": [[4, 10, 20, 50], [4, 10, 20, 50]],
+                "iDisplayLength": 4,
+                responsive: true,
+                aaData: GamesCategory,
+                bJQueryUI: true,
+
+                "language": {
+                    "search": "חפש:",
+
+
+
+
+                    "paginate": {
+
+                        "previous": "קודם",
+                        "next": "הבא",
+
+                    },
+
+
+                },
+
+                aoColumns: [
+
+                    {
+                        mData: 'Categoryid'
+                    },
+
+                    {
+                        mData: 'Categoryname'
+                    },
+
+                    {
+                        mData: 'Status1'
+                    },
+
+                    {
+                        render: function (data, type, row, meta) {
+                            let dataCategory = "data-Categoryid='" + row.Categoryid + "' data-Status1='" + row.Status1 + "'";
+
+
+                            if (row.Status1 == 'פעיל')
+                                deleteBtn = "<button type='button' class = 'deleteBtn btn btn-danger' " + dataCategory + "> השבת </button>";
+                            else
+                                deleteBtn = "<button type='button' class = 'deleteBtn btn btn-success' " + dataCategory + "> הפעל </button>";
+
+                            deleteBtn += "<button type='button' class = 'yoyo btn btn-info' id='UpdateBtn'" + dataCategory + "> בחר לעדכון </button>";
+
+
+                            return deleteBtn;
+
+
+                        }
+                    }
+
+
+                ]
+
+
+
+            });
+
+            //strOption = "";
+            //for (var i = 0; i < GamesCategories.length; i++) { //Add Games Categories to drop list
+            //    strOption += ' <option id="' + GamesCategories[i].Categoryid + '">' + GamesCategories[i].Categoryname + '</option> '
+            //}
+            //$("#gamecategories").append(strOption);
+        }
+
+        function getErrorGamesCategories(err) {
+            console.log(err)
+        }
+
+
+
+
+        // פקודת פוסט להכנסת קטגוריה לדאטה בייס
+
+
+
+
+        function SetGameCategories() {
+
+            var Cat = $("#Category").val();
+
+
+            var status = 1;
+            console.log("category:  " + Cat)
+
+
+            // checks if the value of the name is already exist
+            if (containsObject(Cat, GamesCategory))
+                { alert("Category is already Exist") }
+
+            else {
+
+
+
+                    let New_Game_Category = {
+
+                        Categoryname: Cat,
+                        Status1: status
+
+                    }
+
+                ajaxCall("POST", "../api/GamesCategories", JSON.stringify(New_Game_Category), PostSuccessGamesCategories, PostErrorGamesCategories);
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
+
+            function PostSuccessGamesCategories() {
+                alert("success")
+                location.reload();
+
+
+
+
+
+            }
+
+
+
+            function PostErrorGamesCategories() { alert("fail") }
+
+
+
+
+
+
+
+
+        function Update_GameCategory_Name(Categoryid, UpdateCategoryName) {
+
+                alert("got into the Update of a Category Name")
+            console.log("Second time of-" +
+                        "UpdateCategoryName: " + UpdateCategoryName + "      ID: " + Categoryid)
+
+
+
+
+
+            ajaxCall("PUT", "../api/GamesCategories/mark7?id=" + Categoryid + "&UpdateCategoryName=" + UpdateCategoryName, "", updateSuccess, updaterror);
+
+                //כאן יהיה PUT לעדכון השם
+
+
+        }
+
+
+
+
+        function updateSuccess(data) {alert("success update")}
+
+        function updaterror(data) { alert("fail update") }
+    </script>
+
+
+</head>
+<body>
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+        <div class="container">
+
+
+
+
+            <div id="ph">
+
+
+                <table id="serviceTable" class="table table-bordered table table-dark table-striped" style="width:100% ; background-color:#292e38">
+                    <thead>
+                        <tr>
+
+                            <th data-field="Categoryid" style="color:white">מ. סידורי</th>
+                            <th data-field="Categoryname" style="color:white">קטגוריית משחק</th>
+                            <th data-field="Status1" style="color:white">סטאטוס</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                </table>
+
+
+            </div>
+
+
+            <div id="addrestuarantPH">
+                <hr style="border:0.5px solid gray" />
+                <br /><h2>הוספה ועדכון של קטגוריית משחק חדשה:</h2>
+
+
+
+
+
+
+
+                <label for="fname">אנא הקלד כאן את הקטגוריה שברצונך להוסיף:</label>
+                <input type="text" id="Category" name="fname">
+                <button id="InsertGameCategory" class="btn btn-light">הכנס</button>
+
+
+
+                <!--<button id="UpdateGameCategory" class="btn btn-light">עדכן</button>-->
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

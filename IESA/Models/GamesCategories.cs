@@ -34,7 +34,31 @@ namespace IESA.Models
             List <GamesCategories> gamecategories = dbs.GetGameCategoriesr();
             return gamecategories;
         }
-        
+
+
+        public int InsertGameCategory()
+        {
+            DBServices dbs = new DBServices();
+            return dbs.InsertGameCategory(this);
+        }
+
+
+
+        public void setNotactive(int id, string status)
+        {
+            DBServices dbs = new DBServices();
+            dbs.setNotactive(id, status);
+        }
+
+        public void ChangeName(int id, string UpdateCategoryName)
+        {
+            DBServices dbs = new DBServices();
+            dbs.ChangeName(id, UpdateCategoryName);
+        }
+
+
+
+
 
 
     }
