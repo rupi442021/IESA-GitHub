@@ -14,9 +14,10 @@ namespace IESA.Models
         string image1;
         string category;
         DateTime postdate;
+        int viewsnum;
         int status1; //0 or 1
 
-        public Posts(int postid, string title, string body, string image1, string category, DateTime postdate, int status1)
+        public Posts(int postid, string title, string body, string image1, string category, DateTime postdate, int viewsnum, int status1)
         {
             Postid = postid;
             Title = title;
@@ -24,6 +25,7 @@ namespace IESA.Models
             Image1 = image1;
             Category = category;
             Postdate = postdate;
+            Viewsnum = viewsnum;
             Status1 = status1;
         }
 
@@ -35,6 +37,7 @@ namespace IESA.Models
         public string Image1 { get => image1; set => image1 = value; }
         public string Category { get => category; set => category = value; }
         public DateTime Postdate { get => postdate; set => postdate = value; }
+        public int Viewsnum { get => viewsnum; set => viewsnum = value; }
         public int Status1 { get => status1; set => status1 = value; }
 
         //#Functions Area
@@ -73,7 +76,7 @@ namespace IESA.Models
         //---Post.html--- *Close*
 
 
-
+        //---Post_Archive.html--- *Open*
 
 
         public List<Posts> Read() //Sign_Up.html - method OO1
@@ -92,7 +95,21 @@ namespace IESA.Models
         }
 
 
+        //---Post_Archive.html--- *Close*
 
+
+        //---Manager_Main_Page.html--- *Open*
+
+
+        public List<Posts> ReadPosts() //Manager_Main_Page.html - method OM7
+        {
+            DBServices dbs = new DBServices();
+            List<Posts> plist = dbs.ReadPostsMSQL();
+            return plist;
+        }
+
+
+        //---Manager_Main_Page.html--- *Close*
 
     }
 }
