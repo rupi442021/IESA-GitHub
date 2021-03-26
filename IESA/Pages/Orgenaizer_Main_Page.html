@@ -214,7 +214,7 @@
 
 
             for (var i = 0; i < data.length; i++) {
-                if (data[i].Competitionstatus == 1 || data[i].Competitionstatus == 2 || data[i].Competitionstatus == 3)
+                if (data[i].Competitionstatus == 1 || data[i].Competitionstatus == 2)
                     fList.push(data[i]);
                 else
                     pList.push(data[i]);
@@ -252,8 +252,7 @@
                     cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i></p> </div > </div ></div >';
                 else if (fList[i].Competitionstatus == 2)
                     cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem; color:green"></i></p> </div > </div ></div >';
-                else if (fList[i].Competitionstatus == 3)
-                    cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+               
                 $("#FutureC").append(cardstr);
 
             }
@@ -285,8 +284,7 @@
                         cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
                     else if (fList[i].Competitionstatus == 2)
                         cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem ; color:green"></i></p> </div > </div ></div >';
-                    else if (fList[i].Competitionstatus == 3)
-                        cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                   
 
                     $("#AllFutureC").append(cardstr);
 
@@ -317,7 +315,9 @@
                     cardstr += '<p class="card-text">אונליין</p>';
                 else
                     cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
-                if (pList[i].Competitionstatus == 4)
+                 if (pList[i].Competitionstatus == 3)
+                    cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                else if (pList[i].Competitionstatus == 4)
                     cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 5)
                     cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
@@ -356,7 +356,9 @@
                         cardstr += '<p class="card-text">אונליין</p>';
                     else
                         cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
-                    if (pList[i].Competitionstatus == 4)
+                    if (pList[i].Competitionstatus == 3)
+                        cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                    else if (pList[i].Competitionstatus == 4)
                         cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו ' + " " + timetorank + " " + ' ימים להזנת התוצאות </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 5)
                         cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
