@@ -102,7 +102,10 @@ namespace IESA.Models
         public List<Gamers> Glist { get => glist; set => glist = value; }
 
         public Competitions() { }
+
+
         //#Functions Area
+
 
         public int getCompetitionId() //Add_New_Competition.html - method OO1
         {
@@ -125,14 +128,31 @@ namespace IESA.Models
         }
 
 
-
-
         public List<Competitions> ReadGamer(int GID)// gets all the compation of a specifical gamer. // Gamer.html
         {
             DBServices dbs = new DBServices();
             List<Competitions> lCompetitions = dbs.GetGamersCompetitions(GID);
             return lCompetitions;
         }
+
+
+        //---Manager_Main_Page.html--- *Open*
+
+
+        public List<Competitions> ReadCompetitionsM() //Manager_Main_Page.html - method OM8
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> clist = dbs.ReadCompetitionsMSQL();
+            return clist;
+        }
+
+
+        //---Manager_Main_Page.html--- *Close*
+
+
+
+
+
 
 
 

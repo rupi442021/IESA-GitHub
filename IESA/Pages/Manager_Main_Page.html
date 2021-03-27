@@ -263,6 +263,10 @@
             text-decoration: none;
             font-weight: 600;
             transition-duration: 0.20s;
+            position: relative;
+            top: 45px;
+            /*right: 895px;*/
+            right: 82.5%;
         }
 
         .add-post-button:hover {
@@ -273,10 +277,65 @@
             display: none;
         }
 
+        @media only screen and (max-width: 1040px) {
+            .add-post-button {
+                right: 77.5%;
+            }
+        }
+
+        @media only screen and (max-width: 820px) {
+            .add-post-button {
+                right: 60%;
+            }
+        }
+
+
         /*/*button add post*/
 
+        /*title try*/
 
+        .nk-decorated-h, .nk-decorated-h-2 {
+            display: flex;
+        }
 
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a !important;
+            }
+
+            .nk-decorated-h-2::before, .nk-decorated-h::before {
+                flex: 20px !important;
+                width: 20px !important;
+                min-width: 20px !important;
+            }
+
+        .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+            content: "";
+            display: block;
+            flex: 100;
+            border-bottom: 4px solid;
+            transform: translateY(-10px);
+        }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a;
+            }
+
+        .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+            content: "";
+            display: block;
+            flex: 100;
+            border-bottom: 4px solid;
+            transform: translateY(-10px);
+        }
+
+        .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+            display: block;
+            flex: auto;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+
+            /*title try*/
 
     </style>
 
@@ -297,12 +356,27 @@
 
             $(document).on("click", ".add-post-button", function () {
                 
-                window.open('Add_New_Post.html', '_blank');
+                //window.open('Add_New_Post.html', '_blank');
+                location.replace("Add_New_Post.html");
 
             });
 
 
             //---Posts Table--- *Close*
+
+            //---Competitions Table--- *Open*
+
+            ajaxCall("GET", "../api/Competitions/tableC", "", getCompetitionsSuccess, Error); //Manager_Main_Page.html - method OM8
+
+
+            $(document).on("click", ".C_viewBTN", function () {
+                var competitionId = this.getAttribute('data-competitionid');
+
+                swal("פעולה זו תפתח דף חדש המציג את התחרות: " + competitionId)
+            });
+
+
+            //---Competitions Table--- *Close*
 
 
             //---Gamers Table--- *Open*
@@ -598,7 +672,7 @@
             posts = postsdata; // keep the gamers array in a global variable;
 
             try {
-                tbl1 = $('#PostsTable').DataTable({
+                tbl3 = $('#PostsTable').DataTable({
                     data: postsdata,
                     "language": {
                         "info": "",
@@ -653,6 +727,88 @@
         }
 
 
+        function getCompetitionsSuccess(competitionsdata) {
+            console.log(competitionsdata);
+
+            competitions = competitionsdata;
+
+            try {
+                tbl4 = $('#CompetitionsTable').DataTable({
+                    data: competitionsdata,
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 4,
+                    columns: [
+                        { data: "Competitionid", className: "uniqueClassName" },
+                        { data: "Competitionname", className: "uniqueClassName" },
+                        {
+                            "data": "Ispro",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "פתוחה";
+                                }
+                                else {
+                                    return "מקצועית";
+                                }
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        { data: "Console", className: "uniqueClassName" },
+                        {
+                            "data": "Startdate",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                var day = date.getDate();
+                                day = day.toString().length > 1 ? day : "0" + day;
+                                return day + "/" + (month.toString().length > 1 ? month : "0" + month) + "/" + date.getFullYear();
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        {
+                            "data": "Enddate",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                var day = date.getDate();
+                                day = day.toString().length > 1 ? day : "0" + day;
+                                return day + "/" + (month.toString().length > 1 ? month : "0" + month) + "/" + date.getFullYear();
+                            }
+                            , className: "uniqueClassName"
+                        },
+
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataCompetitions = "data-competitionid='" + row.Competitionid + "'";
+
+                                C_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='C_viewBTN bi bi-eye' " + dataCompetitions + "></i></a>";
+
+                                return C_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
+                    ],
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
 
     </script>
 
@@ -674,9 +830,7 @@
                 <div class="divdown"></div>
             </section>
 
-
-            <h2>טבלאות מעקב</h2>
-            <br />
+            <h3 class="nk-decorated-h-2"><span><span style="color: #04b8a5">טבלאות</span> מעקב</span></h3>
 
             <!--Posts Table-->
             <div class="row">
@@ -684,7 +838,7 @@
 
                     <form id="pForm">
 
-                        <button class="add-post-button" style="position:relative; top:45px; right:895px;" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת פוסט חדש</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                        <button class="add-post-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת פוסט חדש</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
 
                         <table id="RedTitle" class="nk-table" style="width:100%">
                             <thead>
@@ -716,6 +870,40 @@
             <br />
 
 
+            <!--Competitions Table-->
+            <div class="row">
+                <div class="col">
+
+                    <form id="cForm">
+                        <table id="RedTitle" class="nk-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="background: #dd163b">תחרויות שממתינות לאישור</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th style="max-width: 70px;">מספר תחרות</th>
+                                    <th style="max-width: 100px;">כותרת</th>
+                                    <th style="max-width: 70px;">סוג</th>
+                                    <th style="max-width: 60px;">שם מארגן</th>
+                                    <th style="max-width: 55px;">תאריך התחלה</th>
+                                    <th style="max-width: 70px;">תאריך סיום</th>
+                                    <th style="max-width: 60px;">פעולות</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <br />
+            <br />
+            <br />
 
             <!--Gamers Table-->
             <div class="row">
@@ -775,7 +963,7 @@
                                     <th style="max-width: 70px;">שם משפחה</th>
                                     <th style="max-width: 50px;">שם הקהילה</th>
                                     <th style="max-width: 50px;">טלפון</th>
-                                    <th style="max-width: 55px;">אימייל</th>
+                                    <th style="max-width: 70px;">אימייל</th>
                                     <th style="max-width: 70px;">תאריך לידה</th>
                                     <th style="max-width: 60px;">פעולות</th>
                                 </tr>
@@ -786,10 +974,6 @@
                 </div>
 
             </div>
-
-
-
-
 
 
 

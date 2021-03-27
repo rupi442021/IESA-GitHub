@@ -1437,6 +1437,54 @@ namespace IESA.Models.DAL
         }
 
 
+        public List<Competitions> ReadCompetitionsMSQL() //Manager_Main_Page.html - method OM8
+        {
+
+            SqlConnection con4 = null;
+            List<Competitions> CompetitionsList = new List<Competitions>();
+
+            try
+            {
+                con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR4 = "SELECT * FROM Competitions WHERE status1 = 'False' ";
+
+                SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
+
+                // get a reader
+                SqlDataReader dr4 = cmd4.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr4.Read())
+                {
+                    Competitions competition = new Competitions();
+
+                    competition.Competitionid = (dr4["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr4["competitionid"]) : default;
+                    competition.Competitionname = (dr4["competitionname"] != DBNull.Value) ? (string)dr4["competitionname"] : default;
+                    competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
+                    competition.Console = (dr4["console"] != DBNull.Value) ? (string)dr4["console"] : default;
+                    competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
+                    competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+
+                    CompetitionsList.Add(competition);
+                }
+
+                return CompetitionsList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con4 != null)
+                {
+                    con4.Close();
+                }
+
+            }
+
+        }
 
 
         //---Manager_Main_Page.html--- *Close*

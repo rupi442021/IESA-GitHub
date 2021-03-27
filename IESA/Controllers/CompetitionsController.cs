@@ -70,13 +70,7 @@ namespace IESA.Controllers
         }
 
 
-
-
-
-
-
         //Gamer's page
-
 
         [HttpGet]
         [Route("api/Competitions/mark11")]
@@ -86,18 +80,22 @@ namespace IESA.Controllers
             return lCompetitions.ReadGamer(GID);
         }
 
-
-
-
-
-
-
-
-
         //END OF--- Gamer's page
 
 
+        //---Manager_Main_Page.html--- *Open*
 
+
+        [HttpGet] //Manager_Main_Page.html - method OM8
+        [Route("api/Competitions/tableC")]
+        public List<Competitions> GetCompetitions()
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.ReadCompetitionsM();
+        }
+
+
+        //---Manager_Main_Page.html--- *Close*
 
 
 
