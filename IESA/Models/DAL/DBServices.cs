@@ -1846,6 +1846,86 @@ namespace IESA.Models.DAL
 
 
 
+        // Get all Gamer's Specific Competitions
+
+
+
+
+        public List<Competitions> GetGamersCompetitions(int GID)
+        {
+            SqlConnection con = null;
+            List<Competitions> cList = new List<Competitions>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from Competitions inner join Gamer_Competition ON Competitions.competitionid = Gamer_Competition.competitionid where Gamer_Competition.gamerid=" + GID + "and Competitions.status1 = 1";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Competitions c = new Competitions();
+                    c.Competitionid = Convert.ToInt32(dr["competitionid"]);
+                    c.Competitionname = (string)dr["competitionname"];
+                    c.Isonline = Convert.ToInt32(dr["isonline"]);
+                    c.Address1 = (string)dr["address1"];
+                    c.Banner = (string)dr["banner"];
+                    c.Logo = (string)dr["logo"];
+                    c.Prize1 = (string)dr["prize1"];
+                    c.Prize2 = (string)dr["prize2"];
+                    c.Price3 = (string)dr["prize3"];
+                    c.Linkforregistration = (string)dr["linkforregistration"];
+                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    c.Body = (string)dr["body"];
+                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
+                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    c.Startime = ((TimeSpan)dr["starttime"]);
+                    c.Endtime = ((TimeSpan)dr["endtime"]);
+                    c.Ispro = Convert.ToInt32(dr["ispro"]);
+                    c.Discord = (string)dr["discord"];
+                    c.Console = (string)dr["console"];
+                    c.Isiesa = Convert.ToInt32(dr["isiesa"]);
+                    c.Linkforstream = (string)dr["linkforstream"];
+                    c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
+                    c.Competitionstatus = (string)dr["competitionstatus"];
+                    c.Status1 = Convert.ToInt32(dr["status1"]);
+                    c.IsPayment = Convert.ToInt32(dr["ispayment"]);
+                    c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
+                    c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
+
+
+                    if (c.Status1 == 1)
+                        cList.Add(c);
+                }
+
+                return cList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+
+
+        //END OF---- Get all Gamer's Specific Competitions
+
+
+
+
 
 
 

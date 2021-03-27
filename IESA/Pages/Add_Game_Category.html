@@ -105,7 +105,7 @@
                 alert("got into UpdateBtn")
                 Categoryid = this.getAttribute('data-Categoryid');
                 console.log("Categoryid:           " + Categoryid)
-               // var Status1 = this.getAttribute('data-Status1');
+                // var Status1 = this.getAttribute('data-Status1');
 
 
                 var str = "";
@@ -113,8 +113,8 @@
                 str += "<br />"
                 str += "<br />"
                 str += "<label for='fname'>אנא עדכן כאן את שם הקטגוריה:</label>"
-             //   str += "<p>שם קטגוריה ישן:" + Update_Id + "</p>"
-                str+="<p>הכנס את השם החדש כאן:"
+                //   str += "<p>שם קטגוריה ישן:" + Update_Id + "</p>"
+                str += "<p>הכנס את השם החדש כאן:"
                 str += "<input type='text' id='Update_Category' name='fname'>"
                 str += "<button id='UpdateGameCategory' class='UGC  btn btn-light'>עדכן</button>"
                 document.getElementById("addrestuarantPH").innerHTML += str;
@@ -140,7 +140,7 @@
 
             $(document).on("click", ".UGC", function () {
                 var UpdateCategoryName = $("#Update_Category").val()
-                console.log("UpdateCategoryName:  " + UpdateCategoryName + "      ID:   " + Categoryid )
+                console.log("UpdateCategoryName:  " + UpdateCategoryName + "      ID:   " + Categoryid)
                 Update_GameCategory_Name(Categoryid, UpdateCategoryName);
 
             })
@@ -351,19 +351,18 @@
 
 
             // checks if the value of the name is already exist
-            if (containsObject(Cat, GamesCategory))
-                { alert("Category is already Exist") }
+            if (containsObject(Cat, GamesCategory)) { alert("Category is already Exist") }
 
             else {
 
 
 
-                    let New_Game_Category = {
+                let New_Game_Category = {
 
-                        Categoryname: Cat,
-                        Status1: status
+                    Categoryname: Cat,
+                    Status1: status
 
-                    }
+                }
 
                 ajaxCall("POST", "../api/GamesCategories", JSON.stringify(New_Game_Category), PostSuccessGamesCategories, PostErrorGamesCategories);
 
@@ -379,23 +378,23 @@
 
 
 
-            }
+        }
 
 
 
-            function PostSuccessGamesCategories() {
-                alert("success")
-                location.reload();
+        function PostSuccessGamesCategories() {
+            alert("success")
+            location.reload();
 
 
 
 
 
-            }
+        }
 
 
 
-            function PostErrorGamesCategories() { alert("fail") }
+        function PostErrorGamesCategories() { alert("fail") }
 
 
 
@@ -406,9 +405,9 @@
 
         function Update_GameCategory_Name(Categoryid, UpdateCategoryName) {
 
-                alert("got into the Update of a Category Name")
+            alert("got into the Update of a Category Name")
             console.log("Second time of-" +
-                        "UpdateCategoryName: " + UpdateCategoryName + "      ID: " + Categoryid)
+                "UpdateCategoryName: " + UpdateCategoryName + "      ID: " + Categoryid)
 
 
 
@@ -416,7 +415,7 @@
 
             ajaxCall("PUT", "../api/GamesCategories/mark7?id=" + Categoryid + "&UpdateCategoryName=" + UpdateCategoryName, "", updateSuccess, updaterror);
 
-                //כאן יהיה PUT לעדכון השם
+            //כאן יהיה PUT לעדכון השם
 
 
         }
@@ -424,7 +423,7 @@
 
 
 
-        function updateSuccess(data) {alert("success update")}
+        function updateSuccess(data) { alert("success update") }
 
         function updaterror(data) { alert("fail update") }
     </script>

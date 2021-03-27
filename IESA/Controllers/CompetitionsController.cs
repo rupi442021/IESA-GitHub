@@ -70,5 +70,38 @@ namespace IESA.Controllers
         }
 
 
+
+
+
+
+
+        //Gamer's page
+
+
+        [HttpGet]
+        [Route("api/Competitions/mark11")]
+        public List<Competitions> Getg(int GID)  
+        {
+            Competitions lCompetitions = new Competitions();
+            return lCompetitions.ReadGamer(GID);
+        }
+
+
+
+
+
+
+
+
+
+        //END OF--- Gamer's page
+
+
+
+
+
+
+
+
     }
 }
