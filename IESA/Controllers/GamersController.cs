@@ -69,18 +69,10 @@ namespace IESA.Controllers
         //---Sign_Up.html--- *Close*
 
 
-        //---Manager_Main_Page.html--- *Open*
-
-
-
-
-
-        //---Manager_Main_Page.html--- *Close*
-
-
         //---Orgenaizer_Main_Page.html-------- *Open*
 
-        //bring all valid gamers in data base.
+
+        //bring all valid gamers in database.
         [HttpGet] 
         [Route("api/gamers/mark3")]
         public List<Gamers> GetG()
@@ -90,10 +82,10 @@ namespace IESA.Controllers
         }
 
 
-
-
         //---Orgenaizer_Main_Page.html-------- *Close*
 
+
+        //---Manager_Main_Page.html--- *Open*
 
 
         [HttpGet] //Manager_Main_Page.html - method OM1
@@ -103,6 +95,26 @@ namespace IESA.Controllers
             Gamers gamerslist = new Gamers();
             return gamerslist.ReadGamers();
         }
+
+
+        [HttpPut] //Manager_Main_Page.html - method OM2
+        [Route("api/Gamers/delg")]
+        public void deleteGamer(int todeleteid)
+        {
+            Gamers gam1 = new Gamers();
+            gam1.DeleteGamer(todeleteid);
+        }
+
+
+        [HttpPut] //Manager_Main_Page.html - method OM3
+        [Route("api/Gamers/Tablegstatus")]
+        public void updateGamerStatus(int toupdateid)
+        {
+            Gamers gamer1 = new Gamers();
+            gamer1.UpdateGamerStatus(toupdateid);
+        }
+
+
 
 
 

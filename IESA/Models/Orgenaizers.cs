@@ -98,6 +98,39 @@ namespace IESA.Models
         //---Sign_In.html--- *Close*
 
 
+        //---Manager_Main_Page.html--- *Open*
+
+
+        public List<Orgenaizers> ReadOrgenaizers() //Manager_Main_Page.html - method OM4
+        {
+            DBServices dbs = new DBServices();
+            List<Orgenaizers> olist = dbs.ReadOrgenaizersMSQL();
+            return olist;
+        }
+
+        public void DeleteOrgenaizer(int todeleteid) //Manager_Main_Page.html - method OM5
+        {
+            DBServices dbs = new DBServices();
+            dbs.DeleteOrgenaizerSQL(todeleteid);
+        }
+
+
+        public void UpdateOrgenaizerStatus(int toupdateid) //Manager_Main_Page.html - method OM6
+        {
+            DBServices dbs = new DBServices();
+            dbs.UpdateOrgenaizerStatusSQL(toupdateid);
+        }
+
+
+
+
+        //---Manager_Main_Page.html--- *Close*
+
+
+
+
+
+
 
     }
 }

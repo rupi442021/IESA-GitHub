@@ -126,8 +126,8 @@ namespace IESA.Models
 
 
 
-
         //---Manager_Main_Page.html--- *Open*
+
 
         public List<Gamers> ReadGamers() //Manager_Main_Page.html - method OM1
         {
@@ -136,12 +136,29 @@ namespace IESA.Models
             return glist;
         }
 
+        public void DeleteGamer(int todeleteid) //Manager_Main_Page.html - method OM2
+        {
+            DBServices dbs = new DBServices();
+            dbs.DeleteGamerSQL(todeleteid);
+        }
+
+        public void UpdateGamerStatus(int toupdateid) //Manager_Main_Page.html - method OM3
+        {
+            DBServices dbs = new DBServices();
+            dbs.UpdateGamerStatusSQL(toupdateid);
+        }
+
+
+
+
 
         //---Manager_Main_Page.html--- *Close*
 
 
 
-        //--------Orgenaizer_Main_Page.html----------- *Open*
+        //---Orgenaizer_Main_Page.html--- *Open*
+
+
         public List<Gamers> Read() 
         {
             DBServices dbs = new DBServices();
@@ -150,8 +167,7 @@ namespace IESA.Models
         }
 
 
-
-        //--------Orgenaizer_Main_Page.html----------- *Close*
+        //---Orgenaizer_Main_Page.html--- *Close*
 
 
     }

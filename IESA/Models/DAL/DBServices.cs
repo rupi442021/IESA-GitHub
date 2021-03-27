@@ -1138,13 +1138,313 @@ namespace IESA.Models.DAL
         }
 
 
+        public int DeleteGamerSQL(int todeleteid) //Manager_Main_Page.html - method OM2
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildDeleteCommandGamer(todeleteid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildDeleteCommandGamer(int todeleteid)
+        {
+            String command;
+            command = "DELETE From Gamers WHERE userid = " + todeleteid;
+            return command;
+        }
+
+
+        public int UpdateGamerStatusSQL(int toupdateid) //Manager_Main_Page.html - method OM3
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandSGamer(toupdateid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandSGamer(int toupdateid)
+        {
+            String command;
+            command = "UPDATE Gamers SET status1 = 1 WHERE userid = " + toupdateid;
+            return command;
+        }
+
+
+        public List<Orgenaizers> ReadOrgenaizersMSQL() //Manager_Main_Page.html - method OM4
+        {
+
+            SqlConnection con2 = null;
+            List<Orgenaizers> OrgenaizersList = new List<Orgenaizers>();
+
+            try
+            {
+                con2 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR2 = "SELECT * FROM Orgenaizers WHERE status1 = 'False' ";
+                SqlCommand cmd2 = new SqlCommand(selectSTR2, con2);
+
+                // get a reader
+                SqlDataReader dr2 = cmd2.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr2.Read())
+                {
+                    Orgenaizers orgenaizer = new Orgenaizers();
+
+                    orgenaizer.Userid = (dr2["userid"] != DBNull.Value) ? Convert.ToInt32(dr2["userid"]) : default;
+                    orgenaizer.Firstname = (dr2["firstname"] != DBNull.Value) ? (string)dr2["firstname"] : default;
+                    orgenaizer.Lastname = (dr2["lastname"] != DBNull.Value) ? (string)dr2["lastname"] : default;
+                    orgenaizer.Phone = (dr2["phone"] != DBNull.Value) ? (string)dr2["phone"] : default;
+                    orgenaizer.Email = (dr2["email"] != DBNull.Value) ? (string)dr2["email"] : default;
+                    orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
+
+                    OrgenaizersList.Add(orgenaizer);
+                }
+
+                return OrgenaizersList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con2 != null)
+                {
+                    con2.Close();
+                }
+
+            }
+
+        }
+
+
+        public int DeleteOrgenaizerSQL(int todeleteid) //Manager_Main_Page.html - method OM5
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildDeleteCommandOrgenaizer(todeleteid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildDeleteCommandOrgenaizer(int todeleteid)
+        {
+            String command;
+            command = "DELETE From Orgenaizers WHERE userid = " + todeleteid;
+            return command;
+        }
+
+
+        public int UpdateOrgenaizerStatusSQL(int toupdateid) //Manager_Main_Page.html - method OM5
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandSOrgenaizer(toupdateid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandSOrgenaizer(int toupdateid)
+        {
+            String command;
+            command = "UPDATE Orgenaizers SET status1 = 1 WHERE userid = " + toupdateid;
+            return command;
+        }
+
+
+        public List<Posts> ReadPostsMSQL() //Manager_Main_Page.html - method OM7
+        {
+
+            SqlConnection con3 = null;
+            List<Posts> PostsList = new List<Posts>();
+
+            try
+            {
+                con3 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR3 = "SELECT TOP 5 WITH TIES * FROM Posts ORDER BY postid desc";
+
+                SqlCommand cmd3 = new SqlCommand(selectSTR3, con3);
+
+                // get a reader
+                SqlDataReader dr3 = cmd3.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr3.Read())
+                {
+                    Posts post = new Posts();
+
+                    post.Postid = (dr3["postid"] != DBNull.Value) ? Convert.ToInt32(dr3["postid"]) : default;
+                    post.Title = (dr3["title"] != DBNull.Value) ? (string)dr3["title"] : default;
+                    post.Category = (dr3["category"] != DBNull.Value) ? (string)dr3["category"] : default;
+                    post.Viewsnum = (dr3["viewsnum"] != DBNull.Value) ? Convert.ToInt32(dr3["viewsnum"]) : default;
+                    post.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
+
+                    PostsList.Add(post);
+                }
+
+                return PostsList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con3 != null)
+                {
+                    con3.Close();
+                }
+
+            }
+
+        }
+
+
+
 
         //---Manager_Main_Page.html--- *Close*
 
 
 
 
-        //---Orgenzier_Mian_Page.html--- *Open*
+        //---Orgenzier_Main_Page.html--- *Open*
 
         public Dictionary<int, List<string>> GamersInC(int CId) //Manager_Main_Page.html - method OM1
         {
@@ -1258,14 +1558,13 @@ namespace IESA.Models.DAL
             return command;
         }
 
-        //---Orgenzier_Mian_Page.html--- *Close*
+
+        //---Orgenzier_Main_Page.html--- *Close*
 
 
 
+        //---Add_Game_Category.html--- *Open*
 
-
-
-        //Add Game Category
 
         public int InsertGameCategory(GamesCategories GameC)
         {
@@ -1326,20 +1625,6 @@ namespace IESA.Models.DAL
         }
 
 
-
-        //END OF---Add Game Category
-
-
-
-
-
-
-
-
-
-
-
-
         // active or deactive a game category in the table
 
         public int setNotactive(int id, string status)
@@ -1387,19 +1672,13 @@ namespace IESA.Models.DAL
 
         private String BuildInsertCommand6(int id, string status) //The second C
         {
-
             if (status == "1")
                 return ("UPDATE GamesCategories SET Status1 = 'False' WHERE categoryID= " + id);
             else
                 return ("UPDATE GamesCategories SET Status1 = 'True' WHERE categoryID= " + id);
-
-
         }
 
-
         // END OF--- active or deactive a game category in the table
-
-
 
 
         //Change the name of a mistaken category
@@ -1446,33 +1725,19 @@ namespace IESA.Models.DAL
 
         }
 
-
         private String BuildInsertCommand7(int id, string UpdateCategoryName) //The second C
         {
-
             string str = "UPDATE GamesCategories SET categoryname ='" + UpdateCategoryName + "' WHERE categoryid= " + id;
             return (str);
-
-
-
-
         }
-
-
         //END OF--Change the name of a mistaken category
 
 
+        //---Add_Game_Category.html--- *Close*
 
 
-
-
-
-
-        //Get All Posts to the Archive
-
-
-
-
+        //---Add_New_Post.html--- *Open*
+      
         public List<Posts> GetPosts()
         {
             SqlConnection con = null;
@@ -1499,10 +1764,6 @@ namespace IESA.Models.DAL
                     g.Postdate = Convert.ToDateTime(dr["postdate"]);
                     g.Status1 = Convert.ToInt32(dr["status1"]);
 
-
-
-
-
                     gList.Add(g);
                 }
 
@@ -1524,13 +1785,10 @@ namespace IESA.Models.DAL
         }
 
 
-
         //END OF----Get All Posts to the Archive
 
 
         //get fillter posts
-
-
 
         public List<Posts> GetFillterPosts(string cat2)
         {
@@ -1541,11 +1799,8 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-
                 String selectSTR = "select * from Posts where category Like '%" + cat2 + "%' ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
-
-
 
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
@@ -1561,10 +1816,6 @@ namespace IESA.Models.DAL
                     g.Postdate = Convert.ToDateTime(dr["postdate"]);
                     g.Status1 = Convert.ToInt32(dr["status1"]);
 
-
-
-
-
                     gList.Add(g);
                 }
 
@@ -1586,10 +1837,10 @@ namespace IESA.Models.DAL
         }
 
 
-
         //END OF---get fillter posts
 
 
+        //---Add_New_Post.html--- *Close*
 
 
 

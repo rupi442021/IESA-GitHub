@@ -40,6 +40,9 @@ namespace IESA.Controllers
         //---Post.html--- *Close*
 
 
+        //---Post_Archive.html--- *Open*
+
+
         [HttpGet]
         [Route("api/Posts/mark9")]
         public List<Posts> Gete()
@@ -54,10 +57,22 @@ namespace IESA.Controllers
             return posts2.ReadFillter(cat2);
         }
 
+        //---Post_Archive.html--- *Close*
 
 
+        //---Manager_Main_Page.html--- *Open*
 
 
+        [HttpGet] //Manager_Main_Page.html - method OM7
+        [Route("api/Posts/tableP")]
+        public List<Posts> GetPosts()
+        {
+            Posts postslist = new Posts();
+            return postslist.ReadPosts();
+        }
+
+
+        //---Manager_Main_Page.html--- *Close*
 
     }
 }

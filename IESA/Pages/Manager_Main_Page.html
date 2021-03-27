@@ -247,12 +247,22 @@
             border-width: 0px 0px 1px 1px;
         }
 
-        #GamersTable {
+        .Bordertable {
             border: solid #1d232f !important;
             border-width: 1px 0px 1px 1px !important;
         }
 
-
+        .add-post-button {
+            border-radius: 4px;
+            color: #181c23;
+            background-color: #fff;
+            border-color: #e0e0e0;
+            border-style: solid;
+            padding: 12px 17px;
+            text-decoration: none;
+            
+        }
+        
 
 
 
@@ -264,8 +274,101 @@
 
         $(document).ready(function () {
 
-            ajaxCall("GET", "../api/Gamers/tableG", "", getGamersSuccess, getGamersError); //Manager_Main_Page.html - method OM1
+            //---Posts Table--- *Open*
 
+            ajaxCall("GET", "../api/Posts/tableP", "", getPostsSuccess, Error); //Manager_Main_Page.html - method OM7
+
+
+            $(document).on("click", ".P_viewBTN", function () {
+                var postId = this.getAttribute('data-postid');
+
+                swal("פעולה זו תפתח דף חדש המציג את הפוסט: " + postId)
+            });
+
+
+            //---Posts Table--- *Close*
+
+
+            //---Gamers Table--- *Open*
+
+            ajaxCall("GET", "../api/Gamers/tableG", "", getGamersSuccess, Error); //Manager_Main_Page.html - method OM1
+
+
+            $(document).on("click", ".G_rejectBTN", function () {
+                var userId = this.getAttribute('data-gamerid');
+
+                swal({
+                    title: "האם אתה בטוח?",
+                    text: "",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (willDelete) {
+                        if (willDelete) RejectGamer(userId);
+                        //else swal("פעולה לא בוצעה"); *Not needed*
+                    });
+
+            });
+
+
+            $(document).on("click", ".G_admitBTN", function () {
+                var userId2 = this.getAttribute('data-gamerid');
+                
+                ajaxCall("PUT", "../api/Gamers/Tablegstatus?toupdateid=" + userId2, "", UpdateSuccessG, Error); //Manager_Main_Page.html - method OM3
+            });
+
+
+            $(document).on("click", ".G_viewBTN", function () {
+                var userId2 = this.getAttribute('data-gamerid');
+
+                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId2)
+            });
+
+
+            //---Gamers Table--- *Close*
+
+
+            //---Orgenaizers Table--- *Open*
+
+            ajaxCall("GET", "../api/Orgenaizers/tableO", "", getOrgenaizersSuccess, Error); //Manager_Main_Page.html - method OM4
+
+
+            $(document).on("click", ".O_rejectBTN", function () {
+                var userId3 = this.getAttribute('data-orgenaizerid');
+
+                swal({
+                    title: "האם אתה בטוח?",
+                    text: "",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (willDelete) {
+                        if (willDelete) RejectOrgenaizer(userId3);
+                        //else swal("פעולה לא בוצעה"); *Not needed*
+                    });
+
+            });
+
+
+            $(document).on("click", ".O_admitBTN", function () {
+                var userId3 = this.getAttribute('data-orgenaizerid');
+                
+                ajaxCall("PUT", "../api/Orgenaizers/Tableostatus?toupdateid=" + userId3, "", UpdateSuccessO, Error); //Manager_Main_Page.html - method OM6
+            });
+
+
+            $(document).on("click", ".O_viewBTN", function () {
+                var userId4 = this.getAttribute('data-orgenaizerid');
+
+                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId4)
+            });
+
+
+
+
+            //---Orgenaizers Table--- *Close*
 
 
         });
@@ -283,7 +386,7 @@
             gamers = gamersdata; // keep the gamers array in a global variable;
 
             try {
-                tbl = $('#GamersTable').DataTable({
+                tbl1 = $('#GamersTable').DataTable({
                     data: gamersdata,
                     "language": {
                         "info": "",
@@ -333,11 +436,112 @@
                             render: function (data, type, row, meta) {
                                 let dataGamers = "data-gamerid='" + row.Userid + "'"; //User id for buttons
 
-                                rejectBtn = "<a href='#' class='reject' title='דחה'><i class='bi bi-x-circle' " + dataGamers + "></i></a>";
-                                admitBtn = "<a href='#' class='admit' title='אשר'><i class='bi bi-check-circle' " + dataGamers + "></i></a>";
-                                viewBtn = "<a href='#' class='view' title='צפה'><i class='bi bi-person-circle' " + dataGamers + "></i></a>";
+                                G_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='G_rejectBTN bi bi-x-circle' " + dataGamers + "></i></a>";
+                                G_admitBtn = "<a href='javascript:;' class='admit' title='אשר'><i class='G_admitBTN bi bi-check-circle' " + dataGamers + "></i></a>";
+                                G_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='G_viewBTN bi bi-person-circle' " + dataGamers + "></i></a>";
 
-                                return rejectBtn + admitBtn + viewBtn;
+                                return G_rejectBtn + G_admitBtn + G_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
+                    ],
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function Error(err) {
+            console.log(err); //*Need to send a certain message from the server about the problem each function
+
+            swal("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+        }
+
+
+        function redrawTable(tbl, data) { //Render table
+            tbl.clear();
+            for (var i = 0; i < data.length; i++) {
+                tbl.row.add(data[i]);
+            }
+            tbl.draw();
+        }
+
+
+        function RejectGamer(userId) {
+
+            ajaxCall("PUT", "../api/Gamers/delg?todeleteid=" + userId, "", UpdateSuccessG, Error); //Manager_Main_Page.html - method OM2
+        }
+
+
+        function UpdateSuccessG(data) {
+            console.log(data);
+
+            ajaxCall("GET", "../api/Gamers/tableG", "", UpdateSuccessG2, Error); //Manager_Main_Page.html - method OM1
+        }
+
+        function UpdateSuccessG2(gamersdata) {
+            console.log(gamersdata);
+
+            redrawTable(tbl1, gamersdata);
+            swal("פעולה בוצעה בהצלחה", "", "success");
+        }
+
+
+
+        function getOrgenaizersSuccess(orgenaizersdata) {
+            console.log(orgenaizersdata);
+            
+
+            orgenaizers = orgenaizersdata; // keep the orgenaizers array in a global variable;
+
+            try {
+                tbl2 = $('#OrgenaizersTable').DataTable({
+                    data: orgenaizersdata,
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 4,
+                    columns: [
+                        { data: "Userid", className: "uniqueClassName" },
+                        { data: "Firstname", className: "uniqueClassName" },
+                        { data: "Lastname", className: "uniqueClassName" },
+                        { data: "Comunityname", className: "uniqueClassName" },
+                        { data: "Phone", className: "uniqueClassName" },
+                        { data: "Email", className: "uniqueClassName" },
+                        {
+                            "data": "Dob",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                var day = date.getDate();
+                                day = day.toString().length > 1 ? day : "0" + day;
+                                return day + "/" + (month.toString().length > 1 ? month : "0" + month) + "/" + date.getFullYear();
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataOrgenaizers = "data-orgenaizerid='" + row.Userid + "'"; //User id for buttons
+
+                                O_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='O_rejectBTN bi bi-x-circle' " + dataOrgenaizers + "></i></a>";
+                                O_admitBtn = "<a href='javascript:;' class='admit' title='אשר'><i class='O_admitBTN bi bi-check-circle' " + dataOrgenaizers + "></i></a>";
+                                O_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='O_viewBTN bi bi-person-circle' " + dataOrgenaizers + "></i></a>";
+
+                                return O_rejectBtn + O_admitBtn + O_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -353,11 +557,85 @@
         }
 
 
-        function getGamersError(err) {
-            console.log(err);
+        function RejectOrgenaizer(userId) {
 
-            swal("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            ajaxCall("PUT", "../api/Orgenaizers/delo?todeleteid=" + userId, "", UpdateSuccessO, Error); //Manager_Main_Page.html - method OM5
         }
+
+        function UpdateSuccessO(data) {
+            console.log(data);
+
+            ajaxCall("GET", "../api/Orgenaizers/tableO", "", UpdateSuccessO2, Error); //Manager_Main_Page.html - method OM4
+        }
+
+        function UpdateSuccessO2(orgenaizersdata) {
+            console.log(orgenaizersdata);
+
+            redrawTable(tbl2, orgenaizersdata);
+            swal("פעולה בוצעה בהצלחה", "", "success");
+        }
+
+
+        function getPostsSuccess(postsdata) {
+            console.log(postsdata);
+
+            posts = postsdata; // keep the gamers array in a global variable;
+
+            try {
+                tbl1 = $('#PostsTable').DataTable({
+                    data: postsdata,
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 4,
+                    columns: [
+                        { data: "Postid", className: "uniqueClassName" },
+                        { data: "Title", className: "uniqueClassName" },
+                        { data: "Category", className: "uniqueClassName" },
+                        { data: "Viewsnum", className: "uniqueClassName" },
+                        {
+                            "data": "Postdate",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                var day = date.getDate();
+                                day = day.toString().length > 1 ? day : "0" + day;
+                                return day + "/" + (month.toString().length > 1 ? month : "0" + month) + "/" + date.getFullYear();
+                            }
+                            , className: "uniqueClassName"
+                        },
+
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataPosts = "data-postid='" + row.Postid + "'"; //User id for buttons
+
+                                P_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='P_viewBTN bi bi-eye' " + dataPosts + "></i></a>";
+
+                                return P_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
+                    ],
+                });
+                
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
 
 
     </script>
@@ -384,7 +662,49 @@
             <h2>טבלאות מעקב</h2>
             <br />
 
+            <!--Posts Table-->
+            <div class="row">
+                <div class="col">
 
+                    <form id="pForm">
+                        <table id="RedTitle" class="nk-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="background: #dd163b">פוסטים בדף הבית</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table id="PostsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th style="max-width: 70px;">מספר פוסט</th>
+                                    <th style="max-width: 100px;">כותרת</th>
+                                    <th style="max-width: 70px;">קטגוריה</th>
+                                    <th style="max-width: 70px;">מספר צפיות</th>
+                                    <th style="max-width: 70px;">תאריך פרסום</th>
+                                    <th style="max-width: 60px;">פעולות</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+
+                    <!--<a href="#" class="add-post-button">
+                        <span class="icon ion-paper-airplane"></span> הוספת פוסט חדש
+                    </a>-->
+
+                    <button class="add-post-button"> הוספת פוסט חדש<i class="bi bi-plus-circle"></i></button>
+
+                </div>
+
+            </div>
+
+            <br />
+            <br />
+            <br />
+
+
+
+            <!--Gamers Table-->
             <div class="row">
                 <div class="col">
 
@@ -395,8 +715,8 @@
                                     <th style="background: #dd163b">שחקנים שממתינים לאישור</th>
                                 </tr>
                             </thead>
-                        </table> <!--table table-bordered table table-dark table-striped-->
-                        <table id="GamersTable" class="nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                        </table>
+                        <table id="GamersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                             <thead>
                                 <tr>
                                     <th style="max-width: 70px;">מספר שחקן</th>
@@ -416,6 +736,56 @@
                 </div>
 
             </div>
+
+            <br />
+            <br />
+            <br />
+
+
+            <!--Orgenaizers Table-->
+            <div class="row">
+                <div class="col">
+
+                    <form id="oForm">
+                        <table id="RedTitle" class="nk-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="background: #dd163b">מארגנים שממתינים לאישור</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table id="OrgenaizersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th style="max-width: 70px;">מספר מארגן</th>
+                                    <th style="max-width: 25px;">שם</th>
+                                    <th style="max-width: 70px;">שם משפחה</th>
+                                    <th style="max-width: 50px;">שם הקהילה</th>
+                                    <th style="max-width: 50px;">טלפון</th>
+                                    <th style="max-width: 55px;">אימייל</th>
+                                    <th style="max-width: 70px;">תאריך לידה</th>
+                                    <th style="max-width: 60px;">פעולות</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </div> <!--container-->
 

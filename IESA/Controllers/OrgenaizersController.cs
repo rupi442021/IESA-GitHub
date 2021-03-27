@@ -44,5 +44,40 @@ namespace IESA.Controllers
 
         //---Sign_In.html--- *Close*
 
+
+        //---Manager_Main_Page.html--- *Open*
+
+
+        [HttpGet] //Manager_Main_Page.html - method OM4
+        [Route("api/Orgenaizers/tableO")]
+        public List<Orgenaizers> GetOrgenaizers()
+        {
+            Orgenaizers orgenaizerslist = new Orgenaizers();
+            return orgenaizerslist.ReadOrgenaizers();
+        }
+
+
+        [HttpPut] //Manager_Main_Page.html - method OM5
+        [Route("api/Orgenaizers/delo")]
+        public void deleteOrgenaizer(int todeleteid)
+        {
+            Orgenaizers org1 = new Orgenaizers();
+            org1.DeleteOrgenaizer(todeleteid);
+        }
+
+
+        [HttpPut] //Manager_Main_Page.html - method OM6
+        [Route("api/Orgenaizers/Tableostatus")]
+        public void updateOrgenaizerStatus(int toupdateid)
+        {
+            Orgenaizers orgenaizer1 = new Orgenaizers();
+            orgenaizer1.UpdateOrgenaizerStatus(toupdateid);
+        }
+
+
+
+
+        //---Manager_Main_Page.html--- *Close*
+
     }
 }
