@@ -124,7 +124,16 @@ namespace IESA.Models
             return lCompetitions;
         }
 
-        
+
+
+
+        public List<Competitions> ReadGamer(int GID)// gets all the compation of a specifical gamer. // Gamer.html
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> lCompetitions = dbs.GetGamersCompetitions(GID);
+            return lCompetitions;
+        }
+
 
 
     }

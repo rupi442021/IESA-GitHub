@@ -196,6 +196,7 @@
     <Content Include="Pages\Add_Game_Category.html" />
     <Content Include="Pages\Add_New_Post.html" />
     <Content Include="Pages\Competition_Preview.html" />
+    <Content Include="Pages\Gamer.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Post_Archive.html" />
