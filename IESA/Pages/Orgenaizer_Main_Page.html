@@ -206,7 +206,6 @@
             ajaxCall("GET", "../api/Competitions?OID=" + OID.Userid, "", getSuccessOrgenaizerCompetition, getErrorOrgenaizerCompetition);
         }
 
-
         function getSuccessOrgenaizerCompetition(data) {
             console.log("In success: ", data);
             var loopFlist = 3;
@@ -244,10 +243,7 @@
                 cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
                 cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                 cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
-                if (fList[i].Address1 == '' || fList[i].Address1 == null)
-                    cardstr += '<p class="card-text">אונליין</p>';
-                else
-                    cardstr += '<p class="card-text">' + fList[i].Address1 + '</p>';
+              
                 if (fList[i].Competitionstatus == 1)
                     cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i></p> </div > </div ></div >';
                 else if (fList[i].Competitionstatus == 2)
@@ -276,10 +272,6 @@
                     cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
                     cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                     cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
-                    if (fList[i].Address1 == '' || fList[i].Address1 == null)
-                        cardstr += '<p class="card-text">אונליין</p>';
-                    else
-                        cardstr += '<p class="card-text">' + fList[i].Address1 + '</p>';
                     if (fList[i].Competitionstatus == 1)
                         cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
                     else if (fList[i].Competitionstatus == 2)
@@ -311,18 +303,14 @@
                 cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
                 cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                 cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
-                if (pList[i].Address1 == '' || pList[i].Address1 == null)
-                    cardstr += '<p class="card-text">אונליין</p>';
-                else
-                    cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
                  if (pList[i].Competitionstatus == 3)
-                    cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                     cardstr += '<button type="button" class="btn btn-danger" disabled>תחרות נדחתה</button><p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 4)
                     cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 5)
                     cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 6)
-                    cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
+                     cardstr += '<button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 7)
                     cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 8)
@@ -346,24 +334,24 @@
 
                     let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0]
 
-                    var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
+                    var cardstr = '<div class="col-3 .mx-auto " <div class="card " style="width: 18rem;">';
                     cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
                     cardstr += '<div class="card-body">';
                     cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
                     cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                     cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
-                    if (pList[i].Address1 == '' || pList[i].Address1 == null)
-                        cardstr += '<p class="card-text">אונליין</p>';
-                    else
-                        cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
+                    //if (pList[i].Address1 == '' || pList[i].Address1 == null)
+                    //    cardstr += '<p class="card-text">אונליין</p>';
+                    //else
+                    //    cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
                     if (pList[i].Competitionstatus == 3)
-                        cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-danger" disabled>תחרות נדחתה</button><p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 4)
                         cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו ' + " " + timetorank + " " + ' ימים להזנת התוצאות </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 5)
                         cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 6)
-                        cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="מנהל מערכת דחה את הדירוגים שהזנת"  disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 7)
                         cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 8)
@@ -561,6 +549,7 @@
 
             }
         }
+
         function getErrorGamersInC(err) {
             console.log("in ERR: ", err);
         }
@@ -617,8 +606,8 @@
 
             <br />
             <div class="row" id="AllPCcards">
-                <div class="col-9" id="AllPastC"></div>
-                <div class="col-3" id=""></div>
+                <div class="row" id="AllPastC"></div>
+                
             </div>
 
             <!-- Modal -->
