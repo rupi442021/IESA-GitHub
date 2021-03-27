@@ -252,18 +252,28 @@
             border-width: 1px 0px 1px 1px !important;
         }
 
+        /*button add post*/
+
         .add-post-button {
-            border-radius: 4px;
+            border-radius: 3px;
             color: #181c23;
             background-color: #fff;
-            border-color: #e0e0e0;
-            border-style: solid;
-            padding: 12px 17px;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
             text-decoration: none;
-            
+            font-weight: 600;
+            transition-duration: 0.20s;
         }
-        
 
+        .add-post-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        #pForm > div.dataTables_wrapper div.dataTables_filter label {
+            display: none;
+        }
+
+        /*/*button add post*/
 
 
 
@@ -283,6 +293,12 @@
                 var postId = this.getAttribute('data-postid');
 
                 swal("פעולה זו תפתח דף חדש המציג את הפוסט: " + postId)
+            });
+
+            $(document).on("click", ".add-post-button", function () {
+                
+                window.open('Add_New_Post.html', '_blank');
+
             });
 
 
@@ -667,6 +683,9 @@
                 <div class="col">
 
                     <form id="pForm">
+
+                        <button class="add-post-button" style="position:relative; top:45px; right:895px;" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת פוסט חדש</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+
                         <table id="RedTitle" class="nk-table" style="width:100%">
                             <thead>
                                 <tr>
@@ -687,12 +706,6 @@
                             </thead>
                         </table>
                     </form>
-
-                    <!--<a href="#" class="add-post-button">
-                        <span class="icon ion-paper-airplane"></span> הוספת פוסט חדש
-                    </a>-->
-
-                    <button class="add-post-button"> הוספת פוסט חדש<i class="bi bi-plus-circle"></i></button>
 
                 </div>
 
