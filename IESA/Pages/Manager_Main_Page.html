@@ -36,13 +36,12 @@
             background-color: #212529;
             color: white;
             letter-spacing: .015em;
-
         }
 
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            height: 2000px;
+            height: 1350px;
             padding-top: 30px;
             position: relative;
         }
@@ -92,7 +91,7 @@
             margin-bottom: 60px;
         }
 
-/*        .dataTables_filter, .dataTables_info {
+        /*        .dataTables_filter, .dataTables_info {
             display: none;
         }
 
@@ -154,8 +153,7 @@
 
         td {
             font-size: 14px;
-            font-family:Arial;
-            
+            font-family: Arial;
         }
 
         tr:nth-child(odd) {
@@ -174,7 +172,7 @@
         }
 
         .dataTables_paginate {
-         float: left !important;
+            float: left !important;
         }
 
 
@@ -206,10 +204,10 @@
             font-family: arial;
         }
 
-        a:hover {
-            color: #04b8a5;
-            transition: .15s color;
-        }
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
 
             a.reject:hover {
                 color: #ed4564;
@@ -264,14 +262,14 @@
             font-weight: 600;
             transition-duration: 0.20s;
             position: relative;
-            top: 45px;
+            bottom: 87.7%;
             /*right: 895px;*/
             right: 82.5%;
         }
 
-        .add-post-button:hover {
-            background-color: #e0e0e0;
-        }
+            .add-post-button:hover {
+                background-color: #e0e0e0;
+            }
 
         #pForm > div.dataTables_wrapper div.dataTables_filter label {
             display: none;
@@ -308,35 +306,48 @@
                 min-width: 20px !important;
             }
 
-        .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
-            content: "";
-            display: block;
-            flex: 100;
-            border-bottom: 4px solid;
-            transform: translateY(-10px);
-        }
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
 
             .nk-decorated-h-2::after, .nk-decorated-h-2::before {
                 border-bottom-color: #353c4a;
             }
 
-        .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
-            content: "";
-            display: block;
-            flex: 100;
-            border-bottom: 4px solid;
-            transform: translateY(-10px);
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+                display: block;
+                flex: auto;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+        /*title try*/
+
+
+        div#services_block {
+            height: 355px;
+            background-color: #3c4250;
+            border-left: 6px solid #292e38;
+            border-right: 6px solid #292e38;
         }
 
-        .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
-            display: block;
-            flex: auto;
-            padding-right: 20px;
-            padding-left: 20px;
+        #box {
+            -webkit-box-shadow: 0 10px 6px -6px #292e38;
+            -moz-box-shadow: 0 10px 6px -6px #292e38;
+            box-shadow: 0 10px 6px -6px #292e38;
         }
-
-            /*title try*/
-
     </style>
 
     <script>
@@ -355,7 +366,7 @@
             });
 
             $(document).on("click", ".add-post-button", function () {
-                
+
                 //window.open('Add_New_Post.html', '_blank');
                 location.replace("Add_New_Post.html");
 
@@ -404,7 +415,7 @@
 
             $(document).on("click", ".G_admitBTN", function () {
                 var userId2 = this.getAttribute('data-gamerid');
-                
+
                 ajaxCall("PUT", "../api/Gamers/Tablegstatus?toupdateid=" + userId2, "", UpdateSuccessG, Error); //Manager_Main_Page.html - method OM3
             });
 
@@ -444,7 +455,7 @@
 
             $(document).on("click", ".O_admitBTN", function () {
                 var userId3 = this.getAttribute('data-orgenaizerid');
-                
+
                 ajaxCall("PUT", "../api/Orgenaizers/Tableostatus?toupdateid=" + userId3, "", UpdateSuccessO, Error); //Manager_Main_Page.html - method OM6
             });
 
@@ -584,7 +595,7 @@
 
         function getOrgenaizersSuccess(orgenaizersdata) {
             console.log(orgenaizersdata);
-            
+
 
             orgenaizers = orgenaizersdata; // keep the orgenaizers array in a global variable;
 
@@ -718,7 +729,7 @@
 
                     ],
                 });
-                
+
             }
 
             catch (err) {
@@ -830,158 +841,224 @@
                 <div class="divdown"></div>
             </section>
 
+
+            <div class="row">
+
+                <div class="col-lg-3" id="services_block" style="text-align:center;">
+                    <h4 style="margin-top:3px;">סטטסטיקה</h4>
+                    <br />
+                    <span>מספר שחקנים רשומים: 435</span>
+                    <div style="padding:5px;"></div>
+                    <span>מספר מארגנים רשומים: 172</span>
+                    <div style="padding:5px;"></div>
+                    <span>מספר תחרויות עתידיות: 4</span>
+                    <div style="padding:5px;"></div>
+                    <span>מספר תחרויות שהתקיימו: 125</span>
+                    <div style="padding:16px;"></div>
+
+                    <!--<p>מספר שחקנים רשומים: 435</p>
+                    <p>מספר מארגנים רשומים: 172</p>
+                    <p>מספר תחרויות עתידיות: 4</p>
+                    <p>מספר תחרויות שהתקיימו: 125</p>-->
+
+                    <br />
+
+
+                    <div id="box" style="background-color: #4a5163; font-size:14px;">
+                        <div style="padding:2px;"></div>
+                        <span>מספר תחרויות ממתינות לאישור: 0</span>
+                        <div style="padding:1px;"></div>
+                        <span>מספר שחקנים ממתינים לאישור: 2</span>
+                        <div style="padding:1px;"></div>
+                        <span>מספר מארגנים ממתינים לאישור: 1</span>
+                        <div style="padding:2px;"></div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-lg-9" id="services_block" style="text-align:center">
+                    <h4 style="margin-top:3px;">גרף</h4>
+
+                    <div style="padding:5px;"></div>
+
+                    <img src="https://i.postimg.cc/52kqyYvF/graphiesa.jpg" class="img-fluid" alt="Graph" />
+                </div>
+
+            </div>
+
+            <br />
+            <br />
+
+
+
+
             <h3 class="nk-decorated-h-2"><span><span>טבלאות</span> מעקב</span></h3>
 
-            <!--Posts Table-->
-            <div class="row">
-                <div class="col">
+            <br />
 
-                    <form id="pForm">
 
-                        <button class="add-post-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת פוסט חדש</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button" role="tab" aria-controls="nav-posts" aria-selected="true">פוסטים באתר</button>
+                    <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-competitions" type="button" role="tab" aria-controls="nav-competitions" aria-selected="false">תחרויות ממתינות לאישור</button>
+                    <button class="nav-link" id="nav-gamers-tab" data-bs-toggle="tab" data-bs-target="#nav-gamers" type="button" role="tab" aria-controls="nav-gamers" aria-selected="false">שחקנים ממתינים לאישור</button>
+                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-orgenaizers" type="button" role="tab" aria-controls="nav-orgenaizers" aria-selected="false">מארגנים ממתינים לאישור</button>
+                </div>
+            </nav>
 
-                        <table id="RedTitle" class="nk-table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="background: #dd163b">פוסטים בדף הבית</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <table id="PostsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th style="max-width: 70px;">מספר פוסט</th>
-                                    <th style="max-width: 100px;">כותרת</th>
-                                    <th style="max-width: 70px;">קטגוריה</th>
-                                    <th style="max-width: 70px;">מספר צפיות</th>
-                                    <th style="max-width: 70px;">תאריך פרסום</th>
-                                    <th style="max-width: 60px;">פעולות</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </form>
+
+            <div class="tab-content" id="nav-tabContent">
+
+                <br />
+
+                <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+                    <!--#1-->
+                    <!--Posts Table-->
+                    <div class="row">
+                        <div class="col">
+
+                            <form id="pForm">
+
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">פוסטים בדף הבית</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="PostsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 70px;">מספר פוסט</th>
+                                            <th style="max-width: 100px;">כותרת</th>
+                                            <th style="max-width: 70px;">קטגוריה</th>
+                                            <th style="max-width: 70px;">מספר צפיות</th>
+                                            <th style="max-width: 70px;">תאריך פרסום</th>
+                                            <th style="max-width: 60px;">פעולות</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
+
+                            <button class="add-post-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת פוסט חדש</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
 
-            <br />
-            <br />
-            <br />
+                <div class="tab-pane fade" id="nav-competitions" role="tabpanel" aria-labelledby="nav-competitions-tab">
+                    <!--#2-->
+                    <!--Competitions Table-->
+                    <div class="row">
+                        <div class="col">
 
+                            <form id="cForm">
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">תחרויות שממתינות לאישור</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 70px;">מספר תחרות</th>
+                                            <th style="max-width: 100px;">כותרת</th>
+                                            <th style="max-width: 70px;">סוג</th>
+                                            <th style="max-width: 60px;">שם מארגן</th>
+                                            <th style="max-width: 55px;">תאריך התחלה</th>
+                                            <th style="max-width: 70px;">תאריך סיום</th>
+                                            <th style="max-width: 60px;">פעולות</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
 
-            <!--Competitions Table-->
-            <div class="row">
-                <div class="col">
+                        </div>
 
-                    <form id="cForm">
-                        <table id="RedTitle" class="nk-table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="background: #dd163b">תחרויות שממתינות לאישור</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th style="max-width: 70px;">מספר תחרות</th>
-                                    <th style="max-width: 100px;">כותרת</th>
-                                    <th style="max-width: 70px;">סוג</th>
-                                    <th style="max-width: 60px;">שם מארגן</th>
-                                    <th style="max-width: 55px;">תאריך התחלה</th>
-                                    <th style="max-width: 70px;">תאריך סיום</th>
-                                    <th style="max-width: 60px;">פעולות</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </form>
-
-                </div>
-
-            </div>
-
-            <br />
-            <br />
-            <br />
-
-            <!--Gamers Table-->
-            <div class="row">
-                <div class="col">
-
-                    <form id="gForm">
-                        <table id="RedTitle" class="nk-table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="background: #dd163b">שחקנים שממתינים לאישור</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <table id="GamersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th style="max-width: 70px;">מספר שחקן</th>
-                                    <th style="max-width: 25px;">שם</th>
-                                    <th style="max-width: 70px;">שם משפחה</th>
-                                    <th style="max-width: 50px;">כינוי</th>
-                                    <th style="max-width: 50px;">טלפון</th>
-                                    <th style="max-width: 55px;">אימייל</th>
-                                    <th style="max-width: 70px;">תאריך לידה</th>
-                                    <th style="max-width: 75px;">תאריך בקשה</th>
-                                    <th style="max-width: 60px;">פעולות</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </form>
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="tab-pane fade" id="nav-gamers" role="tabpanel" aria-labelledby="nav-gamers-tab">
+                    <!--#3-->
+                    <!--Gamers Table-->
+                    <div class="row">
+                        <div class="col">
 
-            <br />
-            <br />
-            <br />
+                            <form id="gForm">
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">שחקנים שממתינים לאישור</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="GamersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 70px;">מספר שחקן</th>
+                                            <th style="max-width: 25px;">שם</th>
+                                            <th style="max-width: 70px;">שם משפחה</th>
+                                            <th style="max-width: 50px;">כינוי</th>
+                                            <th style="max-width: 50px;">טלפון</th>
+                                            <th style="max-width: 55px;">אימייל</th>
+                                            <th style="max-width: 70px;">תאריך לידה</th>
+                                            <th style="max-width: 75px;">תאריך בקשה</th>
+                                            <th style="max-width: 60px;">פעולות</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
 
+                        </div>
 
-            <!--Orgenaizers Table-->
-            <div class="row">
-                <div class="col">
-
-                    <form id="oForm">
-                        <table id="RedTitle" class="nk-table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="background: #dd163b">מארגנים שממתינים לאישור</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <table id="OrgenaizersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th style="max-width: 70px;">מספר מארגן</th>
-                                    <th style="max-width: 25px;">שם</th>
-                                    <th style="max-width: 70px;">שם משפחה</th>
-                                    <th style="max-width: 50px;">שם הקהילה</th>
-                                    <th style="max-width: 50px;">טלפון</th>
-                                    <th style="max-width: 70px;">אימייל</th>
-                                    <th style="max-width: 70px;">תאריך לידה</th>
-                                    <th style="max-width: 60px;">פעולות</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </form>
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="tab-pane fade" id="nav-orgenaizers" role="tabpanel" aria-labelledby="nav-orgenaizers-tab">
+                    <!--#4-->
+                    <!--Orgenaizers Table-->
+                    <div class="row">
+                        <div class="col">
 
+                            <form id="oForm">
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">מארגנים שממתינים לאישור</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="OrgenaizersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 70px;">מספר מארגן</th>
+                                            <th style="max-width: 25px;">שם</th>
+                                            <th style="max-width: 70px;">שם משפחה</th>
+                                            <th style="max-width: 50px;">שם הקהילה</th>
+                                            <th style="max-width: 50px;">טלפון</th>
+                                            <th style="max-width: 70px;">אימייל</th>
+                                            <th style="max-width: 70px;">תאריך לידה</th>
+                                            <th style="max-width: 60px;">פעולות</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
 
+                        </div>
 
+                    </div>
 
+                </div>
 
-
-
-
+            </div> <!--End of tabs-->
 
 
         </div> <!--container-->
