@@ -98,6 +98,17 @@ namespace IESA.Controllers
         //---Manager_Main_Page.html--- *Close*
 
 
+        //---Competition_View.html--- *Open*
+
+        [HttpGet] //Competition_View.html
+        [Route("api/Competitions/getone")]
+        public Competitions GetOne(int CompetitionId)
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.ReadOneCompetition(CompetitionId);
+        }
+
+        //---Competition_View.html--- *Close*
 
 
 
