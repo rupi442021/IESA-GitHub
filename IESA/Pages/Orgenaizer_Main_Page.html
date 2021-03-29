@@ -208,12 +208,11 @@
 
         function getSuccessOrgenaizerCompetition(data) {
             console.log("In success: ", data);
-            var loopFlist = 3;
-            var loopPlist = 3;
+
 
 
             for (var i = 0; i < data.length; i++) {
-                if (data[i].Competitionstatus == 1 || data[i].Competitionstatus == 2)
+                if (data[i].Competitionstatus == 1 || data[i].Competitionstatus == 2 || data[i].Competitionstatus == 4 || data[i].Competitionstatus == 5)
                     fList.push(data[i]);
                 else
                     pList.push(data[i]);
@@ -222,11 +221,15 @@
             console.log("fList: ", fList)
             console.log("pList: ", pList)
 
+            var loopFlist = 3;
+            var loopPlist = 3;
+
             if (fList.length < 3)
                 loopFlist = fList.length
             if (pList.length < 3)
-                loopFlist = pList.length
+                loopPlist = pList.length
 
+            //Futures Competitions
             for (var i = 0; i < loopFlist; i++) {
 
                 let edat = fList[i].Enddate.split("T");
@@ -237,22 +240,28 @@
                 Stardate = Stardate[0].split("-");
                 Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
 
+                let today = new Date(getDate())
+                let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
+
                 var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
-                cardstr += '<img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
+                cardstr += '<a href=#> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"> </a>';
                 cardstr += '<div class="card-body">';
                 cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
-                cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-                cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
-              
+                cardstr += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
+                cardstr += '<p class="card-text"> סיום תחרות: ' + edat + '</p>';
+
                 if (fList[i].Competitionstatus == 1)
-                    cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i></p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-success" disabled>תחרות בבדיקת המערכת</button><p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i></p> </div > </div ></div >';
                 else if (fList[i].Competitionstatus == 2)
-                    cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem; color:green"></i></p> </div > </div ></div >';
-               
+                    cardstr += '<button type="button" class="btn btn-secondary" disabled>הזנת תוצאות תחרות</button><p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem; color:green"></i></p> </div > </div ></div >';
+                else if (fList[i].Competitionstatus == 4)
+                    cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( fList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
+                else if (fList[i].Competitionstatus == 5)
+                    cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
                 $("#FutureC").append(cardstr);
 
             }
-
+            //All Futures Competitions
             if (fList.length > 3) {
                 for (var i = 3; i < fList.length; i++) {
 
@@ -266,23 +275,32 @@
 
 
 
+                    let today = new Date(getDate())
+                    let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
+
+
+
                     var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
-                    cardstr += '<img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
+                    cardstr += '<a href=#> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                     cardstr += '<div class="card-body">';
                     cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
                     cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                     cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
                     if (fList[i].Competitionstatus == 1)
-                        cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
+                        cardstr += '<button type="button" class="btn btn-success" disabled>תחרות בבדיקת המערכת</button><p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
                     else if (fList[i].Competitionstatus == 2)
-                        cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem ; color:green"></i></p> </div > </div ></div >';
-                   
+                        cardstr += '<button type="button" class="btn btn-primary" disabled>הזנת תוצאות תחרות</button><p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem ; color:green"></i></p> </div > </div ></div >';
+                    else if (fList[i].Competitionstatus == 4)
+                        cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( fList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
+                    else if (fList[i].Competitionstatus == 5)
+                        cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
 
                     $("#AllFutureC").append(cardstr);
 
                 }
             }
 
+            //Past Competitions
             for (var i = 0; i < loopPlist; i++) {
 
                 let edat = pList[i].Enddate.split("T");
@@ -298,26 +316,22 @@
                 let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0];
 
                 var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
-                cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
+                cardstr += '<a href=#><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstr += '<div class="card-body">';
                 cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
                 cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                 cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
-                 if (pList[i].Competitionstatus == 3)
-                     cardstr += '<button type="button" class="btn btn-danger" disabled>תחרות נדחתה</button><p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 4)
-                    cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 5)
-                    cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
+                if (pList[i].Competitionstatus == 3)
+                    cardstr += '<button type="button" class="btn btn-danger" disabled>תחרות נדחתה</button><p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 6)
-                     cardstr += '<button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 7)
                     cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 8)
                     cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
                 $("#PastC").append(cardstr);
             }
-
+            //All Past Competitions
             if (pList.length > 3) {
                 for (var i = 3; i < pList.length; i++) {
 
@@ -335,21 +349,13 @@
                     let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0]
 
                     var cardstr = '<div class="col-3 .mx-auto " <div class="card " style="width: 18rem;">';
-                    cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
+                    cardstr += '<a href=#><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                     cardstr += '<div class="card-body">';
                     cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
                     cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                     cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
-                    //if (pList[i].Address1 == '' || pList[i].Address1 == null)
-                    //    cardstr += '<p class="card-text">אונליין</p>';
-                    //else
-                    //    cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
                     if (pList[i].Competitionstatus == 3)
                         cardstr += '<button type="button" class="btn btn-danger" disabled>תחרות נדחתה</button><p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
-                    else if (pList[i].Competitionstatus == 4)
-                        cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו ' + " " + timetorank + " " + ' ימים להזנת התוצאות </p> </div > </div ></div >';
-                    else if (pList[i].Competitionstatus == 5)
-                        cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 6)
                         cardstr += '<button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="מנהל מערכת דחה את הדירוגים שהזנת"  disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 7)
@@ -362,123 +368,6 @@
             }
 
         }
-        if (fList.length > 3) {
-            for (var i = 3; i < fList.length; i++) {
-
-                let edat = fList[i].Enddate.split("T");
-                edat = edat[0].split("-");
-                edat = edat[2] + '/' + edat[1] + '/' + edat[0]
-
-                let Stardate = fList[i].Startdate.split("T");
-                Stardate = Stardate[0].split("-");
-                Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
-
-
-
-                var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
-                cardstr += '<img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
-                cardstr += '<div class="card-body">';
-                cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
-                cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-                cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
-                if (fList[i].Address1 == '' || fList[i].Address1 == null)
-                    cardstr += '<p class="card-text">אונליין</p>';
-                else
-                    cardstr += '<p class="card-text">' + fList[i].Address1 + '</p>';
-                if (fList[i].Competitionstatus == 1)
-                    cardstr += '<p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
-                else if (fList[i].Competitionstatus == 2)
-                    cardstr += '<p id="iconp"><i class="bi bi-check-square" style="font-size: 2rem ; color:green"></i></p> </div > </div ></div >';
-
-
-                $("#AllFutureC").append(cardstr);
-
-            }
-        }
-
-        for (var i = 0; i < loopPlist; i++) {
-
-            let edat = pList[i].Enddate.split("T");
-            edat = edat[0].split("-");
-            let today = new Date(getDate())
-            let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
-
-
-            let Stardate = pList[i].Startdate.split("T");
-            Stardate = Stardate[0].split("-");
-            Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0];
-
-            let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0];
-
-            var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
-            cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
-            cardstr += '<div class="card-body">';
-            cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
-            cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-            cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
-            if (pList[i].Address1 == '' || pList[i].Address1 == null)
-                cardstr += '<p class="card-text">אונליין</p>';
-            else
-                cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
-            if (pList[i].Competitionstatus == 3)
-                cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
-            else if (pList[i].Competitionstatus == 4)
-                cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
-            else if (pList[i].Competitionstatus == 5)
-                cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
-            else if (pList[i].Competitionstatus == 6)
-                cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
-            else if (pList[i].Competitionstatus == 7)
-                cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
-            else if (pList[i].Competitionstatus == 8)
-                cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
-            $("#PastC").append(cardstr);
-        }
-
-        if (pList.length > 3) {
-            for (var i = 3; i < pList.length; i++) {
-
-
-                let edat = pList[i].Enddate.split("T");
-                edat = edat[0].split("-");
-                let today = new Date(getDate())
-                let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
-
-
-                let Stardate = pList[i].Startdate.split("T");
-                Stardate = Stardate[0].split("-");
-                Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
-
-                let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0]
-
-                var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
-                cardstr += '<img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed">';
-                cardstr += '<div class="card-body">';
-                cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
-                cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-                cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
-                if (pList[i].Address1 == '' || pList[i].Address1 == null)
-                    cardstr += '<p class="card-text">אונליין</p>';
-                else
-                    cardstr += '<p class="card-text">' + pList[i].Address1 + '</p>';
-                if (pList[i].Competitionstatus == 3)
-                    cardstr += '<p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 4)
-                    cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( pList[' + i + '] )"> הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו ' + " " + timetorank + " " + ' ימים להזנת התוצאות </p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 5)
-                    cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> ממתין לאישור מנהל </p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 6)
-                    cardstr += '<button type="button" class="btn btn-danger" disabled>דירוגים נדחו</button> <p id="iconp" style="font-size: 0.9rem"><i class="bi bi bi-x" style="font-size: 2rem; color:red"></i>תוצאות התחרות נדחו</p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 7)
-                    cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> תוצאות התחרות אושרו </p> </div > </div ></div >';
-                else if (pList[i].Competitionstatus == 8)
-                    cardstr += '<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter" onclick="renderGamers(pList[' + i + '])">משתתפים</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-check" style="font-size: 2rem; color:green"></i> התערבות מנהל </p> </div > </div ></div >';
-                $("#AllPastC").append(cardstr);
-            }
-
-        }
-
-        
 
         function getErrorOrgenaizerCompetition(err) {
             console.log(err);
@@ -653,8 +542,6 @@
             var gamersarray = data;
 
 
-
-
             for (let key in gamersarray) {
                 $("#partisipantstbl").append('<tr id="' + key + '"><td>' + key + '</td></tr>')
                 for (var i = 0; i < gamersarray[key].length; i++) {
@@ -690,7 +577,7 @@
             <br /><br /><br /><br />
 
             <div id="FCcards">
-                <h3> תחרויות עתידיות</h3>
+                <h3>ניהול תחרויות</h3>
                 <div class="row">
                     <div class="col-9" id="FutureC"></div>
                     <div class="col-3" id="mikra">
@@ -724,7 +611,7 @@
             <br />
             <div class="row" id="AllPCcards">
                 <div class="row" id="AllPastC"></div>
-                
+
             </div>
 
             <!-- Modal -->
