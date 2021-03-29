@@ -26,5 +26,19 @@ namespace IESA.Controllers
         //---Sign_Up.html--- *Close*
 
 
+        //---Manager_Main_Page.html--- *Open*
+
+        [HttpGet] //Manager_Main_Page.html - method OM9
+        [Route("api/Managers/tablestats")]
+        public Dictionary<int, int> GetStatistics()
+        {
+            Managers statisticsdict = new Managers();
+            return statisticsdict.GetStatisticsM();
+        }
+
+
+        //---Manager_Main_Page.html--- *Close*
+
+
     }
 }

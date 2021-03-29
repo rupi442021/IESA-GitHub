@@ -263,7 +263,6 @@
             transition-duration: 0.20s;
             position: relative;
             bottom: 87.7%;
-            /*right: 895px;*/
             right: 82.5%;
         }
 
@@ -343,11 +342,12 @@
             border-right: 6px solid #292e38;
         }
 
-        #box {
+/*        #box {
             -webkit-box-shadow: 0 10px 6px -6px #292e38;
             -moz-box-shadow: 0 10px 6px -6px #292e38;
             box-shadow: 0 10px 6px -6px #292e38;
-        }
+        }*/
+
     </style>
 
     <script>
@@ -363,6 +363,12 @@
                 var postId = this.getAttribute('data-postid');
 
                 swal("פעולה זו תפתח דף חדש המציג את הפוסט: " + postId)
+            });
+
+            $(document).on("click", ".P_editBTN", function () {
+                var postId = this.getAttribute('data-postid');
+
+                swal("פעולה זו תפתח דף חדש העורך את הפוסט: " + postId)
             });
 
             $(document).on("click", ".add-post-button", function () {
@@ -477,6 +483,8 @@
 
         function init() {
 
+            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
+
             //check if the user is manager
         }
 
@@ -588,6 +596,7 @@
             console.log(gamersdata);
 
             redrawTable(tbl1, gamersdata);
+            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
             swal("פעולה בוצעה בהצלחה", "", "success");
         }
 
@@ -673,6 +682,7 @@
             console.log(orgenaizersdata);
 
             redrawTable(tbl2, orgenaizersdata);
+            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
             swal("פעולה בוצעה בהצלחה", "", "success");
         }
 
@@ -721,8 +731,9 @@
                                 let dataPosts = "data-postid='" + row.Postid + "'"; //User id for buttons
 
                                 P_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='P_viewBTN bi bi-eye' " + dataPosts + "></i></a>";
+                                P_editBtn = "<a href='javascript:;' class='view' title='ערוך'><i class='P_editBTN bi bi-pencil' " + dataPosts + "></i></a>";
 
-                                return P_viewBtn;
+                                return P_editBtn + P_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -820,12 +831,56 @@
             }
         }
 
+        function getStatisticsSuccess(statisticsdict) {
+            console.log(statisticsdict);
+
+            //For writing
+            var numgamers = String(statisticsdict["1"]);
+            var numorgenaizers = String(statisticsdict["2"]);
+            var numfuturecomp = String(statisticsdict["3"]);
+            var numpastcomp = String(statisticsdict["4"]);
+
+            document.getElementById("num_gamers").innerHTML = numgamers;
+            document.getElementById("num_orgenaizers").innerHTML = numorgenaizers;
+            document.getElementById("num_futurecomp").innerHTML = numfuturecomp;
+            document.getElementById("num_pastcomp").innerHTML = numpastcomp;
+
+
+            if (parseInt(statisticsdict["7"]) > 0) //Gamers waithing
+            {
+                document.getElementById("competitions_waithing").style.visibility = "visible";
+            }
+            else {
+                document.getElementById("competitions_waithing").style.visibility = "hidden";
+            }
+
+            if (parseInt(statisticsdict["5"]) > 0) //Gamers waithing
+            {
+                document.getElementById("gamers_waithing").style.visibility = "visible";
+            }
+            else {
+
+                document.getElementById("gamers_waithing").style.visibility = "hidden";
+            }
+
+            if (parseInt(statisticsdict["6"]) > 0) //Gamers waithing
+            {
+                document.getElementById("orgenaizers_waithing").style.visibility = "visible";
+            }
+            else {
+                document.getElementById("orgenaizers_waithing").style.visibility = "hidden";
+            }
+
+
+
+        }
+
 
     </script>
 
 
 </head>
-<body>
+<body onload="init()">
 
     <section id="Nav-bar">
         <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
@@ -847,24 +902,20 @@
                 <div class="col-lg-3" id="services_block" style="text-align:center;">
                     <h4 style="margin-top:3px;">סטטסטיקה</h4>
                     <br />
-                    <span>מספר שחקנים רשומים: 435</span>
+                    <span>מספר שחקנים רשומים: <span id="num_gamers"></span></span>
                     <div style="padding:5px;"></div>
-                    <span>מספר מארגנים רשומים: 172</span>
+                    <span>מספר מארגנים רשומים: <span id="num_orgenaizers"></span></span>
                     <div style="padding:5px;"></div>
-                    <span>מספר תחרויות עתידיות: 4</span>
+                    <span>מספר תחרויות עתידיות: <span id="num_futurecomp"></span></span>
                     <div style="padding:5px;"></div>
-                    <span>מספר תחרויות שהתקיימו: 125</span>
+                    <span>מספר תחרויות שהתקיימו: <span id="num_pastcomp"></span></span>
                     <div style="padding:16px;"></div>
 
-                    <!--<p>מספר שחקנים רשומים: 435</p>
-                    <p>מספר מארגנים רשומים: 172</p>
-                    <p>מספר תחרויות עתידיות: 4</p>
-                    <p>מספר תחרויות שהתקיימו: 125</p>-->
 
                     <br />
 
 
-                    <div id="box" style="background-color: #4a5163; font-size:14px;">
+                    <!--<div id="box" style="background-color: #4a5163; font-size:14px;">
                         <div style="padding:2px;"></div>
                         <span>מספר תחרויות ממתינות לאישור: 0</span>
                         <div style="padding:1px;"></div>
@@ -872,7 +923,7 @@
                         <div style="padding:1px;"></div>
                         <span>מספר מארגנים ממתינים לאישור: 1</span>
                         <div style="padding:2px;"></div>
-                    </div>
+                    </div>-->
 
 
                 </div>
@@ -901,9 +952,9 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button" role="tab" aria-controls="nav-posts" aria-selected="true">פוסטים באתר</button>
-                    <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-competitions" type="button" role="tab" aria-controls="nav-competitions" aria-selected="false">תחרויות ממתינות לאישור</button>
-                    <button class="nav-link" id="nav-gamers-tab" data-bs-toggle="tab" data-bs-target="#nav-gamers" type="button" role="tab" aria-controls="nav-gamers" aria-selected="false">שחקנים ממתינים לאישור</button>
-                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-orgenaizers" type="button" role="tab" aria-controls="nav-orgenaizers" aria-selected="false">מארגנים ממתינים לאישור</button>
+                    <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-competitions" type="button" role="tab" aria-controls="nav-competitions" aria-selected="false">תחרויות ממתינות לאישור<span id="competitions_waithing" style="color:#dd163b">*</span></button>
+                    <button class="nav-link" id="nav-gamers-tab" data-bs-toggle="tab" data-bs-target="#nav-gamers" type="button" role="tab" aria-controls="nav-gamers" aria-selected="false">שחקנים ממתינים לאישור<span id="gamers_waithing" style="color:#dd163b">*</span></button>
+                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-orgenaizers" type="button" role="tab" aria-controls="nav-orgenaizers" aria-selected="false">מארגנים ממתינים לאישור<span id="orgenaizers_waithing" style="color:#dd163b">*</span></button>
                 </div>
             </nav>
 

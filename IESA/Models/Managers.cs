@@ -71,5 +71,17 @@ namespace IESA.Models
 
         //---Sign_In.html--- *Close*
 
+
+        //---Manager_Main_Page.html--- *Open*
+
+        public Dictionary<int, int> GetStatisticsM() //Manager_Main_Page.html - method OM9
+        {
+            DBServices dbs = new DBServices();
+            Dictionary<int, int> slist = dbs.GetStatisticsSQL();
+            return slist;
+        }
+
+        //---Manager_Main_Page.html--- *Close*
+
     }
 }

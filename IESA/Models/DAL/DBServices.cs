@@ -1487,6 +1487,52 @@ namespace IESA.Models.DAL
         }
 
 
+        public Dictionary<int, int> GetStatisticsSQL() //Manager_Main_Page.html - method OM9
+        {
+
+            SqlConnection con5 = null;
+            Dictionary<int, int> statisticsdict = new Dictionary<int, int>();
+
+            try
+            {
+                con5 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR5 = "SELECT(SELECT COUNT(*) FROM Gamers WHERE status1 = 1) AS 'Num_Gamers', (SELECT COUNT(*) FROM Orgenaizers WHERE status1 = 1) AS Num_Orgenaizers, (SELECT COUNT(*) FROM Competitions WHERE status1 = 1 AND competitionstatus != 3 AND CONVERT(datetime, enddate, 103) > getdate()) AS Num_Future_Comp, (SELECT COUNT(*) FROM Competitions WHERE status1 = 1 AND competitionstatus = 7 OR competitionstatus = 8 AND CONVERT(datetime, enddate, 103) < getdate()) AS Num_Past_Comp, (SELECT COUNT(*) FROM Gamers WHERE status1 = 0) AS 'Num_Gamers_Waithing', (SELECT COUNT(*) FROM Orgenaizers WHERE status1 = 0) AS 'Num_Orgenaizers_Waithing', (SELECT COUNT(*) FROM Competitions WHERE status1 = 0 AND competitionstatus != 3 AND CONVERT(datetime, enddate, 103) < getdate()) AS Num_Competition_Waithing";
+                SqlCommand cmd5 = new SqlCommand(selectSTR5, con5);
+                
+                SqlDataReader dr5 = cmd5.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr5.Read())
+                {
+
+                    statisticsdict.Add(1, (dr5["Num_Gamers"] != DBNull.Value) ? Convert.ToInt32(dr5["Num_Gamers"]) : default);
+                    statisticsdict.Add(2, (dr5["Num_Orgenaizers"] != DBNull.Value) ? Convert.ToInt32(dr5["Num_Orgenaizers"]) : default);
+                    statisticsdict.Add(3, (dr5["Num_Future_Comp"] != DBNull.Value) ? Convert.ToInt32(dr5["Num_Future_Comp"]) : default);
+                    statisticsdict.Add(4, (dr5["Num_Past_Comp"] != DBNull.Value) ? Convert.ToInt32(dr5["Num_Past_Comp"]) : default);
+                    statisticsdict.Add(5, (dr5["Num_Gamers_Waithing"] != DBNull.Value) ? Convert.ToInt32(dr5["Num_Gamers_Waithing"]) : default);
+                    statisticsdict.Add(6, (dr5["Num_Orgenaizers_Waithing"] != DBNull.Value) ? Convert.ToInt32(dr5["Num_Orgenaizers_Waithing"]) : default);
+                    statisticsdict.Add(7, (dr5["Num_Competition_Waithing"] != DBNull.Value) ? Convert.ToInt32(dr5["Num_Competition_Waithing"]) : default);
+
+                }
+
+                return statisticsdict;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con5 != null)
+                {
+                    con5.Close();
+                }
+
+            }
+
+        }
+
+
         //---Manager_Main_Page.html--- *Close*
 
 
