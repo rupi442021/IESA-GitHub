@@ -245,7 +245,7 @@
                 let today = new Date(getDate())
                 let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
                 var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
-                cardstr += '<a href=Competition_View.html?id=' + fList[i].Competitionid +'> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"> </a>';
+                cardstr += '<a href=Competition_View.html?Competitions=' + fList[i].Competitionid +'> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"> </a>';
                 cardstr += '<div class="card-body">';
                 cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
                 cardstr += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
@@ -282,7 +282,7 @@
 
 
                     var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
-                    cardstr += '<a href=#> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
+                    cardstr += '<a href=Competition_View.html?Competitions=' + fList[i].Competitionid +'> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                     cardstr += '<div class="card-body">';
                     cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
                     cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
@@ -317,7 +317,7 @@
                 let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0];
 
                 var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
-                cardstr += '<a href=#><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
+                cardstr += '<a href=Competition_View.html?Competitions=' + pList[i].Competitionid +'><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstr += '<div class="card-body">';
                 cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
                 cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
@@ -350,7 +350,7 @@
                     let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0]
 
                     var cardstr = '<div class="col-3 .mx-auto " <div class="card " style="width: 18rem;">';
-                    cardstr += '<a href=#><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
+                    cardstr += '<a href=Competition_View.html?Competitions=' + pList[i].Competitionid +'><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                     cardstr += '<div class="card-body">';
                     cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
                     cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';

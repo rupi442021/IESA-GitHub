@@ -145,7 +145,6 @@
             /* return false;*/ //Prevent the page from being reloaded
         }
 
-
         function EmailSuccess(email) {
             console.log(email);
 
@@ -174,7 +173,6 @@
             alert("Error");
         }
 
-
         function NicknameSuccess(nickname) {
             console.log(nickname);
 
@@ -195,7 +193,6 @@
             alert("Error");
         }
 
-
         function getNewId() {
 
             if (userType == 3) {
@@ -207,7 +204,6 @@
 
             return false; //Prevent the page from being reloaded
         }
-
 
         function getSuccessGamer(id3) { //get the id of the new gamer
             console.log(id3);
@@ -224,7 +220,6 @@
             alert(err.responseJSON.ExceptionMessage);
         }
 
-
         function getSuccessOrgenaizer(id2) { //get the id of the new orgenaizer
             console.log(id2);
 
@@ -239,7 +234,6 @@
 
             alert(err.responseJSON.ExceptionMessage);
         }
-
 
         function addPhoto(userid) {
 
@@ -275,7 +269,6 @@
             return false;
         }
 
-
         function routeImage(data) { //Need to remove and change it to preview
             console.log(data);
 
@@ -295,7 +288,6 @@
 
             alert(err);
         }
-
 
         function addGamer(imageURL) {
 
@@ -325,7 +317,6 @@
             return false;
         }
 
-
         function SuccessGamer(data) {
             console.log("in Success");
 
@@ -336,13 +327,11 @@
             }, 3500);
         } //Done creating Gamer User
 
-
         function ErrorGamer(err) {
             console.log(err.responseJSON.ExceptionMessage);
 
             alert(err.responseJSON.ExceptionMessage); //Message - throw new exception from the server*
         }
-
 
         function addOrgenaizer(imageURL) {
 
@@ -371,7 +360,6 @@
             return false;
         }
 
-
         function SuccessOrgenaizer(data) {
             console.log("in Success");
 
@@ -387,8 +375,6 @@
 
             alert(err.responseJSON.ExceptionMessage); //Message - throw new exception from the server*
         }
-
-
 
         function addPreview(userType) {
 
@@ -430,7 +416,6 @@
 
             return false;
         }
-
 
         function imagePreview(data) {
 

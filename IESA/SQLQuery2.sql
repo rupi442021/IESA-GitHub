@@ -1,9 +1,15 @@
-﻿update Competitions set Competitionstatus = '4' where Competitionstatus='2' and CONVERT(date,enddate,103) > getdate()
+﻿select *
+from Orgenaizers
 
+update Orgenaizers
+set status1=1
+where userid=20000003 
 
-
-select * from Competitions inner join Orgenaizer_Competition
-ON Competitions.competitionid = Orgenaizer_Competition.competitionid
-where Orgenaizer_Competition.orgenaizerid=20000000 and Competitions.status1 = 1
-order by CONVERT(date,enddate,103)
-
+SELECT Gamers.userid, Gamers.email, Gamers.password1 FROM Gamers 
+WHERE Gamers.email = 'shaydavid2@gmail.com'
+UNION 
+SELECT Orgenaizers.userid, Orgenaizers.email, Orgenaizers.password1 FROM Orgenaizers 
+WHERE Orgenaizers.email = 'shaydavid2@gmail.com'
+UNION 
+SELECT Managers.userid, Managers.email, Managers.password1 FROM Managers 
+WHERE Managers.email = 'shaydavid2@gmail.com'
