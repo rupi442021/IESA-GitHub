@@ -150,7 +150,11 @@ namespace IESA.Models
         //---Manager_Main_Page.html--- *Close*
 
 
-
+        public Competitions ReadOneCompetition(int CId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadOneCompetition(CId);
+        }
 
 
 
