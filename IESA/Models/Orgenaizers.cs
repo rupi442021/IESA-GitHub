@@ -121,10 +121,18 @@ namespace IESA.Models
             dbs.UpdateOrgenaizerStatusSQL(toupdateid);
         }
 
-
-
-
         //---Manager_Main_Page.html--- *Close*
+
+
+        //---Edit_Personal_Details.html--- *Open*
+        public void UpdateOrgenaizerDetails(int OId, Orgenaizers o1) //Manager_Main_Page.html - method OM6
+        {
+            DBServices dbs = new DBServices();
+            dbs.UpdateOrgenaizerDetails(OId, o1);
+        }
+        
+        //---Manager_Main_Page.html--- *Close*
+
 
 
 
