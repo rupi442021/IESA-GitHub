@@ -2142,6 +2142,62 @@ namespace IESA.Models.DAL
         //---Edit_Post.html--- *Close*
 
 
+        //---Edit_Personal_Details.html--- *Open*
+
+
+        public int UpdateOrgenaizerDetails(int OId, Orgenaizers o1)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandEditOrgenzier(OId, o1);      // helper method to build the update string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandEditOrgenzier(int OId, Orgenaizers o1)
+        {
+            String command;
+            command = " UPDATE Orgenaizers set firstname = '" + o1.Firstname + "' , lastname = '" + o1.Lastname + "' , gender = '" + o1.Gender + "' , phone = '" + o1.Phone + "', dob = '" + o1.Dob + "' , address1 = '" + o1.Address1 + "' , picture = '" + o1.Picture + "' , communityname = '" + o1.Comunityname + "', linktocommunity = '" + o1.Linktocommunity + "' where userid = " + OId + " ";
+
+            return command;
+        }
+
+        //---Edit_Personal_Details.html--- *Close*
+
+
 
     }
 }
