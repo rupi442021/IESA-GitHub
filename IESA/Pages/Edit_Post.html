@@ -118,6 +118,11 @@
             counterimage = 3300;
             phototrigger = 0; //0 if photo didnt change
 
+            var split = window.location.href.split('=');
+            var post_id = split[1];
+
+            ajaxCall("GET", "../api/Posts/getepost?idtoserver=" + post_id, "", renderSuccessPost, Error); //Edit_Post.html - #method OP3
+
             $("#pForm").submit(function (e) {
                 e.preventDefault();
 
@@ -143,9 +148,6 @@
             //    location.replace("TemplatePage.html"); //Wont allow other users to be on this page
             //}
 
-            //Via entering the page, for example we will take id = 1
-            var postid = 7;
-            ajaxCall("GET", "../api/Posts/getepost?idtoserver=" + postid, "", renderSuccessPost, Error); //Edit_Post.html - #method OP3
 
         }
 
@@ -158,7 +160,6 @@
             $("#titleTB").val(postobj.Title);
             $("#bodyTB").val(postobj.Body);
 
-            
 
             let img1 = "<img src='../" + postobj.Image1 + "' class='img-fluid' alt='Logo'/>";
             document.getElementById("ph").innerHTML = img1;
@@ -303,7 +304,8 @@
             swal("פוסט עודכן בהצלחה", "", "success");
 
             setTimeout(function () {
-                location.replace("Manager_Main_Page.html");
+                //location.replace("Manager_Main_Page.html");
+                window.close();
             }, 2500);
         }
 
@@ -418,7 +420,7 @@
 
                         <!--<input type="button" class="btn btn-danger" value="תצוגה מקדימה" id="previewC" />-->
                         <input type="submit" class="btn btn-success" value="שמירת שינויים" onsubmit="return false" />
-                        <input type="button" class="btn btn-danger" value="ביטול" onclick="location.href='Manager_Main_Page.html'" />
+                        <input type="button" class="btn btn-danger" value="ביטול" onclick="window.close();" />
 
                     </div>
                 </div>

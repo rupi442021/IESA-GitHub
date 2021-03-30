@@ -196,7 +196,9 @@
 
         function init() {
             //var post_id = localStorage["post_id"];
-            var post_id = 7;
+
+            var split = window.location.href.split('=');
+            var post_id = split[1];
 
             ajaxCall("GET", "../api/posts/rendpost?idtoserver=" + post_id, "", renderPost, postError); //Post.html - method OP3
         }
