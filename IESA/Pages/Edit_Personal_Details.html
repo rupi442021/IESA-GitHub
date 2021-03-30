@@ -92,7 +92,7 @@
             else if (Odetails.Userid >= 20000000)
                 Gamerrender(Odetails)
             else {
-                alert("אין לך מה לחפש כאן")
+                swal("עריכת פרטים אישיים מתבצעת במאגר הנתונים")
                 window.location("Sign_In.html")
             }
 
@@ -148,9 +148,7 @@
         <div class="container">
 
             <section id="page_title">
-                <a class="titlelink" href="TemplatePage.html">ראשי </a>
-                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-                <a class="titlelink" href="TemplatePage.html">דף קודם </a>
+                <a class="titlelink" href="TemplatePage.html">אזור אישי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <h2 class="headh2">עריכת פרטים אישיים</h2>
                 <div class="divdown"></div>
@@ -275,19 +273,7 @@
                 <form id="oForm" class="was-validated">
                     <div class="row">
                         <div class="col">
-                            <div class="mb-3">
-                                <label for="fname">שם פרטי:</label>
-                                <input type="text" class="form-control" placeholder="שם פרטי" id="ofirstnameTB" pattern=".{2,15}"
-                                       oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים.')"
-                                       oninput="this.setCustomValidity('')" required>
-                            </div>
 
-                            <div class="mb-3">
-                                <label>שם משפחה:</label>
-                                <input type="text" class="form-control" placeholder="שם משפחה" id="olastnameTB" pattern=".{2,15}"
-                                       oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים.')"
-                                       oninput="this.setCustomValidity('')" required>
-                            </div>
                             <div class="mb-3">
                                 <label>כינוי:</label>
                                 <input disabled type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="onicknameTB"
@@ -295,18 +281,56 @@
                                        oninvalid="this.setCustomValidity('כינוי לא חוקי')"
                                        oninput="this.setCustomValidity('')" required>
                             </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="fname">שם פרטי:</label>
+                                        <input type="text" class="form-control" placeholder="שם פרטי" id="ofirstnameTB" pattern=".{2,15}"
+                                               oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+
+                                </div>
+
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>שם משפחה:</label>
+                                        <input type="text" class="form-control" placeholder="שם משפחה" id="olastnameTB" pattern=".{2,15}"
+                                               oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>כתובת דוא"ל:</label>
+                                        <input disabled type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="oemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <label>תעודת זהות:</label>
+                                        <input disabled type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="oidTB" pattern=".{8,9}"
+                                               oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="mb-3">
                                 <label>תאריך לידה:</label>
                                 <input type="date" class="form-control" id="odobTB" oninvalid="this.setCustomValidity('תאריך לידה שגוי')" oninput="this.setCustomValidity('')" required>
                             </div>
-                            <div>
-                                <label>תעודת זהות:</label>
-                                <input disabled type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="oidTB" pattern=".{8,9}"
-                                       oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
-                                       oninput="this.setCustomValidity('')" required>
-                            </div>
 
-                            <br /> <!--Margin bottom 10px not like <br /> too much space!-->
+
+                            <div style="margin-bottom:10px;"></div>
+
 
                             <label>מגדר:</label>
                             <div class="mb-3">
@@ -324,10 +348,6 @@
 
                         </div>
                         <div class="col">
-                            <div class="mb-3">
-                                <label>כתובת דוא"ל:</label>
-                                <input disabled type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="oemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
-                            </div>
 
                             <div class="mb-3">
                                 <label>כתובת מגורים:</label>
