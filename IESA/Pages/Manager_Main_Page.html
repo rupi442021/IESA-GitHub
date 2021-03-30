@@ -695,6 +695,7 @@
             try {
                 tbl3 = $('#PostsTable').DataTable({
                     data: postsdata,
+                    "order": [[0, "desc"]],
                     "language": {
                         "info": "",
                         "infoEmpty": "",
@@ -730,8 +731,8 @@
                             render: function (data, type, row, meta) {
                                 let dataPosts = "data-postid='" + row.Postid + "'"; //User id for buttons
 
-                                P_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='P_viewBTN bi bi-eye' " + dataPosts + "></i></a>";
-                                P_editBtn = "<a href='javascript:;' class='view' title='ערוך'><i class='P_editBTN bi bi-pencil' " + dataPosts + "></i></a>";
+                                P_viewBtn = "<a href='Post.html?postid=" + row.Postid + "' target='_blank' class='view' title='צפה'><i class='P_viewBTN bi bi-eye' " + dataPosts + "></i></a>";
+                                P_editBtn = "<a href='Edit_Post.html?postid=" + row.Postid + "' target='_blank' class='view' title='ערוך'><i class='P_editBTN bi bi-pencil' " + dataPosts + "></i></a>";
 
                                 return P_editBtn + P_viewBtn;
                             }

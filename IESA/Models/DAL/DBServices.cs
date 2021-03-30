@@ -1398,7 +1398,8 @@ namespace IESA.Models.DAL
             {
                 con3 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR3 = "SELECT TOP 5 WITH TIES * FROM Posts ORDER BY postid desc";
+                //Update competitions + Get First 5 Posts
+                String selectSTR3 = "UPDATE Competitions set Competitionstatus = '4' where Competitionstatus='2' and CONVERT(date,enddate,103) > getdate() SELECT TOP 5 WITH TIES * FROM Posts ORDER BY postid desc";
 
                 SqlCommand cmd3 = new SqlCommand(selectSTR3, con3);
 
