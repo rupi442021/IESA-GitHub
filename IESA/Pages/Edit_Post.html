@@ -11,9 +11,8 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
 
-    <title>&#x202E; הוספת פוסט – ASEI</title>
+    <title>&#x202E; עריכת פוסט – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
-
 
     <style type="text/css">
 
@@ -110,7 +109,6 @@
             height: 200px !important;
         }
 
-
     </style>
 
     <script>
@@ -118,10 +116,18 @@
         $(document).ready(function () {
 
             counterimage = 3300;
+            phototrigger = 0; //0 if photo didnt change
 
             $("#pForm").submit(function (e) {
                 e.preventDefault();
-                getPostId();
+
+                if (phototrigger == 1) {
+                    addPhoto(globalpostid); //Will update photo than rest of the information
+                }
+                else { //phototrigger = 0 -> didnt change photo;
+                    updatePost(globalimageurl);
+                }
+
             });
 
             $("#logoFile").change(function () {
@@ -130,100 +136,59 @@
 
         });
 
-
         function init() {
 
-            if (localStorage["user_type"] != "1") {
+            //if (localStorage["user_type"] != "1") {
 
-                location.replace("TemplatePage.html"); //wont allow other users to be on this page
+            //    location.replace("TemplatePage.html"); //Wont allow other users to be on this page
+            //}
+
+            //Via entering the page, for example we will take id = 1
+            var postid = 7;
+            ajaxCall("GET", "../api/Posts/getepost?idtoserver=" + postid, "", renderSuccessPost, Error); //Edit_Post.html - #method OP3
+
+        }
+
+        function renderSuccessPost(postobj) {
+            console.log(postobj);
+            
+            globalpostid = postobj.Postid;
+            globalimageurl = postobj.Image1; //if the user didnt change the photo
+
+            $("#titleTB").val(postobj.Title);
+            $("#bodyTB").val(postobj.Body);
+
+            
+
+            let img1 = "<img src='../" + postobj.Image1 + "' class='img-fluid' alt='Logo'/>";
+            document.getElementById("ph").innerHTML = img1;
+
+            if (postobj.Category == 'עולמי') {
+                document.getElementById('categoriesTB').value = 'עולמי';
+            }
+            else {
+                document.getElementById('categoriesTB').value = 'כללי';
             }
 
+            if (postobj.Status1 == 1) {
+                document.getElementById('statusTB').value = 'פעיל';
+            }
+            else {
+                document.getElementById('statusTB').value = 'לא פעיל';
+            }
+
+
         }
 
-        function getPostId() {
-
-            ajaxCall("GET", "../api/Posts", "", getSuccessId, getErrorId); //method OP1
-        }
-
-        function getSuccessId(id) { //get the id of the new post
-            console.log(id);
-
-            var postid = parseInt(id);
-
-            addPhoto(postid);
-        }
-
-        function getErrorId(err) {
+        function Error(err) {
             console.log(err.responseJSON.ExceptionMessage);
 
-            alert(err.responseJSON.ExceptionMessage);
+            swal("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר")
         }
-
-
-        function addPhoto(postid) {
-
-            var data = new FormData();
-
-            var files = $("#logoFile").get(0).files;
-
-            // Add the uploaded file to the form data collection
-            if (files.length > 0) {
-                for (f = 0; f < files.length; f++) {
-                    data.append("UploadedImage", files[f]);
-                }
-
-                data.append("userid", postid); //append what ever data you want to send along with the files.
-            }
-
-            // Ajax upload
-            $.ajax({
-                type: "POST",
-                url: "../Api/FileUpload",
-                contentType: false,
-                processData: false,
-                data: data,
-                success: addPost,
-                error: error
-            });
-
-        }
-
-        function addPost(imageURL) {
-
-            let photoUpload = imageURL[0];
-
-            PostObj = {
-                Title: $("#titleTB").val(),
-                Body: $("#bodyTB").val(),
-                Image1: photoUpload,
-                Category: $("#categoriesTB").val(),
-                Postdate: getDate(),
-                Status1: 1 //DEFAULT Post Active
-            }
-
-            ajaxCall("POST", "../api/Posts", JSON.stringify(PostObj), SuccessInsert, ErrorInsert); //method OP2
-        }
-
-        function SuccessInsert(data) {
-            console.log("in Success");
-
-            swal("פוסט נוסף בהצלחה", "הינך מועבר לאזור אישי", "success");
-
-            setTimeout(function () {
-                location.replace("TemplatePage.html");
-            }, 3500);
-        }
-
-
-        function ErrorInsert(err) {
-            console.log(err.responseJSON.ExceptionMessage);
-
-            alert(err.responseJSON.ExceptionMessage); //Message - throw new exception from the server*
-        }
-
 
         function addPreview() {
 
+            phototrigger = 1; //change photo
             counterimage = counterimage + 1;
 
             if (counterimage > 3302) { //Security: User Wont be able to upload more then 3 pictures to the server
@@ -251,7 +216,7 @@
                 processData: false,
                 data: data,
                 success: imagePreview,
-                error: error
+                error: Error
             });
 
 
@@ -274,14 +239,76 @@
             document.getElementById("ph").innerHTML = imgStr;
         }
 
-        function error(err) {
-            console.log(err);
+        function addPhoto(globalpostid) { //Gets global integer
 
-            alert(err);
+            var data = new FormData();
+
+            var files = $("#logoFile").get(0).files;
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("userid", globalpostid); //append what ever data you want to send along with the files.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: updatePost,
+                error: Error
+            });
+
         }
 
+        function updatePost(imageURL) {
+
+            if (phototrigger == 1) {
+                var photoUpload = imageURL[0];
+            }
+            else {
+                var photoUpload = imageURL;
+            }
+
+            if ($("#statusTB").val() == "פעיל") {
+                var editstatus = 1;
+            }
+            else {
+                var editstatus = 0;
+            }
+
+            let PostObj = {
+                Postid: globalpostid,
+                Title: $("#titleTB").val(),
+                Body: $("#bodyTB").val(),
+                Image1: photoUpload,
+                Category: $("#categoriesTB").val(),
+                Status1: editstatus
+            }
+
+            ajaxCall("PUT", "../api/Posts/updatepost", JSON.stringify(PostObj), SuccessUpdate, Error); //Edit_Post.html - method OP4
+
+
+        }
+
+        function SuccessUpdate(data) {
+            console.log(data);
+
+            swal("פוסט עודכן בהצלחה", "", "success");
+
+            setTimeout(function () {
+                location.replace("Manager_Main_Page.html");
+            }, 2500);
+        }
 
     </script>
+
 
 </head>
 <body onload="init()">
@@ -300,13 +327,13 @@
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <a class="titlelink" href="TemplatePage.html">פוסטים </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-                <h2 class="headh2">הוספת פוסט חדש</h2>
+                <h2 class="headh2">עריכת פוסט</h2>
                 <div class="divdown"></div>
             </section>
 
             <p>* מיקום הפוסט יהיה ניתן לשינוי בדף דאשבורד מנהל</p> <br>
 
-            <h4 style="color:white">הזנת שדות פוסט</h4><br>
+            <h4 style="color:white">עדכון שדות פוסט</h4><br>
 
             <form id="pForm" class="was-validated">
                 <div class="row">
@@ -331,6 +358,19 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label>סטטוס:</label><br />
+                            <select name="poststatus" class="form-select" id="statusTB" required>
+                                <option hidden selected></option>
+                                <option value="פעיל">פעיל</option>
+                                <option value="לא פעיל">לא פעיל</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -340,7 +380,7 @@
 
                         <div class="mb-3">
                             <label>גוף הפוסט:</label>
-                            <textarea class="form-control" id="bodyTB" placeholder="הזן טקסט כאן" pattern=".{4,3999}"
+                            <textarea class="form-control" id="bodyTB" placeholder="" pattern=".{4,3999}"
                                       oninvalid="this.setCustomValidity('עד 4000 תווים')" rows="7" required></textarea>
                             <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
                         </div>
@@ -364,7 +404,7 @@
                     <div class="col">
                         <label>תצוגה מקדימה: </label>
                         <div id="ph">
-                            <img src="https://i.imagesup.co/images2/825f9efa6c0956d118a1902c75f35529db52189f.jpg" class="img-fluid" alt="Logo">
+                            
                         </div>
 
                     </div>
@@ -377,7 +417,7 @@
                         <br /><br />
 
                         <!--<input type="button" class="btn btn-danger" value="תצוגה מקדימה" id="previewC" />-->
-                        <input type="submit" class="btn btn-success" value="הוספת פוסט" onsubmit="return false" />
+                        <input type="submit" class="btn btn-success" value="שמירת שינויים" onsubmit="return false" />
                         <input type="button" class="btn btn-danger" value="ביטול" onclick="location.href='Manager_Main_Page.html'" />
 
                     </div>

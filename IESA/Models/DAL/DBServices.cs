@@ -1032,7 +1032,7 @@ namespace IESA.Models.DAL
 
         //---Post.html--- *Open*
 
-        public Posts getPostSQL(int id_toserver) //Sign_In.html - method OL2
+        public Posts getPostSQL(int id_toserver) //Post.html - method OP3
         {
 
             SqlConnection con = null;
@@ -1066,7 +1066,7 @@ namespace IESA.Models.DAL
                 return p;
 
             }
-            catch (Exception ex) //change it to a message
+            catch (Exception ex)
             {
                 throw (ex);
             }
@@ -2086,10 +2086,9 @@ namespace IESA.Models.DAL
         //---Competition_view--- *Close*
 
 
-        //---Edit_Personal_Details.html--- *Open*
+        //---Edit_Post.html--- *Open*
 
-        
-        public int UpdateOrgenaizerDetails(int OId, Orgenaizers o1) 
+        public int UpdatePostSQL(Posts post) //Edit_Post.html - method OP4
         {
 
             SqlConnection con;
@@ -2105,7 +2104,7 @@ namespace IESA.Models.DAL
                 throw (ex);
             }
 
-            String cStr = BuildUpdateCommandEditOrgenzier(OId, o1);      // helper method to build the update string
+            String cStr = BuildPutCommandPost(post);      // helper method to build the insert string
 
             cmd = CreateCommand(cStr, con);             // create the command
 
@@ -2131,15 +2130,16 @@ namespace IESA.Models.DAL
 
         }
 
-        private String BuildUpdateCommandEditOrgenzier(int OId, Orgenaizers o1)
+
+        private String BuildPutCommandPost(Posts post)
         {
             String command;
-             command = " UPDATE Orgenaizers set firstname = '" + o1.Firstname + "' , lastname = '" + o1.Lastname + "' , gender = '" + o1.Gender + "' , phone = '" + o1.Phone + "', dob = '" + o1.Dob + "' , address1 = '" + o1.Address1 + "' , picture = '" + o1.Picture + "' , communityname = '" + o1.Comunityname + "', linktocommunity = '" + o1.Linktocommunity + "' where userid = " + OId + " " ;
-
+            command = "UPDATE Posts SET title= '" + post.Title + "', body = '" + post.Body + "', image1 ='" + post.Image1 + "' , category= '" + post.Category + "', status1= " + post.Status1 + " WHERE postid=" + post.Postid;
             return command;
         }
 
-        //---Edit_Personal_Details.html--- *Close*
+
+        //---Edit_Post.html--- *Close*
 
 
 
