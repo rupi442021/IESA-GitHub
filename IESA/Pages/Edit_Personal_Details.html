@@ -116,6 +116,10 @@
                 addPreview(userType)
             });
 
+            $("#gfiles").change(function () {
+                addPreview(userType)
+            });
+
             $("#oForm").submit(function (e) {
                 e.preventDefault();
                 f1(userType);
@@ -194,28 +198,36 @@
             var gradio = $('input[name=radio-gender-g]:checked'); //get gender
             var ggender = gradio.attr('id');
 
+            if ($("#gfiles").val() == "" || $("#gfiles").val() == null)
+                ImgUrl = Odetails.Picture;
+
             GamerObj = {
-                Email: $("#gemailTB").val(),
-                Password1: $("#gpasswordTB").val(),
-                Nickname: $("#gnicknameTB").val(),
+
                 Firstname: $("#gfirstnameTB").val(),
                 Lastname: $("#glastnameTB").val(),
                 Gender: ggender,
-                Id: $("#gidTB").val(),
                 Phone: $("#gPhoneTB").val(),
                 Dob: $("#gdobTB").val(),
                 Address1: $("#gaddressTB").val(),
-                Discorduser: $("#gdiscorduserTB").val(),
-                Picture: imageURL,
-                Registrationdate: getDate(),
-                License: 0,
-                Status1: 0
+                Discorduser: $("#gDiscorduserTB").val(),
+                Picture: ImgUrl
             }
 
-            ajaxCall("POST", "../api/Gamers", JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Gamers_SignUp.html - method O3
+            ajaxCall("PUT", "../api/Gamers/updatedetails?GId=" + Odetails.Userid , JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); 
 
             return false;
         }
+
+        function SuccessGamer(data) {
+            ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Odetails.Userid, "", GetOrgenaizer, ErrorGetOrgenaizer); 
+
+        }
+
+        function ErrorGamer(err) {
+            console.log(err)
+
+        }
+
 
         function updateOrgenaizer(ImgUrl) {
             var oradio = $('input[name=radio-gender-o]:checked'); //get gender
@@ -243,9 +255,17 @@
         }
 
         function SuccessOrgenaizer(data) {
-            ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Odetails.Userid, "", GetOrgenaizer, ErrorGetOrgenaizer); //Sign_Up.html - method OO2
+            ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + Odetails.Userid, "", GetGamerS, ErrorGamer); 
+        }
 
-            
+        function GetGamerS(user) {
+            console.log("123: ", user);
+
+            localStorage.clear();
+            localStorage["user_info"] = JSON.stringify(user);
+            localStorage["user_type"] = "3";
+
+            redirectPage();
         }
 
         function GetOrgenaizer(user) {
@@ -260,9 +280,15 @@
 
             swal("הפרטים עודכנו בהצלחה"); //save only the is in + id of user to render the info later in each page
 
+            if (userType==2)
             setTimeout(function () {
                 location.replace("Orgenaizer_Main_Page.html");
             }, 2500);
+            else
+                setTimeout(function () {
+                    location.replace("Gamer.html");
+                }, 2500);
+
         }
 
         function ErrorGetOrgenaizer(err) {
@@ -297,9 +323,11 @@
             $('#ocomunitynameTB').val(Odetails.Comunityname);
             $('#olinktocommunityTB').val(Odetails.Linktocommunity);
 
-            let imgstr = '<img src="../' + Odetails.Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
 
-            $('#oph').html(imgstr);
+            if (Odetails.Picture != "" || Odetails.Picture != null) {
+                let imgstr = '<img src="../' + Odetails.Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
+                $('#oph').html(imgstr);
+            }
             $('#usernumTB').val(Odetails.Userid);
 
             
@@ -329,11 +357,13 @@
             $('#gDiscorduserTB').val(Odetails.Discorduser);
             //$('#glinktocommunityTB').val(Odetails.Linktocommunity);
 
-            if (Odetails.Picture == ! "" || Odetails.Picture == ! null) {
+            if (Odetails.Picture != "" || Odetails.Picture != null) {
             let imgstr = '<img src="../' + Odetails.Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
                 $('#gph').html(imgstr);
             }
-            
+
+
+
             $('#gusernumTB').val(Odetails.Userid);
 
         }

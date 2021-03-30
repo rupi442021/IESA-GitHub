@@ -2195,6 +2195,56 @@ namespace IESA.Models.DAL
             return command;
         }
 
+        public int UpdateGamerDetails(int GId, Gamers g1)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandEditGamer(GId, g1);      // helper method to build the update string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandEditGamer(int GId, Gamers g1)
+        {
+            String command;
+            command = " UPDATE Gamers set firstname = '" + g1.Firstname + "' , lastname = '" + g1.Lastname + "' , gender = '" + g1.Gender + "' , phone = '" + g1.Phone + "', dob = '" + g1.Dob + "' , address1 = '" + g1.Address1 + "' , picture = '" + g1.Picture + "' , discorduser = '" + g1.Discorduser + "' where userid = " + GId + " ";
+
+            return command;
+        }
+
         //---Edit_Personal_Details.html--- *Close*
 
 

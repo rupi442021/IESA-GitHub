@@ -130,8 +130,8 @@ namespace IESA.Models
             DBServices dbs = new DBServices();
             dbs.UpdateOrgenaizerDetails(OId, o1);
         }
-        
-        //---Manager_Main_Page.html--- *Close*
+
+        //---Edit_Personal_Details.html--- *Close*
 
 
 

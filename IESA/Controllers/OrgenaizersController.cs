@@ -82,7 +82,7 @@ namespace IESA.Controllers
 
         //---Edit_Personal_Details.html--- *Open*
 
-        [HttpPut] //Manager_Main_Page.html - method OM6
+        [HttpPut] //Manager_Main_Page.html 
         [Route("api/Orgenaizers/updatedetails")]
         public void updateOrgenaizerDetails(int OId, Orgenaizers o1)
         {

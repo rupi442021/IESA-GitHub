@@ -170,5 +170,15 @@ namespace IESA.Models
         //---Orgenaizer_Main_Page.html--- *Close*
 
 
+        //---Edit_Personal_Details.html--- *Open*
+        public void UpdateGamerDetails(int GId, Gamers g1) //Manager_Main_Page.html - method OM6
+        {
+            DBServices dbs = new DBServices();
+            dbs.UpdateGamerDetails(GId, g1);
+        }
+
+        //---Edit_Personal_Details.html--- *Close*
+
+
     }
 }

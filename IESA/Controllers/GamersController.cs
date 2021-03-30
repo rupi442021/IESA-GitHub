@@ -114,12 +114,21 @@ namespace IESA.Controllers
             gamer1.UpdateGamerStatus(toupdateid);
         }
 
-
-
-
-
         //---Manager_Main_Page.html--- *Close*
 
+
+        //---Edit_Personal_Details.html--- *Open*
+
+        [HttpPut] //Manager_Main_Page.html 
+        [Route("api/Gamers/updatedetails")]
+        public void updateGamerDetails(int GId, Gamers g1)
+        {
+            Gamers G1 = new Gamers();
+            G1.UpdateGamerDetails(GId, g1);
+        }
+
+
+        //---Edit_Personal_Details.html--- *Close*
 
     }
 }
