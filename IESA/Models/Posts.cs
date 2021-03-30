@@ -111,5 +111,18 @@ namespace IESA.Models
 
         //---Manager_Main_Page.html--- *Close*
 
+
+        //---Edit_Post.html--- *Open*
+
+        public void UpdatePost() //Edit_Post.html - method OP4
+        {
+            DBServices dbs = new DBServices();
+            dbs.UpdatePostSQL(this);
+        }
+
+
+        //---Edit_Post.html--- *Close*
+
+
     }
 }

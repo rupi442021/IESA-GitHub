@@ -197,6 +197,7 @@
     <Content Include="Pages\Add_New_Post.html" />
     <Content Include="Pages\Competition_View.html" />
     <Content Include="Pages\Competition_Preview.html" />
+    <Content Include="Pages\Edit_Post.html" />
     <Content Include="Pages\Gamer.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Post.html" />

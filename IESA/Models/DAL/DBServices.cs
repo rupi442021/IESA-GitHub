@@ -1032,7 +1032,7 @@ namespace IESA.Models.DAL
 
         //---Post.html--- *Open*
 
-        public Posts getPostSQL(int id_toserver) //Sign_In.html - method OL2
+        public Posts getPostSQL(int id_toserver) //Post.html - method OP3
         {
 
             SqlConnection con = null;
@@ -1066,7 +1066,7 @@ namespace IESA.Models.DAL
                 return p;
 
             }
-            catch (Exception ex) //change it to a message
+            catch (Exception ex)
             {
                 throw (ex);
             }
@@ -2086,6 +2086,60 @@ namespace IESA.Models.DAL
         //---Competition_view--- *Close*
 
 
+        //---Edit_Post.html--- *Open*
+
+        public int UpdatePostSQL(Posts post) //Edit_Post.html - method OP4
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildPutCommandPost(post);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        private String BuildPutCommandPost(Posts post)
+        {
+            String command;
+            command = "UPDATE Posts SET title= '" + post.Title + "', body = '" + post.Body + "', image1 ='" + post.Image1 + "' , category= '" + post.Category + "', status1= " + post.Status1 + " WHERE postid=" + post.Postid;
+            return command;
+        }
+
+
+        //---Edit_Post.html--- *Close*
 
 
 

@@ -74,5 +74,27 @@ namespace IESA.Controllers
 
         //---Manager_Main_Page.html--- *Close*
 
+
+        //---Edit_Post.html--- *Open*
+
+
+        [HttpGet] //Edit_Post.html - #method OP3
+        [Route("api/Posts/getepost")]
+        public Posts GetePost(int idtoserver)
+        {
+            Posts postobj = new Posts();
+            return postobj.GetPost(idtoserver);
+        }
+
+        [HttpPut] //Edit_Post.html - method OP4
+        [Route("api/Posts/updatepost")]
+        public void Put([FromBody] Posts updatedpost)
+        {
+            updatedpost.UpdatePost();
+        }
+
+
+        //---Edit_Post.html--- *Close*
+
     }
 }
