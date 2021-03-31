@@ -166,6 +166,12 @@
         console.log(OID.Userid);
 
         $(document).ready(function () {
+
+            if (localStorage["user_type"] != 2) {
+                location.replace("TemplatePage.html");
+            }
+
+
             GetAllOrgenaizerCompetition();
             GetAllGamers();
 

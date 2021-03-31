@@ -1,4 +1,2 @@
 ﻿select *
 from Gamers
-
-
