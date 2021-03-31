@@ -909,7 +909,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " update Competitions set Competitionstatus = '4' where Competitionstatus='2' and CONVERT(date,enddate,103) > getdate() select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid=" + OID+ " and Competitions.status1 = 1 order by CONVERT(date,enddate,103) "; 
+                String selectSTR = " update Competitions set Competitionstatus = '4' where Competitionstatus='2' and CONVERT(date,enddate,103) < getdate() select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid=" + OID+ " and Competitions.status1 = 1 order by CONVERT(date,enddate,103) "; 
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
