@@ -79,7 +79,7 @@ namespace IESA.Models
         //---Post_Archive.html--- *Open*
 
 
-        public List<Posts> Read() //Sign_Up.html - method OO1
+        public List<Posts> Read() //Post_Archive.html - method MP1
         {
             DBServices dbs = new DBServices();
             List<Posts> posts = dbs.GetPosts();

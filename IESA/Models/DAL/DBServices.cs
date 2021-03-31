@@ -1825,44 +1825,43 @@ namespace IESA.Models.DAL
             string str = "UPDATE GamesCategories SET categoryname ='" + UpdateCategoryName + "' WHERE categoryid= " + id;
             return (str);
         }
-        //END OF--Change the name of a mistaken category
-
 
         //---Add_Game_Category.html--- *Close*
 
 
-        //---Add_New_Post.html--- *Open*
+        //---Post_Archive.html--- *Open*
       
-        public List<Posts> GetPosts()
+        public List<Posts> GetPosts() //Post_Archive.html - method MP1
         {
             SqlConnection con = null;
-            List<Posts> gList = new List<Posts>();
+            List<Posts> pList = new List<Posts>();
 
             try
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "select * from Posts";
+                String selectSTR = "SELECT * FROM Posts ORDER BY postid desc";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
 
                 while (dr.Read())
-                {   // Read till the end of the data into a row
-                    Posts g = new Posts();
-                    g.Postid = Convert.ToInt32(dr["postid"]);
-                    g.Title = (string)dr["title"];
-                    g.Body = (string)dr["body"];
-                    g.Image1 = (string)dr["image1"];
-                    g.Category = (string)dr["category"];
-                    g.Postdate = Convert.ToDateTime(dr["postdate"]);
-                    g.Status1 = Convert.ToInt32(dr["status1"]);
+                {   
+                    Posts p = new Posts();
 
-                    gList.Add(g);
+                    p.Postid = Convert.ToInt32(dr["postid"]);
+                    p.Title = (string)dr["title"];
+                    p.Body = (string)dr["body"];
+                    p.Image1 = (string)dr["image1"];
+                    p.Category = (string)dr["category"];
+                    p.Postdate = Convert.ToDateTime(dr["postdate"]);
+                    p.Status1 = Convert.ToInt32(dr["status1"]);
+
+                    pList.Add(p);
                 }
 
-                return gList;
+                return pList;
             }
             catch (Exception ex)
             {
@@ -1879,11 +1878,6 @@ namespace IESA.Models.DAL
             }
         }
 
-
-        //END OF----Get All Posts to the Archive
-
-
-        //get fillter posts
 
         public List<Posts> GetFillterPosts(string cat2)
         {
@@ -1894,7 +1888,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "select * from Posts where category Like '%" + cat2 + "%' ";
+                String selectSTR = "select * from Posts where category Like '%" + cat2 + "%' ORDER BY postid desc";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -1932,10 +1926,7 @@ namespace IESA.Models.DAL
         }
 
 
-        //END OF---get fillter posts
-
-
-        //---Add_New_Post.html--- *Close*
+        //---Post_Archive.html.html--- *Close*
 
 
 

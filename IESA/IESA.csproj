@@ -200,6 +200,7 @@
     <Content Include="Pages\Competition_Preview.html" />
     <Content Include="Pages\Edit_Post.html" />
     <Content Include="Pages\Gamer.html" />
+    <Content Include="Pages\Manager_Main_Page - Copy.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Post_Archive.html" />

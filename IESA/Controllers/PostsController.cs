@@ -43,9 +43,9 @@ namespace IESA.Controllers
         //---Post_Archive.html--- *Open*
 
 
-        [HttpGet]
-        [Route("api/Posts/mark9")]
-        public List<Posts> Gete()
+        [HttpGet] //Post_Archive.html - method MP1
+        [Route("api/Posts/mark9")] 
+        public List<Posts> Gete() 
         {
             Posts posts = new Posts();
             return posts.Read();
