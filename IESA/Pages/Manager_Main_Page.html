@@ -53,6 +53,8 @@
             margin-bottom: 20px;
         }
 
+        /*Page title Open*/
+
         .titlelink {
             color: #FFFFFF;
             text-decoration: none;
@@ -90,6 +92,8 @@
         .divdown {
             margin-bottom: 60px;
         }
+
+        /*Page title Close*/
 
         /*        .dataTables_filter, .dataTables_info {
             display: none;
@@ -359,39 +363,18 @@
             ajaxCall("GET", "../api/Posts/tableP", "", getPostsSuccess, Error); //Manager_Main_Page.html - method OM7
 
 
-            $(document).on("click", ".P_viewBTN", function () {
-                var postId = this.getAttribute('data-postid');
-
-                swal("פעולה זו תפתח דף חדש המציג את הפוסט: " + postId)
-            });
-
-            $(document).on("click", ".P_editBTN", function () {
-                var postId = this.getAttribute('data-postid');
-
-                swal("פעולה זו תפתח דף חדש העורך את הפוסט: " + postId)
-            });
-
             $(document).on("click", ".add-post-button", function () {
 
-                //window.open('Add_New_Post.html', '_blank');
-                location.replace("Add_New_Post.html");
+                window.open('Add_New_Post.html', '_blank');
 
             });
 
-
             //---Posts Table--- *Close*
+
 
             //---Competitions Table--- *Open*
 
             ajaxCall("GET", "../api/Competitions/tableC", "", getCompetitionsSuccess, Error); //Manager_Main_Page.html - method OM8
-
-
-            $(document).on("click", ".C_viewBTN", function () {
-                var competitionId = this.getAttribute('data-competitionid');
-
-                swal("פעולה זו תפתח דף חדש המציג את התחרות: " + competitionId)
-            });
-
 
             //---Competitions Table--- *Close*
 
@@ -426,6 +409,7 @@
             });
 
 
+            //###Update it when gamer card done or Modal
             $(document).on("click", ".G_viewBTN", function () {
                 var userId2 = this.getAttribute('data-gamerid');
 
@@ -465,14 +449,12 @@
                 ajaxCall("PUT", "../api/Orgenaizers/Tableostatus?toupdateid=" + userId3, "", UpdateSuccessO, Error); //Manager_Main_Page.html - method OM6
             });
 
-
+            //####Update it when Orgenaizer info done (Or modal)
             $(document).on("click", ".O_viewBTN", function () {
                 var userId4 = this.getAttribute('data-orgenaizerid');
 
                 swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId4)
             });
-
-
 
 
             //---Orgenaizers Table--- *Close*
@@ -485,7 +467,7 @@
 
             ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
 
-            //check if the user is manager
+            //Check if the user is manager
         }
 
 
@@ -815,7 +797,7 @@
                             render: function (data, type, row, meta) {
                                 let dataCompetitions = "data-competitionid='" + row.Competitionid + "'";
 
-                                C_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='C_viewBTN bi bi-eye' " + dataCompetitions + "></i></a>";
+                                C_viewBtn = "<a href='Competition_View.html?competitionid=" + row.Competitionid + "' target = '_blank' class='view' title='צפה'><i class='C_viewBTN bi bi-eye' " + dataCompetitions + "></i></a>";
 
                                 return C_viewBtn;
                             }
