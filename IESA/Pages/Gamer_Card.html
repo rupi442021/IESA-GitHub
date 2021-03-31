@@ -18,6 +18,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
+    <title>&#x202E; כרטיס שחקן – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
 
     <style type="text/css">
 
@@ -85,7 +88,7 @@
         #policy {
             width: 90%;
             padding-right: 5%;
-            padding-top:15%;
+            padding-top: 15%;
         }
 
 
@@ -95,9 +98,7 @@
             color: white;
             background-color: #04b8a5;
             width: 75%;
-            margin-top:55%;
-           
-            
+            margin-top: 55%;
         }
 
 
@@ -114,22 +115,21 @@
 
         .card {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            max-width:95%;
-           
+            max-width: 95%;
             margin: auto;
             text-align: center;
-            background-color:black;
-            position:relative;
-            right:0%;
-            border:5px solid white;
-            border-radius:20px;
+            background-color: black;
+            position: relative;
+            right: 0%;
+            border: 5px solid white;
+            border-radius: 20px;
         }
 
         .title {
             color: grey;
             font-size: 18px;
         }
-/*
+        /*
         button {
             border: none;
             outline: 0;
@@ -149,7 +149,7 @@
             color: black;
         }
 
-          /*  button:hover, a:hover {
+        /*  button:hover, a:hover {
                 opacity: 0.7;
             }*/
 
@@ -157,37 +157,36 @@
             position: relative;
             right: 14%;
             top: -45%;
-           
         }
+
         #CardImg {
             /*            width:12%;*/
             border-radius: 50%;
             width: 55px;
             height: 55px;
             margin-top: 10px;
-             position:relative;
-           right:1.5%;
-           top:-2.5%;
+            position: relative;
+            right: 1.5%;
+            top: -2.5%;
         }
 
         #ColText {
             text-align: right;
-           /* border: 5px solid red*/
+            /* border: 5px solid red*/
         }
 
         .UnderBold1 {
             font: bold;
             text-decoration: underline;
             text-align: right;
-            padding-right:11.5%;
+            padding-right: 11.5%;
         }
 
         .UnderBold2 {
             font: bold;
             text-decoration: underline;
             text-align: right;
-            padding-left:10%;
-           
+            padding-left: 10%;
         }
 
 
@@ -196,10 +195,11 @@
             padding: 2% 55% 0% 0%;
             color: #04b8a5;
         }
-       
 
-        #CardImg2{position:relative;
-                  right:23%;
+
+        #CardImg2 {
+            position: relative;
+            right: 23%;
         }
 
 
@@ -211,25 +211,23 @@
             text-align: right;
         }
 
-      
-        
-       
+
+
+
         #miki {
             color: #555555;
             text-align: right;
         }
 
-      .miki2{
-          position:relative;
-          right:-5%;
-      } 
-      .miki3{
-          position:relative;
-          right:-4%;
-      }
+        .miki2 {
+            position: relative;
+            right: -5%;
+        }
 
-
-       
+        .miki3 {
+            position: relative;
+            right: -4%;
+        }
     </style>
 
 
@@ -276,18 +274,18 @@
         edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]);
         edat = edat[2] + '/' + edat[1] + '/' + edat[0]
 
-       
+
         let timetorank;
 
 
         let today = new Date(getDate())
 
         if (today > edat1)
-            RemainTime =365-Math.ceil(Math.abs(today - edat1) / (1000 * 60 * 60 * 24))
+            RemainTime = 365 - Math.ceil(Math.abs(today - edat1) / (1000 * 60 * 60 * 24))
 
         //סוף ימים לחידוש הרישיון
 
-       
+
 
 
 
@@ -305,11 +303,11 @@
 
 
         function GetGamerDetails() {
-            console.log("today:  "+today)
-            console.log("edate1:   " +edat1)
+            console.log("today:  " + today)
+            console.log("edate1:   " + edat1)
             console.log("RemainTime:   " + RemainTime)
-          
-         
+
+
 
 
 
@@ -322,7 +320,7 @@
             var det = "";
 
 
-           
+
 
 
             det += "<div class='card'>";
@@ -331,14 +329,14 @@
 
             det += "<div class='row' id='FirstInCard'>"//row2
             det += "<div class='col-9' id='ColText'>"//col-9-1
-            det += " <img id='CardImg' src= '../"+IMG+"' alt='Non'>";
+            det += " <img id='CardImg' src= '../" + IMG + "' alt='Non'>";
             det += "<h4 id='titlecard'>כרטיס שחקן רשמי</h4>";
             det += "</div>";//col-9-1 end
             det += "<div class='col-3' id='TinyFlag'>"//col-3-1
-            det += " <img id='CardImg2' src= '../uploadedFiles/IF.PNG' alt='Non'>";  
+            det += " <img id='CardImg2' src= '../uploadedFiles/IF.PNG' alt='Non'>";
             det += "</div>"
             det += "</div>"
-            
+
 
             // בשורה הזו והלאה יתחילו להופיע הפרטים
             det += "<div class='row' id='lastincard'>"
@@ -346,7 +344,7 @@
             det += "<div class='row'>"
             det += "<div class='col-3'>"//col-3 first
             det += "<p class='UnderBold1'>שם פרטי:</p>"
-            
+
             det += "<p class='UnderBold1'>שם משפחה:</p>"
 
             det += "<p class='UnderBold1'>כינוי:</p>"
@@ -360,13 +358,13 @@
 
             det += "<div class='col-3'>"//col-3 sec
 
-            det += "<p class='RealD'>"+FN+"</p>"
-            det += "<p class='RealD'>"+LN+"</p>"
-            det += "<p class='RealD'>"+NN+"</p>"
-            det += "<p class='RealD'>"+ID+"</p>"
-            det += "<p class='RealD'>" + Address+"</p>"
+            det += "<p class='RealD'>" + FN + "</p>"
+            det += "<p class='RealD'>" + LN + "</p>"
+            det += "<p class='RealD'>" + NN + "</p>"
+            det += "<p class='RealD'>" + ID + "</p>"
+            det += "<p class='RealD'>" + Address + "</p>"
 
-           
+
 
             det += "</div>" //col-3 sec
 
@@ -388,7 +386,7 @@
 
             det += "<div class='col-3'>" //col-3 last
 
-            det += "<p class='RealD'>" +PlayerNumber + "</p>"
+            det += "<p class='RealD'>" + PlayerNumber + "</p>"
             det += "<p class='RealD'>" + BirthDayReal + "</p>"
             det += "<p class='RealD'>" + DISCORD + "</p>"
             det += "<p class='RealD'>" + Phone + "</p>"
@@ -404,8 +402,8 @@
 
             det += "<div class='col-2' >"
 
-           
-        
+
+
             det += "</div>"  //col-3
             det += "</div>"  // row
             //סוף שורת הפרטים
@@ -428,7 +426,7 @@
             det += "</div>"; //row שורה אחרונה
 
             det += "</div>" //card
-         
+
             $("#Card").append(det);
 
 
@@ -445,12 +443,12 @@
 
             mik += "<tr>"
 
-            mik+= "<td>"
+            mik += "<td>"
             mik += '<p id="iconp"><i class="bi bi-check-circle-fill" style="font-size: 2rem; color:#4cff00; "></i> </p>';
             mik += "</td>"
 
             mik += "<td>"
-            mik +="<p class='miki2'>כרטיס שחקן בתוקף</p>"
+            mik += "<p class='miki2'>כרטיס שחקן בתוקף</p>"
             mik += "</td>"
 
             mik += "</tr>"
@@ -467,16 +465,16 @@
 
             mik += "</tr>"
 
-           
 
 
-            mik +="</table>"
+
+            mik += "</table>"
 
             $("#Mikra").append(mik);
         }
 
 
-        
+
 
 
 
@@ -530,9 +528,7 @@
         <div class="container">
 
             <section id="page_title">
-                <a class="titlelink" href="TemplatePage.html">ראשי </a>
-                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-                <a class="titlelink" href="TemplatePage.html">דף קודם </a>
+                <a class="titlelink" href="TemplatePage.html">אזור אישי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <h2 class="headh2">כרטיס שחקן</h2>
                 <div class="divdown"></div>
@@ -553,8 +549,6 @@
 
 
                     </div>
-                    
-                    
                     
                     
                     
@@ -639,7 +633,7 @@
 
 
 
-
+            </div>
 
 
 </section>
