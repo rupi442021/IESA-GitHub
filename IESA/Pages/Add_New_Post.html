@@ -207,11 +207,11 @@
         function SuccessInsert(data) {
             console.log("in Success");
 
-            swal("פוסט נוסף בהצלחה", "הינך מועבר לאזור אישי", "success");
+            swal("פוסט נוצר בהצלחה", "", "success");
 
             setTimeout(function () {
-                location.replace("TemplatePage.html");
-            }, 3500);
+                window.close();
+            }, 2500);
         }
 
 
@@ -378,7 +378,7 @@
 
                         <!--<input type="button" class="btn btn-danger" value="תצוגה מקדימה" id="previewC" />-->
                         <input type="submit" class="btn btn-success" value="הוספת פוסט" onsubmit="return false" />
-                        <input type="button" class="btn btn-danger" value="ביטול" onclick="location.href='Manager_Main_Page.html'" />
+                        <input type="button" class="btn btn-danger" value="ביטול" onclick="window.close();" />
 
                     </div>
                 </div>

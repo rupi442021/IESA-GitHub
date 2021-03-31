@@ -21,13 +21,14 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 
 
-    <title>&#x202E; דף לדוגמא – ASEI</title>
+    <title>&#x202E; פוסטים – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
 
     <style type="text/css">
 
         /*Template Style*/
+
         body {
             background-color: #212529;
             color: white;
@@ -37,17 +38,17 @@
             background-color: #292e38;
             max-width: 1110px;
             height: 2000px;
-            padding-top: 10px;
+            padding-top: 30px;
         }
 
         .jumbotron {
             height: 70px;
             text-align: center;
             padding: 10px;
+            margin-bottom: 20px;
         }
-        /*Template Style*/
 
-        /*.nk{margin:5px;}*/
+        /*Template Style*/
 
 
         .col-md-6 {
@@ -59,7 +60,7 @@
             max-height: 120px;
             position: relative;
             overflow: hidden;
-            width: 58%;
+            width: 65%;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -73,12 +74,11 @@
                 text-align: center;
                 margin: 0;
                 padding: 30px 0;
-                /*                background-image: linear-gradient(to bottom, transparent, black);*/
             }
 
 
         #PostImg {
-            width: 53%;
+            width: 290px;
             height: 150px;
             border-radius: 15px;
         }
@@ -129,20 +129,24 @@
         }
 
 
-
         a {
             text-decoration: none;
+            color: white;
         }
+
+            a:hover {
+                color: white;
+            }
 
         .bg-main-4 {
             position: relative;
-            top: 7.5%;
-            font-size: 20px;
-            font-family: Georgia;
-            background-color: #212529;
+            top: 9%;
+            left: 25%;
+            font-size: 16px;
+            background-color: #119a8c;
             color: white;
             border-radius: 15px;
-            opacity: 0.8;
+            opacity: 0.9;
             font: bold;
         }
 
@@ -154,7 +158,15 @@
 
 
         .nk-blog-grid {
-            margin: 50px;
+            margin: 35px;
+        }
+
+        .nk-gap {
+            margin-bottom: 6px;
+        }
+
+        .btn-info {
+            padding: 5px 15px;
         }
 
     </style>
@@ -165,7 +177,6 @@
 
         $(document).ready(function () {
             GetAllPosts()
-            //renderDate()
 
 
             $(".target").change(function () {
@@ -177,76 +188,14 @@
         });
 
 
-        //function renderDate(date) {
-
-        //    var day = date.substring(8, 10);
-        //    var month = date.substring(5, 7);
-        //    var hebmonth; // Month in Hebrew
-        //    var year = date.substring(0, 4);
-
-        //    switch (month) {
-        //        case "01":
-        //            hebmonth = "בינואר";
-        //            break;
-        //        case "02":
-        //            hebmonth = "בפברואר";
-        //            break;
-        //        case "03":
-        //            hebmonth = "במרץ";
-        //            break;
-        //        case "04":
-        //            hebmonth = "באפריל";
-        //            break;
-        //        case "05":
-        //            hebmonth = "במאי";
-        //            break;
-        //        case "06":
-        //            hebmonth = "ביוני";
-        //            break;
-        //        case "07":
-        //            hebmonth = "ביולי";
-        //            break;
-        //        case "08":
-        //            hebmonth = "באוגוסט";
-        //            break;
-        //        case "09":
-        //            hebmonth = "בספטמבר";
-        //            break;
-        //        case "10":
-        //            hebmonth = "באוקטובר";
-        //            break;
-        //        case "11":
-        //            hebmonth = "בנובמבר";
-        //            break;
-        //        case "12":
-        //            hebmonth = "בדצמבר";
-        //            break;
-
-        //        default:
-        //            hebmonth = "לחודש";
-        //    }
-
-        //    datestring = day + " " + hebmonth + " " + year;
-
-        //    return datestring;
-        //}
-
-
-
-
         function GetFillterCategory()
         {
             var cat = $(".target").val();
             console.log("the category is:    " + cat);
 
-
-
             ajaxCall("GET", "../api/Posts?cat2="+cat ,"", getFillterSuccessPosts, getFillterErrorPosts);
 
-
         }
-
-
 
         function getFillterSuccessPosts(Posts)
         {
@@ -260,44 +209,47 @@
             str += "<div class='row'>"
 
 
-
-
             for (var i = 0; i < Posts.length; i++) {
 
 
-                str += "<div class='col-md-6'>"
-                str += "<a href='blog-article.htmk' class='nk-post-img'><span class='bg-main-4'>" + Posts[i].Category + "</span></a>"
-                str += "<div class='nk-blog-post'>"
+                str += "<div class='col-md-6'>";
+                str += "<span class='nk-post-img'><span class='bg-main-4'>" + Posts[i].Category + "</span>";
+                str += "<div class='nk-blog-post'>";
 
-                str += "<a href='blog-article.html' class='nk-post-img'>"
-                str += " <a href='blog-article.html' class='nk-post-img'>"
-                str += " <img id='PostImg' src= ../" + Posts[i].Image1 + " alt='Magic In the Air'>"
+                str += "<a href='Post.html?postid=" + Posts[i].Postid + "' class='nk-post-img'></a>";
 
-                str += " <span class='nk-post-categories'>"
+                str += " <img id='PostImg' src= ../" + Posts[i].Image1 + " alt='Logo'>";
 
-                str += " </span>"
-                str += " </a>"
+                str += " <span class='nk-post-categories'>";
+
+                str += " </span>";
+
+                str += " <div class='nk-gap'></div>";
+
+                if (Posts[i].Title.length > 24) {
+                    var title_edit = Posts[i].Title.substring(0, 25);
+                    var title_after = title_edit + "..";
+                    str += "<h2 href='Post.html?postid=" + Posts[i].Postid + "' class='nk-post-title h4'>" + title_after + "</h2>";
+                }
+                else {
+                    str += "<h2 href='Post.html?postid=" + Posts[i].Title + "' class='nk-post-title h4'>" + Posts[i].Title + "</h2>";
+                }
+
+                str += "<div class='nk-post-text'>";
+                str += "<p class='sidebar-box'>" + Posts[i].Body + "</p>";
+                //str += " <p class='read - more'><a href='#' class='button'>Read More</a></p>"
+                str += " </div>";
                 str += " <div class='nk-gap'></div>"
-                str += "<h2 class='nk-post-title h4'>" + Posts[i].Title + "</h2>"
-                str += "<div class='nk-post-text'>"
-                str += "<p class='sidebar-box'>" + Posts[i].Body + "</p>"
 
-                str += " </div>"
-                str += " <div class='nk-gap'></div>"
-                str += " <a href='blog-article.html' class='btn btn-primary mb1 bg-blue'> <span class='icon ion-paper-airplane'>קרא עוד</span></a>"
-
+                str += "<a href='Post.html?postid=" + Posts[i].Postid + "' class='btn btn-info'> <span class='icon ion-paper-airplane'>קרא עוד</span></a>"
+                //str += "<div class='nk - post - date float - right'><svg class='svg - inline--fa fa - calendar - alt fa - w - 14' aria-hidden='true' focusable='false' data-prefix='fa' data-icon='calendar - alt' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' data-fa-i2svg='><path fill='currentColor' d='M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z'></path></svg><!-- <span class='fa fa-calendar'></span> Font Awesome fontawesome.com -->" + Posts[i].Postdate+"</div>"
                 str += "<br/>"
-                str += "<div id='postDate'>" + Posts[i].Postdate + "</div>"
-                str += "</div>"
-                str += " </div>"
-
-
-
-
+                str += "<div id='postDate'>" + renderDate(Posts[i].Postdate) + "</div>"
+                str += "</div>";
+                str += " </div>";
 
 
             }
-
 
             str += "</div>"
             str += "</div>"
@@ -305,29 +257,20 @@
 
             $("#ph1").append(str);
 
-
-
-
         }
 
 
         function getFillterErrorPosts()
         {
-            alert("Fillter Failed")
 
-
-
+            swal("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
         }
-
-
 
         //get all the posts
 
         function GetAllPosts() {
 
             ajaxCall("GET", "../api/Posts/mark9" , "", getSuccessPosts, getErrorPosts);
-
-
 
         }
 
@@ -338,16 +281,12 @@
 
             RenderPosts(Posts);
 
-
-
-
         }
 
 
         function getErrorPosts(Posts) {
-            console.log("fail")
 
-
+            swal("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
         }
 
 
@@ -362,79 +301,53 @@
             str += "<div class='row'>"
 
 
+            for (var i = 0; i < Posts.length; i++) {
 
 
-                for (var i = 0; i < Posts.length; i++) {
-                    //str += "<div class='col-sm-4'>"
-                    //str += "<div class='card' style ='width: 18rem ;'>";
-                    //str += "<img class='card-img-top' src=" + Posts[i].Image1 + " alt='IMG'>"
-                    //str += "<div class='card-body'>"
-                    //str += "<h3 class='card-title'>" + Posts[i].Title + "</h3>";
+                str += "<div class='col-md-6'>";
+                str += "<span class='nk-post-img'><span class='bg-main-4'>" + Posts[i].Category + "</span>";
+                str += "<div class='nk-blog-post'>";
 
-                    //str += "</div>"
-                    //str += "<ul class='list-group list-group-flush'>";
-                    //str += "<li class='list-group-item'>  <b>body:</b> " + Posts[i].Body + "</li>"
-                    //str += "<li class='list-group-item'> <b>Post Date:</b> " + Posts[i].Postdate + "</li>"
+                str += "<a href='Post.html?postid=" + Posts[i].Postid + "' class='nk-post-img'></a>";
+                
+                str += " <img id='PostImg' src= ../" + Posts[i].Image1 + " alt='Logo'>";
 
-                    //str += "</ul>";
-                    //str += "</div>";
-                    //str += "</br>";
-                    //str += "</div>"
+                str += " <span class='nk-post-categories'>";
 
+                str += " </span>";
+                
+                str += " <div class='nk-gap'></div>";
 
-                    str += "<div class='col-md-6'>"
-                    str += "<a href='blog-article.htmk' class='nk-post-img'><span class='bg-main-4'>" + Posts[i].Category + "</span></a>"
-                    str += "<div class='nk-blog-post'>"
+                if (Posts[i].Title.length > 24) {
+                    var title_edit = Posts[i].Title.substring(0, 25);
+                    var title_after = title_edit + "..";
+                    str += "<h2 href='Post.html?postid=" + Posts[i].Postid + "' class='nk-post-title h4'>" + title_after + "</h2>";
+                }
+                else {
+                    str += "<h2 href='Post.html?postid=" + Posts[i].Title + "' class='nk-post-title h4'>" + Posts[i].Title + "</h2>";
+                }
 
-                   str+="<a href='blog-article.html' class='nk-post-img'>" //צריך להבין איך אני מקשר כל תמונה לדף של המשך הכתבה(לכתבה המלאה)
-                   str+=" <a href='blog-article.html' class='nk-post-img'>"
-                    str +=" <img id='PostImg' src= ../"+ Posts[i].Image1 + " alt='Magic In the Air'>"
-                    //str += " <span class='nk - post - comments - count'>4</span>"
-                    str += " <span class='nk-post-categories'>"
-
-                    str += " </span>"
-                    str +=" </a>"
-                    str += " <div class='nk-gap'></div>"
-                    str += "<h2 class='nk-post-title h4'>" + Posts[i].Title +"</h2>"   //<a href="blog - article.html">Smell magic in the air. Or maybe barbecue</a>
-                    str += "<div class='nk-post-text'>"
-                    str += "<p class='sidebar-box'>" + Posts[i].Body + "</p>"
+                    
+                str += "<div class='nk-post-text'>";
+                str += "<p class='sidebar-box'>" + Posts[i].Body + "</p>";
                     //str += " <p class='read - more'><a href='#' class='button'>Read More</a></p>"
-                    str += " </div>"
-                    str += " <div class='nk-gap'></div>"
-                    str += " <a href='blog-article.html' class='btn btn-primary mb1 bg-blue'> <span class='icon ion-paper-airplane'>קרא עוד</span></a>"
+                str += " </div>";
+                str += " <div class='nk-gap'></div>"
+
+                str += "<a href='Post.html?postid=" + Posts[i].Postid +"' class='btn btn-info'> <span class='icon ion-paper-airplane'>קרא עוד</span></a>"
                     //str += "<div class='nk - post - date float - right'><svg class='svg - inline--fa fa - calendar - alt fa - w - 14' aria-hidden='true' focusable='false' data-prefix='fa' data-icon='calendar - alt' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' data-fa-i2svg='><path fill='currentColor' d='M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z'></path></svg><!-- <span class='fa fa-calendar'></span> Font Awesome fontawesome.com -->" + Posts[i].Postdate+"</div>"
                     str+="<br/>"
-                    str+="<div id='postDate'>"+Posts[i].Postdate+"</div>"
-                    str+="</div >"
-                    str +=" </div>"
-
-
-
-
-
-                 //<p>With what mingled joy and sorrow do I take up the pen to write to my dearest friend! Oh, what a change between to-day and yesterday! Now I am friendless and alone...</p>
-
-
-
-
+                    str += "<div id='postDate'>" + renderDate(Posts[i].Postdate) + "</div>"
+                str += "</div>";
+                str += " </div>";
 
 
                 }
 
 
 
-
-
-
-
-
             str += "</div>"
             str += "</div>"
-
-
-
-
-
 
 
             $("#ph1").append(str);
@@ -447,18 +360,8 @@
     </script>
 
 
-
-
-
 </head>
 <body>
-
-
-
-
-
-
-
 
     <section id="Nav-bar">
         <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
@@ -469,31 +372,22 @@
 
         <div class="container">
 
-
-
-            <br />
             <section id="page_title">
                 <a class="titlelink" href="TemplatePage.html">ראשי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <h2 class="headh2">פוסטים</h2>
                 <div class="divdown"></div>
-
-
-
-
-
             </section>
 
-            <label>בחר קטגוריה:</label>
+
+            <label>סינון לפי קטגוריה: </label>
             <select class="target">
                 <option hidden selected></option>
                 <option value="כללי">כללי</option>
                 <option value="עולמי">עולמי</option>
-
             </select>
 
-            <div id="ph1">
-
+            <div id="ph1" style="text-align: -webkit-center;>
             </div>
 
 
@@ -504,13 +398,9 @@
 
 
     <section id="site_footer">
-
         <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-
             <h2>IESA</h2>
-
         </div>
-
     </section>
 
 

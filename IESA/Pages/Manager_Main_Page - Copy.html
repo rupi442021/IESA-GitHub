@@ -358,6 +358,10 @@
 
         $(document).ready(function () {
 
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+
             //---Posts Table--- *Open*
 
             ajaxCall("GET", "../api/Posts/tableP", "", getPostsSuccess, Error); //Manager_Main_Page.html - method OM7
