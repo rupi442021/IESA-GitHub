@@ -239,17 +239,24 @@
 
             //Futures Competitions
             for (var i = 0; i < loopFlist; i++) {
-
                 let edat = fList[i].Enddate.split("T");
                 edat = edat[0].split("-");
+                let edat1;
+                edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]);
                 edat = edat[2] + '/' + edat[1] + '/' + edat[0]
 
                 let Stardate = fList[i].Startdate.split("T");
                 Stardate = Stardate[0].split("-");
                 Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
+                let timetorank;
+
 
                 let today = new Date(getDate())
-                let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
+
+                if (today > edat1)
+                    timetorank = 7 - Math.ceil(Math.abs(today - edat1) / (1000 * 60 * 60 * 24))
+                else
+                    timetorank = Math.ceil(Math.abs(edat1 - today) / (1000 * 60 * 60 * 24)) 
                 var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
                 cardstr += '<a href=Competition_View.html?Competitions=' + fList[i].Competitionid +'> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"> </a>';
                 cardstr += '<div class="card-body">';
@@ -274,17 +281,22 @@
 
                     let edat = fList[i].Enddate.split("T");
                     edat = edat[0].split("-");
+                    let edat1;
+                    edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]); 
                     edat = edat[2] + '/' + edat[1] + '/' + edat[0]
 
                     let Stardate = fList[i].Startdate.split("T");
                     Stardate = Stardate[0].split("-");
                     Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
+                    let timetorank;
 
-
-
+                    
                     let today = new Date(getDate())
-                    let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
 
+                    if (today > edat1)
+                        timetorank = 7 - Math.ceil(Math.abs(today - edat1) / (1000 * 60 * 60 * 24))
+                    else
+                        timetorank = Math.ceil(Math.abs(edat1 - today ) / (1000 * 60 * 60 * 24)) 
 
 
                     var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
@@ -312,8 +324,6 @@
 
                 let edat = pList[i].Enddate.split("T");
                 edat = edat[0].split("-");
-                let today = new Date(getDate())
-                let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
 
 
                 let Stardate = pList[i].Startdate.split("T");
@@ -345,8 +355,6 @@
 
                     let edat = pList[i].Enddate.split("T");
                     edat = edat[0].split("-");
-                    let today = new Date(getDate())
-                    let timetorank = 7 - Math.ceil(Math.abs(today - new Date(edat[0] + '-' + edat[1] + '-' + edat[2])) / (1000 * 60 * 60 * 24))
 
 
                     let Stardate = pList[i].Startdate.split("T");
