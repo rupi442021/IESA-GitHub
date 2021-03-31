@@ -565,7 +565,7 @@
                 <div class="divdown"></div>
             </section>
 
-            <h5 style="color:red">* תזכורת למארגנים בעניין מגבלות ההכרה:</h5>
+            <p style="color:red">* תזכורת למארגנים בעניין מגבלות ההכרה:</p>
             <p style="color:white">בהתאם לנוהל ההכרה בתחרויות, יש לבדוק שהתחרות שאתם מגישים עומדת בקריטריונים הבאים:</p>
             <p style="color:white"><i class="bi bi-check2-circle" style="font-size: 1.5rem; color: white;"></i>  חוקי התחרות כתובים היטב ויש קישור אליהם בתיאוק התחרות</p>
             <p style="color:white"><i class="bi bi-check2-circle" style="font-size: 1.5rem; color: white;"></i>  שווי פרסים בתחרות לא עולה על 5,000 ש"ח</p>
@@ -695,11 +695,14 @@
                             <label>תיאור התחרות:</label>
                             <textarea class="form-control" id="descriptionTA" placeholder="עד 1,000 תווים" onkeyup="countChar(this)"
                                       oninvalid="this.setCustomValidity('עד 1000 תווים.')"
-                                      oninput="this.setCustomValidity('')" rows="3" required></textarea>
+                                      oninput="this.setCustomValidity('')" rows="4" required></textarea>
                             <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
                         </div> <!--description-->
 
                         <div class="row">
+
+                        <div style="margin-bottom: 6px;"></div> <!--for row's correct gap-->
+
                             <label>תאריך ושעת התחלה:</label>
                             <div class="col">
                                 <div class="mb-3">
@@ -787,9 +790,10 @@
                         <div class="row" dir="ltr">
 
                             <div class="col">
-                                <br /><br />  <br />
+                                <br />
+
                                 <input type="submit" class="btn btn-success" value="שליחת טופס" onsubmit="return false" />
-                                <input type="button" class="btn btn-danger" value="ביטול" onclick="window.close();" />
+                                <input type="button" class="btn btn-danger" value="ביטול" onclick="window.close();" /> <!--Ask if he sure?-->
                             </div>
                         </div> <!--buttons-->
 

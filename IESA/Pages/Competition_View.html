@@ -11,7 +11,7 @@
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
 
 
-    <title>&#x202E; תצוגה מקדימה לתחרות – ASEI</title>
+    <title>&#x202E; תחרות – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
 
@@ -37,6 +37,50 @@
             margin-bottom: 20px;
         }
 
+        /*Page title Open*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+            text-align:;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            /*margin-bottom: 55px;*/ /*#1*/
+            font-weight: 600;
+            letter-spacing: .015em;
+            margin: 3px; /*#2*/
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .divdown {
+            margin-bottom: 60px;
+        }
+
+        /*Page title Close*/
+
+
         #charNum {
             direction: ltr;
             color: dimgray;
@@ -48,7 +92,6 @@
             width: 1024px;
             height: 210px;
         }
-
 
 
         .cName{
@@ -136,6 +179,10 @@
             buildimagestr = "<img src='../" + img + "'/>";
             document.getElementById("banner").innerHTML = buildimagestr;
             $("#title").html("<p><b>" + data.Competitionname + "<b/><p/>");
+
+            let title1 = data.Competitionname; //For title*
+            document.getElementById("comp_name_title").innerHTML = title1;
+
             $("#discreption").html("<p>" + data.Body + "<p/>");
             $("#cStartD").append("<br/>" + dateStart[2] + '/' + dateStart[1] + '/' + dateStart[0]);
             $("#cStartT").append("<br/>" + timeEnd[0] + ':' + timeEnd[1]+" - ");
@@ -188,89 +235,98 @@
     <section id="content">
 
         <div class="container">
-            
-                <div class="row">
-                    <div class="bannerimage" id="banner"></div>
-                </div>
 
-                <div class="cName" id="title"></div>
-                <div class="cDisc" id="discreption"></div>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <table width="100%" height="100%">
-                            <tr>
-                                <td>
-                                    <i class="bi bi-journal-check" style="font-size: 2rem"></i>
-                                </td>
-                                <td id="cLastDateR" class="details">ההרשמה מסתיימת ב:</td>
-                                <td>
-                                    <i class="bi bi-calendar2-date" style="font-size: 2rem; color: white;"></i>
-                                </td>
-                                <td id="cStartD" class="details">
-                                    תחילת התחרות:
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-clock" style="font-size: 2rem"></i></td>
-                                <td id="cStartT" class="details">
-                                    שעות התחרות:
-                                </td>
-                                <td><i class="bi bi-bookmark-check" style="font-size: 2rem"></i></td>
-                                <td id="cCheckIn" class="details">צ'ק אין:</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-controller" style="font-size: 2rem"></i></td>
-                                <td id="cPro" class="details"></td>
-                                <td><i class="bi bi-credit-card-fill" style="font-size: 2rem"></i></td>
-                                <td id="cPayment" class="details"></td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-link" style="font-size: 2rem"></i></td>
-                                <td class="details">Linkrules</td>
-                                <td><i class="bi bi-geo-alt" style="font-size: 2rem"></i></td>
-                                <td id="cOnline" class="details"></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td id="linkforegistration"></td>
-                            </tr>
-                        </table>
+            <section id="page_title" style="text-align: right !important;">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <a class="titlelink" href="TemplatePage.html">תחרויות </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2" id="comp_name_title"></h2>
+                <div class="divdown"></div>
+            </section>
+
+            <div class="row">
+                <div class="bannerimage" id="banner"></div>
+            </div>
+
+            <div class="cName" id="title"></div>
+            <div class="cDisc" id="discreption"></div>
+            <div class="row">
+                <div class="col-lg-9">
+                    <table width="100%" height="100%">
+                        <tr>
+                            <td>
+                                <i class="bi bi-journal-check" style="font-size: 2rem"></i>
+                            </td>
+                            <td id="cLastDateR" class="details">ההרשמה מסתיימת ב:</td>
+                            <td>
+                                <i class="bi bi-calendar2-date" style="font-size: 2rem; color: white;"></i>
+                            </td>
+                            <td id="cStartD" class="details">
+                                תחילת התחרות:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-clock" style="font-size: 2rem"></i></td>
+                            <td id="cStartT" class="details">
+                                שעות התחרות:
+                            </td>
+                            <td><i class="bi bi-bookmark-check" style="font-size: 2rem"></i></td>
+                            <td id="cCheckIn" class="details">צ'ק אין:</td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-controller" style="font-size: 2rem"></i></td>
+                            <td id="cPro" class="details"></td>
+                            <td><i class="bi bi-credit-card-fill" style="font-size: 2rem"></i></td>
+                            <td id="cPayment" class="details"></td>
+                        </tr>
+                        <tr>
+                            <td><i class="bi bi-link" style="font-size: 2rem"></i></td>
+                            <td class="details">Linkrules</td>
+                            <td><i class="bi bi-geo-alt" style="font-size: 2rem"></i></td>
+                            <td id="cOnline" class="details"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td id="linkforegistration"></td>
+                        </tr>
+                    </table>
                 </div>
-                    <div class="col-lg-3">
-                        <div class="row" id="Trophy">
-                            <p>פרסים:</p>
-                            <div class="row troph">
-                                <div class="col">
-                                    <i class="bi bi-trophy-fill"></i>
-                                </div>
-                                <div class="col"> 1ST </div>
-                                <div id="prize1" class="col prize1"></div>
+                <div class="col-lg-3">
+                    <div class="row" id="Trophy">
+                        <p>פרסים:</p>
+                        <div class="row troph">
+                            <div class="col">
+                                <i class="bi bi-trophy-fill"></i>
                             </div>
-                            <div class="row troph">
-                                <div class="col"><i class="bi bi-trophy-fill"></i></div>
-                                <div class="col">2ND</div>
-                                <div id="prize2" class="col prize2"></div>
-                            </div>
-                            <div class="row troph">
-                                <div class="col"><i class="bi bi-trophy-fill"></i></div>
-                                <div class="col">3RD</div>
-                                <div id="prize3" class="col prize3"></div>
-                            </div>
+                            <div class="col"> 1ST </div>
+                            <div id="prize1" class="col prize1"></div>
                         </div>
-                        <div class="row" id="consoleDIV">
-                            <p>קונסולה: </p>
+                        <div class="row troph">
+                            <div class="col"><i class="bi bi-trophy-fill"></i></div>
+                            <div class="col">2ND</div>
+                            <div id="prize2" class="col prize2"></div>
                         </div>
-                        <div class="row" id="gameCategoryDIV">
-                            <p>קטגוריית משחק: </p>
-                        </div>
-                        <div class="row" style="margin-top: 100px;">
-                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                        <div class="row troph">
+                            <div class="col"><i class="bi bi-trophy-fill"></i></div>
+                            <div class="col">3RD</div>
+                            <div id="prize3" class="col prize3"></div>
                         </div>
                     </div>
+                    <div class="row" id="consoleDIV">
+                        <p>קונסולה: </p>
+                    </div>
+                    <div class="row" id="gameCategoryDIV">
+                        <p>קטגוריית משחק: </p>
+                    </div>
+                    <div class="row" style="margin-top: 100px;">
+                        <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                    </div>
                 </div>
-            
+            </div>
+
         </div>
 
     </section>

@@ -31,8 +31,8 @@
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            /*height: 2000px;*/
-            padding-top: 15px;
+            height: 1200px;
+            padding-top: 30px;
             align-content: center;
         }
 
@@ -44,26 +44,47 @@
             margin-top: 20px;
         }
 
-
-        .titlelink:hover {
-            color: white;
-            background-color: transparent;
-        }
-
-        hr {
-            display: inline-block;
-            width: 78%;
-            margin-bottom: 0px;
-            margin-left: 5px;
-            opacity: 0.8;
-            height: 1px !important;
-            background-color: white;
-        }
+        /*Page title Open*/
 
         .titlelink {
             color: #FFFFFF;
             text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
         }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            /*margin-bottom: 55px;*/ /*#1*/
+            font-weight: 600;
+            letter-spacing: .015em;
+            margin: 3px; /*#2*/
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .divdown {
+            margin-bottom: 60px;
+        }
+
+        /*Page title Close*/
 
         .card {
             border: 0px;
@@ -585,11 +606,10 @@
 
         <div class="container">
 
-            <br />
-
-            <h2 style="color:white; display: inline-block">אזור אישי</h2>
-            <hr />
-            <br /><br /><br /><br />
+            <section id="page_title">
+                <h2 class="headh2">אזור אישי</h2>
+                <div class="divdown"></div>
+            </section>
 
             <div id="FCcards">
                 <h3>ניהול תחרויות</h3>
@@ -626,7 +646,7 @@
             <br />
             <div class="row" id="AllPCcards">
                 <div class="row" id="AllPastC"></div>
-                
+
             </div>
 
             <!-- Modal -->
