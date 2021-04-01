@@ -161,7 +161,51 @@
                 document.getElementById("enddDB").setAttribute("min", $("#startdDB").val());
 
             });
+
+
+            //var split = window.location.href.split('=');
+            //var CId = split[1];
+            //console.log("Your C is: ", CId);
+
+            ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + 11 + "", "", getSuccessC, getErrorC);
+
+
+
         });
+
+        function getSuccessC(data) {
+            console.log(data)
+
+            $("#cnameTB").val(data.Competitionname)
+             //Isonline: conline,
+                //Address1: address,
+                //Banner: bannerURL,
+                //Logo: logoURL,
+            $("#prize1TB").val(data.Prize1),
+            $("#prize2TB").val(data.Prize2),
+            $("#prize3TB").val(data.Price3),
+            $("#urlcommunityTB").val(data.Linkforregistration),
+            $("#ldfrDB").val(data.Lastdateforregistration),
+            $("#descriptionTA").val(data.Body),
+            $("#startdDB").val(data.Startdate),
+            $("#enddDB").val(data.Enddate),
+            $("#starttTB").val(data.Startime),
+            $("#endtTB").val(data.Endtime),
+                //Ispro: ctype,
+            $("#cdiscordTB").val(data.Discord),
+            $("#consoleDB").val(data.Console),
+                //Isiesa: 0,
+                //Competitionstatus: 'S',
+                //Ispayment: cpayment,
+            $("#checkin1TB").val(data.Startcheckin),
+            $("#checkin2TB").val(data.Endcheckin)
+                //Gamecategory: $("#ccategoriesDB option:selected").text()
+               
+
+
+        }
+
+        function getErrorC(err) {console.log(err)}
 
         function PreviewBuilder() {
 
@@ -774,15 +818,17 @@
                             <div class="col">
                                 <br /><br />  <br />
                                 <input type="button" class="btn btn-danger" value="תצוגה מקדימה" id="previewC" />
-                                <input type="submit" class="btn btn-success" value="שליחת טופס" onsubmit="return false" />
+                                <input type="button" class="btn btn-danger" value="דחייה" id="previewC" />
+                                <input type="button" class="btn btn-danger" value="אישור" id="previewC" />
+                                <input type="submit" class="btn btn-success" value="עדכון טופס" onsubmit="return false" />
+                                <input type="button" class="btn btn-primary" value="ביטול" id="previewC" />
+
                             </div>
                         </div> <!--buttons-->
 
                     </div>
                 </div>
             </form>
-
-            <h1>Classic editor</h1>
 
 
 

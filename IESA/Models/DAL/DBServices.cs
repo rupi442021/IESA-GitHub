@@ -612,8 +612,8 @@ namespace IESA.Models.DAL
                     g.Categoryname = (string)dr["categoryname"];
                     g.Status1 = Convert.ToInt32(dr["status1"]);
 
-                    if(g.Status1 == 1)
-                    gList.Add(g);
+                   
+                        gList.Add(g);
                 }
 
                 return gList;
@@ -727,7 +727,7 @@ namespace IESA.Models.DAL
             String prefix = "INSERT INTO Competitions " + "(competitionname, address1, banner, logo, prize1, prize2, prize3, linkforregistration, lastdateforregistration, body , startdate, enddate, startTime, endTime, ispro, discord, console, isiesa, linkforstream, competitionstatus, ispayment, isonline, startcheckin, endcheckin) ";
 
             command = prefix + sb.ToString();
-            
+
             return command;
         }
         public int InsertGameInC(int cID, int gcID, int oID) //Add_New_Competition.html - Add row to game_competition 
@@ -898,7 +898,7 @@ namespace IESA.Models.DAL
 
 
         //---Orgenaizer_Main_Page.html--- *Open*
-        
+
 
         public List<Competitions> GetOrgenaizerCompetitions(int OID)
         {
@@ -909,7 +909,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " update Competitions set Competitionstatus = '4' where Competitionstatus='2' and CONVERT(date,enddate,103) < getdate() select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid=" + OID+ " and Competitions.status1 = 1 order by CONVERT(date,enddate,103) "; 
+                String selectSTR = " update Competitions set Competitionstatus = '4' where Competitionstatus='2' and CONVERT(date,enddate,103) < getdate() select * from Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid where Orgenaizer_Competition.orgenaizerid=" + OID + " and Competitions.status1 = 1 order by CONVERT(date,enddate,103) ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -917,35 +917,35 @@ namespace IESA.Models.DAL
 
                 while (dr.Read())
                 {   // Read till the end of the data into a row
-                    Competitions c            = new Competitions();
-                    c.Competitionid           = Convert.ToInt32(dr["competitionid"]);
-                    c.Competitionname         = (string)dr["competitionname"];
-                    c.Isonline                = Convert.ToInt32(dr["isonline"]);
-                    c.Address1                = (string)dr["address1"];
-                    c.Banner                  = (string)dr["banner"];
-                    c.Logo                    = (string)dr["logo"];
-                    c.Prize1                  = (string)dr["prize1"];
-                    c.Prize2                  = (string)dr["prize2"];
-                    c.Price3                  = (string)dr["prize3"];
-                    c.Linkforregistration     = (string)dr["linkforregistration"];
+                    Competitions c = new Competitions();
+                    c.Competitionid = Convert.ToInt32(dr["competitionid"]);
+                    c.Competitionname = (string)dr["competitionname"];
+                    c.Isonline = Convert.ToInt32(dr["isonline"]);
+                    c.Address1 = (string)dr["address1"];
+                    c.Banner = (string)dr["banner"];
+                    c.Logo = (string)dr["logo"];
+                    c.Prize1 = (string)dr["prize1"];
+                    c.Prize2 = (string)dr["prize2"];
+                    c.Price3 = (string)dr["prize3"];
+                    c.Linkforregistration = (string)dr["linkforregistration"];
                     c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
-                    c.Body                    = (string)dr["body"];
-                    c.Startdate               = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate                 = Convert.ToDateTime(dr["enddate"]);
-                    c.Startime                = ((TimeSpan)dr["starttime"]);
-                    c.Endtime                 = ((TimeSpan)dr["endtime"]);
-                    c.Ispro                   = Convert.ToInt32(dr["ispro"]);
-                    c.Discord                 = (string)dr["discord"];
-                    c.Console                 = (string)dr["console"];
-                    c.Isiesa                  = Convert.ToInt32(dr["isiesa"]);
-                    c.Linkforstream           = (string)dr["linkforstream"];
-                    c.Numofparticipants       = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
-                    c.Competitionstatus       = (string)dr["competitionstatus"];
-                    c.Status1                 = Convert.ToInt32(dr["status1"]);
-                    c.IsPayment               = Convert.ToInt32(dr["ispayment"]);
-                    c.Startcheckin            = ((TimeSpan)dr["startcheckin"]);
-                    c.Endcheckin              = ((TimeSpan)dr["endcheckin"]);
-                    
+                    c.Body = (string)dr["body"];
+                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
+                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    c.Startime = ((TimeSpan)dr["starttime"]);
+                    c.Endtime = ((TimeSpan)dr["endtime"]);
+                    c.Ispro = Convert.ToInt32(dr["ispro"]);
+                    c.Discord = (string)dr["discord"];
+                    c.Console = (string)dr["console"];
+                    c.Isiesa = Convert.ToInt32(dr["isiesa"]);
+                    c.Linkforstream = (string)dr["linkforstream"];
+                    c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
+                    c.Competitionstatus = (string)dr["competitionstatus"];
+                    c.Status1 = Convert.ToInt32(dr["status1"]);
+                    c.IsPayment = Convert.ToInt32(dr["ispayment"]);
+                    c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
+                    c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
+
 
                     if (c.Status1 == 1)
                         cList.Add(c);
@@ -1004,8 +1004,8 @@ namespace IESA.Models.DAL
                     g.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
 
 
-                    
-                        gList.Add(g);
+
+                    gList.Add(g);
                 }
 
                 return gList;
@@ -1500,7 +1500,7 @@ namespace IESA.Models.DAL
 
                 String selectSTR5 = "SELECT(SELECT COUNT(*) FROM Gamers WHERE status1 = 1) AS 'Num_Gamers', (SELECT COUNT(*) FROM Orgenaizers WHERE status1 = 1) AS Num_Orgenaizers, (SELECT COUNT(*) FROM Competitions WHERE status1 = 1 AND competitionstatus != 3 AND CONVERT(datetime, enddate, 103) > getdate()) AS Num_Future_Comp, (SELECT COUNT(*) FROM Competitions WHERE status1 = 1 AND competitionstatus = 7 OR competitionstatus = 8 AND CONVERT(datetime, enddate, 103) < getdate()) AS Num_Past_Comp, (SELECT COUNT(*) FROM Gamers WHERE status1 = 0) AS 'Num_Gamers_Waithing', (SELECT COUNT(*) FROM Orgenaizers WHERE status1 = 0) AS 'Num_Orgenaizers_Waithing', (SELECT COUNT(*) FROM Competitions WHERE status1 = 0 AND competitionstatus != 3 AND CONVERT(datetime, enddate, 103) < getdate()) AS Num_Competition_Waithing";
                 SqlCommand cmd5 = new SqlCommand(selectSTR5, con5);
-                
+
                 SqlDataReader dr5 = cmd5.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
 
                 while (dr5.Read())
@@ -1615,7 +1615,7 @@ namespace IESA.Models.DAL
             try
             {
                 int numEffected = cmd.ExecuteNonQuery(); // execute the command
-                
+
             }
             catch (Exception ex)
             {
@@ -1637,17 +1637,17 @@ namespace IESA.Models.DAL
         private String BuildInsertCommand(List<Gamer_Competition> rankarray) //Add_New_Post.html - method OP2 (Insert: Post (2))
         {
             String command;
-            String command2; 
+            String command2;
             // use a string builder to create the dynamic string
             StringBuilder sa = new StringBuilder();
 
-            for (int i = 0; i < rankarray.Count ; i++)
+            for (int i = 0; i < rankarray.Count; i++)
             {
-                sa.Append (" INSERT INTO Gamer_Competition (gamerid, competitionid, rank1) ");
-                sa.Append (" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , " + rankarray[i].Rank1 +" ) ");
+                sa.Append(" INSERT INTO Gamer_Competition (gamerid, competitionid, rank1) ");
+                sa.Append(" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , " + rankarray[i].Rank1 + " ) ");
             }
 
-            command2 = " UPDATE Competitions SET  competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " "; 
+            command2 = " UPDATE Competitions SET  competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
             command = sa.ToString() + command2;
 
             return command;
@@ -1776,7 +1776,7 @@ namespace IESA.Models.DAL
         // END OF--- active or deactive a game category in the table
 
 
-        //Change the name of a mistaken category
+        //Change the name of a mistaken category name
 
         public int ChangeName(int id, string UpdateCategoryName)
         {
@@ -1830,7 +1830,7 @@ namespace IESA.Models.DAL
 
 
         //---Post_Archive.html--- *Open*
-      
+
         public List<Posts> GetPosts() //Post_Archive.html - method MP1
         {
             SqlConnection con = null;
@@ -1847,7 +1847,7 @@ namespace IESA.Models.DAL
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
 
                 while (dr.Read())
-                {   
+                {
                     Posts p = new Posts();
 
                     p.Postid = Convert.ToInt32(dr["postid"]);
@@ -2008,7 +2008,7 @@ namespace IESA.Models.DAL
 
 
         //---Competition_view.html--- *Open*
-        
+
         public Competitions ReadOneCompetition(int CId)
         {
             SqlConnection con = null;
@@ -2053,7 +2053,7 @@ namespace IESA.Models.DAL
                     c.IsPayment = Convert.ToInt32(dr["ispayment"]);
                     c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
                     c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
-                   
+
                     return c;
 
                 }
