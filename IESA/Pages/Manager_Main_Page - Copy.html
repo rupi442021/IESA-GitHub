@@ -2,6 +2,15 @@
 <html dir="rtl">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Modal-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Modal-->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -24,6 +33,8 @@
 
     <!--Data Tables-->
 
+
+
     <title>&#x202E; ניהול מערכת – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
@@ -37,6 +48,7 @@
             color: white;
             letter-spacing: .015em;
         }
+
 
         .container {
             background-color: #292e38;
@@ -346,7 +358,7 @@
             border-right: 6px solid #292e38;
         }
 
-/*        #box {
+        /*        #box {
             -webkit-box-shadow: 0 10px 6px -6px #292e38;
             -moz-box-shadow: 0 10px 6px -6px #292e38;
             box-shadow: 0 10px 6px -6px #292e38;
@@ -357,10 +369,6 @@
     <script>
 
         $(document).ready(function () {
-
-            $('#myModal').on('shown.bs.modal', function () {
-                $('#myInput').trigger('focus')
-            })
 
             //---Posts Table--- *Open*
 
@@ -531,7 +539,7 @@
                             render: function (data, type, row, meta) {
                                 let dataGamers = "data-gamerid='" + row.Userid + "'"; //User id for buttons
 
-                                G_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='G_rejectBTN bi bi-x-circle' " + dataGamers + "></i></a>";
+                                G_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='G_rejectBTN bi bi-x-circle' data-toggle='modal' data-target='#myModal' " + dataGamers + "></i></a>";
                                 G_admitBtn = "<a href='javascript:;' class='admit' title='אשר'><i class='G_admitBTN bi bi-check-circle' " + dataGamers + "></i></a>";
                                 G_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='G_viewBTN bi bi-person-circle' " + dataGamers + "></i></a>";
 
@@ -883,7 +891,6 @@
                 <div class="divdown"></div>
             </section>
 
-
             <div class="row">
 
                 <div class="col-lg-3" id="services_block" style="text-align:center;">
@@ -903,14 +910,14 @@
 
 
                     <!--<div id="box" style="background-color: #4a5163; font-size:14px;">
-                        <div style="padding:2px;"></div>
-                        <span>מספר תחרויות ממתינות לאישור: 0</span>
-                        <div style="padding:1px;"></div>
-                        <span>מספר שחקנים ממתינים לאישור: 2</span>
-                        <div style="padding:1px;"></div>
-                        <span>מספר מארגנים ממתינים לאישור: 1</span>
-                        <div style="padding:2px;"></div>
-                    </div>-->
+                <div style="padding:2px;"></div>
+                <span>מספר תחרויות ממתינות לאישור: 0</span>
+                <div style="padding:1px;"></div>
+                <span>מספר שחקנים ממתינים לאישור: 2</span>
+                <div style="padding:1px;"></div>
+                <span>מספר מארגנים ממתינים לאישור: 1</span>
+                <div style="padding:2px;"></div>
+            </div>-->
 
 
                 </div>
@@ -1097,6 +1104,37 @@
                 </div>
 
             </div> <!--End of tabs-->
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Open modal</button>
+
+            <!-- Modal Open -->
+            <div class="modal fade" id="myModal" style="color:black; text-align:right">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">פרטי משתמש</h4>
+
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <p>מספר שחקן: 800000000</p>
+                            <p>שם: עומר</p>
+                            <p>שם משפחה: בצלאל</p>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer" style="color:black">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">סגירה</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- Modal Close -->
 
 
         </div> <!--container-->
