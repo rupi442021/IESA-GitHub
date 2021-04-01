@@ -9,6 +9,12 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
+    <!--Graph-->
+
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <!--Graph-->
+
     <!--Data Tables-->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -346,7 +352,7 @@
             border-right: 6px solid #292e38;
         }
 
-/*        #box {
+        /*        #box {
             -webkit-box-shadow: 0 10px 6px -6px #292e38;
             -moz-box-shadow: 0 10px 6px -6px #292e38;
             box-shadow: 0 10px 6px -6px #292e38;
@@ -465,9 +471,40 @@
 
         function init() {
 
+            buildGradesGraph();
+
             ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
 
             //Check if the user is manager
+        }
+
+        function buildGradesGraph() {
+            var chart = new CanvasJS.Chart("chartContainer",
+                {
+                    title: {
+                        text: "מספר כניסות לאתר שבועי - דוגמא"
+                    },
+                    axisX: {
+                        labelFormatter: function (e) {
+                            return "יום " + (e.value + 1);
+                        }
+                    },
+                    data: [
+                        {
+                            type: "line",
+                            dataPoints: [
+                                { y: 17 },
+                                { y: 32 },
+                                { y: 22 },
+                                { y: 14 },
+                                { y: 25 },
+                                { y: 18 },
+                                { y: 20 }
+                            ]
+                        }
+                    ]
+                });
+            chart.render();
         }
 
 
@@ -694,7 +731,21 @@
                     pageLength: 4,
                     columns: [
                         { data: "Postid", className: "uniqueClassName" },
-                        { data: "Title", className: "uniqueClassName" },
+                        {
+                            "data": "Title",
+                            "render": function (data) {
+                                if (data.length > 40) {
+                                    var title_edit = data.substring(0, 38);
+                                    var title_after = title_edit + "..";
+                                    return title_after;
+                                }
+                                else {
+                                    return data;
+                                }
+
+                            }
+                            , className: "uniqueClassName"
+                        },
                         { data: "Category", className: "uniqueClassName" },
                         { data: "Viewsnum", className: "uniqueClassName" },
                         {
@@ -756,7 +807,21 @@
                     pageLength: 4,
                     columns: [
                         { data: "Competitionid", className: "uniqueClassName" },
-                        { data: "Competitionname", className: "uniqueClassName" },
+                        {
+                            "data": "Competitionname",
+                            "render": function (data) {
+                                if (data.length > 27) {
+                                    var title_edit = data.substring(0, 25);
+                                    var title_after = title_edit + "..";
+                                    return title_after;
+                                }
+                                else {
+                                    return data;
+                                }
+
+                            }
+                            , className: "uniqueClassName"
+                        },
                         {
                             "data": "Ispro",
                             "render": function (data) {
@@ -912,11 +977,13 @@
                 </div>
 
                 <div class="col-lg-9" id="services_block" style="text-align:center">
-                    <h4 style="margin-top:3px;">גרף</h4>
+                    <!--<h4 style="margin-top:3px;">גרפים</h4>-->
 
                     <div style="padding:5px;"></div>
 
-                    <img src="https://i.postimg.cc/52kqyYvF/graphiesa.jpg" class="img-fluid" alt="Graph" />
+                    <div id="chartContainer" style="height: 94%; width: 100%;">
+                    </div>
+
                 </div>
 
             </div>
@@ -1005,8 +1072,8 @@
                                             <th style="max-width: 100px;">כותרת</th>
                                             <th style="max-width: 70px;">סוג</th>
                                             <th style="max-width: 60px;">שם מארגן</th>
-                                            <th style="max-width: 55px;">תאריך התחלה</th>
-                                            <th style="max-width: 70px;">תאריך סיום</th>
+                                            <th style="max-width: 65px;">תאריך התחלה</th>
+                                            <th style="max-width: 65px;">תאריך סיום</th>
                                             <th style="max-width: 60px;">פעולות</th>
                                         </tr>
                                     </thead>

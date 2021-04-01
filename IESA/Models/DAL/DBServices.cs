@@ -1081,6 +1081,57 @@ namespace IESA.Models.DAL
 
         }
 
+        public List<Posts> ReadAnotherPostsSQL(int postid, string categoryname) //Post.html - method OP4
+        {
+
+            SqlConnection con = null;
+            List<Posts> PostsList = new List<Posts>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                
+                String selectSTR = "SELECT TOP 3 WITH TIES * FROM Posts WHERE category = '" + categoryname + "' and postid != '" + postid + "' and status1 = 1 ORDER BY postid desc";
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Posts post = new Posts();
+
+                    post.Postid = (dr["postid"] != DBNull.Value) ? Convert.ToInt32(dr["postid"]) : default;
+                    post.Title = (dr["title"] != DBNull.Value) ? (string)dr["title"] : default;
+                    post.Body = (dr["body"] != DBNull.Value) ? (string)dr["body"] : default;
+                    post.Image1 = (dr["image1"] != DBNull.Value) ? (string)dr["image1"] : default;
+                    post.Category = (dr["category"] != DBNull.Value) ? (string)dr["category"] : default;
+                    post.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+                    post.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
+
+                    PostsList.Add(post);
+                }
+
+                return PostsList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
 
         //---Post.html--- *Close*
 

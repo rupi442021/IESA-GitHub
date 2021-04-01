@@ -33,7 +33,7 @@
 
     <!--Data Tables-->
 
-
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
     <title>&#x202E; ניהול מערכת – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
@@ -47,6 +47,7 @@
             background-color: #212529;
             color: white;
             letter-spacing: .015em;
+            padding-right: 0px;
         }
 
 
@@ -358,17 +359,96 @@
             border-right: 6px solid #292e38;
         }
 
-        /*        #box {
-            -webkit-box-shadow: 0 10px 6px -6px #292e38;
-            -moz-box-shadow: 0 10px 6px -6px #292e38;
-            box-shadow: 0 10px 6px -6px #292e38;
-        }*/
+        /*Modal*/
+
+        html {
+            overflow-y: scroll !important;
+        }
+
+        .modal-content {
+            color: black;
+        }
+
+        /*Modal*/
+
 
     </style>
 
     <script>
 
+
+
+                function buildGradesGraph() {
+                    var chart = new CanvasJS.Chart("chartContainer",
+                        {
+                            title: {
+                                text: "מספר כניסות לאתר שבועי - דוגמא"
+                            },
+                            axisX: {
+                                labelFormatter: function (e) {
+                                    return "יום " + (e.value + 1);
+                                }
+                            },
+                            data: [
+                                {
+                                    type: "line",
+                                    dataPoints: [
+                                        { y: 17 },
+                                        { y: 32 },
+                                        { y: 22 },
+                                        { y: 14 },
+                                        { y: 25 },
+                                        { y: 18 },
+                                        { y: 20 }
+                                    ]
+                                }
+                            ]
+                        });
+                    chart.render();
+                }
+
+        //function buildGradesGraph() {
+        //    var chart = new CanvasJS.Chart("chartContainer",
+        //        {
+        //            title: {
+        //                text: "מספר כניסות לאתר"
+        //            },
+        //            axisX: {
+        //                interlacedColor: "#fff"
+        //            },
+        //            data: [
+
+        //                {
+        //                    type: "line",
+        //                    dataPoints: [
+        //                        { x: 1, y: 171 },
+        //                        { x: 2, y: 155 },
+        //                        { x: 3, y: 150 },
+        //                        { x: 4, y: 165 },
+        //                        { x: 5, y: 195 },
+        //                        { x: 6, y: 168 },
+        //                        { x: 7, y: 128 }
+        //                    ]
+        //                }
+        //            ]
+        //        });
+
+        //    chart.render();
+        //}
+
         $(document).ready(function () {
+
+
+            $(document).on("click", "#closeBTN", function () {
+
+                $("hello").css("padding-right", "0px !important");
+
+                setTimeout(function () {
+                    $("hello").css("padding-right", "0px ");
+                    alert("2.5");
+                }, 2500);
+
+            });
 
             //---Posts Table--- *Open*
 
@@ -875,7 +955,7 @@
 
 
 </head>
-<body onload="init()">
+<body onload="buildGradesGraph()" id="hello">
 
     <section id="Nav-bar">
         <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
@@ -923,11 +1003,13 @@
                 </div>
 
                 <div class="col-lg-9" id="services_block" style="text-align:center">
-                    <h4 style="margin-top:3px;">גרף</h4>
+                    <!--<h4 style="margin-top:3px;">גרף</h4>-->
 
                     <div style="padding:5px;"></div>
 
-                    <img src="https://i.postimg.cc/52kqyYvF/graphiesa.jpg" class="img-fluid" alt="Graph" />
+                    <div id="chartContainer" style="height: 94%; width: 100%;">
+                    </div>
+
                 </div>
 
             </div>
@@ -1105,6 +1187,8 @@
 
             </div> <!--End of tabs-->
 
+
+
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Open modal</button>
 
             <!-- Modal Open -->
@@ -1128,7 +1212,7 @@
 
                         <!-- Modal footer -->
                         <div class="modal-footer" style="color:black">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">סגירה</button>
+                            <button type="button" id="closeBTN" class="btn btn-danger" data-dismiss="modal">סגירה</button>
                         </div>
 
                     </div>

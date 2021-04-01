@@ -200,18 +200,28 @@
             var split = window.location.href.split('=');
             var post_id = split[1];
 
-            ajaxCall("GET", "../api/posts/rendpost?idtoserver=" + post_id, "", renderPost, postError); //Post.html - method OP3
+            ajaxCall("GET", "../api/Posts/rendpost?idtoserver=" + post_id, "", getAnotherPosts, Error); //Post.html - method OP3
+        }
+
+        function getAnotherPosts(postobj) {
+            console.log(postobj);
+
+            post = postobj; //Save global integer of post
+
+            ajaxCall("GET", "../api/Posts/rendpost2?postid=" + postobj.Postid + "&categoryname=" + postobj.Category, "", renderPost, Error); //Post.html - method OP4
         }
 
 
-        function renderPost(post) {
+        function renderPost(postList) {
+            console.log(postList);
+
             
             strtitle = '';
             strtitle += "<a class='titlelink' href='TemplatePage.html'>ראשי </a>";
 
             strtitle += "<svg style='width: .5em; transform: rotate(180deg); vertical-align: -.17em;' aria-hidden='true' focusable = 'false' data - prefix='fa' data-icon='angle-right' role = 'img' xmlns = 'http://www.w3.org/2000/svg' viewBox = '0 0 256 512' > <path fill='currentColor' d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'></path></svg >";
             strtitle += " ";
-            strtitle += "<a class='titlelink' href='TemplatePage.html'>פוסטים </a>";
+            strtitle += "<a class='titlelink' href='Post_Archive.html'>פוסטים </a>";
             strtitle += "<svg style='width: .5em; transform: rotate(180deg); vertical-align: -.17em;' aria-hidden='true' focusable = 'false' data - prefix='fa' data-icon='angle-right' role = 'img' xmlns = 'http://www.w3.org/2000/svg' viewBox = '0 0 256 512' > <path fill='currentColor' d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z'></path></svg >";
             strtitle += "<br />";
             strtitle += "<h2 class='headh2'>" + post.Title + "</h2>";
@@ -267,41 +277,39 @@
             str += "<div class='row' id='headeranotherpost'>";
             str += "<h4 class='headh4'>פוסטים<span style='color: white'><span style='color: transparent'>.</span>נוספים</span></h4>";
             str += "</div>";
-            str += "<div class='row' id='anotherpimg' style='margin-top: 19px'>";
-            str += "<div class='col' style='padding: 1px'>";
 
-            str += "<a class='postlink' href='TemplatePage.html'><p id='panotherpost'>" + post.Title + "</p></a>";
-            str += "</div>";
-            str += "<div class='col'>";
-            str += "<a href='TemplatePage.html'><img id='imganotherpost' src='https://html.nkdev.info/goodgames/assets/images/post-2.jpg' /></a>";
-            str += "</div>";
-            str += "</div>";
-            str += "<div class='row' id='anotherpimg'>";
-            str += "<div class='col' style='padding: 1px'>";
-            str += "<a class='postlink' href='TemplatePage.html'><p id='panotherpost'>" + post.Title + "</p></a>";
-            str += "</div>";
-            str += "<div class='col'>";
-            str += "<a href='TemplatePage.html'><img id='imganotherpost' src='https://html.nkdev.info/goodgames/assets/images/post-2.jpg' /></a>";
-            str += "</div>";
-            str += "</div>";
-            str += "<div class='row' id='anotherpimg'>";
-            str += "<div class='col' style='padding: 1px'>";
-            str += "<a class='postlink' href='TemplatePage.html'><p id='panotherpost'>" + post.Title + "</p></a>";
-            str += "</div>";
-            str += "<div class='col'>";
-            str += "<a href='TemplatePage.html'><img id='imganotherpost' src='https://html.nkdev.info/goodgames/assets/images/post-2.jpg' /></a>";
-            str += "</div>";
-            str += "</div>";
+            
+            for (i = 0; i < postList.length; i++) {
+
+                str += "<div class='row' id='anotherpimg' style='margin-top: 19px'>";
+                str += "<div class='col' style='padding: 1px'>";
+
+                if (postList[i].Title.length > 45) {
+                    var title_edit = postList[i].Title.substring(0, 43);
+                    var title_after = title_edit + "..";
+
+                    str += "<a class='postlink' href='Post.html?postid=" + postList[i].Postid + "'><p id='panotherpost'>" + title_after + "</p></a>";
+                }
+                else {
+                    str += "<a class='postlink' href='Post.html?postid=" + postList[i].Postid + "'><p id='panotherpost'>" + postList[i].Title + "</p></a>";
+                }
+
+                str += "</div>";
+                str += "<div class='col'>";
+                str += "<a href='Post.html?postid=" + postList[i].Postid + "'><img class='img-fluid' id='imganotherpost' src='../" + postList[i].Image1 + "' alt='Logo'/></a>";
+                str += "</div>";
+                str += "</div>";
+            }
+
             str += "</div>";
             str += "</div>";
             str += "</div>";
 
             document.getElementById("post_area").innerHTML = str;
 
-
         }
 
-        function postError(err) {
+        function Error(err) {
             console.log(err);
 
             swal("בעיה בהתקשרות עם שרת, נא נסה שנית מאוחר יותר");

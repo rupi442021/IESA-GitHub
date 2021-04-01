@@ -72,6 +72,13 @@ namespace IESA.Models
             return dbs.getPostSQL(id_toserver);
         }
 
+        public List<Posts> ReadAnotherPosts(int postid, string categoryname) //Post.html - method OP4
+        {
+            DBServices dbs = new DBServices();
+            List<Posts> postsList = dbs.ReadAnotherPostsSQL(postid, categoryname);
+            return postsList;
+        }
+
 
         //---Post.html--- *Close*
 

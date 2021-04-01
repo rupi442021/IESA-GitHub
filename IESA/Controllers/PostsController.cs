@@ -29,13 +29,23 @@ namespace IESA.Controllers
 
         //---Post.html--- *Open*
 
+
         [HttpGet] //Post.html - method OP3
-        [Route("api/posts/rendpost")]
+        [Route("api/Posts/rendpost")]
         public Posts GetPost(int idtoserver)
         {
             Posts post1 = new Posts();
             return post1.GetPost(idtoserver);
         }
+
+        [HttpGet] //Post.html - method OP4
+        [Route("api/Posts/rendpost2")]
+        public List<Posts> getAnotherPosts(int postid, string categoryname)
+        {
+            Posts postsList = new Posts();
+            return postsList.ReadAnotherPosts(postid, categoryname);
+        }
+
 
         //---Post.html--- *Close*
 
@@ -56,6 +66,7 @@ namespace IESA.Controllers
             Posts posts2 = new Posts();
             return posts2.ReadFillter(cat2);
         }
+
 
         //---Post_Archive.html--- *Close*
 
