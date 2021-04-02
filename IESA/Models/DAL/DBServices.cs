@@ -1043,7 +1043,7 @@ namespace IESA.Models.DAL
 
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Posts WHERE postid = " + id_toserver;
+                String selectSTR = "UPDATE Posts SET viewsnum = viewsnum+1 WHERE postid =" + id_toserver + " SELECT * FROM Posts WHERE postid = " + id_toserver;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -1499,7 +1499,8 @@ namespace IESA.Models.DAL
             {
                 con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR4 = "SELECT * FROM Competitions WHERE status1 = 'False' ";
+                //String selectSTR4 = "SELECT * FROM Competitions WHERE status1 = 'False' ";
+                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionname, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
 
                 SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
 
@@ -1513,7 +1514,7 @@ namespace IESA.Models.DAL
                     competition.Competitionid = (dr4["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr4["competitionid"]) : default;
                     competition.Competitionname = (dr4["competitionname"] != DBNull.Value) ? (string)dr4["competitionname"] : default;
                     competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
-                    competition.Console = (dr4["console"] != DBNull.Value) ? (string)dr4["console"] : default;
+                    competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
                     competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
                     competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
 
