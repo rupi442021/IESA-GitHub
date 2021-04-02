@@ -14,7 +14,7 @@
 
 
 
-    <title>&#x202E; הגשת תחרות – ASEI</title>
+    <title>&#x202E; עריכת פרטי תחרות – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
 
@@ -110,6 +110,14 @@
             direction: rtl;
         }
 
+        img {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 3px;
+            background-color: #F0FFFF;
+            width: 100%;
+        }
+
         /*Template Style*/
 
     </style>
@@ -122,6 +130,9 @@
         var counterimage = 2300;
         var address = '';
         var today = getDate();
+        var GameCategories;
+        var CId;
+        
 
         $(document).ready(function () {
             GetAllGameCategories();
@@ -164,45 +175,82 @@
 
 
             //var split = window.location.href.split('=');
-            //var CId = split[1];
+            //CId = split[1];
             //console.log("Your C is: ", CId);
+            CId = 16;
 
-            ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + 11 + "", "", getSuccessC, getErrorC);
-
-
+            ajaxCall("GET", "../api/Competitions/getcategory?CompetitionId=" + CId + "", "", getSuccessCg, getErrorCg);
+            ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + CId + "", "", getSuccessC, getErrorC);
 
         });
+
+        function getSuccessCg(gc) {
+
+            console.log(gc)
+            GameCategories = gc
+
+        };
+
+        function getErrorCg(err) {
+
+            console.log(err)
+        }
 
         function getSuccessC(data) {
             console.log(data)
 
+            logoURL = data.Logo;
+            bannerURL = data.Banner;
+
+            let startdDB = data.Startdate.split("T")
+            $('#startdDB').val(startdDB[0]);
+
+            let enddDB = data.Enddate.split("T")
+            $("#enddDB").val(enddDB[0])
+
+            let ldfr = data.Lastdateforregistration.split("T")
+            $("#ldfrDB").val(ldfr[0])
+
+            if (data.Isonline == 1)
+                $("#online").prop("checked", true);
+            else {
+                $("#offline").prop("checked", true);
+                $("#addressTB").val(data.Address1);
+            }
+
+            if (data.Ispayment == 1)
+                $("#payment").prop("checked", true);
+            else 
+                $("#free").prop("checked", true);
+
+            if (data.Ispro == 1)
+                $("#cPro").prop("checked", true);
+            else
+                $("#cAma").prop("checked", true);
+
+            let Banner1 = "<img src='../" + bannerURL + "' class='img-fluid' alt='Logo'/>";
+            document.getElementById("bannerph").innerHTML = Banner1;
+
+            let Logo1 = "<img src='../" + logoURL + "' class='img-fluid' alt='Logo'/>";
+            document.getElementById("logoph").innerHTML = Logo1;
+
+
             $("#cnameTB").val(data.Competitionname)
-             //Isonline: conline,
-                //Address1: address,
-                //Banner: bannerURL,
-                //Logo: logoURL,
             $("#prize1TB").val(data.Prize1),
             $("#prize2TB").val(data.Prize2),
             $("#prize3TB").val(data.Price3),
             $("#urlcommunityTB").val(data.Linkforregistration),
-            $("#ldfrDB").val(data.Lastdateforregistration),
             $("#descriptionTA").val(data.Body),
-            $("#startdDB").val(data.Startdate),
-            $("#enddDB").val(data.Enddate),
             $("#starttTB").val(data.Startime),
-            $("#endtTB").val(data.Endtime),
-                //Ispro: ctype,
+            $("#endtTB").val(data.Endtime),     
             $("#cdiscordTB").val(data.Discord),
             $("#consoleDB").val(data.Console),
-                //Isiesa: 0,
-                //Competitionstatus: 'S',
-                //Ispayment: cpayment,
             $("#checkin1TB").val(data.Startcheckin),
-            $("#checkin2TB").val(data.Endcheckin)
-                //Gamecategory: $("#ccategoriesDB option:selected").text()
-               
-
-
+            $("#checkin2TB").val(data.Endcheckin),
+            $('#ccategoriesDB').val(GameCategories);
+            //Isiesa: 0,
+            //Competitionstatus: 'S',
+   
         }
 
         function getErrorC(err) {console.log(err)}
@@ -275,7 +323,7 @@
         function postErrorP(err) {
             console.log(err)
         }
-
+        
         function postSuccessC(data) {
             console.log("C Success", data);
 
@@ -285,22 +333,22 @@
             var oID = JSON.parse(localStorage.getItem("user_info"));
 
 
-            ajaxCall("POST", "../api/Competitions?cID=" + cID + "&gcID=" + gcID + "&oID=" + oID.Userid, "", postSuccessCInG, postErrorCInG)
+            ajaxCall("PUT", "../api/Competitions?cID=" + cID + "&gcID=" + gcID , "", putSuccessCInG, putErrorCInG)
 
 
         }
 
-        function postSuccessCInG(data) {
+        function putSuccessCInG(data) {
             console.log(data);
-            swal("התחרות הוגשה בהצלחה! תמתין לתשובת מנהל")
+            swal("התחרות עודכנה בהצלחה!")
 
             setTimeout(function () {
-                location.replace("Orgenaizer_Main_Page.html");
+                location.replace("Manager_Main_Page.html");
             }, 2500);
 
         }
 
-        function postErrorCInG(err) {
+        function putErrorCInG(err) {
             console.log("ERR ")
             console.log(err);
 
@@ -420,7 +468,7 @@
             console.log(err);
         }
 
-        function CompetitionBuilder() {
+        function CompetitionBuilder() { //PUT
 
             var tradio = $('input[name=radio-type]:checked'); //get competition type (Pro or Amateurs)
             var ctype = tradio.attr('id');
@@ -475,7 +523,7 @@
             }
 
 
-            ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessC, postErrorC)
+            ajaxCall("PUT", "../api/Competitions/updatedetails?CID=" + CId , JSON.stringify(c1), postSuccessC, postErrorC)
             return false;
 
         }
@@ -488,6 +536,7 @@
 
         function getSuccessGamesCategories(GamesCategories) {
             console.log("GameCategories: ", GamesCategories)
+            GamesCategoriesArray = GamesCategories;
             strOption = "";
             for (var i = 0; i < GamesCategories.length; i++) { //Add Games Categories to drop list
                 strOption += ' <option value="' + GamesCategories[i].Categoryid + '">' + GamesCategories[i].Categoryname + '</option> '
@@ -620,9 +669,11 @@
 
                         <div class="mb-3">
                             <label>קטגוריית משחק:</label><br />
+                        <div id="gameg">
                             <select name="gamecategories" class="form-select" id="ccategoriesDB" required>
                                 <option />
                             </select>
+                        </div>
                         </div> <!--game category-->
 
                         <div class="mb-3">
@@ -793,7 +844,7 @@
                                 <div class="form-group" method="post" enctype="multipart/form-data">
                                     <label for="file">באנר תחרות: </label>
                                     <br />
-                                    <input type="file" id="bannerFile" name="files" multiple="multiple" required />
+                                    <input type="file" id="bannerFile" name="files" multiple="multiple" />
                                     <p class="noteforfiles">הגודל המומלץ לבאנר 970x250</p>
                                 </div>
                                 <div>
@@ -804,7 +855,7 @@
                                 <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
                                     <label for="file">לוגו תחרות:  </label>
                                     <br />
-                                    <input type="file" id="logoFile" name="files" multiple="multiple" required />
+                                    <input type="file" id="logoFile" name="files" multiple="multiple" />
                                     <p class="noteforfiles">צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
                                 </div>
                                 <div>
