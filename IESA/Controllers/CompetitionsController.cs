@@ -110,6 +110,36 @@ namespace IESA.Controllers
 
         //---Competition_View.html--- *Close*
 
+        //---Edit_Competition.html--- *Open*
+
+        [HttpGet] //Edit_Competition.html
+        [Route("api/Competitions/getcategory")]
+        public int Getcategory(int CompetitionId)
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.Getcategory(CompetitionId);
+        }
+
+        [HttpPut] //Edit_Competition.html 
+        [Route("api/Competitions/updatedetails")]
+        public void updateCompetitonDetails(int CId,Competitions c1)
+        {
+            Competitions C1 = new Competitions();
+            C1.updateCompetitonDetails(CId, c1);
+        }
+
+        public void Put(int cID, int gcID) //Add_New_Competitions.html 
+        {
+            DBServices dbs = new DBServices();
+            dbs.updateGameInC(cID, gcID);
+        }
+
+
+        //---Edit_Competition.html--- *Close*
+
+
+
+
 
 
     }

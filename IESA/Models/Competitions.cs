@@ -156,6 +156,23 @@ namespace IESA.Models
             return dbs.ReadOneCompetition(CId);
         }
 
+        //---Edit_Competition.html--- *Open*
+
+        public int Getcategory(int CId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.Getcategory(CId);
+        }
+
+        public void updateCompetitonDetails(int CId, Competitions c1) //Manager_Main_Page.html - method OM6
+        {
+            DBServices dbs = new DBServices();
+            dbs.updateCompetitonDetails(CId, c1);
+        }
+
+        
+        //---Edit_Competition.html--- *Close*
+
 
 
 

@@ -2291,6 +2291,154 @@ namespace IESA.Models.DAL
 
         //---Edit_Personal_Details.html--- *Close*
 
+        //---Edit_Competition.html--- *Open*
+
+        public int Getcategory(int CId)
+        {
+            var categoryId = 0;
+            SqlConnection con = null;
+            Competitions c = new Competitions();
+            
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = " select categoryid from Competition_Game where competitionid = " + CId + "";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read()) //1 row
+                {
+                    categoryId = Convert.ToInt32(dr["categoryid"]); 
+                    
+                }
+                return (categoryId);
+            }
+                
+
+            
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+        public int updateCompetitonDetails(int CId, Competitions c1)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandEditGamer(CId, c1);      // helper method to build the update string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandEditGamer(int CId, Competitions c1)
+        {
+            String command;
+            command = " UPDATE Competitions set competitionname = '" + c1.Competitionname + "' , address1 = '" + c1.Address1 + "' , banner = '" + c1.Banner + "' , logo = '" + c1.Logo + "', prize1 = '" + c1.Prize1 + "' , prize2 = '" + c1.Prize2 + "' , prize3 = '" + c1.Price3 + "' , linkforregistration = '" + c1.Linkforregistration + "' , lastdateforregistration = '" + c1.Lastdateforregistration + "' , body = '" + c1.Body + "' , Startdate = '" + c1.Startdate + "' , enddate= '" + c1.Enddate + "' , startTime= '" + c1.Startime + "' , endTime= '" + c1.Endtime + "' , ispro = '" + c1.Ispro + "' , discord = '" + c1.Discord + "' , console = '" + c1.Console + "' , isiesa = '" + c1.Isiesa + "' , linkforstream = '" + c1.Linkforstream + "' , competitionstatus= '" + '1' + "' , ispayment = '" + c1.IsPayment + "' , isonline= '" + c1.Isonline + "' , startcheckin = '" + c1.Startcheckin + "' , endcheckin = '" + c1.Endcheckin + "' where competitionid = " + CId + " ";
+
+            return command;
+        }
+
+        public int updateGameInC(int cID, int gcID)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandEditGamer(cID, gcID);      // helper method to build the update string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandEditGamer(int cID, int gcID)
+        {
+            String command;
+            command = "UPDATE Competition_Game set categoryid ="+ gcID+"  where competitionid = "+ cID + " ";
+
+            return command;
+        }
+
+        
+
+        //---Edit_Competition.html--- *Close*
+
 
 
     }
