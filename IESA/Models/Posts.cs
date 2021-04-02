@@ -94,14 +94,6 @@ namespace IESA.Models
         }
 
 
-        public List<Posts> ReadFillter(string cat2) //Sign_Up.html - method OO1
-        {
-            DBServices dbs = new DBServices();
-            List<Posts> posts2 = dbs.GetFillterPosts(cat2);
-            return posts2;
-        }
-
-
         //---Post_Archive.html--- *Close*
 
 

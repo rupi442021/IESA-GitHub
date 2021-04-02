@@ -61,12 +61,6 @@ namespace IESA.Controllers
             return posts.Read();
         }
 
-        public List<Posts> GET(string cat2)
-        {
-            Posts posts2 = new Posts();
-            return posts2.ReadFillter(cat2);
-        }
-
 
         //---Post_Archive.html--- *Close*
 
