@@ -54,10 +54,10 @@ namespace IESA.Controllers
 
         [HttpGet]
         [Route("api/Competitions/mark5")]
-        public Dictionary<int, List<string>> GetG(int CId) //Orgenaizer_Main_Page.html - 
+        public Dictionary<int, List<string>> GetG(int CId ,int statusval) //Orgenaizer_Main_Page.html - 
         {
             DBServices dbs = new DBServices();
-            return dbs.GamersInC(CId);
+            return dbs.GamersInC(CId, statusval);
         }
 
         [HttpPost]
@@ -132,6 +132,14 @@ namespace IESA.Controllers
         {
             DBServices dbs = new DBServices();
             dbs.updateGameInC(cID, gcID);
+        }
+
+        [HttpPut] //Edit_Competition.html 
+        [Route("api/Competitions/decideC")]
+        public void decideNewC(int CId, string statusvalue)
+        {
+            DBServices dbs = new DBServices();
+            dbs.decideNewC(CId, statusvalue);
         }
 
 

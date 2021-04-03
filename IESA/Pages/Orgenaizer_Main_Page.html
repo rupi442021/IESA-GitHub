@@ -565,7 +565,7 @@
             console.log("In render Gamers: ", c1.Competitionid);
 
             //get gamers list in specific competition
-            ajaxCall("GET", "../api/Competitions/mark5?CId=" + c1.Competitionid, "", getSuccessGamersInC, getErrorGamersInC);
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + c1.Competitionid + "&statusval="+ 1, "", getSuccessGamersInC, getErrorGamersInC);
             $("#exampleModalLongTitle").text(c1.Competitionname);
 
         }

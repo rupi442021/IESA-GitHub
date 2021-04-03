@@ -1593,7 +1593,7 @@ namespace IESA.Models.DAL
 
         //---Orgenzier_Main_Page.html--- *Open*
 
-        public Dictionary<int, List<string>> GamersInC(int CId) //Manager_Main_Page.html - method OM1
+        public Dictionary<int, List<string>> GamersInC(int CId , int val) //Manager_Main_Page.html - method OM1
         {
 
             SqlConnection con = null;
@@ -1602,7 +1602,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT * FROM Gamer_Competition inner join Gamers on Gamer_Competition.gamerid=Gamers.userid WHERE competitionid=" + CId + " and  Gamer_Competition.status1 = '1' ";
+                String selectSTR = " SELECT * FROM Gamer_Competition inner join Gamers on Gamer_Competition.gamerid=Gamers.userid WHERE competitionid=" + CId + " and  Gamer_Competition.status1 = " + val ;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
@@ -2384,6 +2384,56 @@ namespace IESA.Models.DAL
         {
             String command;
             command = "UPDATE Competition_Game set categoryid ="+ gcID+"  where competitionid = "+ cID + " ";
+
+            return command;
+        }
+
+        public int decideNewC(int cID, string val)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommanddecideNewC(cID, val);      // helper method to build the update string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommanddecideNewC(int cID, string val)
+        {
+            String command;
+            command = "UPDATE Competitions set competitionstatus =" + val + "  where competitionid = " + cID + " ";
 
             return command;
         }

@@ -1,2 +1,4 @@
 ﻿select *
-from Gamers
+from Competitions
+
+

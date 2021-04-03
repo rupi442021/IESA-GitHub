@@ -1,18 +1,20 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
-
-
-
 
     <title>&#x202E; עריכת פרטי תחרות – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
@@ -41,7 +43,15 @@
             margin-bottom: 20px;
         }
 
+        table, tr {
+            border: 1px solid black;
+            color: black;
+        }
+
         /*Page title Open*/
+        .modal-content {
+            color: black;
+        }
 
         .titlelink {
             color: #FFFFFF;
@@ -123,7 +133,7 @@
     </style>
     <script>
 
-        var competitionid;
+
         var logoURL = '';
         var bannerURL = '';
         var imgType = '';
@@ -132,15 +142,31 @@
         var today = getDate();
         var GameCategories;
         var CId;
-        
+
 
         $(document).ready(function () {
             GetAllGameCategories();
 
-            document.getElementById("cForm").addEventListener("submit", function (event) {
-                event.preventDefault();
-                BeforGetCId();
-            });
+            $("#rankEdit").click(GetRanksForC);
+
+            $("#cancelEdit").click(function () {
+                swal({
+                    title: "האם אתה בטוח שברצונך לצאת?",
+                    text: "כל השינויים יאבדו",
+                    icon: "warning",
+                    buttons: [
+                        'הישאר בדף זה',
+                        'חזור לאזור אישי'
+                    ],
+                    dangerMode: true,
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        location.replace("Manager_Main_Page.html")
+                    } else {
+
+                    }
+                });
+            })
 
             $("#previewC").click(PreviewBuilder);
 
@@ -177,12 +203,68 @@
             //var split = window.location.href.split('=');
             //CId = split[1];
             //console.log("Your C is: ", CId);
-            CId = 16;
+            CId = 6;
 
             ajaxCall("GET", "../api/Competitions/getcategory?CompetitionId=" + CId + "", "", getSuccessCg, getErrorCg);
             ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + CId + "", "", getSuccessC, getErrorC);
 
+            document.getElementById("cForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                addBanner();
+            });
+
+
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            });
+
+
         });
+
+        function GetRanksForC() {
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + CId + "&statusval=" + 0, "", getSuccessRanks, getErrorRanks);
+        }
+
+        function getSuccessRanks(data) {
+            $("#exampleModalLongTitle").text("אישור דירוגים לתחרות");
+
+
+            console.log(data);
+            $("#modal-body").text('')
+            $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
+
+            var gamersarray = data;
+
+
+            for (let key in gamersarray) {
+                $("#partisipantstbl").append('<tr id="' + key + '"><td>' + key + '</td></tr>')
+                for (var i = 0; i < gamersarray[key].length; i++) {
+
+                    $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
+
+                }
+
+            }
+
+        }
+
+        function getErrorRanks(err) {
+            console.log(err);
+        }
+
+        function decideNewC(val) {
+
+            ajaxCall("PUT", "../api/Competitions/decideC?cID=" + CId + "&statusvalue=" + val, "", decideCsuccess, decideCerr)
+        }
+
+        function decideCsuccess(data) {
+            swal("הפעולה בוצעה בהצלחה");
+            location.replace("Manager_Main_Page.html");
+        }
+
+        function decideCerr(err) {
+            console.log(err)
+        }
 
         function getSuccessCg(gc) {
 
@@ -197,6 +279,76 @@
         }
 
         function getSuccessC(data) {
+
+            if (data.Competitionstatus == '1') {
+                $("#previewC").show();
+                $("#rejectC").show();
+                $("#acceptC").show();
+                $("#cancelEdit").show();
+                $("#rankEdit").hide();
+                $("#submitedit").show();
+
+            }
+            else if (data.Competitionstatus == '2') {
+                $("#previewC").show();
+                $("#rejectC").hide();
+                $("#acceptC").hide();
+                $("#cancelEdit").show();
+                $("#rankEdit").hide();
+                $("#submitedit").show();
+
+            }
+            else if (data.Competitionstatus == '3') {
+                $("#previewC").hide();
+                $("#rejectC").hide();
+                $("#acceptC").hide();
+                $("#cancelEdit").show();
+                $("#rankEdit").hide();
+                $("#submitedit").show();
+
+            }
+            else if (data.Competitionstatus == '4') {
+                $("#previewC").hide();
+                $("#rejectC").hide();
+                $("#acceptC").hide();
+                $("#cancelEdit").show();
+                $("#rankEdit").show();
+                $("#submitedit").show();
+
+            }
+            else if (data.Competitionstatus == '5') {
+                $("#previewC").hide();
+                $("#rejectC").hide();
+                $("#acceptC").hide();
+                $("#cancelEdit").show();
+                $("#rankEdit").show();
+                $("#submitedit").show();
+            }
+            else if (data.Competitionstatus == '6') {
+                $("#previewC").hide();
+                $("#rejectC").hide();
+                $("#acceptC").hide();
+                $("#cancelEdit").show();
+                $("#rankEdit").show();
+                $("#submitedit").show();
+            }
+            else if (data.Competitionstatus == '7') {
+                $("#previewC").hide();
+                $("#rejectC").show();
+                $("#acceptC").hide();
+                $("#cancelEdit").show();
+                $("#rankEdit").show();
+                $("#submitedit").show();
+            }
+            else if (data.Competitionstatus == '8') {
+                $("#previewC").hide();
+                $("#rejectC").show();
+                $("#acceptC").hide();
+                $("#cancelEdit").show();
+                $("#rankEdit").show();
+                $("#submitedit").show();
+            }
+
             console.log(data)
 
             logoURL = data.Logo;
@@ -220,7 +372,7 @@
 
             if (data.Ispayment == 1)
                 $("#payment").prop("checked", true);
-            else 
+            else
                 $("#free").prop("checked", true);
 
             if (data.Ispro == 1)
@@ -237,23 +389,23 @@
 
             $("#cnameTB").val(data.Competitionname)
             $("#prize1TB").val(data.Prize1),
-            $("#prize2TB").val(data.Prize2),
-            $("#prize3TB").val(data.Price3),
-            $("#urlcommunityTB").val(data.Linkforregistration),
-            $("#descriptionTA").val(data.Body),
-            $("#starttTB").val(data.Startime),
-            $("#endtTB").val(data.Endtime),     
-            $("#cdiscordTB").val(data.Discord),
-            $("#consoleDB").val(data.Console),
-            $("#checkin1TB").val(data.Startcheckin),
-            $("#checkin2TB").val(data.Endcheckin),
-            $('#ccategoriesDB').val(GameCategories);
+                $("#prize2TB").val(data.Prize2),
+                $("#prize3TB").val(data.Price3),
+                $("#urlcommunityTB").val(data.Linkforregistration),
+                $("#descriptionTA").val(data.Body),
+                $("#starttTB").val(data.Startime),
+                $("#endtTB").val(data.Endtime),
+                $("#cdiscordTB").val(data.Discord),
+                $("#consoleDB").val(data.Console),
+                $("#checkin1TB").val(data.Startcheckin),
+                $("#checkin2TB").val(data.Endcheckin),
+                $('#ccategoriesDB').val(GameCategories);
             //Isiesa: 0,
             //Competitionstatus: 'S',
-   
+
         }
 
-        function getErrorC(err) {console.log(err)}
+        function getErrorC(err) { console.log(err) }
 
         function PreviewBuilder() {
 
@@ -323,17 +475,16 @@
         function postErrorP(err) {
             console.log(err)
         }
-        
+
         function postSuccessC(data) {
             console.log("C Success", data);
 
 
             var gcID = document.getElementById("ccategoriesDB").value;
-            var cID = competitionid;
             var oID = JSON.parse(localStorage.getItem("user_info"));
 
 
-            ajaxCall("PUT", "../api/Competitions?cID=" + cID + "&gcID=" + gcID , "", putSuccessCInG, putErrorCInG)
+            ajaxCall("PUT", "../api/Competitions?cID=" + CId + "&gcID=" + gcID, "", putSuccessCInG, putErrorCInG)
 
 
         }
@@ -359,22 +510,7 @@
 
         }
 
-        function BeforGetCId() {
-            getCompetitionId();
-            return false;
-        }
 
-        function getCompetitionId() {
-
-            ajaxCall("GET", "../api/Competitions", "", getSuccessCompetitions, getErrorCompetitions)
-
-        }
-
-        function getSuccessCompetitions(cId) {
-            competitionid = cId
-            console.log("In success competiton: ", competitionid);
-            addBanner(competitionid);
-        }
 
         function addBanner() {
 
@@ -391,7 +527,7 @@
                     data.append("UploadedImage", files[f]);
                 }
 
-                data.append("CompetitionID", competitionid + "_banner"); //append what ever data you want to send along with the files.
+                data.append("CompetitionID", CId + "_banner"); //append what ever data you want to send along with the files.
 
 
             }
@@ -411,7 +547,8 @@
         }
 
         function routeBanner(data) {
-            bannerURL = data[0]
+            if ($('#bannerFile').val() !== "")
+                bannerURL = data[0]
             console.log("In url's: ", bannerURL);
             addLogo();
 
@@ -433,7 +570,7 @@
                     data.append("UploadedImage", files[f]);
                 }
 
-                data.append("CompetitionID", competitionid + "_logo"); //append what ever data you want to send along with the files.
+                data.append("CompetitionID", CId + "_logo"); //append what ever data you want to send along with the files.
 
 
             }
@@ -453,7 +590,8 @@
         }
 
         function routeLogo(data) {
-            logoURL = data[0]
+            if ($('#logoFile').val() !== "")
+                logoURL = data[0]
             console.log("In url's: ", logoURL);
             CompetitionBuilder();
             return false;
@@ -464,9 +602,7 @@
 
         }
 
-        function getErrorCompetitions(err) {
-            console.log(err);
-        }
+
 
         function CompetitionBuilder() { //PUT
 
@@ -523,7 +659,7 @@
             }
 
 
-            ajaxCall("PUT", "../api/Competitions/updatedetails?CID=" + CId , JSON.stringify(c1), postSuccessC, postErrorC)
+            ajaxCall("PUT", "../api/Competitions/updatedetails?CID=" + CId, JSON.stringify(c1), postSuccessC, postErrorC)
             return false;
 
         }
@@ -619,17 +755,20 @@
 
             if (imgType == '_logo') {
                 document.getElementById("logoph").innerHTML = imgStr;
-                logoURL = data[0];
+                if ($('#logoFile').val() !== "")
+                    logoURL = data[0];
             }
             else {
                 document.getElementById("bannerph").innerHTML = imgStr;
-                bannerURL = data[0];
+                if ($('#bannerFile').val() !== "")
+                    bannerURL = data[0];
             }
 
         }
 
-        function f1() {
-
+        function EditRanks() {
+            console.log("In edit rankS:");
+            $("#exampleModalLongTitle").text("shir")
         }
 
 
@@ -669,11 +808,11 @@
 
                         <div class="mb-3">
                             <label>קטגוריית משחק:</label><br />
-                        <div id="gameg">
-                            <select name="gamecategories" class="form-select" id="ccategoriesDB" required>
-                                <option />
-                            </select>
-                        </div>
+                            <div id="gameg">
+                                <select name="gamecategories" class="form-select" id="ccategoriesDB" required>
+                                    <option />
+                                </select>
+                            </div>
                         </div> <!--game category-->
 
                         <div class="mb-3">
@@ -868,11 +1007,12 @@
 
                             <div class="col">
                                 <br /><br />  <br />
-                                <input type="button" class="btn btn-danger" value="תצוגה מקדימה" id="previewC" />
-                                <input type="button" class="btn btn-danger" value="דחייה" id="previewC" />
-                                <input type="button" class="btn btn-danger" value="אישור" id="previewC" />
-                                <input type="submit" class="btn btn-success" value="עדכון טופס" onsubmit="return false" />
-                                <input type="button" class="btn btn-primary" value="ביטול" id="previewC" />
+                                <input type="button" class="btn btn-secondary" value="תצוגה מקדימה" id="previewC" />
+                                <input type="button" class="btn btn-danger" value="דחיית תחרות" id="rejectC" onclick="decideNewC('3')" />
+                                <input type="button" class="btn btn-primary" value="אישור תחרות" id="acceptC" onclick="decideNewC('2')" />
+                                <input type="submit" class="btn btn-success" value="עדכון טופס" id="submitedit" onsubmit="return false" />
+                                <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
+                                <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />
 
                             </div>
                         </div> <!--buttons-->
@@ -880,18 +1020,41 @@
                     </div>
                 </div>
             </form>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="modal-body" class="modal-body">
+                        </div>
+                        <div id='result'></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="rejectranks">דחיית דירוגים</button>
+                            <button type="button" class="btn btn-success" id="acceptranks">אישור דירוגים</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
         </div>
 
-                    </section >
+    </section>
 
-                        <section id="site_footer">
-                            <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-                                <h2>IESA</h2>
-                            </div>
-                        </section>
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
 
-</body >
-</html >
+
+
+</body>
+</html>
