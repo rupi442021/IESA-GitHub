@@ -863,8 +863,9 @@
                                 let dataCompetitions = "data-competitionid='" + row.Competitionid + "'";
 
                                 C_viewBtn = "<a href='Competition_View.html?competitionid=" + row.Competitionid + "' target = '_blank' class='view' title='צפה'><i class='C_viewBTN bi bi-eye' " + dataCompetitions + "></i></a>";
+                                C_editBtn = "<a href='Edit_Competition.html?competitionid=" + row.Competitionid + "' target='_blank' class='view' title='ערוך'><i class='C_editBTN bi bi-pencil' " + dataCompetitions + "></i></a>";
 
-                                return C_viewBtn;
+                                return C_editBtn + C_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
