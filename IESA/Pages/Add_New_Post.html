@@ -194,7 +194,9 @@
 
             PostObj = {
                 Title: $("#titleTB").val(),
-                Body: $("#bodyTB").val(),
+                Body1: $("#body1TB").val(),
+                Body2: $("#body2TB").val(),
+                Body3: $("#body3TB").val(),
                 Image1: photoUpload,
                 Category: $("#categoriesTB").val(),
                 Postdate: getDate(),
@@ -304,7 +306,7 @@
                 <div class="divdown"></div>
             </section>
 
-            <p>* מיקום הפוסט יהיה ניתן לשינוי בדף דאשבורד מנהל</p> <br>
+            <p>* הפסקה הראשונה חייבת להיות מוזנת עם טקסט</p> <br>
 
             <h4 style="color:white">הזנת שדות פוסט</h4><br>
 
@@ -339,15 +341,49 @@
 
 
                         <div class="mb-3">
-                            <label>גוף הפוסט:</label>
-                            <textarea class="form-control" id="bodyTB" placeholder="הזן טקסט כאן" pattern=".{4,3999}"
-                                      oninvalid="this.setCustomValidity('עד 4000 תווים')" rows="7" required></textarea>
+                            <label>פסקה 1:</label>
+                            <textarea class="form-control" id="body1TB" placeholder="" pattern=".{4,3999}"
+                                      oninvalid="this.setCustomValidity('עד 4000 תווים')" rows="5" required></textarea>
                             <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
                         </div>
 
                     </div>
 
                 </div>
+
+                <div class="row">
+
+                    <div class="col">
+
+
+                        <div class="mb-3">
+                            <label>פסקה 2:</label>
+                            <textarea class="form-control" id="body2TB" placeholder="" pattern=".{4,3999}"
+                                      oninvalid="this.setCustomValidity('עד 4000 תווים')" rows="5"></textarea>
+                            <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+
+
+                        <div class="mb-3">
+                            <label>פסקה 3:</label>
+                            <textarea class="form-control" id="body3TB" placeholder="" pattern=".{4,3999}"
+                                      oninvalid="this.setCustomValidity('עד 4000 תווים')" rows="5"></textarea>
+                            <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
+                        </div>
+
+                    </div>
+
+                </div>
+
+
 
                 <div class="row">
                     <div class="col">

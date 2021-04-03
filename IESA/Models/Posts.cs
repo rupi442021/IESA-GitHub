@@ -10,18 +10,22 @@ namespace IESA.Models
     {
         int postid;
         string title;
-        string body; //In SQL nvarchar(1) ? Check*
+        string body1;
+        string body2;
+        string body3;
         string image1;
         string category;
         DateTime postdate;
         int viewsnum;
-        int status1; //0 or 1
+        int status1;
 
-        public Posts(int postid, string title, string body, string image1, string category, DateTime postdate, int viewsnum, int status1)
+        public Posts(int postid, string title, string body1, string body2, string body3, string image1, string category, DateTime postdate, int viewsnum, int status1)
         {
             Postid = postid;
             Title = title;
-            Body = body;
+            Body1 = body1;
+            Body2 = body2;
+            Body3 = body3;
             Image1 = image1;
             Category = category;
             Postdate = postdate;
@@ -33,7 +37,9 @@ namespace IESA.Models
 
         public int Postid { get => postid; set => postid = value; }
         public string Title { get => title; set => title = value; }
-        public string Body { get => body; set => body = value; }
+        public string Body1 { get => body1; set => body1 = value; }
+        public string Body2 { get => body2; set => body2 = value; }
+        public string Body3 { get => body3; set => body3 = value; }
         public string Image1 { get => image1; set => image1 = value; }
         public string Category { get => category; set => category = value; }
         public DateTime Postdate { get => postdate; set => postdate = value; }

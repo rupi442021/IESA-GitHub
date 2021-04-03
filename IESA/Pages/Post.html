@@ -29,7 +29,7 @@
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            height: 1300px;
+            height: 1700px;
             padding-top: 30px;
             position: relative;
         }
@@ -98,8 +98,9 @@
         }
 
         #pafter {
-            margin-bottom: 40px;
+            margin-bottom: 27px;
         }
+          
 
 
         .nk-post-categories {
@@ -262,9 +263,28 @@
             str += "<br />";
             str += "<p id='pafter'>";
 
-            str += post.Body;
+            str += post.Body1;
 
             str += "</p>";
+
+            if (post.Body2 == null) {
+                str += "";
+            }
+            else {
+                str += "<p id='pafter'>";
+                str += post.Body2;
+                str += "</p>";
+            }
+
+            if (post.Body3 == null) {
+                str += "";
+            }
+            else {
+                str += "<p id='pafter'>";
+                str += post.Body3;
+                str += "</p>";
+            }
+
             str += "</div>";
             str += "<div class='col-lg-3'>";
 
