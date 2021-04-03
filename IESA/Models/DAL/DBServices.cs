@@ -60,6 +60,7 @@ namespace IESA.Models.DAL
 
         //---Sign_Up.html--- *Open*
 
+
         public string CheckEmailSQL(string emailADD) //Sign_Up.html - method OG1 (Check Email: Gamer/Orgenaizer)
         {
 
@@ -156,7 +157,7 @@ namespace IESA.Models.DAL
 
         }
 
-        public int GetnewIdGamer() //Sign_Up.html - method OG3 (Get New Id: Gamer)
+        public int GetnewIdGamer()  //Sign_Up.html - method OG3 (Get New Id: Gamer)
         {
             userId = 0;
 
@@ -197,7 +198,7 @@ namespace IESA.Models.DAL
 
         }
 
-        public int GetnewIdOrgenaizer() //Sign_Up.html - method OO1 (Get New Id: Orgenaizer)
+        public int GetnewIdOrgenaizer()  //Sign_Up.html - method OO1 (Get New Id: Orgenaizer)
         {
             userId = 0;
 
@@ -588,6 +589,49 @@ namespace IESA.Models.DAL
 
         //---Add_New_Competition.html--- *Open*
 
+
+        public List<GamesCategories> GetGameCategoriesr()
+        {
+            SqlConnection con = null;
+            List<GamesCategories> gList = new List<GamesCategories>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from GamesCategories";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    GamesCategories g = new GamesCategories();
+                    g.Categoryid = Convert.ToInt32(dr["categoryid"]);
+                    g.Categoryname = (string)dr["categoryname"];
+                    g.Status1 = Convert.ToInt32(dr["status1"]);
+
+                   
+                        gList.Add(g);
+                }
+
+                return gList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
         public int getCompetitionId()  //Add_New_Competition.html - method OO1 (Get New Id: Competition)
         {
             competitionId = 0;
@@ -631,8 +675,7 @@ namespace IESA.Models.DAL
             }
 
         }
-
-        public int InsertCompetition(Competitions Competition) //Add_New_Competition.html 
+        public int InsertCompetition(Competitions Competition) ////Add_New_Competition.html 
         {
 
             SqlConnection con;
@@ -674,7 +717,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         private String BuildInsertCommand(Competitions Competition) //Add_New_Competition.html
         {
             String command;
@@ -688,7 +730,6 @@ namespace IESA.Models.DAL
 
             return command;
         }
-
         public int InsertGameInC(int cID, int gcID, int oID) //Add_New_Competition.html - Add row to game_competition 
         {
 
@@ -731,7 +772,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         private String BuildInsertCommand(int cID, int gcID, int oID) //Add_New_Competition.html - Add row to game_competition
         {
             String command;
@@ -750,11 +790,11 @@ namespace IESA.Models.DAL
 
         }
 
-
         //---Add_New_Competition.html--- *Close*
 
 
         //---Add_New_Post.html--- *Open*
+
 
         public int GetnewIdPost() //Add_New_Post.html - method OP1
         {
@@ -796,7 +836,6 @@ namespace IESA.Models.DAL
             }
 
         }
-
         public int InsertPost(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (1))
         {
 
@@ -839,15 +878,14 @@ namespace IESA.Models.DAL
             }
 
         }
-
         private String BuildInsertCommand(Posts post) //Add_New_Post.html - method OP2 (Insert: Post (2))
         {
             String command;
 
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", post.Title, post.Body1, post.Body2, post.Body3, post.Image1, post.Category, post.Postdate, post.Status1);
-            String prefix = "INSERT INTO Posts " + "(title, body1, body2, body3, image1, category, postdate, status1) ";
+            sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')", post.Title, post.Body, post.Image1, post.Category, post.Postdate, post.Status1);
+            String prefix = "INSERT INTO Posts " + "(title, body, image1, category, postdate, status1) ";
 
             command = prefix + sb.ToString();
 
@@ -860,6 +898,7 @@ namespace IESA.Models.DAL
 
 
         //---Orgenaizer_Main_Page.html--- *Open*
+
 
         public List<Competitions> GetOrgenaizerCompetitions(int OID)
         {
@@ -987,6 +1026,7 @@ namespace IESA.Models.DAL
         }
 
 
+
         //---Orgenaizer_Main_Page.html--- *Close*
 
 
@@ -1015,9 +1055,7 @@ namespace IESA.Models.DAL
 
                     p.Postid = (dr["postid"] != DBNull.Value) ? Convert.ToInt32(dr["postid"]) : default;
                     p.Title = (dr["title"] != DBNull.Value) ? (string)dr["title"] : default;
-                    p.Body1 = (dr["body1"] != DBNull.Value) ? (string)dr["body1"] : default;
-                    p.Body2 = (dr["body2"] != DBNull.Value) ? (string)dr["body2"] : default;
-                    p.Body3 = (dr["body3"] != DBNull.Value) ? (string)dr["body3"] : default;
+                    p.Body = (dr["body"] != DBNull.Value) ? (string)dr["body"] : default;
                     p.Image1 = (dr["image1"] != DBNull.Value) ? (string)dr["image1"] : default;
                     p.Category = (dr["category"] != DBNull.Value) ? (string)dr["category"] : default;
                     p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
@@ -1067,9 +1105,7 @@ namespace IESA.Models.DAL
 
                     post.Postid = (dr["postid"] != DBNull.Value) ? Convert.ToInt32(dr["postid"]) : default;
                     post.Title = (dr["title"] != DBNull.Value) ? (string)dr["title"] : default;
-                    post.Body1 = (dr["body1"] != DBNull.Value) ? (string)dr["body1"] : default;
-                    post.Body2 = (dr["body2"] != DBNull.Value) ? (string)dr["body2"] : default;
-                    post.Body3 = (dr["body3"] != DBNull.Value) ? (string)dr["body3"] : default;
+                    post.Body = (dr["body"] != DBNull.Value) ? (string)dr["body"] : default;
                     post.Image1 = (dr["image1"] != DBNull.Value) ? (string)dr["image1"] : default;
                     post.Category = (dr["category"] != DBNull.Value) ? (string)dr["category"] : default;
                     post.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
@@ -1152,6 +1188,7 @@ namespace IESA.Models.DAL
 
         }
 
+
         public int DeleteGamerSQL(int todeleteid) //Manager_Main_Page.html - method OM2
         {
 
@@ -1200,6 +1237,7 @@ namespace IESA.Models.DAL
             command = "DELETE From Gamers WHERE userid = " + todeleteid;
             return command;
         }
+
 
         public int UpdateGamerStatusSQL(int toupdateid) //Manager_Main_Page.html - method OM3
         {
@@ -1250,6 +1288,7 @@ namespace IESA.Models.DAL
             return command;
         }
 
+
         public List<Orgenaizers> ReadOrgenaizersMSQL() //Manager_Main_Page.html - method OM4
         {
 
@@ -1298,6 +1337,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
 
         public int DeleteOrgenaizerSQL(int todeleteid) //Manager_Main_Page.html - method OM5
         {
@@ -1348,6 +1388,7 @@ namespace IESA.Models.DAL
             return command;
         }
 
+
         public int UpdateOrgenaizerStatusSQL(int toupdateid) //Manager_Main_Page.html - method OM5
         {
 
@@ -1397,6 +1438,7 @@ namespace IESA.Models.DAL
             return command;
         }
 
+
         public List<Posts> ReadPostsMSQL() //Manager_Main_Page.html - method OM7
         {
 
@@ -1445,6 +1487,7 @@ namespace IESA.Models.DAL
             }
 
         }
+
 
         public List<Competitions> ReadCompetitionsMSQL() //Manager_Main_Page.html - method OM8
         {
@@ -1496,6 +1539,7 @@ namespace IESA.Models.DAL
 
         }
 
+
         public Dictionary<int, int> GetStatisticsSQL() //Manager_Main_Page.html - method OM9
         {
 
@@ -1545,9 +1589,11 @@ namespace IESA.Models.DAL
         //---Manager_Main_Page.html--- *Close*
 
 
+
+
         //---Orgenzier_Main_Page.html--- *Open*
 
-        public Dictionary<int, List<string>> GamersInC(int CId) //Manager_Main_Page.html - method OM1
+        public Dictionary<int, List<string>> GamersInC(int CId , int val) //Manager_Main_Page.html - method OM1
         {
 
             SqlConnection con = null;
@@ -1556,7 +1602,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT * FROM Gamer_Competition inner join Gamers on Gamer_Competition.gamerid=Gamers.userid WHERE competitionid=" + CId + " and  Gamer_Competition.status1 = '1' ";
+                String selectSTR = " SELECT * FROM Gamer_Competition inner join Gamers on Gamer_Competition.gamerid=Gamers.userid WHERE competitionid=" + CId + " and  Gamer_Competition.status1 = " + val ;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
@@ -1663,52 +1709,11 @@ namespace IESA.Models.DAL
         //---Orgenzier_Main_Page.html--- *Close*
 
 
+
         //---Add_Game_Category.html--- *Open*
 
-        public List<GamesCategories> GetGameCategoriesr() //Add_Game_Category.html - method MC1
-        {
-            SqlConnection con = null;
-            List<GamesCategories> gList = new List<GamesCategories>();
 
-            try
-            {
-                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
-
-                String selectSTR = "select * from GamesCategories";
-                SqlCommand cmd = new SqlCommand(selectSTR, con);
-
-                // get a reader
-                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
-
-                while (dr.Read())
-                {   // Read till the end of the data into a row
-                    GamesCategories g = new GamesCategories();
-                    g.Categoryid = Convert.ToInt32(dr["categoryid"]);
-                    g.Categoryname = (string)dr["categoryname"];
-                    g.Status1 = Convert.ToInt32(dr["status1"]);
-
-
-                    gList.Add(g);
-                }
-
-                return gList;
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Close();
-                }
-
-            }
-        }
-
-        public int InsertGameCategory(GamesCategories GameC) //Add_Game_Category.html - method MC2
+        public int InsertGameCategory(GamesCategories GameC)
         {
 
             SqlConnection con;
@@ -1766,7 +1771,10 @@ namespace IESA.Models.DAL
 
         }
 
-        public int setNotactive(int id, string status) //Add_Game_Category.html - method MC3
+
+        // active or deactive a game category in the table
+
+        public int setNotactive(int id, string status)
         {
             SqlConnection con;
             SqlCommand cmd;
@@ -1808,7 +1816,8 @@ namespace IESA.Models.DAL
 
         }
 
-        private String BuildInsertCommand6(int id, string status)
+
+        private String BuildInsertCommand6(int id, string status) //The second C
         {
             if (status == "1")
                 return ("UPDATE GamesCategories SET Status1 = 'False' WHERE categoryID= " + id);
@@ -1816,7 +1825,12 @@ namespace IESA.Models.DAL
                 return ("UPDATE GamesCategories SET Status1 = 'True' WHERE categoryID= " + id);
         }
 
-        public int ChangeName(int id, string UpdateCategoryName) //Add_Game_Category.html - method MC4
+        // END OF--- active or deactive a game category in the table
+
+
+        //Change the name of a mistaken category name
+
+        public int ChangeName(int id, string UpdateCategoryName)
         {
             SqlConnection con;
             SqlCommand cmd;
@@ -1858,12 +1872,11 @@ namespace IESA.Models.DAL
 
         }
 
-        private String BuildInsertCommand7(int id, string UpdateCategoryName)
+        private String BuildInsertCommand7(int id, string UpdateCategoryName) //The second C
         {
             string str = "UPDATE GamesCategories SET categoryname ='" + UpdateCategoryName + "' WHERE categoryid= " + id;
             return (str);
         }
-
 
         //---Add_Game_Category.html--- *Close*
 
@@ -1891,7 +1904,7 @@ namespace IESA.Models.DAL
 
                     p.Postid = Convert.ToInt32(dr["postid"]);
                     p.Title = (string)dr["title"];
-                    p.Body1 = (string)dr["body1"];
+                    p.Body = (string)dr["body"];
                     p.Image1 = (string)dr["image1"];
                     p.Category = (string)dr["category"];
                     p.Postdate = Convert.ToDateTime(dr["postdate"]);
@@ -1921,7 +1934,13 @@ namespace IESA.Models.DAL
         //---Post_Archive.html.html--- *Close*
 
 
-        //---Competition_view.html--- *Open*
+
+
+
+        // Get all Gamer's Specific Competitions
+
+
+
 
         public List<Competitions> GetGamersCompetitions(int GID)
         {
@@ -1991,6 +2010,10 @@ namespace IESA.Models.DAL
             }
         }
 
+
+
+        //---Competition_view.html--- *Open*
+
         public Competitions ReadOneCompetition(int CId)
         {
             SqlConnection con = null;
@@ -2057,7 +2080,6 @@ namespace IESA.Models.DAL
             }
         }
 
-
         //---Competition_view--- *Close*
 
 
@@ -2105,10 +2127,11 @@ namespace IESA.Models.DAL
 
         }
 
+
         private String BuildPutCommandPost(Posts post)
         {
             String command;
-            command = "UPDATE Posts SET title= '" + post.Title + "', body1 = '" + post.Body1 + "', body2 = '" + post.Body2 + "', body3 = '" + post.Body3 + "', image1 ='" + post.Image1 + "' , category= '" + post.Category + "', status1= " + post.Status1 + " WHERE postid=" + post.Postid;
+            command = "UPDATE Posts SET title= '" + post.Title + "', body = '" + post.Body + "', image1 ='" + post.Image1 + "' , category= '" + post.Category + "', status1= " + post.Status1 + " WHERE postid=" + post.Postid;
             return command;
         }
 
@@ -2117,6 +2140,7 @@ namespace IESA.Models.DAL
 
 
         //---Edit_Personal_Details.html--- *Open*
+
 
         public int UpdateOrgenaizerDetails(int OId, Orgenaizers o1)
         {
@@ -2218,9 +2242,7 @@ namespace IESA.Models.DAL
             return command;
         }
 
-
         //---Edit_Personal_Details.html--- *Close*
-
 
         //---Edit_Competition.html--- *Open*
 
@@ -2229,7 +2251,7 @@ namespace IESA.Models.DAL
             var categoryId = 0;
             SqlConnection con = null;
             Competitions c = new Competitions();
-            
+
 
             try
             {
@@ -2243,14 +2265,14 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-                    categoryId = Convert.ToInt32(dr["categoryid"]); 
-                    
+                    categoryId = Convert.ToInt32(dr["categoryid"]);
+
                 }
                 return (categoryId);
             }
-                
 
-            
+
+
             catch (Exception ex)
             {
                 // write to log
@@ -2361,10 +2383,61 @@ namespace IESA.Models.DAL
         private String BuildUpdateCommandEditGamer(int cID, int gcID)
         {
             String command;
-            command = "UPDATE Competition_Game set categoryid ="+ gcID+"  where competitionid = "+ cID + " ";
+            command = "UPDATE Competition_Game set categoryid =" + gcID + "  where competitionid = " + cID + " ";
 
             return command;
         }
+
+        public int decideNewC(int cID, string val)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommanddecideNewC(cID, val);      // helper method to build the update string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommanddecideNewC(int cID, string val)
+        {
+            String command;
+            command = "UPDATE Competitions set competitionstatus =" + val + "  where competitionid = " + cID + " ";
+
+            return command;
+        }
+
 
 
         //---Edit_Competition.html--- *Close*

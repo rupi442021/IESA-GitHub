@@ -200,10 +200,9 @@
             });
 
 
-            //var split = window.location.href.split('=');
-            //CId = split[1];
-            //console.log("Your C is: ", CId);
-            CId = 6;
+            var split = window.location.href.split('=');
+            CId = split[1];
+           
 
             ajaxCall("GET", "../api/Competitions/getcategory?CompetitionId=" + CId + "", "", getSuccessCg, getErrorCg);
             ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + CId + "", "", getSuccessC, getErrorC);
