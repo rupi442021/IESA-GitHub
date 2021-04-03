@@ -191,7 +191,7 @@
             else { Status1 = 0 }
 
 
-            ajaxCall("PUT", "../api/GamesCategories/mark6?id=" + Categoryid + "&status=" + Status1, "", deleteSuccess, deleterror);
+            ajaxCall("PUT", "../api/GamesCategories/mark6?id=" + Categoryid + "&status=" + Status1, "", deleteSuccess, deleterror); //Add_Game_Category.html - method MC3
 
         }
 
@@ -245,10 +245,10 @@
 
         function GetAllGameCategories() {
 
-            ajaxCall("GET", "../api/GamesCategories", "", getSuccessGamesCategories, getErrorGamesCategories);
+            ajaxCall("GET", "../api/GamesCategories", "", getSuccessGamesCategories, getErrorGamesCategories); //Add_Game_Category.html - method MC1
 
         }
-
+        
 
         function getSuccessGamesCategories(GamesCategories) {
             console.log(GamesCategories)
@@ -373,7 +373,7 @@
 
                 }
 
-                ajaxCall("POST", "../api/GamesCategories", JSON.stringify(New_Game_Category), PostSuccessGamesCategories, PostErrorGamesCategories);
+                ajaxCall("POST", "../api/GamesCategories", JSON.stringify(New_Game_Category), PostSuccessGamesCategories, PostErrorGamesCategories); //Add_Game_Category.html - method MC2
 
             }
 
@@ -422,7 +422,7 @@
 
 
 
-            ajaxCall("PUT", "../api/GamesCategories/mark7?id=" + Categoryid + "&UpdateCategoryName=" + UpdateCategoryName, "", updateSuccess, updaterror);
+            ajaxCall("PUT", "../api/GamesCategories/mark7?id=" + Categoryid + "&UpdateCategoryName=" + UpdateCategoryName, "", updateSuccess, updaterror); //Add_Game_Category.html - method MC4
 
             //כאן יהיה PUT לעדכון השם
 

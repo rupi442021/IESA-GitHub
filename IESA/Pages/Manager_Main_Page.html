@@ -271,9 +271,12 @@
             text-decoration: none;
             font-weight: 600;
             transition-duration: 0.20s;
-            position: relative;
+            position: absolute;
+            bottom: 49.2%;
+            right: 81.9%;
+/*            position: relative;
             bottom: 87.7%;
-            right: 82.5%;
+            right: 82.5%;*/
         }
 
             .add-post-button:hover {
@@ -287,12 +290,16 @@
         @media only screen and (max-width: 1040px) {
             .add-post-button {
                 right: 77.5%;
+                bottom: 24.3%;
+                /*right: 77.5%;*/
             }
         }
 
         @media only screen and (max-width: 820px) {
             .add-post-button {
                 right: 60%;
+                bottom: 22%;
+                /*right: 60%;*/
             }
         }
 
@@ -863,8 +870,9 @@
                                 let dataCompetitions = "data-competitionid='" + row.Competitionid + "'";
 
                                 C_viewBtn = "<a href='Competition_View.html?competitionid=" + row.Competitionid + "' target = '_blank' class='view' title='צפה'><i class='C_viewBTN bi bi-eye' " + dataCompetitions + "></i></a>";
+                                C_editBtn = "<a href='Edit_Competition.html?competitionid=" + row.Competitionid + "' target='_blank' class='view' title='ערוך'><i class='C_editBTN bi bi-pencil' " + dataCompetitions + "></i></a>";
 
-                                return C_viewBtn;
+                                return C_editBtn + C_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
