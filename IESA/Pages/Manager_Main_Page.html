@@ -902,13 +902,15 @@
             document.getElementById("num_futurecomp").innerHTML = numfuturecomp;
             document.getElementById("num_pastcomp").innerHTML = numpastcomp;
 
-
-            if (parseInt(statisticsdict["7"]) > 0) //Gamers waithing
+            //FIX IT TO BE HIGHER THEN 0*******************************************************************************************
+            if (parseInt(statisticsdict["7"]) > 0) //Competition waithing
             {
+                
                 document.getElementById("competitions_waithing").style.visibility = "visible";
             }
             else {
-                document.getElementById("competitions_waithing").style.visibility = "hidden";
+                
+                document.getElementById("competitions_waithing").style.visibility = "visible";
             }
 
             if (parseInt(statisticsdict["5"]) > 0) //Gamers waithing
