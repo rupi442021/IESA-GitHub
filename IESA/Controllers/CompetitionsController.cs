@@ -46,7 +46,7 @@ namespace IESA.Controllers
         }
 
 
-        public List<Competitions> Get(int OID) //Orgenaizer_Main_Page.html - 
+        public List<Competitions> Get(int OID) //Orgenaizer_Main_Page.html - method AA1
         {
             Competitions lCompetitions = new Competitions();
             return lCompetitions.Read(OID);
