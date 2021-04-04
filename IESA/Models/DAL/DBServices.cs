@@ -1456,8 +1456,7 @@ namespace IESA.Models.DAL
             {
                 con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                //String selectSTR4 = "SELECT * FROM Competitions WHERE status1 = 'False' ";
-                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionname, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
+                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionstatus, Competitions.competitionname, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
 
                 SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
 
@@ -1469,6 +1468,7 @@ namespace IESA.Models.DAL
                     Competitions competition = new Competitions();
 
                     competition.Competitionid = (dr4["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr4["competitionid"]) : default;
+                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
                     competition.Competitionname = (dr4["competitionname"] != DBNull.Value) ? (string)dr4["competitionname"] : default;
                     competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
                     competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
@@ -1480,10 +1480,10 @@ namespace IESA.Models.DAL
 
                 return CompetitionsList;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw new Exception("Problem getting the information from the server, please try again later");
+                // write to log
+                throw (ex);
             }
             finally
             {
