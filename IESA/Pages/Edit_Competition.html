@@ -204,7 +204,7 @@
             CId = split[1];
            
 
-            ajaxCall("GET", "../api/Competitions/getcategory?CompetitionId=" + CId + "", "", getSuccessCg, getErrorCg);
+            ajaxCall("GET", "../api/Competitions/getcategory?CompetitionId=" + CId + "", "", getSuccessCg, getErrorCg); //Edit_Competitions.html - method SC5
             ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + CId + "", "", getSuccessC, getErrorC);
 
             document.getElementById("cForm").addEventListener("submit", function (event) {
@@ -221,7 +221,7 @@
         });
 
         function GetRanksForC() {
-            ajaxCall("GET", "../api/Competitions/mark5?CId=" + CId + "&statusval=" + 0, "", getSuccessRanks, getErrorRanks);
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + CId + "&statusval=" + 0, "", getSuccessRanks, getErrorRanks); //Edit_Competitions.html - method SC6
         }
 
         function getSuccessRanks(data) {
@@ -253,7 +253,7 @@
 
         function decideNewC(val) {
 
-            ajaxCall("PUT", "../api/Competitions/decideC?cID=" + CId + "&statusvalue=" + val, "", decideCsuccess, decideCerr)
+            ajaxCall("PUT", "../api/Competitions/decideC?cID=" + CId + "&statusvalue=" + val, "", decideCsuccess, decideCerr) //Edit_Competitions.html - method SC7
         }
 
         function decideCsuccess(data) {
@@ -462,7 +462,7 @@
                 Gamecategory: $("#ccategoriesDB option:selected").text()
             }
 
-            ajaxCall("POST", "../api/Competitions/mark2", JSON.stringify(p1), postSuccessP, postErrorP);
+            ajaxCall("POST", "../api/Competitions/mark2", JSON.stringify(p1), postSuccessP, postErrorP); //Edit_Competitions.html - method SC8
             window.open("https://localhost:44318/Pages/Competition_Preview.html"); //need to change the URL after publish project
 
         }
@@ -483,7 +483,7 @@
             var oID = JSON.parse(localStorage.getItem("user_info"));
 
 
-            ajaxCall("PUT", "../api/Competitions?cID=" + CId + "&gcID=" + gcID, "", putSuccessCInG, putErrorCInG)
+            ajaxCall("PUT", "../api/Competitions?cID=" + CId + "&gcID=" + gcID, "", putSuccessCInG, putErrorCInG) //Edit_Competitions.html - method SC9
 
 
         }
@@ -658,15 +658,15 @@
             }
 
 
-            ajaxCall("PUT", "../api/Competitions/updatedetails?CID=" + CId, JSON.stringify(c1), postSuccessC, postErrorC)
+            ajaxCall("PUT", "../api/Competitions/updatedetails?CID=" + CId, JSON.stringify(c1), postSuccessC, postErrorC) //Edit_Competitions.html - method SC10
             return false;
 
         }
 
         function GetAllGameCategories() {
 
-            ajaxCall("GET", "../api/GamesCategories", "", getSuccessGamesCategories, getErrorGamesCategories);
-
+            ajaxCall("GET", "../api/GamesCategories", "", getSuccessGamesCategories, getErrorGamesCategories); //Edit_Competitions.html - method MC1
+             
         }
 
         function getSuccessGamesCategories(GamesCategories) {

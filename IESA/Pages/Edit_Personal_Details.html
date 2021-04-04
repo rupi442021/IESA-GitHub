@@ -225,13 +225,13 @@
                 Picture: ImgUrl
             }
 
-            ajaxCall("PUT", "../api/Gamers/updatedetails?GId=" + Odetails.Userid , JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); 
+            ajaxCall("PUT", "../api/Gamers/updatedetails?GId=" + Odetails.Userid , JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Edit_Personal_Details.html - method SG1 
 
             return false;
         }
 
         function SuccessGamer(data) {
-            ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + Odetails.Userid, "", GetGamerS, ErrorGamer); 
+            ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + Odetails.Userid, "", GetGamerS, ErrorGamer); //Edit_Personal_Details.html - method SG2
 
         }
 
@@ -261,13 +261,13 @@
                 Linktocommunity: $("#olinktocommunityTB").val()
             }
 
-            ajaxCall("PUT", "../api/Orgenaizers/updatedetails?OId=" + Odetails.Userid , JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Sign_Up.html - method OO2
+            ajaxCall("PUT", "../api/Orgenaizers/updatedetails?OId=" + Odetails.Userid, JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Edit_Personal_Details.html - method SO1
 
             return false;
         }
 
         function SuccessOrgenaizer(data) {
-            ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Odetails.Userid, "", GetOrgenaizer, ErrorGetOrgenaizer); 
+            ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Odetails.Userid, "", GetOrgenaizer, ErrorGetOrgenaizer); //Edit_Personal_Details.html - method SO2
         }
 
         function GetGamerS(user) {

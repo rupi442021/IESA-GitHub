@@ -32,7 +32,7 @@ namespace IESA.Controllers
 
         [HttpPost]
         [Route("api/Competitions/mark2")]
-        public void Postc([FromBody] Competitions p1) //Add_New_Competitions.html - Preview
+        public void Postc([FromBody] Competitions p1) //Add_New_Competitions.html - Preview + Edit_Competitions.html - method SC8
         {
                       Pcompetitions = new Competitions();
                       Pcompetitions = p1;
@@ -40,13 +40,13 @@ namespace IESA.Controllers
 
         [HttpGet]
         [Route("api/Competitions/mark1")]
-        public Competitions Getc() //Add_New_Competitions.html - 
+        public Competitions Getc() //Competition_Preview.html - method SC4
         {
-            return (Pcompetitions);
+            return (Pcompetitions); //return from static class here. Not from dbService.
         }
 
 
-        public List<Competitions> Get(int OID) //Orgenaizer_Main_Page.html - method AA1
+        public List<Competitions> Get(int OID) //Orgenaizer_Main_Page.html - method SC1
         {
             Competitions lCompetitions = new Competitions();
             return lCompetitions.Read(OID);
@@ -54,7 +54,7 @@ namespace IESA.Controllers
 
         [HttpGet]
         [Route("api/Competitions/mark5")]
-        public Dictionary<int, List<string>> GetG(int CId ,int statusval) //Orgenaizer_Main_Page.html - 
+        public Dictionary<int, List<string>> GetG(int CId ,int statusval) //Orgenaizer_Main_Page.html - method SC3 + Edit_Competitions.html - method SC6
         {
             DBServices dbs = new DBServices();
             return dbs.GamersInC(CId, statusval);
@@ -62,11 +62,10 @@ namespace IESA.Controllers
 
         [HttpPost]
         [Route("api/Competitions/mark6")]
-        public void Postg(List<Gamer_Competition> rankarr) //Add_New_Competitions.html - Preview
+        public void Postg(List<Gamer_Competition> rankarr) //Orgenaizer_Main_Page.html - method SC2
         {
             DBServices dbs = new DBServices();
             dbs.Insertranks(rankarr);
-
         }
 
 
@@ -114,7 +113,7 @@ namespace IESA.Controllers
 
         [HttpGet] //Edit_Competition.html
         [Route("api/Competitions/getcategory")]
-        public int Getcategory(int CompetitionId)
+        public int Getcategory(int CompetitionId) //Edit_Competitions.html - method SC5
         {
             Competitions competitionslist = new Competitions();
             return competitionslist.Getcategory(CompetitionId);
@@ -136,7 +135,7 @@ namespace IESA.Controllers
 
         [HttpPut] //Edit_Competition.html 
         [Route("api/Competitions/decideC")]
-        public void decideNewC(int CId, string statusvalue)
+        public void decideNewC(int CId, string statusvalue) //Edit_Competitions.html - method SC7
         {
             DBServices dbs = new DBServices();
             dbs.decideNewC(CId, statusvalue);

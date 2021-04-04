@@ -115,7 +115,7 @@ namespace IESA.Models
             return dbs.CheckInfoSQL(email, pass);
         }
 
-        public Gamers GetUserInfo(int id_toserver) //Sign_In.html - method OL2
+        public Gamers GetUserInfo(int id_toserver) //Sign_In.html - method OL2 + Edit_Personal_Details.html - method SG2
         {
             DBServices dbs = new DBServices();
             return dbs.getGamerSQL(id_toserver);
@@ -159,7 +159,7 @@ namespace IESA.Models
         //---Orgenaizer_Main_Page.html--- *Open*
 
 
-        public List<Gamers> Read() 
+        public List<Gamers> Read() //Orgenaizer_Main_Page.html - method SG1
         {
             DBServices dbs = new DBServices();
             List<Gamers> lGamers = dbs.GetGamers();
@@ -171,7 +171,7 @@ namespace IESA.Models
 
 
         //---Edit_Personal_Details.html--- *Open*
-        public void UpdateGamerDetails(int GId, Gamers g1) //Manager_Main_Page.html - method OM6
+        public void UpdateGamerDetails(int GId, Gamers g1) //Edit_Personal_Details.html - method SE1 
         {
             DBServices dbs = new DBServices();
             dbs.UpdateGamerDetails(GId, g1);
