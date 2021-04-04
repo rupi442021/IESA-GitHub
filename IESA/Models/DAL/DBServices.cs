@@ -2367,8 +2367,6 @@ namespace IESA.Models.DAL
         }
 
 
-
-
         public int decideNewC(int cID, string val)
         {
 
