@@ -120,7 +120,7 @@ namespace IESA.Models
             dbs.InsertCompetition(this);
         }
 
-        public List<Competitions> Read(int OID) //Sign_Up.html - method OO1
+        public List<Competitions> Read(int OID) //Sign_Up.html + Orgenaizer_Main_Page.html - method AA1
         {
             DBServices dbs = new DBServices();
             List<Competitions> lCompetitions = dbs.GetOrgenaizerCompetitions(OID);
