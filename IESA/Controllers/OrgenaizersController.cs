@@ -33,7 +33,7 @@ namespace IESA.Controllers
 
         [HttpGet] //Sign_In.html - method OL3
         [Route("api/Orgenaizers/login2")]
-        public Orgenaizers GetOrgenaizer(int idtoserver)
+        public Orgenaizers GetOrgenaizer(int idtoserver) //Edit_Personal_Details.html - method SO2
         {
             Orgenaizers userin = new Orgenaizers();
             return userin.getUserInfo(idtoserver);
@@ -84,7 +84,7 @@ namespace IESA.Controllers
 
         [HttpPut] //Manager_Main_Page.html 
         [Route("api/Orgenaizers/updatedetails")]
-        public void updateOrgenaizerDetails(int OId, Orgenaizers o1)
+        public void updateOrgenaizerDetails(int OId, Orgenaizers o1) //Edit_Personal_Details.html - method SO1
         {
             Orgenaizers O1 = new Orgenaizers();
             O1.UpdateOrgenaizerDetails(OId, o1);

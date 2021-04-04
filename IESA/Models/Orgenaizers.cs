@@ -88,7 +88,7 @@ namespace IESA.Models
         //---Sign_In.html--- *Open*
 
 
-        public Orgenaizers getUserInfo(int id_toserver) //Sign_In.html - method OL3
+        public Orgenaizers getUserInfo(int id_toserver) //Sign_In.html - method OL3 + Edit_Personal_Details.html - method SO2
         {
             DBServices dbs = new DBServices();
             return dbs.getOrgenaizerSQL(id_toserver);
@@ -115,7 +115,7 @@ namespace IESA.Models
         }
 
 
-        public void UpdateOrgenaizerStatus(int toupdateid) //Manager_Main_Page.html - method OM6
+        public void UpdateOrgenaizerStatus(int toupdateid) //Manager_Main_Page.html - method OM6 
         {
             DBServices dbs = new DBServices();
             dbs.UpdateOrgenaizerStatusSQL(toupdateid);
@@ -125,7 +125,7 @@ namespace IESA.Models
 
 
         //---Edit_Personal_Details.html--- *Open*
-        public void UpdateOrgenaizerDetails(int OId, Orgenaizers o1) //Manager_Main_Page.html - method OM6
+        public void UpdateOrgenaizerDetails(int OId, Orgenaizers o1) //Manager_Main_Page.html - method OM6 + Edit_Personal_Details.html - method SO1
         {
             DBServices dbs = new DBServices();
             dbs.UpdateOrgenaizerDetails(OId, o1);

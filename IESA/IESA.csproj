@@ -162,6 +162,7 @@
     <Compile Include="Controllers\Gamers_GameController.cs" />
     <Compile Include="Controllers\Gamer_CompetitionController.cs" />
     <Compile Include="Controllers\GamesCategoriesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagersController.cs" />
     <Compile Include="Controllers\Manager_PostController.cs" />
     <Compile Include="Controllers\OrgenaizersController.cs" />

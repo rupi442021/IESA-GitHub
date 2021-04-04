@@ -59,7 +59,7 @@ namespace IESA.Controllers
 
         [HttpGet] //Sign_In.html - method OL2
         [Route("api/Gamers/login3")]
-        public Gamers GetGamer(int idtoserver)
+        public Gamers GetGamer(int idtoserver) //Edit_Personal_Details.html - method SG2
         {
             Gamers userin = new Gamers();
             return userin.GetUserInfo(idtoserver);
@@ -75,7 +75,7 @@ namespace IESA.Controllers
         //bring all valid gamers in database.
         [HttpGet] 
         [Route("api/gamers/mark3")]
-        public List<Gamers> GetG()
+        public List<Gamers> GetG() //Orgenaizer_Main_Page.html - method SG1
         {
             Gamers lGamers = new Gamers();
             return lGamers.Read();
@@ -121,7 +121,7 @@ namespace IESA.Controllers
 
         [HttpPut] //Manager_Main_Page.html 
         [Route("api/Gamers/updatedetails")]
-        public void updateGamerDetails(int GId, Gamers g1)
+        public void updateGamerDetails(int GId, Gamers g1) //Edit_Personal_Details.html - method SG1 
         {
             Gamers G1 = new Gamers();
             G1.UpdateGamerDetails(GId, g1);

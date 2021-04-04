@@ -31,7 +31,7 @@
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            height: 1200px;
+            height: 1800px;
             padding-top: 30px;
             align-content: center;
         }
@@ -192,6 +192,8 @@
                 location.replace("TemplatePage.html");
             }
 
+            
+
 
             GetAllOrgenaizerCompetition();
             GetAllGamers();
@@ -232,7 +234,8 @@
         });
 
         function GetAllOrgenaizerCompetition() {
-            ajaxCall("GET", "../api/Competitions?OID=" + OID.Userid, "", getSuccessOrgenaizerCompetition, getErrorOrgenaizerCompetition);
+
+            ajaxCall("GET", "../api/Competitions?OID=" + OID.Userid, "", getSuccessOrgenaizerCompetition, getErrorOrgenaizerCompetition); //Orgenaizer_Main_Page.html - method SC1
         }
 
         function getSuccessOrgenaizerCompetition(data) {
@@ -275,7 +278,7 @@
                 let today = new Date(getDate())
 
                 if (today > edat1)
-                    timetorank = 7 - Math.ceil(Math.abs(today - edat1) / (1000 * 60 * 60 * 24))
+                    timetorank = 30 - Math.ceil(Math.abs(today - edat1) / (1000 * 60 * 60 * 24))
                 else
                     timetorank = Math.ceil(Math.abs(edat1 - today) / (1000 * 60 * 60 * 24)) 
                 var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
@@ -410,7 +413,7 @@
         }
 
         function GetAllGamers() {
-            ajaxCall("GET", "../api/Gamers/mark3", "", getSuccessGamers, getErrorGamers);
+            ajaxCall("GET", "../api/Gamers/mark3", "", getSuccessGamers, getErrorGamers); //Orgenaizer_Main_Page.html - method SG1
         }
 
         function getSuccessGamers(data) {
@@ -510,7 +513,7 @@
                 }
                 console.log("rankarr: ", Ranksarr)
 
-                ajaxCall("POST", "../api/Competitions/mark6", JSON.stringify(Ranksarr), SuccessInsertRanks, ErrorInsertRanks); //method OP2
+                ajaxCall("POST", "../api/Competitions/mark6", JSON.stringify(Ranksarr), SuccessInsertRanks, ErrorInsertRanks); //Orgenaizer_Main_Page.html - method SC2
 
             }
         }
@@ -565,7 +568,7 @@
             console.log("In render Gamers: ", c1.Competitionid);
 
             //get gamers list in specific competition
-            ajaxCall("GET", "../api/Competitions/mark5?CId=" + c1.Competitionid + "&statusval="+ 1, "", getSuccessGamersInC, getErrorGamersInC);
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + c1.Competitionid + "&statusval=" + 1, "", getSuccessGamersInC, getErrorGamersInC); //Orgenaizer_Main_Page.html - method SC3
             $("#exampleModalLongTitle").text(c1.Competitionname);
 
         }
