@@ -65,28 +65,52 @@
             /*    background-color: darkred;*/
         }
 
-        /*.form-control {*/
-        /*   background-color:*/
-
-
-        hr {
-            display: inline-block;
-            width: 78%;
-            margin-bottom: 0px;
-            margin-left: 5px;
-            opacity: 0.8;
-            height: 2px !important;
-        }
+        /*Page title Open*/
 
         .titlelink {
             color: #FFFFFF;
             text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
         }
 
             .titlelink:hover {
-                color: white;
-                background-color: transparent;
+                color: #04b8a5;
+                transition: .15s color;
             }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            /*margin-bottom: 55px;*/ /*#1*/
+            font-weight: 600;
+            letter-spacing: .015em;
+            /*margin: 3px;*/
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .divdown {
+            margin-bottom: 60px;
+        }
+
+        /*Page title Close*/
+
+
+        .nav-tabs .nav-link { /*Color of the tabs*/
+            color: #fbf5f5;
+        }
 
     </style>
 
@@ -460,10 +484,12 @@
 
         <div class="container">
 
-            <a class="titlelink" href="TemplatePage.html">ראשי ></a><br />
-            <h2 style="color:white; display: inline-block">הרשמה לעמותה</h2>
-            <hr />
-            <br /><br /><br /><br />
+            <section id="page_title">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">הרשמה לעמותה</h2>
+                <div class="divdown"></div>
+            </section>
 
 
             <nav>
@@ -709,7 +735,7 @@
 
                             <div class="mb-3" style="text-align:left; padding-left:115px;">
 
-                            <input type="submit" class="btn btn-primary" value="שליחת טופס" />
+                                <input type="submit" class="btn btn-primary" value="שליחת טופס" />
                             </div>
 
 

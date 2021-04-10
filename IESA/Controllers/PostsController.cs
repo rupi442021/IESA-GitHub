@@ -80,6 +80,25 @@ namespace IESA.Controllers
         //---Manager_Main_Page.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+
+        [HttpGet] //Database.html - method OD1
+        [Route("api/Posts/tableDBPosts")]
+        public List<Posts> GetDBPosts()
+        {
+            Posts postslist = new Posts();
+            return postslist.ReadDBPosts();
+        }
+
+
+
+
+
+
+        //---Database.html--- *Close*
+
+
         //---Edit_Post.html--- *Open*
 
 
@@ -100,6 +119,8 @@ namespace IESA.Controllers
 
 
         //---Edit_Post.html--- *Close*
+
+
 
     }
 }
