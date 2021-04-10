@@ -117,6 +117,21 @@ namespace IESA.Models
         //---Manager_Main_Page.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+
+        public List<Posts> ReadDBPosts() //Database.html - method OD1
+        {
+            DBServices dbs = new DBServices();
+            List<Posts> plist = dbs.ReadDBPostsSQL();
+            return plist;
+        }
+
+
+        //---Database.html--- *Close*
+
+
+
         //---Edit_Post.html--- *Open*
 
         public void UpdatePost() //Edit_Post.html - method OP4

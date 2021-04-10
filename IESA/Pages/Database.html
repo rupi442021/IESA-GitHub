@@ -14,7 +14,6 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
     <!--Graph-->
-
     <!--Data Tables-->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -30,7 +29,7 @@
 
     <!--Data Tables-->
 
-    <title>&#x202E; ניהול מערכת – ASEI</title>
+    <title>&#x202E; מאגר מידע – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
 
@@ -82,7 +81,7 @@
             /*margin-bottom: 55px;*/ /*#1*/
             font-weight: 600;
             letter-spacing: .015em;
-            margin: 3px; /*#2*/
+            /*margin: 3px;*/ /*#2*/
         }
 
             .headh2::after {
@@ -211,7 +210,7 @@
         a {
             color: white;
             text-decoration: none;
-            font-family: arial;
+            /*font-family: arial;*/
         }
 
             a:hover {
@@ -219,13 +218,13 @@
                 transition: .15s color;
             }
 
-            a.reject:hover {
+/*            a.reject:hover {
                 color: #ed4564;
                 transition: .15s color;
-            }
+            }*/
 
-            a.admit:hover {
-                color: #04b8a5;
+            a.delete:hover {
+                color: #ed4564;
                 transition: .15s color;
             }
 
@@ -277,9 +276,9 @@
             font-weight: 600;
             transition-duration: 0.20s;
             position: absolute;
-            bottom: 49.2%;
+            bottom: 65.5%;
             right: 81.9%;
-/*            position: relative;
+            /*            position: relative;
             bottom: 87.7%;
             right: 82.5%;*/
         }
@@ -288,8 +287,11 @@
                 background-color: #e0e0e0;
             }
 
-        #pForm > div.dataTables_wrapper div.dataTables_filter label {
-            display: none;
+
+        #pForm > div.dataTables_wrapper div.dataTables_filter label { /*Search box - Posts*/
+            position: absolute;
+            top: -46px;
+            right: 59.5%;
         }
 
         @media only screen and (max-width: 1040px) {
@@ -366,13 +368,16 @@
 
         .nav-tabs .nav-link { /*Color of the tabs*/
             color: #fbf5f5;
+            margin-left: 7px;
         }
 
-        /*        #box {
-            -webkit-box-shadow: 0 10px 6px -6px #292e38;
-            -moz-box-shadow: 0 10px 6px -6px #292e38;
-            box-shadow: 0 10px 6px -6px #292e38;
-        }*/
+        .bi-person::before { /*Person icon*/
+            font-size: 20px;
+        }
+
+        .bi-info-circle::before { /*Info icon*/
+            font-size: 17px;
+        }
 
     </style>
 
@@ -382,12 +387,29 @@
 
             //---Posts Table--- *Open*
 
-            ajaxCall("GET", "../api/Posts/tableP", "", getPostsSuccess, Error); //Manager_Main_Page.html - method OM7
+            ajaxCall("GET", "../api/Posts/tableDBPosts", "", getPostsSuccess, Error); //Database.html - method OD1
 
 
             $(document).on("click", ".add-post-button", function () {
 
                 window.open('Add_New_Post.html', '_blank');
+
+            });
+
+            $(document).on("click", ".P_deleteBTN", function () {
+                var postId = this.getAttribute('data-postid');
+
+                swal({
+                    title: "האם אתה בטוח?",
+                    text: "פעולה זו תמחק את הפוסט לצמיתות",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (willDelete) {
+                        if (willDelete) DeletePost(postId);
+                        //else swal("פעולה לא בוצעה"); *Not needed*
+                    });
 
             });
 
@@ -398,7 +420,14 @@
 
             ajaxCall("GET", "../api/Competitions/tableC", "", getCompetitionsSuccess, Error); //Manager_Main_Page.html - method OM8
 
+
             //---Competitions Table--- *Close*
+
+
+            //---Ranks Table--- *Open*
+
+
+            //---Ranks Table--- *Close*
 
 
             //---Gamers Table--- *Open*
@@ -406,12 +435,12 @@
             ajaxCall("GET", "../api/Gamers/tableG", "", getGamersSuccess, Error); //Manager_Main_Page.html - method OM1
 
 
-            $(document).on("click", ".G_rejectBTN", function () {
+            $(document).on("click", ".G_deleteBTN", function () {
                 var userId = this.getAttribute('data-gamerid');
 
                 swal({
                     title: "האם אתה בטוח?",
-                    text: "",
+                    text: "פעולה זו תמחק את המשתמש לצמיתות",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true
@@ -424,7 +453,7 @@
             });
 
 
-            $(document).on("click", ".G_admitBTN", function () {
+            $(document).on("click", ".G_editBTN", function () {
                 var userId2 = this.getAttribute('data-gamerid');
 
                 ajaxCall("PUT", "../api/Gamers/Tablegstatus?toupdateid=" + userId2, "", UpdateSuccessG, Error); //Manager_Main_Page.html - method OM3
@@ -447,12 +476,12 @@
             ajaxCall("GET", "../api/Orgenaizers/tableO", "", getOrgenaizersSuccess, Error); //Manager_Main_Page.html - method OM4
 
 
-            $(document).on("click", ".O_rejectBTN", function () {
+            $(document).on("click", ".O_deleteBTN", function () {
                 var userId3 = this.getAttribute('data-orgenaizerid');
 
                 swal({
                     title: "האם אתה בטוח?",
-                    text: "",
+                    text: "פעולה זו תמחק את המשתמש לצמיתות",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true
@@ -465,7 +494,7 @@
             });
 
 
-            $(document).on("click", ".O_admitBTN", function () {
+            $(document).on("click", ".O_editBTN", function () {
                 var userId3 = this.getAttribute('data-orgenaizerid');
 
                 ajaxCall("PUT", "../api/Orgenaizers/Tableostatus?toupdateid=" + userId3, "", UpdateSuccessO, Error); //Manager_Main_Page.html - method OM6
@@ -482,45 +511,30 @@
             //---Orgenaizers Table--- *Close*
 
 
+            //---Managers Table--- *Open*
+
+
+            //---Managers Table--- *Close*
+
+
+            //---Categories Table--- *Open*
+
+
+            //---Categories Table--- *Close*
+
+           
+            //---Israel Table--- *Open*
+
+
+            //---Israel Table--- *Close*
+
+
         });
 
 
         function init() {
 
-            buildGradesGraph();
-
-            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
-
             //Check if the user is manager
-        }
-
-        function buildGradesGraph() {
-            var chart = new CanvasJS.Chart("chartContainer",
-                {
-                    title: {
-                        text: "מספר כניסות לאתר שבועי - דוגמא"
-                    },
-                    axisX: {
-                        labelFormatter: function (e) {
-                            return "יום " + (e.value + 1);
-                        }
-                    },
-                    data: [
-                        {
-                            type: "line",
-                            dataPoints: [
-                                { y: 17 },
-                                { y: 32 },
-                                { y: 22 },
-                                { y: 14 },
-                                { y: 25 },
-                                { y: 18 },
-                                { y: 20 }
-                            ]
-                        }
-                    ]
-                });
-            chart.render();
         }
 
 
@@ -545,7 +559,7 @@
                         },
                     },
                     responsive: true,
-                    pageLength: 4,
+                    pageLength: 10,
                     columns: [
                         { data: "Userid", className: "uniqueClassName" },
                         { data: "Firstname", className: "uniqueClassName" },
@@ -580,11 +594,11 @@
                             render: function (data, type, row, meta) {
                                 let dataGamers = "data-gamerid='" + row.Userid + "'"; //User id for buttons
 
-                                G_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='G_rejectBTN bi bi-x-circle' " + dataGamers + "></i></a>";
-                                G_admitBtn = "<a href='javascript:;' class='admit' title='אשר'><i class='G_admitBTN bi bi-check-circle' " + dataGamers + "></i></a>";
-                                G_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='G_viewBTN bi bi-person-circle' " + dataGamers + "></i></a>";
+                                G_deleteBtn = "<a href='javascript:;' class='delete' title='מחק'><i class='G_deleteBTN bi bi-trash' " + dataGamers + "></i></a>";
+                                G_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='G_editBTN bi bi-pencil' " + dataGamers + "></i></a>";
+                                G_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='G_viewBTN bi bi-eye' " + dataGamers + "></i></a>";
 
-                                return G_rejectBtn + G_admitBtn + G_viewBtn;
+                                return G_deleteBtn + G_editBtn + G_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -659,7 +673,7 @@
                         },
                     },
                     responsive: true,
-                    pageLength: 4,
+                    pageLength: 10,
                     columns: [
                         { data: "Userid", className: "uniqueClassName" },
                         { data: "Firstname", className: "uniqueClassName" },
@@ -682,11 +696,11 @@
                             render: function (data, type, row, meta) {
                                 let dataOrgenaizers = "data-orgenaizerid='" + row.Userid + "'"; //User id for buttons
 
-                                O_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='O_rejectBTN bi bi-x-circle' " + dataOrgenaizers + "></i></a>";
-                                O_admitBtn = "<a href='javascript:;' class='admit' title='אשר'><i class='O_admitBTN bi bi-check-circle' " + dataOrgenaizers + "></i></a>";
-                                O_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='O_viewBTN bi bi-person-circle' " + dataOrgenaizers + "></i></a>";
+                                O_deleteBtn = "<a href='javascript:;' class='delete' title='מחק'><i class='O_deleteBTN bi bi-trash' " + dataOrgenaizers + "></i></a>";
+                                O_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='O_editBTN bi bi-pencil' " + dataOrgenaizers + "></i></a>";
+                                O_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='O_viewBTN bi bi-eye' " + dataOrgenaizers + "></i></a>";
 
-                                return O_rejectBtn + O_admitBtn + O_viewBtn;
+                                return O_deleteBtn + O_editBtn + O_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -744,7 +758,7 @@
                         },
                     },
                     responsive: true,
-                    pageLength: 4,
+                    pageLength: 10,
                     columns: [
                         { data: "Postid", className: "uniqueClassName" },
                         {
@@ -782,8 +796,9 @@
 
                                 P_viewBtn = "<a href='Post.html?postid=" + row.Postid + "' target='_blank' class='view' title='צפה'><i class='P_viewBTN bi bi-eye' " + dataPosts + "></i></a>";
                                 P_editBtn = "<a href='Edit_Post.html?postid=" + row.Postid + "' target='_blank' class='edit' title='ערוך'><i class='P_editBTN bi bi-pencil' " + dataPosts + "></i></a>";
+                                P_deleteBtn = "<a href='javascript:;' class='delete' title='מחק'><i class='P_deleteBTN bi bi-trash' " + dataPosts + "></i></a>";
 
-                                return P_editBtn + P_viewBtn;
+                                return P_deleteBtn + P_editBtn + P_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -820,7 +835,7 @@
                         },
                     },
                     responsive: true,
-                    pageLength: 4,
+                    pageLength: 10,
                     columns: [
                         { data: "Competitionid", className: "uniqueClassName" },
                         { data: "Competitionstatus", className: "uniqueClassName" },
@@ -914,11 +929,11 @@
             //FIX IT TO BE HIGHER THEN 0*******************************************************************************************
             if (parseInt(statisticsdict["7"]) > 0) //Competition waithing
             {
-                
+
                 document.getElementById("competitions_waithing").style.visibility = "visible";
             }
             else {
-                
+
                 document.getElementById("competitions_waithing").style.visibility = "visible";
             }
 
@@ -960,71 +975,46 @@
         <div class="container">
 
             <section id="page_title">
-                <h2 class="headh2">ניהול מערכת</h2>
+                <a class="titlelink" href="Manager_Main_Page.html">ניהול מערכת </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">מאגר מידע</h2>
                 <div class="divdown"></div>
             </section>
 
 
             <div class="row">
 
-                <div class="col-lg-3" id="services_block" style="text-align:center;">
-                    <h4 style="margin-top:3px;">סטטסטיקה</h4>
+                <div class="col" style="margin:3px;">
+
+                    <p>* תזכורות בנוגע לניהול המידע:</p>
+                    <i class="bi bi-info-circle"></i><span>הרשומות השונות במאגר המידע ניתנות להשבתה על מנת להימנע ממחיקתם לצמיתות</span>
                     <br />
-                    <span>מספר שחקנים רשומים: <span id="num_gamers"></span></span>
-                    <div style="padding:5px;"></div>
-                    <span>מספר מארגנים רשומים: <span id="num_orgenaizers"></span></span>
-                    <div style="padding:5px;"></div>
-                    <span>מספר תחרויות עתידיות: <span id="num_futurecomp"></span></span>
-                    <div style="padding:5px;"></div>
-                    <span>מספר תחרויות שהתקיימו: <span id="num_pastcomp"></span></span>
-                    <div style="padding:16px;"></div>
+                    <i class="bi bi-info-circle"></i><span>ניתן למחוק משתמש המוגדר כמנהל באמצעות מסד הנתונים של המערכת</span>
 
-
-                    <br />
-
-
-                    <!--<div id="box" style="background-color: #4a5163; font-size:14px;">
-                        <div style="padding:2px;"></div>
-                        <span>מספר תחרויות ממתינות לאישור: 0</span>
-                        <div style="padding:1px;"></div>
-                        <span>מספר שחקנים ממתינים לאישור: 2</span>
-                        <div style="padding:1px;"></div>
-                        <span>מספר מארגנים ממתינים לאישור: 1</span>
-                        <div style="padding:2px;"></div>
-                    </div>-->
-
-
-                </div>
-
-                <div class="col-lg-9" id="services_block" style="text-align:center">
-                    <!--<h4 style="margin-top:3px;">גרפים</h4>-->
-
-                    <div style="padding:5px;"></div>
-
-                    <div id="chartContainer" style="height: 94%; width: 100%;">
+                    <div style="margin-bottom: 40px">
                     </div>
 
                 </div>
 
             </div>
 
-            <br />
-            <br />
 
 
-
-
-            <h3 class="nk-decorated-h-2"><span><span>טבלאות</span> מעקב</span></h3>
+            <h3 class="nk-decorated-h-2"><span><span>טבלאות</span> מידע</span></h3>
 
             <br />
 
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button" role="tab" aria-controls="nav-posts" aria-selected="true">פוסטים באתר</button>
-                    <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-competitions" type="button" role="tab" aria-controls="nav-competitions" aria-selected="false">תחרויות ממתינות לאישור<span id="competitions_waithing" style="color:#dd163b">*</span></button>
-                    <button class="nav-link" id="nav-gamers-tab" data-bs-toggle="tab" data-bs-target="#nav-gamers" type="button" role="tab" aria-controls="nav-gamers" aria-selected="false">שחקנים ממתינים לאישור<span id="gamers_waithing" style="color:#dd163b">*</span></button>
-                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-orgenaizers" type="button" role="tab" aria-controls="nav-orgenaizers" aria-selected="false">מארגנים ממתינים לאישור<span id="orgenaizers_waithing" style="color:#dd163b">*</span></button>
+                    <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button" role="tab" aria-controls="nav-posts" aria-selected="true">פוסטים</button>
+                    <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-competitions" type="button" role="tab" aria-controls="nav-competitions" aria-selected="false">תחרויות</button>
+                    <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-ranks" type="button" role="tab" aria-controls="nav-ranks" aria-selected="false">דירוגים</button>
+                    <button class="nav-link" id="nav-gamers-tab" data-bs-toggle="tab" data-bs-target="#nav-gamers" type="button" role="tab" aria-controls="nav-gamers" aria-selected="false">שחקנים</button>
+                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-orgenaizers" type="button" role="tab" aria-controls="nav-orgenaizers" aria-selected="false">מארגנים</button>
+                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-managers" type="button" role="tab" aria-controls="nav-managers" aria-selected="false">מנהלים</button>
+                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-categories" type="button" role="tab" aria-controls="nav-categories" aria-selected="false">קטגוריות משחק</button>
+                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-israel" type="button" role="tab" aria-controls="nav-israel" aria-selected="false">נבחרת ישראל</button>
                 </div>
             </nav>
 
@@ -1044,7 +1034,7 @@
                                 <table id="RedTitle" class="nk-table" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="background: #dd163b">פוסטים בדף הבית</th>
+                                            <th style="background: #dd163b">פוסטים</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -1081,7 +1071,7 @@
                                 <table id="RedTitle" class="nk-table" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="background: #dd163b">תחרויות שממתינות לאישור</th>
+                                            <th style="background: #dd163b">תחרויות</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -1117,7 +1107,7 @@
                                 <table id="RedTitle" class="nk-table" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="background: #dd163b">שחקנים שממתינים לאישור</th>
+                                            <th style="background: #dd163b">שחקנים</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -1154,7 +1144,7 @@
                                 <table id="RedTitle" class="nk-table" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th style="background: #dd163b">מארגנים שממתינים לאישור</th>
+                                            <th style="background: #dd163b">מארגנים</th>
                                         </tr>
                                     </thead>
                                 </table>

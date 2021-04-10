@@ -1545,6 +1545,62 @@ namespace IESA.Models.DAL
         //---Manager_Main_Page.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+        public List<Posts> ReadDBPostsSQL() //Database.html - method OD1
+        {
+
+            SqlConnection con1 = null;
+            List<Posts> PostsList = new List<Posts>();
+
+            try
+            {
+                con1 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR1 = "SELECT * FROM Posts ORDER BY postid desc";
+
+                SqlCommand cmd1 = new SqlCommand(selectSTR1, con1);
+
+                // get a reader
+                SqlDataReader dr1 = cmd1.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr1.Read())
+                {
+                    Posts post = new Posts();
+
+                    post.Postid = (dr1["postid"] != DBNull.Value) ? Convert.ToInt32(dr1["postid"]) : default;
+                    post.Title = (dr1["title"] != DBNull.Value) ? (string)dr1["title"] : default;
+                    post.Category = (dr1["category"] != DBNull.Value) ? (string)dr1["category"] : default;
+                    post.Viewsnum = (dr1["viewsnum"] != DBNull.Value) ? Convert.ToInt32(dr1["viewsnum"]) : default;
+                    post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
+
+                    PostsList.Add(post);
+                }
+
+                return PostsList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
+            }
+            finally
+            {
+                if (con1 != null)
+                {
+                    con1.Close();
+                }
+
+            }
+
+        }
+
+
+
+
+        //---Database.html--- *Close*
+
+
         //---Orgenzier_Main_Page.html--- *Open*
 
         public Dictionary<int, List<string>> GamersInC(int CId, int val) //Manager_Main_Page.html - method OM1
