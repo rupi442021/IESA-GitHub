@@ -170,10 +170,20 @@ namespace IESA.Models
             dbs.updateCompetitonDetails(CId, c1);
         }
 
-        
+
         //---Edit_Competition.html--- *Close*
 
+        //---ReactClientSide---*Open*
 
+        public List<Competitions> GetCompetitonL() //Manager_Main_Page.html - method OM8
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> clist = dbs.GetCompetitonL();
+            return clist;
+        }
+
+
+        //---ReactClientSide---*Close*
 
 
 

@@ -144,6 +144,19 @@ namespace IESA.Controllers
 
         //---Edit_Competition.html--- *Close*
 
+        //---ReactClientSide---*Open*
+
+        [HttpGet]
+        [Route("api/Competitions/CompetitonsList")]
+        public List<Competitions> GetCl() //- method S1
+            {
+                Competitions lCompetitions = new Competitions();
+                return lCompetitions.GetCompetitonL();
+            }
+        
+
+        //---ReactClientSide---*Close*
+
 
 
 
