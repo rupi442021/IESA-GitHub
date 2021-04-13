@@ -278,21 +278,12 @@
             position: absolute;
             bottom: 65.5%;
             right: 81.9%;
-            /*            position: relative;
-            bottom: 87.7%;
-            right: 82.5%;*/
         }
 
             .add-post-button:hover {
                 background-color: #e0e0e0;
             }
 
-
-        #pForm > div.dataTables_wrapper div.dataTables_filter label { /*Search box - Posts*/
-            position: absolute;
-            top: -46px;
-            right: 59.5%;
-        }
 
         @media only screen and (max-width: 1040px) {
             .add-post-button {
@@ -308,6 +299,65 @@
                 bottom: 22%;
                 /*right: 60%;*/
             }
+        }
+
+
+        #pForm > div.dataTables_wrapper div.dataTables_filter label { /*Search box - Posts*/
+            position: absolute;
+            top: -46px;
+            right: 59.5%;
+        }
+
+        .add-competition-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+            position: absolute;
+            bottom: 65.5%;
+            right: 80.1%;
+        }
+
+            .add-competition-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        #cForm > div.dataTables_wrapper div.dataTables_filter label {
+            position: absolute;
+            top: -46px;
+            right: 57.6%;
+        }
+
+        .add-category-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+            position: absolute;
+            bottom: 65.5%;
+            right: 63.8%;
+        }
+
+            .add-category-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        #caForm > div.dataTables_wrapper div.dataTables_filter label {
+            position: absolute;
+            top: -46px;
+            right: 41.3%;
+        }
+
+        #caForm > div.dataTables_wrapper div.dataTables_paginate {
+            margin-left: 34%;
         }
 
 
@@ -378,6 +428,8 @@
         .bi-info-circle::before { /*Info icon*/
             font-size: 17px;
         }
+
+
     </style>
 
     <script>
@@ -436,6 +488,12 @@
                         if (willDelete) DeleteCompetition(competitionId);
                         //else swal("פעולה לא בוצעה"); *Not needed*
                     });
+
+            });
+
+            $(document).on("click", ".add-competition-button", function () {
+
+                window.open('Add_New_Competition.html', '_blank');
 
             });
 
@@ -545,6 +603,7 @@
 
             //---Categories Table--- *Open*
 
+            ajaxCall("GET", "../api/GamesCategories/tablecaDB", "", getCategoriesSuccess, Error); //Database.html - method OD8
 
             //---Categories Table--- *Close*
 
@@ -896,7 +955,6 @@
                     pageLength: 10,
                     columns: [
                         { data: "Competitionid", className: "uniqueClassName" },
-                        { data: "Competitionstatus", className: "uniqueClassName" },
                         {
                             "data": "Competitionname",
                             "render": function (data) {
@@ -909,6 +967,19 @@
                                     return data;
                                 }
 
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        { data: "Competitionstatus", className: "uniqueClassName" },
+                        {
+                            "data": "Isiesa",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "קהילה";
+                                }
+                                else {
+                                    return "עמותה";
+                                }
                             }
                             , className: "uniqueClassName"
                         },
@@ -1019,6 +1090,66 @@
                                 M_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='M_viewBTN bi bi-eye' " + dataManagers + "></i></a>";
 
                                 return M_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
+                    ],
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function getCategoriesSuccess(categoriesdata) {
+            console.log(categoriesdata);
+
+            categories = categoriesdata;
+
+            try {
+                tbl6 = $('#CategoriesTable').DataTable({
+                    data: categoriesdata,
+                    "order": [[1, "desc"], [0, "asc"]],
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 10,
+                    columns: [
+                        { data: "Categoryname", className: "uniqueClassName" },
+                        {
+                            "data": "Status1",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "לא פעיל";
+                                }
+                                else {
+                                    return "פעיל";
+                                }
+                            }
+                            , className: "uniqueClassName"
+                        },
+
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataCategories = "data-categoryid='" + row.Userid + "'"; //User id for buttons
+
+                                Ca_ActiveBtn = "<a href='javascript:;' class='admit' title='הפוך לפעיל'><i class='Ca_ActiveBTN bi bi-arrow-up-circle' " + dataCategories + "></i></a>";
+                                Ca_InactiveBtn = "<a href='javascript:;' class='delete' title='הפוך ללא פעיל'><i class='Ca_InactiveBTN bi bi-arrow-down-circle' " + dataCategories + "></i></a>";
+
+                                return Ca_InactiveBtn + Ca_ActiveBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -1199,18 +1330,21 @@
                                 <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th style="max-width: 70px;">מספר תחרות</th>
-                                            <th style="max-width: 50px;">סטאטוס</th>
+                                            <th style="max-width: 75px;">מספר תחרות</th>
                                             <th style="max-width: 100px;">כותרת</th>
-                                            <th style="max-width: 50px;">סוג</th>
-                                            <th style="max-width: 60px;">שם מארגן</th>
-                                            <th style="max-width: 65px;">תאריך התחלה</th>
-                                            <th style="max-width: 65px;">תאריך סיום</th>
+                                            <th style="max-width: 40px;">סטאטוס</th>
+                                            <th style="max-width: 45px;">שיוך</th>
+                                            <th style="max-width: 45px;">סוג</th>
+                                            <th style="max-width: 60px;">שם היוצר</th>
+                                            <th style="max-width: 75px;">תאריך התחלה</th>
+                                            <th style="max-width: 75px;">תאריך סיום</th>
                                             <th style="max-width: 60px;">פעולות</th>
                                         </tr>
                                     </thead>
                                 </table>
                             </form>
+
+                            <button class="add-competition-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת תחרות חדשה</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
 
                         </div>
 
@@ -1369,26 +1503,25 @@
                         <div class="col">
 
                             <form id="caForm">
-                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                <table id="RedTitle" class="nk-table" style="width:60%; margin-left: auto; margin-right: auto;">
                                     <thead>
                                         <tr>
                                             <th style="background: #dd163b">קטגוריות משחק</th>
                                         </tr>
                                     </thead>
                                 </table>
-                                <table id="ManagersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                <table id="CategoriesTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:60%;">
                                     <thead>
                                         <tr>
-                                            <th style="max-width: 70px;">כותרת 1</th>
-                                            <th style="max-width: 50px;">כותרת 2</th>
-                                            <th style="max-width: 100px;">כותרת 3</th>
-                                            <th style="max-width: 50px;">כותרת 4</th>
-                                            <th style="max-width: 60px;">כותרת 5</th>
-                                            <th style="max-width: 65px;">כותרת 6</th>
+                                            <th style="max-width: 80px;">שם קטגוריה</th>
+                                            <th style="max-width: 60px;">שיוך</th>
+                                            <th style="max-width: 50px;">פעולות</th>
                                         </tr>
                                     </thead>
                                 </table>
                             </form>
+
+                            <button class="add-category-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת קטגוריה</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
 
                         </div>
 
@@ -1410,7 +1543,7 @@
                                         </tr>
                                     </thead>
                                 </table>
-                                <table id="ManagersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                <table id="IsraelTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                                     <thead>
                                         <tr>
                                             <th style="max-width: 70px;">כותרת 1</th>

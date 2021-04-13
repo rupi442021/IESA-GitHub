@@ -47,5 +47,20 @@ namespace IESA.Controllers
         //---Add_Game_Category.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+
+        [HttpGet] //Database.html - method OD8
+        [Route("api/GamesCategories/tablecaDB")]
+        public List<GamesCategories> GetCategoriesDB()
+        {
+            GamesCategories gameslist = new GamesCategories();
+            return gameslist.ReadCategoriesDB();
+        }
+
+
+        //---Database.html--- *Close*
+
+
     }
 }

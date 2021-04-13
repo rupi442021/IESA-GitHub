@@ -1456,7 +1456,7 @@ namespace IESA.Models.DAL
             {
                 con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionstatus, Competitions.competitionname, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
+                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
 
                 SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
 
@@ -1468,8 +1468,8 @@ namespace IESA.Models.DAL
                     Competitions competition = new Competitions();
 
                     competition.Competitionid = (dr4["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr4["competitionid"]) : default;
-                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
                     competition.Competitionname = (dr4["competitionname"] != DBNull.Value) ? (string)dr4["competitionname"] : default;
+                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
                     competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
                     competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
                     competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
@@ -1704,7 +1704,7 @@ namespace IESA.Models.DAL
             {
                 con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionstatus, Competitions.competitionname, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
+                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.isiesa, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
 
                 SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
 
@@ -1716,8 +1716,9 @@ namespace IESA.Models.DAL
                     Competitions competition = new Competitions();
 
                     competition.Competitionid = (dr4["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr4["competitionid"]) : default;
-                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
                     competition.Competitionname = (dr4["competitionname"] != DBNull.Value) ? (string)dr4["competitionname"] : default;
+                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
+                    competition.Isiesa = (dr4["isiesa"] != DBNull.Value) ? Convert.ToInt32(dr4["isiesa"]) : default;
                     competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
                     competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
                     competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
@@ -1891,6 +1892,48 @@ namespace IESA.Models.DAL
 
             }
 
+        }
+
+        public List<GamesCategories> ReadCategoriesDBSQL() //Database.html - method OD8
+        {
+            SqlConnection con6 = null;
+            List<GamesCategories> caList = new List<GamesCategories>();
+
+            try
+            {
+                con6 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR6 = "select * from GamesCategories";
+                SqlCommand cmd = new SqlCommand(selectSTR6, con6);
+
+                // get a reader
+                SqlDataReader dr6 = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr6.Read())
+                {
+                    GamesCategories ca = new GamesCategories();
+
+                    ca.Categoryname = (dr6["categoryname"] != DBNull.Value) ? (string)dr6["categoryname"] : default;
+                    ca.Status1 = (dr6["status1"] != DBNull.Value) ? Convert.ToInt32(dr6["status1"]) : default;
+
+                    caList.Add(ca);
+                }
+
+                return caList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con6 != null)
+                {
+                    con6.Close();
+                }
+
+            }
         }
 
         //---Database.html--- *Close*
