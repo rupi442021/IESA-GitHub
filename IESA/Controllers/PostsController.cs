@@ -91,9 +91,13 @@ namespace IESA.Controllers
             return postslist.ReadDBPosts();
         }
 
-
-
-
+        [HttpPut] //Database.html - method OD2
+        [Route("api/Posts/delp")]
+        public void deletePost(int todeleteid)
+        {
+            Posts post1 = new Posts();
+            post1.DeletePost(todeleteid);
+        }
 
 
         //---Database.html--- *Close*

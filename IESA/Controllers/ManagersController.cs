@@ -39,6 +39,21 @@ namespace IESA.Controllers
 
         //---Manager_Main_Page.html--- *Close*
 
+        //---Database.html--- *Open*
+
+
+        [HttpGet] //Database.html - method OD7
+        [Route("api/Managers/tableMdb")]
+        public List<Managers> GetManagersDB()
+        {
+            Managers managerslist = new Managers();
+            return managerslist.ReadManagersDB();
+        }
+
+
+
+        //---Database.html--- *Close*
+
 
     }
 }

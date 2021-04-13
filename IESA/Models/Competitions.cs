@@ -150,6 +150,24 @@ namespace IESA.Models
         //---Manager_Main_Page.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+        public void DeleteCompetition(int todeleteid) //Database.html - method OD3
+        {
+            DBServices dbs = new DBServices();
+            dbs.DeleteCompSQL(todeleteid);
+        }
+
+        public List<Competitions> ReadCompetitionsDB() //Database.html - method OD4
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> clist = dbs.ReadCompetitionsDBSQL();
+            return clist;
+        }
+
+        //---Database.html--- *Close*
+
+
         public Competitions ReadOneCompetition(int CId)
         {
             DBServices dbs = new DBServices();
@@ -172,6 +190,7 @@ namespace IESA.Models
 
 
         //---Edit_Competition.html--- *Close*
+
 
         //---ReactClientSide---*Open*
 

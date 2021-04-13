@@ -127,6 +127,12 @@ namespace IESA.Models
             return plist;
         }
 
+        public void DeletePost(int todeleteid) //Database.html - method OD2
+        {
+            DBServices dbs = new DBServices();
+            dbs.DeletePostSQL(todeleteid);
+        }
+
 
         //---Database.html--- *Close*
 

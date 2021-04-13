@@ -83,5 +83,16 @@ namespace IESA.Models
 
         //---Manager_Main_Page.html--- *Close*
 
+        //---Database.html--- *Open*
+
+        public List<Managers> ReadManagersDB() //Database.html - method OD7
+        {
+            DBServices dbs = new DBServices();
+            List<Managers> mlist = dbs.ReadManagersDBSQL();
+            return mlist;
+        }
+
+        //---Database.html--- *Close*
+
     }
 }
