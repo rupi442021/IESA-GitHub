@@ -18,7 +18,7 @@ namespace IESA.Controllers
             return newid.getCompetitionId();
         }
 
-        public void Post([FromBody] Competitions Competition) //Add_New_Competitions.html 
+        public void Post(Competitions Competition) //Add_New_Competitions.html 
         {
             Competition.InsertCompetition();
         }

@@ -2935,6 +2935,108 @@ namespace IESA.Models.DAL
             }
         }
 
+
+        public List<Comments> ReadCommentsForPosts(int Pid)
+        {
+            SqlConnection con = null;
+            List<Comments> cList = new List<Comments>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from PostsComments_React where idpost=" + Pid;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+                
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Comments c = new Comments();
+                    c.Postid = Convert.ToInt32(dr["idpost"]);
+                    c.Commentid = Convert.ToInt32(dr["idcomment"]);
+                    c.Name = (string)dr["commentname"];
+                    c.Body = (string)dr["commentbody"];
+                    c.Date = Convert.ToDateTime(dr["date1"]);
+
+                     cList.Add(c);
+                }
+
+                return cList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+        public int InsertComments(Comments comments) 
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommandforComment(comments);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommandforComment(Comments comments) 
+        {
+            String command;
+            
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat(" Values( " + comments.Postid + " , '" + comments.Name + "' , '" + comments.Body + "', getdate() )");
+            String prefix = " INSERT INTO PostsComments_React ";
+          
+            command = prefix + sb.ToString();
+
+            return command;
+
+        }
         //---ReactClientSide---*Close*
 
 
