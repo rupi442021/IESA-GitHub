@@ -9,11 +9,6 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
-    <!--Graph-->
-
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-    <!--Graph-->
     <!--Data Tables-->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -430,13 +425,121 @@
         }
 
 
+
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 15%; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+
+            color: black;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 30%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            
+        }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        /* The Close Button */
+
+        .modal-header {
+            padding: 6px 16px;
+            background-color: #dd163b;
+            color: white;
+/*            font-family: "Open Sans",sans-serif;*/
+
+        }
+
+        .modal-body {
+            padding: 2px 16px;
+        }
+
+        .modal-footer {
+            padding: 2px 16px;
+            color: white;
+        }
+
     </style>
 
     <script>
 
+
+
         //tbl1 = gamers | tbl2 = orgenaizers | tbl3 = posts | tbl4 = competitions | tbl5 = managers | tbl6 = categoies | tbl7 = israel |tblX = ranks (to be added later)*
 
         $(document).ready(function () {
+
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            //var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal 
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            //span.onclick = function () {
+            //    modal.style.display = "none";
+            //}
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
 
             //---Posts Table--- *Open*
 
@@ -604,6 +707,27 @@
             //---Categories Table--- *Open*
 
             ajaxCall("GET", "../api/GamesCategories/tablecaDB", "", getCategoriesSuccess, Error); //Database.html - method OD8
+
+            $(document).on("click", ".Ca_InactiveBTN", function () {
+                var isactive = 0;
+                var categoryid = this.getAttribute('data-categoryid');
+
+                ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD9
+            });
+
+            $(document).on("click", ".Ca_ActiveBTN", function () {
+                var isactive = 1;
+                var categoryid = this.getAttribute('data-categoryid');
+
+                ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD9
+            });
+
+            $(document).on("click", ".Ca_editBTN", function () {
+                var categoryid = this.getAttribute('data-categoryid');
+                swal("Modal open for id: " + categoryid);
+
+                //ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD10
+            });
 
             //---Categories Table--- *Close*
 
@@ -849,6 +973,17 @@
 
             redrawTable(tbl2, orgenaizersdata);
             ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //(#) Manager_Main_Page.html - method OM9
+            swal("פעולה בוצעה בהצלחה", "", "success");
+        }
+
+        function UpdateSuccessCa(data) {
+
+            ajaxCall("GET", "../api/GamesCategories/tablecaDB", "", UpdateSuccessCa2, Error); //Database.html - method OD8
+        }
+
+        function UpdateSuccessCa2(categoriesdata) {
+
+            redrawTable(tbl6, categoriesdata);
             swal("פעולה בוצעה בהצלחה", "", "success");
         }
 
@@ -1128,14 +1263,17 @@
                     responsive: true,
                     pageLength: 10,
                     columns: [
+
                         { data: "Categoryname", className: "uniqueClassName" },
                         {
                             "data": "Status1",
                             "render": function (data) {
                                 if (data == 0) {
+                                    isactive = 0;
                                     return "לא פעיל";
                                 }
                                 else {
+                                    isactive = 1;
                                     return "פעיל";
                                 }
                             }
@@ -1144,12 +1282,19 @@
 
                         {
                             render: function (data, type, row, meta) {
-                                let dataCategories = "data-categoryid='" + row.Userid + "'"; //User id for buttons
+                                let dataCategories = "data-categoryid='" + row.Categoryid + "'";
 
-                                Ca_ActiveBtn = "<a href='javascript:;' class='admit' title='הפוך לפעיל'><i class='Ca_ActiveBTN bi bi-arrow-up-circle' " + dataCategories + "></i></a>";
-                                Ca_InactiveBtn = "<a href='javascript:;' class='delete' title='הפוך ללא פעיל'><i class='Ca_InactiveBTN bi bi-arrow-down-circle' " + dataCategories + "></i></a>";
+                                if (isactive == 0) {
+                                    Ca_ActiveBtn = "<a href='javascript:;' class='admit' title='הפוך לפעיל'><i class='Ca_ActiveBTN bi bi-check-circle' " + dataCategories + "></i></a>";
+                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategories + "></i></a>";
+                                    return CA_editBtn + Ca_ActiveBtn;
+                                }
+                                else {
+                                    Ca_InactiveBtn = "<a href='javascript:;' class='delete' title='הפוך ללא פעיל'><i class='Ca_InactiveBTN bi bi-x-circle' " + dataCategories + "></i></a>";
+                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategories + "></i></a>";
+                                    return CA_editBtn + Ca_InactiveBtn;
+                                }
 
-                                return Ca_InactiveBtn + Ca_ActiveBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -1564,6 +1709,33 @@
                 </div>
 
             </div> <!--End of tabs-->
+
+
+            <h2>Animated Modal with Header and Footer</h2>
+
+            <!-- Trigger/Open The Modal -->
+            <button id="myBtn">Open Modal</button>
+
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content" style="text-align:right">
+                    <div class="modal-header">
+                        <!--<span class="close">&times;</span>-->
+                        <h4>עריכת קטגורית משחק</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>קצת טקסט</p>
+                        <p>עוד טקסט</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button>סגור</button>
+                    </div>
+
+                </div>
+
+            </div>
 
 
         </div> <!--container-->

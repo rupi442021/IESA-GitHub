@@ -1913,6 +1913,7 @@ namespace IESA.Models.DAL
                 {
                     GamesCategories ca = new GamesCategories();
 
+                    ca.Categoryid = (dr6["categoryid"] != DBNull.Value) ? Convert.ToInt32(dr6["categoryid"]) : default;
                     ca.Categoryname = (dr6["categoryname"] != DBNull.Value) ? (string)dr6["categoryname"] : default;
                     ca.Status1 = (dr6["status1"] != DBNull.Value) ? Convert.ToInt32(dr6["status1"]) : default;
 
@@ -1934,6 +1935,55 @@ namespace IESA.Models.DAL
                 }
 
             }
+        }
+
+        public int changeStatusSQL(int isactive, int categoryid) //Database.html - method OD9
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandCStatus(isactive, categoryid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandCStatus(int isactive, int categoryid)
+        {
+            String command;
+            command = "UPDATE GamesCategories SET status1 = " + isactive + " WHERE categoryid = " + categoryid + " ";
+            return command;
         }
 
         //---Database.html--- *Close*
@@ -2047,7 +2097,7 @@ namespace IESA.Models.DAL
                 sa.Append(" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , " + rankarray[i].Rank1 + " ) ");
             }
 
-            command2 = " UPDATE Competitions SET  competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
+            command2 = "UPDATE Competitions SET competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
             command = sa.ToString() + command2;
 
             return command;
@@ -2813,6 +2863,7 @@ namespace IESA.Models.DAL
 
 
         //---Edit_Competition.html--- *Close*
+
 
         //---ReactClientSide---*Open*
 

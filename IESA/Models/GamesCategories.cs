@@ -68,12 +68,21 @@ namespace IESA.Models
 
         //---Database.html--- *Open*
 
+
         public List<GamesCategories> ReadCategoriesDB() //Database.html - method OD8
         {
             DBServices dbs = new DBServices();
             List<GamesCategories> calist = dbs.ReadCategoriesDBSQL();
             return calist;
         }
+
+
+        public void changeStatus(int isactive, int categoryid) //Database.html - method OD9
+        {
+            DBServices dbs = new DBServices();
+            dbs.changeStatusSQL(isactive, categoryid);
+        }
+
 
         //---Database.html--- *Close*
 
