@@ -2,18 +2,21 @@
 <html dir="rtl">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Modal-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Modal-->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-
-    <!--Graph-->
-
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-    <!--Graph-->
 
     <!--Data Tables-->
 
@@ -30,6 +33,8 @@
 
     <!--Data Tables-->
 
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
     <title>&#x202E; ניהול מערכת – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
@@ -42,7 +47,9 @@
             background-color: #212529;
             color: white;
             letter-spacing: .015em;
+            padding-right: 0px;
         }
+
 
         .container {
             background-color: #292e38;
@@ -229,11 +236,6 @@
                 transition: .15s color;
             }
 
-            a.edit:hover {
-                color: #f3cc5b;
-                transition: .15s color;
-            }
-
             a.view:hover {
                 color: #5c99f0;
                 transition: .15s color;
@@ -278,10 +280,7 @@
             transition-duration: 0.20s;
             position: absolute;
             bottom: 49.2%;
-            right: 81.9%;
-/*            position: relative;
-            bottom: 87.7%;
-            right: 82.5%;*/
+            right: 82%;
         }
 
             .add-post-button:hover {
@@ -296,7 +295,6 @@
             .add-post-button {
                 right: 77.5%;
                 bottom: 24.3%;
-                /*right: 77.5%;*/
             }
         }
 
@@ -304,7 +302,6 @@
             .add-post-button {
                 right: 60%;
                 bottom: 22%;
-                /*right: 60%;*/
             }
         }
 
@@ -364,21 +361,92 @@
             border-right: 6px solid #292e38;
         }
 
-        .nav-tabs .nav-link { /*Color of the tabs*/
-            color: #fbf5f5;
+        /*Modal*/
+
+        html {
+            overflow-y: scroll !important;
         }
 
-        /*        #box {
-            -webkit-box-shadow: 0 10px 6px -6px #292e38;
-            -moz-box-shadow: 0 10px 6px -6px #292e38;
-            box-shadow: 0 10px 6px -6px #292e38;
-        }*/
+        .modal-content {
+            color: black;
+        }
+
+        /*Modal*/
+
 
     </style>
 
     <script>
 
+
+
+                function buildGradesGraph() {
+                    var chart = new CanvasJS.Chart("chartContainer",
+                        {
+                            title: {
+                                text: "מספר כניסות לאתר שבועי - דוגמא"
+                            },
+                            axisX: {
+                                labelFormatter: function (e) {
+                                    return "יום " + (e.value + 1);
+                                }
+                            },
+                            data: [
+                                {
+                                    type: "line",
+                                    dataPoints: [
+                                        { y: 17 },
+                                        { y: 32 },
+                                        { y: 22 },
+                                        { y: 14 },
+                                        { y: 25 },
+                                        { y: 18 },
+                                        { y: 20 }
+                                    ]
+                                }
+                            ]
+                        });
+                    chart.render();
+                }
+
+        //function buildGradesGraph() {
+        //    var chart = new CanvasJS.Chart("chartContainer",
+        //        {
+        //            title: {
+        //                text: "מספר כניסות לאתר"
+        //            },
+        //            axisX: {
+        //                interlacedColor: "#fff"
+        //            },
+        //            data: [
+
+        //                {
+        //                    type: "line",
+        //                    dataPoints: [
+        //                        { x: 1, y: 171 },
+        //                        { x: 2, y: 155 },
+        //                        { x: 3, y: 150 },
+        //                        { x: 4, y: 165 },
+        //                        { x: 5, y: 195 },
+        //                        { x: 6, y: 168 },
+        //                        { x: 7, y: 128 }
+        //                    ]
+        //                }
+        //            ]
+        //        });
+
+        //    chart.render();
+        //}
+
         $(document).ready(function () {
+
+
+            $(document).on("click", "#closeBTN", function () {
+
+                $("hello").css("padding-right", "0px !important");
+
+
+            });
 
             //---Posts Table--- *Open*
 
@@ -487,40 +555,9 @@
 
         function init() {
 
-            buildGradesGraph();
-
             ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
 
             //Check if the user is manager
-        }
-
-        function buildGradesGraph() {
-            var chart = new CanvasJS.Chart("chartContainer",
-                {
-                    title: {
-                        text: "מספר כניסות לאתר שבועי - דוגמא"
-                    },
-                    axisX: {
-                        labelFormatter: function (e) {
-                            return "יום " + (e.value + 1);
-                        }
-                    },
-                    data: [
-                        {
-                            type: "line",
-                            dataPoints: [
-                                { y: 17 },
-                                { y: 32 },
-                                { y: 22 },
-                                { y: 14 },
-                                { y: 25 },
-                                { y: 18 },
-                                { y: 20 }
-                            ]
-                        }
-                    ]
-                });
-            chart.render();
         }
 
 
@@ -580,7 +617,7 @@
                             render: function (data, type, row, meta) {
                                 let dataGamers = "data-gamerid='" + row.Userid + "'"; //User id for buttons
 
-                                G_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='G_rejectBTN bi bi-x-circle' " + dataGamers + "></i></a>";
+                                G_rejectBtn = "<a href='javascript:;' class='reject' title='דחה'><i class='G_rejectBTN bi bi-x-circle' data-toggle='modal' data-target='#myModal' " + dataGamers + "></i></a>";
                                 G_admitBtn = "<a href='javascript:;' class='admit' title='אשר'><i class='G_admitBTN bi bi-check-circle' " + dataGamers + "></i></a>";
                                 G_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='G_viewBTN bi bi-person-circle' " + dataGamers + "></i></a>";
 
@@ -747,21 +784,7 @@
                     pageLength: 4,
                     columns: [
                         { data: "Postid", className: "uniqueClassName" },
-                        {
-                            "data": "Title",
-                            "render": function (data) {
-                                if (data.length > 40) {
-                                    var title_edit = data.substring(0, 38);
-                                    var title_after = title_edit + "..";
-                                    return title_after;
-                                }
-                                else {
-                                    return data;
-                                }
-
-                            }
-                            , className: "uniqueClassName"
-                        },
+                        { data: "Title", className: "uniqueClassName" },
                         { data: "Category", className: "uniqueClassName" },
                         { data: "Viewsnum", className: "uniqueClassName" },
                         {
@@ -781,7 +804,7 @@
                                 let dataPosts = "data-postid='" + row.Postid + "'"; //User id for buttons
 
                                 P_viewBtn = "<a href='Post.html?postid=" + row.Postid + "' target='_blank' class='view' title='צפה'><i class='P_viewBTN bi bi-eye' " + dataPosts + "></i></a>";
-                                P_editBtn = "<a href='Edit_Post.html?postid=" + row.Postid + "' target='_blank' class='edit' title='ערוך'><i class='P_editBTN bi bi-pencil' " + dataPosts + "></i></a>";
+                                P_editBtn = "<a href='Edit_Post.html?postid=" + row.Postid + "' target='_blank' class='view' title='ערוך'><i class='P_editBTN bi bi-pencil' " + dataPosts + "></i></a>";
 
                                 return P_editBtn + P_viewBtn;
                             }
@@ -823,22 +846,7 @@
                     pageLength: 4,
                     columns: [
                         { data: "Competitionid", className: "uniqueClassName" },
-                        {
-                            "data": "Competitionname",
-                            "render": function (data) {
-                                if (data.length > 27) {
-                                    var title_edit = data.substring(0, 25);
-                                    var title_after = title_edit + "..";
-                                    return title_after;
-                                }
-                                else {
-                                    return data;
-                                }
-
-                            }
-                            , className: "uniqueClassName"
-                        },
-                        { data: "Competitionstatus", className: "uniqueClassName" },
+                        { data: "Competitionname", className: "uniqueClassName" },
                         {
                             "data": "Ispro",
                             "render": function (data) {
@@ -880,9 +888,8 @@
                                 let dataCompetitions = "data-competitionid='" + row.Competitionid + "'";
 
                                 C_viewBtn = "<a href='Competition_View.html?competitionid=" + row.Competitionid + "' target = '_blank' class='view' title='צפה'><i class='C_viewBTN bi bi-eye' " + dataCompetitions + "></i></a>";
-                                C_editBtn = "<a href='Edit_Competition.html?competitionid=" + row.Competitionid + "' target='_blank' class='edit' title='ערוך'><i class='C_editBTN bi bi-pencil' " + dataCompetitions + "></i></a>";
 
-                                return C_editBtn + C_viewBtn;
+                                return C_viewBtn;
                             }
                             , className: "uniqueClassName"
                         }
@@ -911,15 +918,13 @@
             document.getElementById("num_futurecomp").innerHTML = numfuturecomp;
             document.getElementById("num_pastcomp").innerHTML = numpastcomp;
 
-            //FIX IT TO BE HIGHER THEN 0*******************************************************************************************
-            if (parseInt(statisticsdict["7"]) > 0) //Competition waithing
+
+            if (parseInt(statisticsdict["7"]) > 0) //Gamers waithing
             {
-                
                 document.getElementById("competitions_waithing").style.visibility = "visible";
             }
             else {
-                
-                document.getElementById("competitions_waithing").style.visibility = "visible";
+                document.getElementById("competitions_waithing").style.visibility = "hidden";
             }
 
             if (parseInt(statisticsdict["5"]) > 0) //Gamers waithing
@@ -948,7 +953,7 @@
 
 
 </head>
-<body onload="init()">
+<body onload="buildGradesGraph()" id="hello">
 
     <section id="Nav-bar">
         <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
@@ -963,7 +968,6 @@
                 <h2 class="headh2">ניהול מערכת</h2>
                 <div class="divdown"></div>
             </section>
-
 
             <div class="row">
 
@@ -997,7 +1001,7 @@
                 </div>
 
                 <div class="col-lg-9" id="services_block" style="text-align:center">
-                    <!--<h4 style="margin-top:3px;">גרפים</h4>-->
+                    <!--<h4 style="margin-top:3px;">גרף</h4>-->
 
                     <div style="padding:5px;"></div>
 
@@ -1090,11 +1094,10 @@
                                         <tr>
                                             <th style="max-width: 70px;">מספר תחרות</th>
                                             <th style="max-width: 100px;">כותרת</th>
-                                            <th style="max-width: 50px;">סטאטוס</th>
-                                            <th style="max-width: 50px;">סוג</th>
+                                            <th style="max-width: 70px;">סוג</th>
                                             <th style="max-width: 60px;">שם מארגן</th>
-                                            <th style="max-width: 65px;">תאריך התחלה</th>
-                                            <th style="max-width: 65px;">תאריך סיום</th>
+                                            <th style="max-width: 55px;">תאריך התחלה</th>
+                                            <th style="max-width: 70px;">תאריך סיום</th>
                                             <th style="max-width: 60px;">פעולות</th>
                                         </tr>
                                     </thead>
@@ -1181,6 +1184,39 @@
                 </div>
 
             </div> <!--End of tabs-->
+
+
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Open modal</button>
+
+            <!-- Modal Open -->
+            <div class="modal fade" id="myModal" style="color:black; text-align:right">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">פרטי משתמש</h4>
+
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <p>מספר שחקן: 800000000</p>
+                            <p>שם: עומר</p>
+                            <p>שם משפחה: בצלאל</p>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer" style="color:black">
+                            <button type="button" id="closeBTN" class="btn btn-danger" data-dismiss="modal">סגירה</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- Modal Close -->
 
 
         </div> <!--container-->

@@ -1456,7 +1456,7 @@ namespace IESA.Models.DAL
             {
                 con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionstatus, Competitions.competitionname, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
+                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
 
                 SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
 
@@ -1468,8 +1468,8 @@ namespace IESA.Models.DAL
                     Competitions competition = new Competitions();
 
                     competition.Competitionid = (dr4["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr4["competitionid"]) : default;
-                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
                     competition.Competitionname = (dr4["competitionname"] != DBNull.Value) ? (string)dr4["competitionname"] : default;
+                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
                     competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
                     competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
                     competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
@@ -1596,14 +1596,402 @@ namespace IESA.Models.DAL
         }
 
 
+        public int DeletePostSQL(int todeleteid) //Database.html - method OD2
+        {
 
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildDeleteCommandPost(todeleteid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildDeleteCommandPost(int todeleteid)
+        {
+            String command;
+            command = "DELETE From Posts WHERE postid = " + todeleteid;
+            return command;
+        }
+
+        public int DeleteCompSQL(int todeleteid) //Database.html - method OD3
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildDeleteCommandComp(todeleteid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildDeleteCommandComp(int todeleteid)
+        {
+            String command;
+            command = "DELETE From Competitions WHERE competitionid = " + todeleteid;
+            return command;
+        }
+
+        public List<Competitions> ReadCompetitionsDBSQL() //Database.html - method OD4
+        {
+
+            SqlConnection con4 = null;
+            List<Competitions> CompetitionsList = new List<Competitions>();
+
+            try
+            {
+                con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.isiesa, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
+
+                SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
+
+                // get a reader
+                SqlDataReader dr4 = cmd4.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr4.Read())
+                {
+                    Competitions competition = new Competitions();
+
+                    competition.Competitionid = (dr4["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr4["competitionid"]) : default;
+                    competition.Competitionname = (dr4["competitionname"] != DBNull.Value) ? (string)dr4["competitionname"] : default;
+                    competition.Competitionstatus = (dr4["competitionstatus"] != DBNull.Value) ? (string)dr4["competitionstatus"] : default;
+                    competition.Isiesa = (dr4["isiesa"] != DBNull.Value) ? Convert.ToInt32(dr4["isiesa"]) : default;
+                    competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
+                    competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
+                    competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
+                    competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+
+                    CompetitionsList.Add(competition);
+                }
+
+                return CompetitionsList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con4 != null)
+                {
+                    con4.Close();
+                }
+
+            }
+
+        }
+
+        public List<Gamers> ReadGamersDBSQL() //Database.html - method OD5
+        {
+
+            SqlConnection con = null;
+            List<Gamers> GamersList = new List<Gamers>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Gamers";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Gamers gamer = new Gamers();
+
+                    gamer.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
+                    gamer.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
+                    gamer.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
+                    gamer.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
+                    gamer.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
+                    gamer.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
+                    gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    GamersList.Add(gamer);
+                }
+
+                return GamersList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+        public List<Orgenaizers> ReadOrgenaizersDBSQL() //Database.html - method OD6
+        {
+
+            SqlConnection con2 = null;
+            List<Orgenaizers> OrgenaizersList = new List<Orgenaizers>();
+
+            try
+            {
+                con2 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR2 = "SELECT * FROM Orgenaizers";
+                SqlCommand cmd2 = new SqlCommand(selectSTR2, con2);
+
+                // get a reader
+                SqlDataReader dr2 = cmd2.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr2.Read())
+                {
+                    Orgenaizers orgenaizer = new Orgenaizers();
+
+                    orgenaizer.Userid = (dr2["userid"] != DBNull.Value) ? Convert.ToInt32(dr2["userid"]) : default;
+                    orgenaizer.Firstname = (dr2["firstname"] != DBNull.Value) ? (string)dr2["firstname"] : default;
+                    orgenaizer.Lastname = (dr2["lastname"] != DBNull.Value) ? (string)dr2["lastname"] : default;
+                    orgenaizer.Phone = (dr2["phone"] != DBNull.Value) ? (string)dr2["phone"] : default;
+                    orgenaizer.Email = (dr2["email"] != DBNull.Value) ? (string)dr2["email"] : default;
+                    orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
+
+                    OrgenaizersList.Add(orgenaizer);
+                }
+
+                return OrgenaizersList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con2 != null)
+                {
+                    con2.Close();
+                }
+
+            }
+
+        }
+
+        public List<Managers> ReadManagersDBSQL() //Database.html - method OD7
+        {
+
+            SqlConnection con5 = null;
+            List<Managers> ManagersList = new List<Managers>();
+
+            try
+            {
+                con5 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR5 = "SELECT * FROM Managers";
+                SqlCommand cmd5 = new SqlCommand(selectSTR5, con5);
+
+                // get a reader
+                SqlDataReader dr5 = cmd5.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr5.Read())
+                {
+                    Managers manager = new Managers();
+
+                    manager.Userid = (dr5["userid"] != DBNull.Value) ? Convert.ToInt32(dr5["userid"]) : default;
+                    manager.Firstname = (dr5["firstname"] != DBNull.Value) ? (string)dr5["firstname"] : default;
+                    manager.Lastname = (dr5["lastname"] != DBNull.Value) ? (string)dr5["lastname"] : default;
+                    manager.Role1 = (dr5["role1"] != DBNull.Value) ? (string)dr5["role1"] : default;
+                    manager.Phone = (dr5["phone"] != DBNull.Value) ? (string)dr5["phone"] : default;
+                    manager.Email = (dr5["email"] != DBNull.Value) ? (string)dr5["email"] : default;
+                    manager.Dob = (dr5["dob"] != DBNull.Value) ? Convert.ToDateTime(dr5["dob"]) : default;
+
+
+                    ManagersList.Add(manager);
+                }
+
+                return ManagersList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con5 != null)
+                {
+                    con5.Close();
+                }
+
+            }
+
+        }
+
+        public List<GamesCategories> ReadCategoriesDBSQL() //Database.html - method OD8
+        {
+            SqlConnection con6 = null;
+            List<GamesCategories> caList = new List<GamesCategories>();
+
+            try
+            {
+                con6 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR6 = "select * from GamesCategories";
+                SqlCommand cmd = new SqlCommand(selectSTR6, con6);
+
+                // get a reader
+                SqlDataReader dr6 = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr6.Read())
+                {
+                    GamesCategories ca = new GamesCategories();
+
+                    ca.Categoryid = (dr6["categoryid"] != DBNull.Value) ? Convert.ToInt32(dr6["categoryid"]) : default;
+                    ca.Categoryname = (dr6["categoryname"] != DBNull.Value) ? (string)dr6["categoryname"] : default;
+                    ca.Status1 = (dr6["status1"] != DBNull.Value) ? Convert.ToInt32(dr6["status1"]) : default;
+
+                    caList.Add(ca);
+                }
+
+                return caList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con6 != null)
+                {
+                    con6.Close();
+                }
+
+            }
+        }
+
+        public int changeStatusSQL(int isactive, int categoryid) //Database.html - method OD9
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandCStatus(isactive, categoryid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandCStatus(int isactive, int categoryid)
+        {
+            String command;
+            command = "UPDATE GamesCategories SET status1 = " + isactive + " WHERE categoryid = " + categoryid + " ";
+            return command;
+        }
 
         //---Database.html--- *Close*
 
 
         //---Orgenzier_Main_Page.html--- *Open*
 
-        public Dictionary<int, List<string>> GamersInC(int CId, int val) //Manager_Main_Page.html - method OM1
+        public Dictionary<int, List<string>> GamersInC(int CId, int val)
         {
 
             SqlConnection con = null;
@@ -1709,7 +2097,7 @@ namespace IESA.Models.DAL
                 sa.Append(" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , " + rankarray[i].Rank1 + " ) ");
             }
 
-            command2 = " UPDATE Competitions SET  competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
+            command2 = "UPDATE Competitions SET competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
             command = sa.ToString() + command2;
 
             return command;
@@ -2475,6 +2863,7 @@ namespace IESA.Models.DAL
 
 
         //---Edit_Competition.html--- *Close*
+
 
         //---ReactClientSide---*Open*
 

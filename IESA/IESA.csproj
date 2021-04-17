@@ -209,6 +209,7 @@
     <Content Include="Pages\Edit_Post.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Gamer_Card.html" />
+    <Content Include="Pages\MODALTRY.html" />
     <Content Include="Pages\Project_Menu.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Post_Archive.html" />

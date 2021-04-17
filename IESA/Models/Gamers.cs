@@ -155,6 +155,17 @@ namespace IESA.Models
         //---Manager_Main_Page.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+        public List<Gamers> ReadGamersDB() //Database.html - method OD5
+        {
+            DBServices dbs = new DBServices();
+            List<Gamers> glist = dbs.ReadGamersDBSQL();
+            return glist;
+        }
+
+        //---Database.html--- *Close*
+
 
         //---Orgenaizer_Main_Page.html--- *Open*
 

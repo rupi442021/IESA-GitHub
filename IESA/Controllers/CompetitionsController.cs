@@ -144,6 +144,28 @@ namespace IESA.Controllers
 
         //---Edit_Competition.html--- *Close*
 
+
+        //---Database.html--- *Open*
+
+        [HttpPut] //Database.html - method OD3
+        [Route("api/Competitions/delc")]
+        public void deleteCompetition(int todeleteid)
+        {
+            Competitions comp1 = new Competitions();
+            comp1.DeleteCompetition(todeleteid);
+        }
+
+        [HttpGet] //Manager_Main_Page.html - method OD4
+        [Route("api/Competitions/tablecdb")]
+        public List<Competitions> GetCompetitionsDB()
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.ReadCompetitionsDB();
+        }
+
+        //---Database.html--- *Close*
+
+
         //---ReactClientSide---*Open*
 
         [HttpGet]

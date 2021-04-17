@@ -47,5 +47,27 @@ namespace IESA.Controllers
         //---Add_Game_Category.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+
+        [HttpGet] //Database.html - method OD8
+        [Route("api/GamesCategories/tablecaDB")]
+        public List<GamesCategories> GetCategoriesDB()
+        {
+            GamesCategories gameslist = new GamesCategories();
+            return gameslist.ReadCategoriesDB();
+        }
+
+        [HttpPut] //Database.html - method OD9
+        [Route("api/GamesCategories/tablecstatus")]
+        public void changeStatus(int isactive, int categoryid)
+        {
+            GamesCategories categorystatus = new GamesCategories();
+            categorystatus.changeStatus(isactive, categoryid);
+        }
+
+        //---Database.html--- *Close*
+
+
     }
 }

@@ -117,6 +117,23 @@ namespace IESA.Controllers
         //---Manager_Main_Page.html--- *Close*
 
 
+
+        //---Database.html--- *Open*
+
+
+        [HttpGet] //Database.html - method OD5
+        [Route("api/Gamers/tableGdb")]
+        public List<Gamers> GetGamersDB()
+        {
+            Gamers gamerslist = new Gamers();
+            return gamerslist.ReadGamersDB();
+        }
+
+
+
+        //---Database.html--- *Close*
+
+
         //---Edit_Personal_Details.html--- *Open*
 
         [HttpPut] //Manager_Main_Page.html 

@@ -9,11 +9,6 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
-    <!--Graph-->
-
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-    <!--Graph-->
     <!--Data Tables-->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -218,7 +213,7 @@
                 transition: .15s color;
             }
 
-/*            a.reject:hover {
+            /*            a.reject:hover {
                 color: #ed4564;
                 transition: .15s color;
             }*/
@@ -278,21 +273,12 @@
             position: absolute;
             bottom: 65.5%;
             right: 81.9%;
-            /*            position: relative;
-            bottom: 87.7%;
-            right: 82.5%;*/
         }
 
             .add-post-button:hover {
                 background-color: #e0e0e0;
             }
 
-
-        #pForm > div.dataTables_wrapper div.dataTables_filter label { /*Search box - Posts*/
-            position: absolute;
-            top: -46px;
-            right: 59.5%;
-        }
 
         @media only screen and (max-width: 1040px) {
             .add-post-button {
@@ -308,6 +294,65 @@
                 bottom: 22%;
                 /*right: 60%;*/
             }
+        }
+
+
+        #pForm > div.dataTables_wrapper div.dataTables_filter label { /*Search box - Posts*/
+            position: absolute;
+            top: -46px;
+            right: 59.5%;
+        }
+
+        .add-competition-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+            position: absolute;
+            bottom: 65.5%;
+            right: 80.1%;
+        }
+
+            .add-competition-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        #cForm > div.dataTables_wrapper div.dataTables_filter label {
+            position: absolute;
+            top: -46px;
+            right: 57.6%;
+        }
+
+        .add-category-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+            position: absolute;
+            bottom: 65.5%;
+            right: 63.8%;
+        }
+
+            .add-category-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        #caForm > div.dataTables_wrapper div.dataTables_filter label {
+            position: absolute;
+            top: -46px;
+            right: 41.3%;
+        }
+
+        #caForm > div.dataTables_wrapper div.dataTables_paginate {
+            margin-left: 34%;
         }
 
 
@@ -379,11 +424,140 @@
             font-size: 17px;
         }
 
+
+
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 15%; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+
+            color: black;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 30%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            
+        }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        /* The Close Button */
+
+        .modal-header {
+            padding: 6px 16px;
+            background-color: #dd163b;
+            color: white;
+/*            font-family: "Open Sans",sans-serif;*/
+
+        }
+
+        .modal-body {
+            padding: 2px 16px;
+        }
+
+        .modal-footer {
+            padding: 2px 16px;
+            color: white;
+        }
+
+        .btn-danger {
+            width: 75px;
+        }
+
+        #categoryedit {
+            width: 75px;
+        }
+
     </style>
 
     <script>
 
+
+
+        //tbl1 = gamers | tbl2 = orgenaizers | tbl3 = posts | tbl4 = competitions | tbl5 = managers | tbl6 = categoies | tbl7 = israel |tblX = ranks (to be added later)*
+
         $(document).ready(function () {
+
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            //var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal 
+            btn.onclick = function () {
+
+
+                editModal();
+
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            //span.onclick = function () {
+            //    modal.style.display = "none";
+            //}
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            $(document).on("click", "#closebtn", function () {
+
+                modal.style.display = "none";
+
+            });
 
             //---Posts Table--- *Open*
 
@@ -418,8 +592,31 @@
 
             //---Competitions Table--- *Open*
 
-            ajaxCall("GET", "../api/Competitions/tableC", "", getCompetitionsSuccess, Error); //Manager_Main_Page.html - method OM8
 
+            ajaxCall("GET", "../api/Competitions/tablecdb", "", getCompetitionsSuccess, Error); //Database.html - method OD4
+
+            $(document).on("click", ".C_deleteBTN", function () {
+                var competitionId = this.getAttribute('data-competitionid');
+
+                swal({
+                    title: "האם אתה בטוח?",
+                    text: "פעולה זו תמחק את התחרות לצמיתות",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (willDelete) {
+                        if (willDelete) DeleteCompetition(competitionId);
+                        //else swal("פעולה לא בוצעה"); *Not needed*
+                    });
+
+            });
+
+            $(document).on("click", ".add-competition-button", function () {
+
+                window.open('Add_New_Competition.html', '_blank');
+
+            });
 
             //---Competitions Table--- *Close*
 
@@ -432,7 +629,7 @@
 
             //---Gamers Table--- *Open*
 
-            ajaxCall("GET", "../api/Gamers/tableG", "", getGamersSuccess, Error); //Manager_Main_Page.html - method OM1
+            ajaxCall("GET", "../api/Gamers/tableGdb", "", getGamersSuccess, Error); //Database.html - method OD5
 
 
             $(document).on("click", ".G_deleteBTN", function () {
@@ -446,7 +643,7 @@
                     dangerMode: true
                 })
                     .then(function (willDelete) {
-                        if (willDelete) RejectGamer(userId);
+                        if (willDelete) DeleteGamer(userId);
                         //else swal("פעולה לא בוצעה"); *Not needed*
                     });
 
@@ -456,7 +653,7 @@
             $(document).on("click", ".G_editBTN", function () {
                 var userId2 = this.getAttribute('data-gamerid');
 
-                ajaxCall("PUT", "../api/Gamers/Tablegstatus?toupdateid=" + userId2, "", UpdateSuccessG, Error); //Manager_Main_Page.html - method OM3
+                swal("פעולה זו תפתח דף חדש העורך את פרטי המשתמש: " + userId2)
             });
 
 
@@ -473,7 +670,7 @@
 
             //---Orgenaizers Table--- *Open*
 
-            ajaxCall("GET", "../api/Orgenaizers/tableO", "", getOrgenaizersSuccess, Error); //Manager_Main_Page.html - method OM4
+            ajaxCall("GET", "../api/Orgenaizers/tableOdb", "", getOrgenaizersSuccess, Error); //Database.html - method OD6
 
 
             $(document).on("click", ".O_deleteBTN", function () {
@@ -487,7 +684,7 @@
                     dangerMode: true
                 })
                     .then(function (willDelete) {
-                        if (willDelete) RejectOrgenaizer(userId3);
+                        if (willDelete) DeleteOrgenaizer(userId3);
                         //else swal("פעולה לא בוצעה"); *Not needed*
                     });
 
@@ -495,12 +692,12 @@
 
 
             $(document).on("click", ".O_editBTN", function () {
-                var userId3 = this.getAttribute('data-orgenaizerid');
+                var userId4 = this.getAttribute('data-orgenaizerid');
 
-                ajaxCall("PUT", "../api/Orgenaizers/Tableostatus?toupdateid=" + userId3, "", UpdateSuccessO, Error); //Manager_Main_Page.html - method OM6
+                swal("פעולה זו תפתח דף חדש העורך את פרטי המשתמש: " + userId4)
             });
 
-            //####Update it when Orgenaizer info done (Or modal)
+
             $(document).on("click", ".O_viewBTN", function () {
                 var userId4 = this.getAttribute('data-orgenaizerid');
 
@@ -513,16 +710,103 @@
 
             //---Managers Table--- *Open*
 
+            ajaxCall("GET", "../api/Managers/tableMdb", "", getManagersSuccess, Error); //Database.html - method OD7
+
+
+            $(document).on("click", ".M_viewBTN", function () {
+                var userId5 = this.getAttribute('data-managerid');
+
+                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId5)
+            });
 
             //---Managers Table--- *Close*
 
 
             //---Categories Table--- *Open*
 
+            ajaxCall("GET", "../api/GamesCategories/tablecaDB", "", getCategoriesSuccess, Error); //Database.html - method OD8
+
+            $(document).on("click", ".Ca_InactiveBTN", function () {
+                var isactive = 0;
+                var categoryid = this.getAttribute('data-categoryid');
+
+                ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD9
+            });
+
+            $(document).on("click", ".Ca_ActiveBTN", function () {
+                var isactive = 1;
+                var categoryid = this.getAttribute('data-categoryid');
+
+                ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD9
+            });
+
+            $(document).on("click", ".Ca_editBTN", function () {
+                categoryid = this.getAttribute('data-categoryid'); //global for submit function
+                categoryname = this.getAttribute('data-categoryname'); //global for submit function
+
+                editModal(categoryname);
+                modal.style.display = "block";
+
+                //ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD10
+            });
+
+            //$(document).on("click", "#categoryedit", function () {
+            //    //check the length of the val()
+                
+
+            //    var categoryname = this.getAttribute('data-categoryname');
+
+            //    if (categoryname.length < 2) {
+            //        swal("צריך 2 תווים לפחות");
+            //    }
+            //    else {
+            //        swal("מעדכן את: " + categoryname);
+            //    }
+
+
+            //    return false;
+            //});
+
+            $("#categoryedit").click(function (e) {
+                e.preventDefault();
+                //we got categoryname from clicking on the pen before
+
+                var newcategory = $("#categoryTB").val();
+                
+                if (newcategory.length >= 2) {
+                    swal("מעדכן את: " + categoryname);
+                }
+                else {
+                    swal("צריך 2 תווים לפחות"); //צריך לעשות שיתקבל הודעה פנימית בFORM אבל יש בעיות עם השליחה
+                }
+            });
+
+            //$("#ca_EditForm").submit(function (e) {
+            //    e.preventDefault();
+            //    alert("hey");
+            //});
+
+            //$(document).on("submit", "#ca_EditForm", function () {
+            //    alert("hey");
+
+            //});
+
+            //$("#ca_EditForm").on("submit", function () {
+            //    alert("hey");
+            //    return false;
+            //})
+
+            //$("#ca_EditForm").submit(function () {
+            //    alert("Submitted");
+            //});
+
+
+
+
 
             //---Categories Table--- *Close*
 
-           
+
             //---Israel Table--- *Open*
 
 
@@ -629,26 +913,58 @@
         }
 
 
-        function RejectGamer(userId) {
+        function DeleteGamer(userId) {
 
-            ajaxCall("PUT", "../api/Gamers/delg?todeleteid=" + userId, "", UpdateSuccessG, Error); //Manager_Main_Page.html - method OM2
+            ajaxCall("PUT", "../api/Gamers/delg?todeleteid=" + userId, "", UpdateSuccessG, Error); //(#) Manager_Main_Page.html - method OM2
         }
 
 
         function UpdateSuccessG(data) {
-            console.log(data);
 
-            ajaxCall("GET", "../api/Gamers/tableG", "", UpdateSuccessG2, Error); //Manager_Main_Page.html - method OM1
+            ajaxCall("GET", "../api/Gamers/tableGdb", "", UpdateSuccessG2, Error); //Database.html - method OD5
         }
 
         function UpdateSuccessG2(gamersdata) {
-            console.log(gamersdata);
 
             redrawTable(tbl1, gamersdata);
-            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
+            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //(#) Manager_Main_Page.html - method OM9
             swal("פעולה בוצעה בהצלחה", "", "success");
         }
 
+        function DeletePost(postId) {
+
+            ajaxCall("PUT", "../api/Posts/delp?todeleteid=" + postId, "", UpdateSuccessP, Error); //Database.html - method OD2
+        }
+
+        function UpdateSuccessP(data) {
+
+            ajaxCall("GET", "../api/Posts/tableDBPosts", "", UpdateSuccessP2, Error); //Database.html - method OD1
+        }
+
+        function UpdateSuccessP2(postsdata) {
+
+            redrawTable(tbl3, postsdata);
+            swal("פעולה בוצעה בהצלחה", "", "success");
+        }
+
+
+        function DeleteCompetition(competitionId) {
+
+
+            ajaxCall("PUT", "../api/Competitions/delc?todeleteid=" + competitionId, "", UpdateSuccessC, Error); //Database.html - method OD3
+        }
+
+        function UpdateSuccessC(data) {
+
+            ajaxCall("GET", "../api/Competitions/tablecdb", "", UpdateSuccessC2, Error); //Manager_Main_Page.html - method OD4
+        }
+
+        function UpdateSuccessC2(competitionsdata) {
+
+            redrawTable(tbl4, competitionsdata);
+            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //(#) Manager_Main_Page.html - method OM9
+            swal("פעולה בוצעה בהצלחה", "", "success");
+        }
 
 
         function getOrgenaizersSuccess(orgenaizersdata) {
@@ -716,22 +1032,33 @@
         }
 
 
-        function RejectOrgenaizer(userId) {
+        function DeleteOrgenaizer(userId) {
 
-            ajaxCall("PUT", "../api/Orgenaizers/delo?todeleteid=" + userId, "", UpdateSuccessO, Error); //Manager_Main_Page.html - method OM5
+            ajaxCall("PUT", "../api/Orgenaizers/delo?todeleteid=" + userId, "", DeleteSuccessO, Error); //(#) Manager_Main_Page.html - method OM5
         }
 
-        function UpdateSuccessO(data) {
+        function DeleteSuccessO(data) {
             console.log(data);
 
-            ajaxCall("GET", "../api/Orgenaizers/tableO", "", UpdateSuccessO2, Error); //Manager_Main_Page.html - method OM4
+            ajaxCall("GET", "../api/Orgenaizers/tableOdb", "", UpdateSuccessO2, Error); //Database.html - method OD6
         }
 
         function UpdateSuccessO2(orgenaizersdata) {
             console.log(orgenaizersdata);
 
             redrawTable(tbl2, orgenaizersdata);
-            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
+            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //(#) Manager_Main_Page.html - method OM9
+            swal("פעולה בוצעה בהצלחה", "", "success");
+        }
+
+        function UpdateSuccessCa(data) {
+
+            ajaxCall("GET", "../api/GamesCategories/tablecaDB", "", UpdateSuccessCa2, Error); //Database.html - method OD8
+        }
+
+        function UpdateSuccessCa2(categoriesdata) {
+
+            redrawTable(tbl6, categoriesdata);
             swal("פעולה בוצעה בהצלחה", "", "success");
         }
 
@@ -838,7 +1165,6 @@
                     pageLength: 10,
                     columns: [
                         { data: "Competitionid", className: "uniqueClassName" },
-                        { data: "Competitionstatus", className: "uniqueClassName" },
                         {
                             "data": "Competitionname",
                             "render": function (data) {
@@ -851,6 +1177,19 @@
                                     return data;
                                 }
 
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        { data: "Competitionstatus", className: "uniqueClassName" },
+                        {
+                            "data": "Isiesa",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "קהילה";
+                                }
+                                else {
+                                    return "עמותה";
+                                }
                             }
                             , className: "uniqueClassName"
                         },
@@ -896,8 +1235,142 @@
 
                                 C_viewBtn = "<a href='Competition_View.html?competitionid=" + row.Competitionid + "' target = '_blank' class='view' title='צפה'><i class='C_viewBTN bi bi-eye' " + dataCompetitions + "></i></a>";
                                 C_editBtn = "<a href='Edit_Competition.html?competitionid=" + row.Competitionid + "' target='_blank' class='edit' title='ערוך'><i class='C_editBTN bi bi-pencil' " + dataCompetitions + "></i></a>";
+                                C_deleteBtn = "<a href='javascript:;' class='delete' title='מחק'><i class='C_deleteBTN bi bi-trash' " + dataCompetitions + "></i></a>";
 
-                                return C_editBtn + C_viewBtn;
+                                return C_deleteBtn + C_editBtn + C_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
+                    ],
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function getManagersSuccess(managersdata) {
+            console.log(managersdata);
+
+            managers = managersdata;
+
+            try {
+                tbl5 = $('#ManagersTable').DataTable({
+                    data: managersdata,
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 10,
+                    columns: [
+                        { data: "Userid", className: "uniqueClassName" },
+                        { data: "Firstname", className: "uniqueClassName" },
+                        { data: "Lastname", className: "uniqueClassName" },
+                        { data: "Role1", className: "uniqueClassName" },
+                        { data: "Phone", className: "uniqueClassName" },
+                        { data: "Email", className: "uniqueClassName" },
+                        {
+                            "data": "Dob",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                var day = date.getDate();
+                                day = day.toString().length > 1 ? day : "0" + day;
+                                return day + "/" + (month.toString().length > 1 ? month : "0" + month) + "/" + date.getFullYear();
+                            }
+                            , className: "uniqueClassName"
+                        },
+
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataManagers = "data-managerid='" + row.Userid + "'"; //User id for buttons
+
+                                M_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='M_viewBTN bi bi-eye' " + dataManagers + "></i></a>";
+
+                                return M_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
+                    ],
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function getCategoriesSuccess(categoriesdata) {
+            console.log(categoriesdata);
+
+            categories = categoriesdata;
+
+            try {
+                tbl6 = $('#CategoriesTable').DataTable({
+                    data: categoriesdata,
+                    "order": [[1, "desc"], [0, "asc"]],
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 10,
+                    columns: [
+
+                        { data: "Categoryname", className: "uniqueClassName" },
+                        {
+                            "data": "Status1",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    isactive = 0;
+                                    return "לא פעיל";
+                                }
+                                else {
+                                    isactive = 1;
+                                    return "פעיל";
+                                }
+                            }
+                            , className: "uniqueClassName"
+                        },
+
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataCategoriesid = "data-categoryid='" + row.Categoryid + "'";
+                                let dataCategoriesname = "data-categoryname='" + row.Categoryname + "'";
+
+                                if (isactive == 0) {
+                                    Ca_ActiveBtn = "<a href='javascript:;' class='admit' title='הפוך לפעיל'><i class='Ca_ActiveBTN bi bi-check-circle' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
+                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
+                                    return CA_editBtn + Ca_ActiveBtn;
+                                }
+                                else {
+                                    Ca_InactiveBtn = "<a href='javascript:;' class='delete' title='הפוך ללא פעיל'><i class='Ca_InactiveBTN bi bi-x-circle' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
+                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
+                                    return CA_editBtn + Ca_InactiveBtn;
+                                }
+
                             }
                             , className: "uniqueClassName"
                         }
@@ -959,6 +1432,56 @@
         }
 
 
+        function editModal(categoryname) {
+
+            str = '';
+            str += "<div style='margin-top:8px'></div>";
+            str += "<form id='ca_EditForm' class='was-validated' onclick='return false'>";
+            str += "<div class='row'>";
+            str += "<div class='col-lg-5'>";
+            str += "<div class='mb-3'>";
+            str += "<label>שם קטגוריה:</label>";
+            str += "<input type='text' class='form-control' id='categoryTB' pattern='.{2,40}' oninvalid='this.setCustomValidity('מינימום 2 תויים, ועד 40')' oninput='this.setCustomValidity('')' required>";
+            str += "</div>";
+            str += "</div>";
+            str += "</div>";
+
+            //str += "<button id='closebtn' type='button' class='btn btn-danger'>סגור</button>";
+            //str += "<input id='categoryedit' type='submit' class='btn btn-success' value='שמור' />";
+
+            str += "</form>";
+
+            str += "<div style='margin-bottom:8px'></div>";
+
+           
+            document.getElementById("edit_category_modal").innerHTML = str;
+
+
+            $("#categoryTB").val(categoryname);
+
+            //<div style="margin-top:8px"></div>
+                //<form id="pForm" class="was-validated">
+                //    <div class="row">
+                //        <div class="col-lg-5">
+
+                //            <div class="mb-3">
+                //                <label>שם קטגוריה:</label>
+                //                <input type="text" class="form-control" id="categoryTB" pattern=".{2,40}"
+                //                    oninvalid="this.setCustomValidity('מינמום 2 תווים, ועד 40')"
+                //                    oninput="this.setCustomValidity('')" required>
+                //                    </div>
+                //            </div>
+                //        </div>
+                //        </form>
+
+                //    <div style="margin-bottom:8px"></div>
+
+
+
+
+        }
+
+
     </script>
 
 
@@ -1009,12 +1532,12 @@
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-posts-tab" data-bs-toggle="tab" data-bs-target="#nav-posts" type="button" role="tab" aria-controls="nav-posts" aria-selected="true">פוסטים</button>
                     <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-competitions" type="button" role="tab" aria-controls="nav-competitions" aria-selected="false">תחרויות</button>
-                    <button class="nav-link" id="nav-competitions-tab" data-bs-toggle="tab" data-bs-target="#nav-ranks" type="button" role="tab" aria-controls="nav-ranks" aria-selected="false">דירוגים</button>
+                    <button class="nav-link" id="nav-ranks-tab" data-bs-toggle="tab" data-bs-target="#nav-ranks" type="button" role="tab" aria-controls="nav-ranks" aria-selected="false">דירוגים</button>
                     <button class="nav-link" id="nav-gamers-tab" data-bs-toggle="tab" data-bs-target="#nav-gamers" type="button" role="tab" aria-controls="nav-gamers" aria-selected="false">שחקנים</button>
                     <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-orgenaizers" type="button" role="tab" aria-controls="nav-orgenaizers" aria-selected="false">מארגנים</button>
-                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-managers" type="button" role="tab" aria-controls="nav-managers" aria-selected="false">מנהלים</button>
-                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-categories" type="button" role="tab" aria-controls="nav-categories" aria-selected="false">קטגוריות משחק</button>
-                    <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-israel" type="button" role="tab" aria-controls="nav-israel" aria-selected="false">נבחרת ישראל</button>
+                    <button class="nav-link" id="nav-managers-tab" data-bs-toggle="tab" data-bs-target="#nav-managers" type="button" role="tab" aria-controls="nav-managers" aria-selected="false">מנהלים</button>
+                    <button class="nav-link" id="nav-categories-tab" data-bs-toggle="tab" data-bs-target="#nav-categories" type="button" role="tab" aria-controls="nav-categories" aria-selected="false">קטגוריות משחק</button>
+                    <button class="nav-link" id="nav-israel-tab" data-bs-toggle="tab" data-bs-target="#nav-israel" type="button" role="tab" aria-controls="nav-israel" aria-selected="false">נבחרת ישראל</button>
                 </div>
             </nav>
 
@@ -1078,14 +1601,52 @@
                                 <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th style="max-width: 70px;">מספר תחרות</th>
-                                            <th style="max-width: 50px;">סטאטוס</th>
+                                            <th style="max-width: 75px;">מספר תחרות</th>
                                             <th style="max-width: 100px;">כותרת</th>
-                                            <th style="max-width: 50px;">סוג</th>
-                                            <th style="max-width: 60px;">שם מארגן</th>
-                                            <th style="max-width: 65px;">תאריך התחלה</th>
-                                            <th style="max-width: 65px;">תאריך סיום</th>
+                                            <th style="max-width: 40px;">סטאטוס</th>
+                                            <th style="max-width: 45px;">שיוך</th>
+                                            <th style="max-width: 45px;">סוג</th>
+                                            <th style="max-width: 60px;">שם היוצר</th>
+                                            <th style="max-width: 75px;">תאריך התחלה</th>
+                                            <th style="max-width: 75px;">תאריך סיום</th>
                                             <th style="max-width: 60px;">פעולות</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
+
+                            <button class="add-competition-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת תחרות חדשה</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="nav-ranks" role="tabpanel" aria-labelledby="nav-ranks-tab">
+                    <!--#X-->
+                    <!--Competitions Table-->
+                    <div class="row">
+                        <div class="col">
+
+                            <form id="rForm">
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">דירוגים</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 70px;">כותרת 1</th>
+                                            <th style="max-width: 50px;">כותרת 2</th>
+                                            <th style="max-width: 100px;">כותרת 3</th>
+                                            <th style="max-width: 50px;">כותרת 4</th>
+                                            <th style="max-width: 60px;">כותרת 5</th>
+                                            <th style="max-width: 65px;">כותרת 6</th>
+
                                         </tr>
                                     </thead>
                                 </table>
@@ -1170,7 +1731,166 @@
 
                 </div>
 
+                <div class="tab-pane fade" id="nav-managers" role="tabpanel" aria-labelledby="nav-managers-tab">
+                    <!--#5-->
+                    <!--Managers Table-->
+                    <div class="row">
+                        <div class="col">
+
+                            <form id="mForm">
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">מנהלים</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="ManagersTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 70px;">מספר מנהל</th>
+                                            <th style="max-width: 25px;">שם</th>
+                                            <th style="max-width: 70px;">שם משפחה</th>
+                                            <th style="max-width: 70px;">תפקיד</th>
+                                            <th style="max-width: 50px;">טלפון</th>
+                                            <th style="max-width: 55px;">אימייל</th>
+                                            <th style="max-width: 70px;">תאריך לידה</th>
+                                            <th style="max-width: 60px;">פעולות</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab">
+                    <!--#6-->
+                    <!--Categories Table-->
+                    <div class="row">
+                        <div class="col">
+
+                            <form id="caForm">
+                                <table id="RedTitle" class="nk-table" style="width:60%; margin-left: auto; margin-right: auto;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">קטגוריות משחק</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="CategoriesTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:60%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 80px;">שם קטגוריה</th>
+                                            <th style="max-width: 60px;">שיוך</th>
+                                            <th style="max-width: 50px;">פעולות</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
+
+                            <button class="add-category-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת קטגוריה</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="nav-israel" role="tabpanel" aria-labelledby="nav-israel-tab">
+                    <!--#7-->
+                    <!--Israel Table-->
+                    <div class="row">
+                        <div class="col">
+
+                            <form id="iForm">
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #dd163b">נבחרת ישראל</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="IsraelTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 70px;">כותרת 1</th>
+                                            <th style="max-width: 50px;">כותרת 2</th>
+                                            <th style="max-width: 100px;">כותרת 3</th>
+                                            <th style="max-width: 50px;">כותרת 4</th>
+                                            <th style="max-width: 60px;">כותרת 5</th>
+                                            <th style="max-width: 65px;">כותרת 6</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div> <!--End of tabs-->
+
+
+            <h2>Animated Modal with Header and Footer</h2>
+
+            <!-- Trigger/Open The Modal -->
+            <button id="myBtn">מודל עריכת קטגוריה</button> <!--Onclick write to div id="edit_category_modal"-->
+        
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content" style="text-align:right">
+
+                    <div class="modal-header">
+                        <!--<span class="close">&times;</span>-->
+                        <h4>עריכת קטגורית משחק</h4>
+                    </div>
+
+                    <div id="edit_category_modal" class="modal-body">
+
+                        <!--<div style="margin-top:8px"></div>
+
+                        <form id="ca_EditForm" class="was-validated">
+                            <div class="row">
+                                <div class="col-lg-5">
+
+                                    <div class="mb-3">
+                                        <label>שם קטגוריה:</label>
+                                        <input type="text" class="form-control" id="categoryTB" pattern=".{2,40}"
+                                               oninvalid="this.setCustomValidity('מינמום 2 תווים, ועד 40')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                                
+                                <button id="closebtn" type="button" class="btn btn-danger">סגור</button>
+                                <input type="submit" class="btn btn-success" value="שמור" />
+                            </div>
+
+
+                        </form>
+
+                        <div style="margin-bottom:8px"></div>-->
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="closebtn" type="button" class="btn btn-danger">סגור</button>
+                        <input type="submit" id="categoryedit" class="btn btn-success" form="ca_EditForm" value="שמור" />
+
+                        <!--id="categoryedit"
+                        <button id="categoryedit" type="button" class="btn btn-success">שמור</button>-->
+                    </div>
+
+                </div>
+
+            </div>
 
 
         </div> <!--container-->

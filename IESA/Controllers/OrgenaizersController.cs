@@ -80,6 +80,22 @@ namespace IESA.Controllers
         //---Manager_Main_Page.html--- *Close*
 
 
+        //---Database.html--- *Open*
+
+
+        [HttpGet] //Database.html - method OD6
+        [Route("api/Orgenaizers/tableOdb")]
+        public List<Orgenaizers> GetOrgenaizersDB()
+        {
+            Orgenaizers orgelist = new Orgenaizers();
+            return orgelist.ReadOrgenaizersDB();
+        }
+
+
+
+        //---Database.html--- *Close*
+
+
         //---Edit_Personal_Details.html--- *Open*
 
         [HttpPut] //Manager_Main_Page.html 
