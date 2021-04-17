@@ -2487,7 +2487,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " select * from Competitions where competitionstatus = '2' ";
+                String selectSTR = " select * from Competitions;";// where competitionstatus = '2' ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
