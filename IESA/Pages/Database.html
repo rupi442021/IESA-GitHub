@@ -505,6 +505,14 @@
             color: white;
         }
 
+        .btn-danger {
+            width: 75px;
+        }
+
+        #categoryedit {
+            width: 75px;
+        }
+
     </style>
 
     <script>
@@ -526,6 +534,10 @@
 
             // When the user clicks the button, open the modal 
             btn.onclick = function () {
+
+
+                editModal();
+
                 modal.style.display = "block";
             }
 
@@ -540,6 +552,12 @@
                     modal.style.display = "none";
                 }
             }
+
+            $(document).on("click", "#closebtn", function () {
+
+                modal.style.display = "none";
+
+            });
 
             //---Posts Table--- *Open*
 
@@ -723,11 +741,68 @@
             });
 
             $(document).on("click", ".Ca_editBTN", function () {
-                var categoryid = this.getAttribute('data-categoryid');
-                swal("Modal open for id: " + categoryid);
+                categoryid = this.getAttribute('data-categoryid'); //global for submit function
+                categoryname = this.getAttribute('data-categoryname'); //global for submit function
+
+                editModal(categoryname);
+                modal.style.display = "block";
 
                 //ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD10
             });
+
+            //$(document).on("click", "#categoryedit", function () {
+            //    //check the length of the val()
+                
+
+            //    var categoryname = this.getAttribute('data-categoryname');
+
+            //    if (categoryname.length < 2) {
+            //        swal("צריך 2 תווים לפחות");
+            //    }
+            //    else {
+            //        swal("מעדכן את: " + categoryname);
+            //    }
+
+
+            //    return false;
+            //});
+
+            $("#categoryedit").click(function (e) {
+                e.preventDefault();
+                //we got categoryname from clicking on the pen before
+
+                var newcategory = $("#categoryTB").val();
+                
+                if (newcategory.length >= 2) {
+                    swal("מעדכן את: " + categoryname);
+                }
+                else {
+                    swal("צריך 2 תווים לפחות"); //צריך לעשות שיתקבל הודעה פנימית בFORM אבל יש בעיות עם השליחה
+                }
+            });
+
+            //$("#ca_EditForm").submit(function (e) {
+            //    e.preventDefault();
+            //    alert("hey");
+            //});
+
+            //$(document).on("submit", "#ca_EditForm", function () {
+            //    alert("hey");
+
+            //});
+
+            //$("#ca_EditForm").on("submit", function () {
+            //    alert("hey");
+            //    return false;
+            //})
+
+            //$("#ca_EditForm").submit(function () {
+            //    alert("Submitted");
+            //});
+
+
+
+
 
             //---Categories Table--- *Close*
 
@@ -1282,16 +1357,17 @@
 
                         {
                             render: function (data, type, row, meta) {
-                                let dataCategories = "data-categoryid='" + row.Categoryid + "'";
+                                let dataCategoriesid = "data-categoryid='" + row.Categoryid + "'";
+                                let dataCategoriesname = "data-categoryname='" + row.Categoryname + "'";
 
                                 if (isactive == 0) {
-                                    Ca_ActiveBtn = "<a href='javascript:;' class='admit' title='הפוך לפעיל'><i class='Ca_ActiveBTN bi bi-check-circle' " + dataCategories + "></i></a>";
-                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategories + "></i></a>";
+                                    Ca_ActiveBtn = "<a href='javascript:;' class='admit' title='הפוך לפעיל'><i class='Ca_ActiveBTN bi bi-check-circle' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
+                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
                                     return CA_editBtn + Ca_ActiveBtn;
                                 }
                                 else {
-                                    Ca_InactiveBtn = "<a href='javascript:;' class='delete' title='הפוך ללא פעיל'><i class='Ca_InactiveBTN bi bi-x-circle' " + dataCategories + "></i></a>";
-                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategories + "></i></a>";
+                                    Ca_InactiveBtn = "<a href='javascript:;' class='delete' title='הפוך ללא פעיל'><i class='Ca_InactiveBTN bi bi-x-circle' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
+                                    CA_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='Ca_editBTN bi bi-pencil' " + dataCategoriesid + " " + dataCategoriesname + "></i></a>";
                                     return CA_editBtn + Ca_InactiveBtn;
                                 }
 
@@ -1350,6 +1426,56 @@
             else {
                 document.getElementById("orgenaizers_waithing").style.visibility = "hidden";
             }
+
+
+
+        }
+
+
+        function editModal(categoryname) {
+
+            str = '';
+            str += "<div style='margin-top:8px'></div>";
+            str += "<form id='ca_EditForm' class='was-validated' onclick='return false'>";
+            str += "<div class='row'>";
+            str += "<div class='col-lg-5'>";
+            str += "<div class='mb-3'>";
+            str += "<label>שם קטגוריה:</label>";
+            str += "<input type='text' class='form-control' id='categoryTB' pattern='.{2,40}' oninvalid='this.setCustomValidity('מינימום 2 תויים, ועד 40')' oninput='this.setCustomValidity('')' required>";
+            str += "</div>";
+            str += "</div>";
+            str += "</div>";
+
+            //str += "<button id='closebtn' type='button' class='btn btn-danger'>סגור</button>";
+            //str += "<input id='categoryedit' type='submit' class='btn btn-success' value='שמור' />";
+
+            str += "</form>";
+
+            str += "<div style='margin-bottom:8px'></div>";
+
+           
+            document.getElementById("edit_category_modal").innerHTML = str;
+
+
+            $("#categoryTB").val(categoryname);
+
+            //<div style="margin-top:8px"></div>
+                //<form id="pForm" class="was-validated">
+                //    <div class="row">
+                //        <div class="col-lg-5">
+
+                //            <div class="mb-3">
+                //                <label>שם קטגוריה:</label>
+                //                <input type="text" class="form-control" id="categoryTB" pattern=".{2,40}"
+                //                    oninvalid="this.setCustomValidity('מינמום 2 תווים, ועד 40')"
+                //                    oninput="this.setCustomValidity('')" required>
+                //                    </div>
+                //            </div>
+                //        </div>
+                //        </form>
+
+                //    <div style="margin-bottom:8px"></div>
+
 
 
 
@@ -1714,23 +1840,52 @@
             <h2>Animated Modal with Header and Footer</h2>
 
             <!-- Trigger/Open The Modal -->
-            <button id="myBtn">Open Modal</button>
-
+            <button id="myBtn">מודל עריכת קטגוריה</button> <!--Onclick write to div id="edit_category_modal"-->
+        
             <!-- The Modal -->
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content" style="text-align:right">
+
                     <div class="modal-header">
                         <!--<span class="close">&times;</span>-->
                         <h4>עריכת קטגורית משחק</h4>
                     </div>
-                    <div class="modal-body">
-                        <p>קצת טקסט</p>
-                        <p>עוד טקסט</p>
+
+                    <div id="edit_category_modal" class="modal-body">
+
+                        <!--<div style="margin-top:8px"></div>
+
+                        <form id="ca_EditForm" class="was-validated">
+                            <div class="row">
+                                <div class="col-lg-5">
+
+                                    <div class="mb-3">
+                                        <label>שם קטגוריה:</label>
+                                        <input type="text" class="form-control" id="categoryTB" pattern=".{2,40}"
+                                               oninvalid="this.setCustomValidity('מינמום 2 תווים, ועד 40')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                                
+                                <button id="closebtn" type="button" class="btn btn-danger">סגור</button>
+                                <input type="submit" class="btn btn-success" value="שמור" />
+                            </div>
+
+
+                        </form>
+
+                        <div style="margin-bottom:8px"></div>-->
+
                     </div>
+
                     <div class="modal-footer">
-                        <button>סגור</button>
+                        <button id="closebtn" type="button" class="btn btn-danger">סגור</button>
+                        <input type="submit" id="categoryedit" class="btn btn-success" form="ca_EditForm" value="שמור" />
+
+                        <!--id="categoryedit"
+                        <button id="categoryedit" type="button" class="btn btn-success">שמור</button>-->
                     </div>
 
                 </div>
