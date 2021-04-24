@@ -440,8 +440,6 @@
             overflow: auto; /* Enable scroll if needed */
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-
-
             color: black;
         }
 
@@ -458,7 +456,6 @@
             -webkit-animation-duration: 0.4s;
             animation-name: animatetop;
             animation-duration: 0.4s;
-            
         }
 
         /* Add Animation */
@@ -492,8 +489,7 @@
             padding: 6px 16px;
             background-color: #dd163b;
             color: white;
-/*            font-family: "Open Sans",sans-serif;*/
-
+            /*            font-family: "Open Sans",sans-serif;*/
         }
 
         .modal-body {
@@ -512,52 +508,15 @@
         #categoryedit {
             width: 75px;
         }
-
     </style>
 
     <script>
 
 
 
-        //tbl1 = gamers | tbl2 = orgenaizers | tbl3 = posts | tbl4 = competitions | tbl5 = managers | tbl6 = categoies | tbl7 = israel |tblX = ranks (to be added later)*
+        //tbl1 = gamers | tbl2 = orgenaizers | tbl3 = posts | tbl4 = competitions | tbl5 = managers | tbl6 = categoies |tblX = ranks (to be added later)*
 
         $(document).ready(function () {
-
-            // Get the modal
-            var modal = document.getElementById("myModal");
-
-            // Get the button that opens the modal
-            var btn = document.getElementById("myBtn");
-
-            // Get the <span> element that closes the modal
-            //var span = document.getElementsByClassName("close")[0];
-
-            // When the user clicks the button, open the modal 
-            btn.onclick = function () {
-
-
-                editModal();
-
-                modal.style.display = "block";
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            //span.onclick = function () {
-            //    modal.style.display = "none";
-            //}
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-
-            $(document).on("click", "#closebtn", function () {
-
-                modal.style.display = "none";
-
-            });
 
             //---Posts Table--- *Open*
 
@@ -724,6 +683,36 @@
 
             //---Categories Table--- *Open*
 
+            // ***Get the modal - create
+            var modal_create = document.getElementById("Modal_C_Create");
+
+            $(document).on("click", "#closebtn_createc", function () {
+
+                modal_create.style.display = "none";
+
+            });
+
+            // ***Get the modal - edit
+            var modal_edit = document.getElementById("Modal_C_Edit");
+
+            // When the user clicks anywhere outside of the modal, close it
+
+            window.onclick = function (event) {
+                if (event.target == modal_create) {
+                    modal_create.style.display = "none";
+                }
+                else if (event.target == modal_edit) {
+                    modal_edit.style.display = "none";
+                }
+            }
+
+            $(document).on("click", "#closebtn_editc", function () {
+
+                modal_edit.style.display = "none";
+
+            });
+
+
             ajaxCall("GET", "../api/GamesCategories/tablecaDB", "", getCategoriesSuccess, Error); //Database.html - method OD8
 
             $(document).on("click", ".Ca_InactiveBTN", function () {
@@ -740,77 +729,63 @@
                 ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD9
             });
 
+            $(document).on("click", ".add-category-button", function () {
+
+                addcategoryModal();
+                modal_create.style.display = "block";
+            });
+
+
             $(document).on("click", ".Ca_editBTN", function () {
                 categoryid = this.getAttribute('data-categoryid'); //global for submit function
                 categoryname = this.getAttribute('data-categoryname'); //global for submit function
 
-                editModal(categoryname);
-                modal.style.display = "block";
+                editcategoryModal(categoryname);
+                modal_edit.style.display = "block";
 
-                //ajaxCall("PUT", "../api/GamesCategories/tablecstatus?isactive=" + isactive + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD10
             });
 
-            //$(document).on("click", "#categoryedit", function () {
-            //    //check the length of the val()
-                
 
-            //    var categoryname = this.getAttribute('data-categoryname');
+            $("#categoryadd").click(function (e) {
+                e.preventDefault();
 
-            //    if (categoryname.length < 2) {
-            //        swal("צריך 2 תווים לפחות");
-            //    }
-            //    else {
-            //        swal("מעדכן את: " + categoryname);
-            //    }
+                var newcategoryadd = $("#categoryaddTB").val(); //New
 
+                if (newcategoryadd.length >= 2) {
 
-            //    return false;
-            //});
+                    CategoryObj = {
+                        Categoryname: newcategoryadd,
+                    }
+                    
+                    ajaxCall("POST", "../api/GamesCategories", JSON.stringify(CategoryObj), UpdateSuccessCa, Error); //Database.html - method OD11
+                }
+                else {
+                    swal("צריך 2 תווים לפחות");
+                }
+
+            });
 
             $("#categoryedit").click(function (e) {
                 e.preventDefault();
-                //we got categoryname from clicking on the pen before
+                //we got categoryname + categoryid from clicking on the edit icon before
 
-                var newcategory = $("#categoryTB").val();
-                
+                var newcategory = $("#categoryeditTB").val(); //New
+
                 if (newcategory.length >= 2) {
-                    swal("מעדכן את: " + categoryname);
+                    //swal("מעדכן את: " + categoryname);
+
+                    ajaxCall("PUT", "../api/GamesCategories/editcname?newcategory=" + newcategory + "&categoryid=" + categoryid, "", UpdateSuccessCa, Error); //Database.html - method OD10
                 }
                 else {
                     swal("צריך 2 תווים לפחות"); //צריך לעשות שיתקבל הודעה פנימית בFORM אבל יש בעיות עם השליחה
                 }
+
             });
-
-            //$("#ca_EditForm").submit(function (e) {
-            //    e.preventDefault();
-            //    alert("hey");
-            //});
-
-            //$(document).on("submit", "#ca_EditForm", function () {
-            //    alert("hey");
-
-            //});
-
-            //$("#ca_EditForm").on("submit", function () {
-            //    alert("hey");
-            //    return false;
-            //})
-
-            //$("#ca_EditForm").submit(function () {
-            //    alert("Submitted");
-            //});
-
 
 
 
 
             //---Categories Table--- *Close*
-
-
-            //---Israel Table--- *Open*
-
-
-            //---Israel Table--- *Close*
 
 
         });
@@ -898,9 +873,9 @@
         }
 
         function Error(err) {
-            console.log(err); //*Need to send a certain message from the server about the problem each function
+            console.log(err);
 
-            swal("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            swal(err.responseJSON.ExceptionMessage);
         }
 
 
@@ -1431,8 +1406,30 @@
 
         }
 
+        function addcategoryModal() {
 
-        function editModal(categoryname) {
+            str = '';
+            str += "<div style='margin-top:8px'></div>";
+            str += "<form id='ca_CreateForm' class='was-validated' onclick='return false'>";
+            str += "<div class='row'>";
+            str += "<div class='col-lg-5'>";
+            str += "<div class='mb-3'>";
+            str += "<label>שם קטגוריה:</label>";
+            str += "<input type='text' class='form-control' id='categoryaddTB' pattern='.{2,40}' oninvalid='this.setCustomValidity('מינימום 2 תויים, ועד 40')' oninput='this.setCustomValidity('')' required>";
+            str += "</div>";
+            str += "</div>";
+            str += "</div>";
+
+            str += "</form>";
+
+            str += "<div style='margin-bottom:8px'></div>";
+
+            document.getElementById("add_category_modalJS").innerHTML = str;
+
+        }
+
+
+        function editcategoryModal(categoryname) {
 
             str = '';
             str += "<div style='margin-top:8px'></div>";
@@ -1441,43 +1438,18 @@
             str += "<div class='col-lg-5'>";
             str += "<div class='mb-3'>";
             str += "<label>שם קטגוריה:</label>";
-            str += "<input type='text' class='form-control' id='categoryTB' pattern='.{2,40}' oninvalid='this.setCustomValidity('מינימום 2 תויים, ועד 40')' oninput='this.setCustomValidity('')' required>";
+            str += "<input type='text' class='form-control' id='categoryeditTB' pattern='.{2,40}' oninvalid='this.setCustomValidity('מינימום 2 תויים, ועד 40')' oninput='this.setCustomValidity('')' required>";
             str += "</div>";
             str += "</div>";
             str += "</div>";
-
-            //str += "<button id='closebtn' type='button' class='btn btn-danger'>סגור</button>";
-            //str += "<input id='categoryedit' type='submit' class='btn btn-success' value='שמור' />";
 
             str += "</form>";
 
             str += "<div style='margin-bottom:8px'></div>";
 
-           
-            document.getElementById("edit_category_modal").innerHTML = str;
+            document.getElementById("edit_category_modalJS").innerHTML = str;
 
-
-            $("#categoryTB").val(categoryname);
-
-            //<div style="margin-top:8px"></div>
-                //<form id="pForm" class="was-validated">
-                //    <div class="row">
-                //        <div class="col-lg-5">
-
-                //            <div class="mb-3">
-                //                <label>שם קטגוריה:</label>
-                //                <input type="text" class="form-control" id="categoryTB" pattern=".{2,40}"
-                //                    oninvalid="this.setCustomValidity('מינמום 2 תווים, ועד 40')"
-                //                    oninput="this.setCustomValidity('')" required>
-                //                    </div>
-                //            </div>
-                //        </div>
-                //        </form>
-
-                //    <div style="margin-bottom:8px"></div>
-
-
-
+            $("#categoryeditTB").val(categoryname);
 
         }
 
@@ -1537,7 +1509,6 @@
                     <button class="nav-link" id="nav-orgenaizers-tab" data-bs-toggle="tab" data-bs-target="#nav-orgenaizers" type="button" role="tab" aria-controls="nav-orgenaizers" aria-selected="false">מארגנים</button>
                     <button class="nav-link" id="nav-managers-tab" data-bs-toggle="tab" data-bs-target="#nav-managers" type="button" role="tab" aria-controls="nav-managers" aria-selected="false">מנהלים</button>
                     <button class="nav-link" id="nav-categories-tab" data-bs-toggle="tab" data-bs-target="#nav-categories" type="button" role="tab" aria-controls="nav-categories" aria-selected="false">קטגוריות משחק</button>
-                    <button class="nav-link" id="nav-israel-tab" data-bs-toggle="tab" data-bs-target="#nav-israel" type="button" role="tab" aria-controls="nav-israel" aria-selected="false">נבחרת ישראל</button>
                 </div>
             </nav>
 
@@ -1800,50 +1771,37 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="nav-israel" role="tabpanel" aria-labelledby="nav-israel-tab">
-                    <!--#7-->
-                    <!--Israel Table-->
-                    <div class="row">
-                        <div class="col">
+            </div> <!--End of tabs-->
 
-                            <form id="iForm">
-                                <table id="RedTitle" class="nk-table" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th style="background: #dd163b">נבחרת ישראל</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                                <table id="IsraelTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="max-width: 70px;">כותרת 1</th>
-                                            <th style="max-width: 50px;">כותרת 2</th>
-                                            <th style="max-width: 100px;">כותרת 3</th>
-                                            <th style="max-width: 50px;">כותרת 4</th>
-                                            <th style="max-width: 60px;">כותרת 5</th>
-                                            <th style="max-width: 65px;">כותרת 6</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </form>
 
-                        </div>
+            <!-- The Modal Create-->
+            <div id="Modal_C_Create" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content" style="text-align:right">
+
+                    <div class="modal-header">
+                        <!--<span class="close">&times;</span>-->
+                        <h4>הוספת קטגורית משחק</h4>
+                    </div>
+
+                    <div id="add_category_modalJS" class="modal-body">
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="closebtn_createc" type="button" class="btn btn-danger">סגור</button>
+                        <input type="submit" id="categoryadd" class="btn btn-success" form="ca_CreateForm" value="שמור" />
 
                     </div>
 
                 </div>
 
-            </div> <!--End of tabs-->
+            </div> <!-- The Modal Create-->
 
 
-            <h2>Animated Modal with Header and Footer</h2>
-
-            <!-- Trigger/Open The Modal -->
-            <button id="myBtn">מודל עריכת קטגוריה</button> <!--Onclick write to div id="edit_category_modal"-->
-        
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
+            <!-- The Modal Edit-->
+            <div id="Modal_C_Edit" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content" style="text-align:right">
@@ -1853,44 +1811,19 @@
                         <h4>עריכת קטגורית משחק</h4>
                     </div>
 
-                    <div id="edit_category_modal" class="modal-body">
-
-                        <!--<div style="margin-top:8px"></div>
-
-                        <form id="ca_EditForm" class="was-validated">
-                            <div class="row">
-                                <div class="col-lg-5">
-
-                                    <div class="mb-3">
-                                        <label>שם קטגוריה:</label>
-                                        <input type="text" class="form-control" id="categoryTB" pattern=".{2,40}"
-                                               oninvalid="this.setCustomValidity('מינמום 2 תווים, ועד 40')"
-                                               oninput="this.setCustomValidity('')" required>
-                                    </div>
-                                </div>
-                                
-                                <button id="closebtn" type="button" class="btn btn-danger">סגור</button>
-                                <input type="submit" class="btn btn-success" value="שמור" />
-                            </div>
-
-
-                        </form>
-
-                        <div style="margin-bottom:8px"></div>-->
+                    <div id="edit_category_modalJS" class="modal-body">
 
                     </div>
 
                     <div class="modal-footer">
-                        <button id="closebtn" type="button" class="btn btn-danger">סגור</button>
+                        <button id="closebtn_editc" type="button" class="btn btn-danger">סגור</button>
                         <input type="submit" id="categoryedit" class="btn btn-success" form="ca_EditForm" value="שמור" />
 
-                        <!--id="categoryedit"
-                        <button id="categoryedit" type="button" class="btn btn-success">שמור</button>-->
                     </div>
 
                 </div>
 
-            </div>
+            </div> <!-- The Modal Edit-->
 
 
         </div> <!--container-->

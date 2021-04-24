@@ -12,39 +12,16 @@ namespace IESA.Controllers
     {
 
 
-        //---Add_Game_Category.html--- *Open*
+        //---Add_New_Competition.html--- *Open*
 
-        public List<GamesCategories> Get() //Add_Game_Category.html - method MC1
+        public List<GamesCategories> Get() //Add_New_Competition.html - method MC1
         {
             GamesCategories gamecategories = new GamesCategories();
             return gamecategories.Read();
         }
 
-        public int Post([FromBody] GamesCategories GameC) //Add_Game_Category.html - method MC2
-        {
-            return GameC.InsertGameCategory();
-        }
 
-        [HttpPut]
-        [Route("api/GamesCategories/mark6")]
-        public void Put(int id, string status) //Add_Game_Category.html - method MC3
-        {
-            GamesCategories c = new GamesCategories();
-            c.setNotactive(id, status);
-
-        }
-
-        [HttpPut]
-        [Route("api/GamesCategories/mark7")]
-        public void PUTe(int id, string UpdateCategoryName) //Add_Game_Category.html - method MC4
-        {
-            GamesCategories c = new GamesCategories();
-            c.ChangeName(id, UpdateCategoryName);
-
-        }
-
-
-        //---Add_Game_Category.html--- *Close*
+        //---Add_New_Competition.html--- *Close*
 
 
         //---Database.html--- *Open*
@@ -65,6 +42,21 @@ namespace IESA.Controllers
             GamesCategories categorystatus = new GamesCategories();
             categorystatus.changeStatus(isactive, categoryid);
         }
+
+        [HttpPut] //Database.html - method OD10
+        [Route("api/GamesCategories/editcname")]
+        public void changeStatus(string newcategory, int categoryid)
+        {
+            GamesCategories editname = new GamesCategories();
+            editname.editCategory(newcategory, categoryid);
+        }
+
+
+        public void Post([FromBody] GamesCategories category) //Database.html - method OD11
+        {
+            category.addgameCategory();
+        }
+
 
         //---Database.html--- *Close*
 

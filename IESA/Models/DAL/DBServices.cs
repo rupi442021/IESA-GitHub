@@ -588,6 +588,49 @@ namespace IESA.Models.DAL
 
         //---Add_New_Competition.html--- *Open*
 
+        public List<GamesCategories> GetGameCategoriesr() //Add_New_Competition.html - method MC1
+        {
+            SqlConnection con = null;
+            List<GamesCategories> gList = new List<GamesCategories>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "select * from GamesCategories";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    GamesCategories g = new GamesCategories();
+                    g.Categoryid = Convert.ToInt32(dr["categoryid"]);
+                    g.Categoryname = (string)dr["categoryname"];
+                    g.Status1 = Convert.ToInt32(dr["status1"]);
+
+
+                    gList.Add(g);
+                }
+
+                return gList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
         public int getCompetitionId()  //Add_New_Competition.html - method OO1 (Get New Id: Competition)
         {
             competitionId = 0;
@@ -1581,8 +1624,7 @@ namespace IESA.Models.DAL
             }
             catch (Exception)
             {
-
-                throw new Exception("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
             finally
             {
@@ -1621,10 +1663,9 @@ namespace IESA.Models.DAL
                 int numEffected = cmd.ExecuteNonQuery(); // execute the command
                 return numEffected;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // write to log
-                throw (ex);
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
 
             finally
@@ -1655,10 +1696,9 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create the connection
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // write to log
-                throw (ex);
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
 
             String cStr = BuildDeleteCommandComp(todeleteid);      // helper method to build the insert string
@@ -1670,10 +1710,9 @@ namespace IESA.Models.DAL
                 int numEffected = cmd.ExecuteNonQuery(); // execute the command
                 return numEffected;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // write to log
-                throw (ex);
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
 
             finally
@@ -1729,10 +1768,9 @@ namespace IESA.Models.DAL
 
                 return CompetitionsList;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // write to log
-                throw (ex);
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
             finally
             {
@@ -1781,8 +1819,7 @@ namespace IESA.Models.DAL
             }
             catch (Exception)
             {
-
-                throw new Exception("Problem getting the information from the server, please try again later");
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
             finally
             {
@@ -1830,8 +1867,7 @@ namespace IESA.Models.DAL
             }
             catch (Exception)
             {
-
-                throw new Exception("Problem getting the information from the server, please try again later");
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
             finally
             {
@@ -1880,8 +1916,7 @@ namespace IESA.Models.DAL
             }
             catch (Exception)
             {
-
-                throw new Exception("Problem getting the information from the server, please try again later");
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
             finally
             {
@@ -1922,10 +1957,9 @@ namespace IESA.Models.DAL
 
                 return caList;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // write to log
-                throw (ex);
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
             finally
             {
@@ -1962,10 +1996,9 @@ namespace IESA.Models.DAL
                 int numEffected = cmd.ExecuteNonQuery(); // execute the command
                 return numEffected;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // write to log
-                throw (ex);
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
             }
 
             finally
@@ -1984,6 +2017,109 @@ namespace IESA.Models.DAL
             String command;
             command = "UPDATE GamesCategories SET status1 = " + isactive + " WHERE categoryid = " + categoryid + " ";
             return command;
+        }
+
+        public int editCategorySQL(string newcategory, int categoryid) //Database.html - method OD10
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandCName(newcategory, categoryid);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception)
+            {
+                throw new Exception("קטגוריה זו כבר קיימת ברשומות");
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandCName(string newcategory, int categoryid)
+        {
+            String command;
+            command = "UPDATE GamesCategories SET categoryname = '" + newcategory + "' WHERE categoryid = " + categoryid + " ";
+            return command;
+        }
+
+        public int addgameCategorySQL(GamesCategories category) //Database.html - method OD11
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                throw new Exception("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
+            }
+
+            String cStr = BuildInsertcategoryCommand(category);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception)
+            {
+                throw new Exception("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertcategoryCommand(GamesCategories category)
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            sb.AppendFormat("Values('{0}')", category.Categoryname);
+            String prefix = "INSERT INTO GamesCategories " + "(categoryname) ";
+
+            command = prefix + sb.ToString();
+
+            return command;
+
         }
 
         //---Database.html--- *Close*
@@ -2105,211 +2241,6 @@ namespace IESA.Models.DAL
 
 
         //---Orgenzier_Main_Page.html--- *Close*
-
-
-        //---Add_Game_Category.html--- *Open*
-
-        public List<GamesCategories> GetGameCategoriesr() //Add_Game_Category.html - method MC1
-        {
-            SqlConnection con = null;
-            List<GamesCategories> gList = new List<GamesCategories>();
-
-            try
-            {
-                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
-
-                String selectSTR = "select * from GamesCategories";
-                SqlCommand cmd = new SqlCommand(selectSTR, con);
-
-                // get a reader
-                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
-
-                while (dr.Read())
-                {   // Read till the end of the data into a row
-                    GamesCategories g = new GamesCategories();
-                    g.Categoryid = Convert.ToInt32(dr["categoryid"]);
-                    g.Categoryname = (string)dr["categoryname"];
-                    g.Status1 = Convert.ToInt32(dr["status1"]);
-
-
-                    gList.Add(g);
-                }
-
-                return gList;
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-            finally
-            {
-                if (con != null)
-                {
-                    con.Close();
-                }
-
-            }
-        }
-
-        public int InsertGameCategory(GamesCategories GameC) //Add_Game_Category.html - method MC2
-        {
-
-            SqlConnection con;
-            SqlCommand cmd;
-
-            try
-            {
-                con = connect("DBConnectionString"); // create the connection
-            }
-            catch (Exception)
-            {
-                // write to log
-
-                throw new Exception("Problem inserting to the server, please try again later");
-            }
-
-            String cStr = BuildInsertCommand(GameC);      // helper method to build the insert string
-
-            cmd = CreateCommand(cStr, con);             // create the command
-
-            try
-            {
-                int numEffected = cmd.ExecuteNonQuery(); // execute the command
-                return numEffected;
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    // close the db connection
-                    con.Close();
-                }
-            }
-
-        }
-
-        private String BuildInsertCommand(GamesCategories GameC)
-        {
-            String command;
-
-            StringBuilder sb = new StringBuilder();
-            // use a string builder to create the dynamic string
-            sb.AppendFormat("Values('{0}', '{1}')", GameC.Categoryname, GameC.Status1);
-            String prefix = "INSERT INTO GamesCategories " + "(categoryName, status1) ";
-
-            command = prefix + sb.ToString();
-
-            return command;
-
-        }
-
-        public int setNotactive(int id, string status) //Add_Game_Category.html - method MC3
-        {
-            SqlConnection con;
-            SqlCommand cmd;
-
-            try
-            {
-                con = connect("DBConnectionString"); // create the connection
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-
-            String cStr = BuildInsertCommand6(id, status);      // helper method to build the insert string
-
-            cmd = CreateCommand(cStr, con);             // create the command
-
-            try
-            {
-                int numEffected = cmd.ExecuteNonQuery(); // execute the command
-                return numEffected; //return how many row's effected.
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    // close the db connection
-                    con.Close();
-
-                }
-            }
-
-        }
-
-        private String BuildInsertCommand6(int id, string status)
-        {
-            if (status == "1")
-                return ("UPDATE GamesCategories SET Status1 = 'False' WHERE categoryID= " + id);
-            else
-                return ("UPDATE GamesCategories SET Status1 = 'True' WHERE categoryID= " + id);
-        }
-
-        public int ChangeName(int id, string UpdateCategoryName) //Add_Game_Category.html - method MC4
-        {
-            SqlConnection con;
-            SqlCommand cmd;
-
-            try
-            {
-                con = connect("DBConnectionString"); // create the connection
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-
-            String cStr = BuildInsertCommand7(id, UpdateCategoryName);      // helper method to build the insert string
-
-            cmd = CreateCommand(cStr, con);             // create the command
-
-            try
-            {
-                int numEffected = cmd.ExecuteNonQuery(); // execute the command
-                return numEffected; //return how many row's effected.
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw (ex);
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    // close the db connection
-                    con.Close();
-
-                }
-            }
-
-        }
-
-        private String BuildInsertCommand7(int id, string UpdateCategoryName)
-        {
-            string str = "UPDATE GamesCategories SET categoryname ='" + UpdateCategoryName + "' WHERE categoryid= " + id;
-            return (str);
-        }
-
-
-        //---Add_Game_Category.html--- *Close*
 
 
         //---Post_Archive.html--- *Open*

@@ -202,7 +202,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Pages\Add_Game_Category.html" />
     <Content Include="Pages\Database.html" />
     <Content Include="Pages\Edit_Competition.html" />
     <Content Include="Pages\Add_New_Post.html" />
@@ -211,7 +210,6 @@
     <Content Include="Pages\Edit_Post.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Gamer_Card.html" />
-    <Content Include="Pages\MODALTRY.html" />
     <Content Include="Pages\Project_Menu.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Post_Archive.html" />
@@ -269,8 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Pages\Gamer\" />
-    <Folder Include="Pages\Orgenaizer\" />
     <Folder Include="uploadedFiles\Preview\" />
   </ItemGroup>
   <ItemGroup>

@@ -31,7 +31,7 @@ namespace IESA.Models
 
         //---Add_New_Competition.html--- *Open*
 
-        public List<GamesCategories> Read() //Add_Game_Category.html - method MC1
+        public List<GamesCategories> Read() //Add_New_Competition.html - method MC1
         {
             DBServices dbs = new DBServices();
             List <GamesCategories> gamecategories = dbs.GetGameCategoriesr();
@@ -40,27 +40,6 @@ namespace IESA.Models
 
 
         //---Add_New_Competition.html--- *Close*
-
-
-        //---Add_Game_Category.html--- *Open*
-
-        public int InsertGameCategory() //Add_Game_Category.html - method MC2
-        {
-            DBServices dbs = new DBServices();
-            return dbs.InsertGameCategory(this);
-        }
-
-        public void setNotactive(int id, string status) //Add_Game_Category.html - method MC3
-        {
-            DBServices dbs = new DBServices();
-            dbs.setNotactive(id, status);
-        }
-
-        public void ChangeName(int id, string UpdateCategoryName) //Add_Game_Category.html - method MC4
-        {
-            DBServices dbs = new DBServices();
-            dbs.ChangeName(id, UpdateCategoryName);
-        }
 
 
         //---Add_Game_Category.html--- *Close*
@@ -81,6 +60,24 @@ namespace IESA.Models
         {
             DBServices dbs = new DBServices();
             dbs.changeStatusSQL(isactive, categoryid);
+        }
+
+        public void editCategory(string newcategory, int categoryid) //Database.html - method OD10
+        {
+            DBServices dbs = new DBServices();
+            dbs.editCategorySQL(newcategory, categoryid);
+        }
+
+        //public int addgameCategory(string newcategoryadd) //Database.html - method OD11
+        //{
+        //    DBServices dbs = new DBServices();
+        //    return dbs.addgameCategorySQL(newcategoryadd);
+        //}
+
+        public void addgameCategory() //Database.html - method OD11
+        {
+            DBServices dbs = new DBServices();
+            dbs.addgameCategorySQL(this);
         }
 
 
