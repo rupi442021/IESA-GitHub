@@ -148,6 +148,18 @@ namespace IESA.Models
 
 
 
+        //Edit_Personal_By_Manager.html - method MU1---*Open*
+        public List<Orgenaizers> ReadOrgDetails(int IdUser) 
+        {
+            DBServices dbs = new DBServices();
+            List<Orgenaizers> glist = dbs.ReadOrgDetails(IdUser);
+            return glist;
+        }
+
+        //Edit_Personal_By_Manager.html - method MU1---*Close*
+
+
+
 
 
 

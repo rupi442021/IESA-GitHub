@@ -191,5 +191,24 @@ namespace IESA.Models
         //---Edit_Personal_Details.html--- *Close*
 
 
+
+
+
+        //Edit_Personal_By_Manager.html - method MU2---*Open*
+        public List<Gamers> ReadGamerDetails(int IdUser) //Manager_Main_Page.html - method OM1
+        {
+            DBServices dbs = new DBServices();
+            List<Gamers> glist = dbs.ReadGamerDetails(IdUser);
+            return glist;
+        }
+
+        //Edit_Personal_By_Manager.html - method MU2---*Close*
+
+
+
+
+
+
+
     }
 }

@@ -2971,6 +2971,149 @@ namespace IESA.Models.DAL
         //---ReactClientSide---*Close*
 
 
+
+
+        //Edit_Personal_By_Manager.html - method MU1---*Open*
+
+        public List<Orgenaizers> ReadOrgDetails(int IdUser)
+        {
+
+            SqlConnection con2 = null;
+            List<Orgenaizers> OrgenaizersList = new List<Orgenaizers>();
+
+            try
+            {
+                con2 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR2 = "SELECT * FROM Orgenaizers Where userid=" + IdUser;
+                SqlCommand cmd2 = new SqlCommand(selectSTR2, con2);
+
+                // get a reader
+                SqlDataReader dr2 = cmd2.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr2.Read())
+                {
+                    Orgenaizers orgenaizer = new Orgenaizers();
+
+                    orgenaizer.Userid = (dr2["userid"] != DBNull.Value) ? Convert.ToInt32(dr2["userid"]) : default;
+                    orgenaizer.Firstname = (dr2["firstname"] != DBNull.Value) ? (string)dr2["firstname"] : default;
+                    orgenaizer.Lastname = (dr2["lastname"] != DBNull.Value) ? (string)dr2["lastname"] : default;
+                    orgenaizer.Id = (dr2["id"] != DBNull.Value) ? Convert.ToInt32(dr2["id"]) : default;
+
+
+                    orgenaizer.Phone = (dr2["phone"] != DBNull.Value) ? (string)dr2["phone"] : default;
+                    orgenaizer.Email = (dr2["email"] != DBNull.Value) ? (string)dr2["email"] : default;
+                    orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
+
+                    orgenaizer.Gender = (dr2["gender"] != DBNull.Value) ? (string)dr2["gender"] : default;
+                    orgenaizer.Nickname = (dr2["nickname"] != DBNull.Value) ? (string)dr2["nickname"] : default;
+                    orgenaizer.Picture = (dr2["picture"] != DBNull.Value) ? (string)dr2["picture"] : default;
+                    orgenaizer.Address1 = (dr2["address1"] != DBNull.Value) ? (string)dr2["address1"] : default;
+                    orgenaizer.Linktocommunity = (dr2["linktocommunity"] != DBNull.Value) ? (string)dr2["linktocommunity"] : default;
+
+                    OrgenaizersList.Add(orgenaizer);
+                }
+
+                return OrgenaizersList;
+            }
+            catch (Exception)
+            {
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            }
+            finally
+            {
+                if (con2 != null)
+                {
+                    con2.Close();
+                }
+
+            }
+
+        }
+
+
+
+        //Edit_Personal_By_Manager-MU1
+
+
+
+
+        //Edit_Personal_By_Manager.html - method MU2---*Open*
+
+
+        public List<Gamers> ReadGamerDetails(int IdUser) //Manager_Main_Page.html - method OM1
+        {
+
+            SqlConnection con = null;
+            List<Gamers> GamersList = new List<Gamers>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Gamers WHERE userid =" + IdUser;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Gamers gamer = new Gamers();
+
+                    gamer.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
+                    gamer.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default;
+                    gamer.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;                   
+                    gamer.Discorduser = (dr["discorduser"] != DBNull.Value) ? (string)dr["discorduser"] : default;
+                    gamer.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
+                    gamer.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
+                    gamer.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
+                    gamer.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
+                    gamer.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
+                    gamer.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
+                    gamer.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
+                    gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    GamersList.Add(gamer);
+                }
+
+                return GamersList;
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Problem getting the information from the server, please try again later");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+
+        //Edit_Personal_By_Manager.html - method MU2---*Close*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }
