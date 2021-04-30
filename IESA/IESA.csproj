@@ -207,9 +207,11 @@
     <Content Include="Pages\Add_New_Post.html" />
     <Content Include="Pages\Competition_View.html" />
     <Content Include="Pages\Competition_Preview.html" />
+    <Content Include="Pages\Edit_Personal_By_Manager.html" />
     <Content Include="Pages\Edit_Post.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Gamer_Card.html" />
+    <Content Include="Pages\ProfileTry.html" />
     <Content Include="Pages\Project_Menu.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Post_Archive.html" />
