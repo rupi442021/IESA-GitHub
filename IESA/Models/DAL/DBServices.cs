@@ -2229,11 +2229,11 @@ namespace IESA.Models.DAL
 
             for (int i = 0; i < rankarray.Count; i++)
             {
-                sa.Append(" INSERT INTO Gamer_Competition (gamerid, competitionid, rank1) ");
-                sa.Append(" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , " + rankarray[i].Rank1 + " ) ");
+                sa.Append(" INSERT INTO Gamer_Competition (gamerid, competitionid, date1, time1, rank1, score) ");
+                sa.Append(" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , getdate() , '10:00:00' , "  + rankarray[i].Rank1 + " , 0) ");
             }
 
-            command2 = "UPDATE Competitions SET competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
+            command2 = " UPDATE Competitions SET competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
             command = sa.ToString() + command2;
 
             return command;

@@ -167,6 +167,11 @@
             direction: rtl;
         }
 
+        .modal-header {
+        background-color: #dd163b;
+        }
+
+
         /*Template Style*/
 
     </style>
@@ -598,6 +603,14 @@
         function getErrorGamersInC(err) {
             console.log("in ERR: ", err);
         }
+
+        function redirect() {
+            window.location.href = "Add_New_Competition.html";
+        }
+
+        function sendRanksToManager() {
+            console.log("inSendRanksToManager");
+        }
     </script>
 </head>
 <body>
@@ -615,7 +628,15 @@
                 <h2 class="headh2">אזור אישי</h2>
                 <div class="divdown"></div>
             </section>
-
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col-3 mb-3">
+                    <div class="buttonadd">
+                        <button type="button" class="btn btn-danger" onclick="redirect()">הגשת תחרות חדשה <i class="bi bi-plus-square"></i></button>
+                    </div>
+                </div>
+            </div>
             <div id="FCcards">
                 <h3>ניהול תחרויות</h3>
                 <div class="row">
@@ -668,8 +689,8 @@
                         </div>
                         <div id='result'></div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closerank">סגור</button>
-                            <button type="button" class="btn btn-primary" id="saverank">Save changes</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="closerank">סגור</button>
+                            <button type="button" class="btn btn-success" id="saverank" onclick="sendRanksToManager()">שלח דירוגים</button>
                         </div>
                     </div>
                 </div>
