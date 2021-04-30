@@ -109,5 +109,18 @@ namespace IESA.Controllers
 
         //---Edit_Personal_Details.html--- *Close*
 
+
+
+        [HttpGet] //Edit_Personal_By_Manager.html - method MU1---*Open*
+        [Route("api/Orgenaizers/{IdUser}")]
+        public List<Orgenaizers> GetOrgDetails(int IdUser)
+        {
+            Orgenaizers OrgDetails = new Orgenaizers();
+            return OrgDetails.ReadOrgDetails(IdUser);
+        }
+
+
+        //Edit_Personal_By_Manager.html - method MU1---*Close*
+
     }
 }

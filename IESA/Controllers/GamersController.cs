@@ -147,5 +147,22 @@ namespace IESA.Controllers
 
         //---Edit_Personal_Details.html--- *Close*
 
+
+        [HttpGet] //Edit_Personal_By_Manager.html - method MU2---*Open*
+        [Route("api/Gamers/{IdUser}")]
+        public List<Gamers> GetGamerDetails(int IdUser)
+        {
+            Gamers gamerDetails = new Gamers();
+            return gamerDetails.ReadGamerDetails(IdUser);
+        }
+
+
+        //Edit_Personal_By_Manager.html - method MU2---*Close*
+
+
+
+
+
+
     }
 }

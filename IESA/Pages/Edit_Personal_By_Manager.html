@@ -1,0 +1,1044 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <title>&#x202E; עריכת פרטים אישיים – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            height: 2000px;
+            padding-top: 30px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Page title Open*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            /*margin-bottom: 55px;*/ /*#1*/
+            font-weight: 600;
+            letter-spacing: .015em;
+            margin: 3px; /*#2*/
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .divdown {
+            margin-bottom: 60px;
+        }
+
+        /*Page title Close*/
+
+        #oph, #gph {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #ofiles, #gfiles {
+            margin-top: 15px;
+        }
+
+        #btnsubmit {
+            margin-top: 50px;
+            text-align: left;
+            padding-left: 115px;
+        }
+
+
+        /*Start of For Switch Button*/
+        #ForSwitch {
+            position: relative;
+            left: 93%;
+            bottom:-8%;
+            font:bold;
+            /*font-family:David;*/
+            font-size:16px;
+            /*text-decoration:underline;*/
+        }
+        /*End of For Switch Button*/
+        /*Start of Switch Button */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            position: relative;
+            left: 75%
+        }
+
+
+            /* Hide default HTML checkbox */
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+
+
+        /*end color-profile switch rounded button*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*Template Style*/
+
+    </style>
+
+
+    <script>
+        userType = '';
+        IdUser = '';
+        var counterimage = 2300;
+        // when we will get to this page(threw manager page) we will take the specific id of the orgenaizer/gamer  and get all his details and will render them here.
+        // כאן אביא את ה-איי די על פי מה שהמנהל לחץ ואשאל האם ה-איי די גדול או קטן מ-30000.
+        IdUser = 20000000;
+        // אם הוא גדול אז הגט יהיה מעמוד שחקן ואם הוא קטן אז מעמוד מארגן
+        //ואז ארנדר כל נתון למקום המתאים לו
+        // כמובן שבעת עריכה אצטרך לעשות פקודת פוט
+
+        $(document).ready(function () {
+            console.log(IdUser)
+            if (IdUser< 30000000) {//for orgenziers
+                userType=2
+                ajaxCall("GET", "../api/Orgenaizers/" + IdUser, "", getSuccessOrgDetails, ErrorOrg); //Edit_Personal_By_Manager.html - method MU1
+            }
+
+
+            else if (IdUser >= 30000000)
+            {
+                userType = 3
+                ajaxCall("GET", "../api/Gamers/" + IdUser, "", getSuccessGamerDetails, ErrorGamer); //Edit_Personal_By_Manager.html - method MU2
+
+            }
+
+            else {
+
+                swal("עריכת פרטים אישיים מתבצעת במאגר הנתונים")
+                window.location("Sign_In.html")
+                  }
+
+
+            function getSuccessGamerDetails(det)
+            {
+                Userid=det[0].Userid
+                Gamerrender(det)
+
+                console.log(det)
+                console.log(userType)
+
+                $("#ofiles").change(function () {
+                    addPreview(userType)
+                });
+
+                $("#gfiles").change(function () {
+                    addPreview(userType)
+                });
+
+                $("#oForm").submit(function (e) {
+                    e.preventDefault();
+                    f1(userType);
+                });
+
+                $("#gForm").submit(function (e) {
+                    e.preventDefault();
+                    f1(userType);
+                });
+
+
+              
+
+
+            }
+
+            function ErrorGamer(det)
+            {
+
+                alert("ErrorGamer")
+
+
+
+
+            }
+
+
+            function getSuccessOrgDetails(det)
+            {
+
+
+                console.log(det)
+                console.log(userType)
+
+
+
+                Orgenzierrender(det)
+                Userid = det[0].Userid
+
+                $("#ofiles").change(function () {
+                    addPreview(userType)
+                });
+
+                $("#gfiles").change(function () {
+                    addPreview(userType)
+                });
+
+                $("#oForm").submit(function (e) {
+                    e.preventDefault();
+                    f1(userType);
+                });
+
+                $("#gForm").submit(function (e) {
+                    e.preventDefault();
+                    f1(userType);
+                });
+
+
+
+
+
+
+            }
+
+            function ErrorOrg(det)
+            {
+                alert("ErrorOrg")
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //General Things of This Page
+
+
+            $("#cancel_edit_gamer").click(function () {
+                window.history.back();
+            });
+
+            $("#cancel_edit_orgenaizer").click(function () {
+                window.history.back();
+            });
+
+            $("#main_page").click(function () {
+
+                    $("#main_page").attr("href", "Manager_Main_Page.html")
+
+            })
+
+
+
+        });
+
+
+
+
+        //render by id
+
+
+        function Orgenzierrender(det) {
+            $("#Gamerrow").hide()
+            $("#Orgenaizerrow").show()
+            console.log(det[0].Firstname)
+
+
+
+
+            $("#ofirstnameTB").val(det[0].Firstname);
+            $("#olastnameTB").val(det[0].Lastname);
+            $("#onicknameTB").val(det[0].Nickname);
+            let dob = det[0].Dob.split("T")
+            $('#odobTB').val(dob[0]);
+            $('#oidTB').val(det[0].Id);
+            if (det[0].Gender == 'זכר' || det[0].Gender == 'oMale')
+                $('input[name=radio-gender-o][value=Male]').prop('checked', true);
+            else if ((det[0].Gender == 'נקבה' || det[0].Gender == 'oFemale'))
+                $('input[name=radio-gender-o][value=Female]').prop('checked', true);
+            else
+                $('input[name=radio-gender-o][value=None]').prop('checked', true);
+            $('#oemailTB').val(det[0].Email);
+            //$('#opasswordTB').val(Odetails.Password1);
+            $('#oaddressTB').val(det[0].Address1);
+            $('#oPhoneTB').val(det[0].Phone);
+            $('#ocomunitynameTB').val(det[0].Comunityname);
+            $('#olinktocommunityTB').val(det[0].Linktocommunity);
+
+
+            if (det[0].Picture == null) { }
+
+            else {
+                 imgstr = '<img src="../' + det[0].Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
+                $('#oph').html(imgstr);
+            }
+            $('#usernumTB').val(det[0].Userid);
+
+
+
+        }
+
+
+
+        function Gamerrender(det) {
+            $("#Gamerrow").show()
+            $("#Orgenzierrow").hide()
+
+            $("#gfirstnameTB").val(det[0].Firstname);
+            $("#glastnameTB").val(det[0].Lastname);
+            $("#gnicknameTB").val(det[0].Nickname);
+            let dob = det[0].Dob.split("T")
+            $('#gdobTB').val(dob[0]);
+            $('#gidTB').val(det[0].Id);
+            if (det[0].Gender == 'זכר' || det[0].Gender == 'gMale')
+                $('input[name=radio-gender-g][value=Male]').prop('checked', true);
+            else if ((det[0].Gender == 'נקבה' || det[0].Gender == 'gFemale'))
+                $('input[name=radio-gender-g][value=Female]').prop('checked', true);
+            else
+                $('input[name=radio-gender-g][value=None]').prop('checked', true);
+            $('#gemailTB').val(det[0].Email);
+            //$('#opasswordTB').val(Odetails.Password1);
+            $('#gaddressTB').val(det[0].Address1);
+            $('#gPhoneTB').val(det[0].Phone);
+            $('#gDiscorduserTB').val(det[0].Discorduser);
+            //$('#glinktocommunityTB').val(Odetails.Linktocommunity);
+
+
+            if (det[0].Picture == null) { }
+
+            else {
+                 imgstr = '<img src="../' + det[0].Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
+                $('#gph').html(imgstr);
+            }
+
+
+
+            $('#gusernumTB').val(det[0].Userid);
+
+        }
+
+
+
+
+
+            //end of render
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //add photo----start
+
+        function f1(userType) {
+            addPhoto(userType);
+            return false;
+        }
+
+        function addPhoto(userType) {
+
+            var data = new FormData();
+
+            if (userType == 3) {
+                var files = $("#gfiles").get(0).files;
+            }
+            else { //userType == 2
+                var files = $("#ofiles").get(0).files;
+            }
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("userid",Userid); //append what ever data you want to send along with the files.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: routeImage,
+                error: error
+            });
+
+            return false;
+        }
+
+        function routeImage(data) {
+            console.log(data);
+
+            if (userType == 3) {
+                updateGamer(data[0]);
+            }
+            else { //userType == 2
+                updateOrgenaizer(data[0]);
+            }
+
+
+        }
+
+        function updateGamer(ImgUrl) {
+            var gradio = $('input[name=radio-gender-g]:checked'); //get gender
+            var ggender = gradio.attr('id');
+
+            if ($("#gfiles").val() == "" || $("#gfiles").val() == null)
+                ImgUrl = imgstr;
+
+            GamerObj = {
+
+                Firstname: $("#gfirstnameTB").val(),
+                Lastname: $("#glastnameTB").val(),
+                Gender: ggender,
+                Phone: $("#gPhoneTB").val(),
+                Dob: $("#gdobTB").val(),
+                Address1: $("#gaddressTB").val(),
+                Discorduser: $("#gDiscorduserTB").val(),
+                Picture: ImgUrl
+            }
+
+            ajaxCall("PUT", "../api/Gamers/updatedetails?GId=" + Userid, JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Edit_Personal_Details.html - method SG1
+
+            return false;
+        }
+
+        function SuccessGamer(data) {
+            ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + Userid, "", GetGamerS, ErrorGamer); //Edit_Personal_Details.html - method SG2
+
+        }
+
+        function ErrorGamer(err) {
+            console.log(err)
+
+        }
+
+
+        function updateOrgenaizer(ImgUrl) {
+            var oradio = $('input[name=radio-gender-o]:checked'); //get gender
+            var ogender = oradio.attr('id');
+
+
+            if ($("#ofiles").val() == "" || $("#ofiles").val() == null)
+                ImgUrl = imgstr;
+
+            OrgenaizerObj = {
+                Firstname: $("#ofirstnameTB").val(),
+                Lastname: $("#olastnameTB").val(),
+                Gender: ogender,
+                Phone: $("#oPhoneTB").val(),
+                Dob: $("#odobTB").val(),
+                Address1: $("#oaddressTB").val(),
+                Picture: ImgUrl,
+                Comunityname: $("#ocomunitynameTB").val(),
+                Linktocommunity: $("#olinktocommunityTB").val()
+            }
+
+            ajaxCall("PUT", "../api/Orgenaizers/updatedetails?OId=" + Userid, JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Edit_Personal_Details.html - method SO1
+
+            return false;
+        }
+
+        function SuccessOrgenaizer(data) {
+            ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Userid, "", GetOrgenaizer, ErrorGetOrgenaizer); //Edit_Personal_Details.html - method SO2
+        }
+
+        function GetGamerS(user) {
+            console.log("In get G: ", user);
+            console.log("In get G: ", user);
+
+            localStorage["user_info"] = JSON.stringify(user);
+            localStorage["user_type"] = "3";
+
+            redirectPage();
+        }
+
+        function GetOrgenaizer(user) {
+            console.log("In get O: ", user);
+            localStorage.clear();
+            localStorage["user_info"] = JSON.stringify(user);
+            localStorage["user_type"] = "2";
+
+            redirectPage();
+        }
+
+        function redirectPage() {
+
+            swal("הפרטים עודכנו בהצלחה"); //save only the is in + id of user to render the info later in each page
+
+            if (userType == 2)
+                setTimeout(function () {
+                    location.replace("Manager_Main_Page.html");
+                }, 2500);
+            else
+                setTimeout(function () {
+                    location.replace("Manager_Main_Page.html");
+                }, 2500);
+
+        }
+
+        function ErrorGetOrgenaizer(err) {
+            console.log(err);
+        }
+
+        function ErrorOrgenaizer(err) {
+            console.log(err);
+        }
+
+
+
+
+
+        //add photo---end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //add Preview photo---start
+
+
+        function addPreview(userType) {
+
+            previewCode = userType; //global integer for next function
+            counterimage = counterimage + 1;
+
+            if (counterimage > 2302) { //Security: User Wont be able to upload more then 3 pictures to the server
+                counterimage = 2300;
+            }
+
+            var data = new FormData();
+
+            if (userType == 3) {
+                var files = $("#gfiles").get(0).files;
+            }
+            else { //userType == 2
+                var files = $("#ofiles").get(0).files;
+            }
+
+            // Add the uploaded file to the form data collection
+            if (files.length > 0) {
+                for (f = 0; f < files.length; f++) {
+                    data.append("UploadedImage", files[f]);
+                }
+
+                data.append("userid", counterimage); //append what ever data you want to send along with the files.
+            }
+
+            // Ajax upload
+            $.ajax({
+                type: "POST",
+                url: "../Api/FileUpload",
+                contentType: false,
+                processData: false,
+                data: data,
+                success: imagePreview,
+                error: error
+            });
+
+            return false;
+        }
+
+        function imagePreview(data) {
+
+            var imgStr = "";
+
+            if (Array.isArray(data)) {
+                for (var i = 0; i < data.length; i++) {
+                    imgStr = "<img src='../" + data[i] + "' class='rounded-circle' alt='Cinque Terre' width='100' height='100'/>"; //instead of +=
+                }
+            }
+
+
+            else {
+                imgStr = "<img src='../" + data + "'/>";
+            }
+
+            if (previewCode == 3) {
+                document.getElementById("gph").innerHTML = imgStr;
+            }
+            else {
+                document.getElementById("oph").innerHTML = imgStr;
+            }
+
+        }
+
+        function error(err) {
+            console.log(err);
+        }
+
+
+
+
+         //add Preview photo---end
+
+
+
+
+    </script>
+
+</head>
+<body>
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+        <div class="container">
+
+            <section id="page_title">
+                <a class="titlelink" id="main_page">אזור אישי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">עריכת פרטים אישיים</h2>
+                <div class="divdown"></div>
+            </section>
+
+            <div class="row" id="Gamerrow">
+                <form id="gForm" class="was-validated">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>כינוי:</label>
+                                        <input  class="form-control" placeholder='הכינוי שלך בעמותה' id="gnicknameTB"
+                                               pattern="^[a-zA-Z]{2,15}$"
+                                               oninvalid="this.setCustomValidity('כינוי לא חוקי')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label>מספר משתמש:</label>
+                                            <input  class="form-control" placeholder='מספר משתמש במערכת' id="gusernumTB" oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="fname">שם פרטי:</label>
+                                        <input type="text" class="form-control" placeholder="שם פרטי" id="gfirstnameTB" pattern=".{2,15}"
+                                               oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+
+                                </div>
+
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>שם משפחה:</label>
+                                        <input type="text" class="form-control" placeholder="שם משפחה" id="glastnameTB" pattern=".{2,15}"
+                                               oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>כתובת דוא"ל:</label>
+                                        <input  class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="gemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <label>תעודת זהות:</label>
+                                        <input  class="form-control" placeholder="מכיל 8-9 ספרות" id="gidTB" pattern=".{8,9}"
+                                               oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>תאריך לידה:</label>
+                                <input type="date" class="form-control" id="gdobTB" oninvalid="this.setCustomValidity('תאריך לידה שגוי')" oninput="this.setCustomValidity('')" required>
+                            </div>
+
+
+                            <div style="margin-bottom:10px;"></div>
+
+
+                            <label>מגדר:</label>
+                            <div class="mb-3">
+                                <input type="radio" class="form-check-input" id="gMale" name="radio-gender-g" value="Male" required>
+                                <label class="form-check-label">זכר</label>
+                            </div>
+                            <div class="mb-3">
+                                <input type="radio" class="form-check-input" id="gFemale" name="radio-gender-g" value="Female" required>
+                                <label class="form-check-label">נקבה</label>
+                            </div>
+                            <div class="mb-3">
+                                <input type="radio" class="form-check-input" id="gNone" name="radio-gender-g" value="None" required>
+                                <label class="form-check-label">מעדיף לא לומר</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label>כתובת מגורים:</label>
+                                <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="gaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                            </div>
+                            <div class="mb-3">
+                                <label>מספר נייד:</label>
+                                <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="gPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                            </div>
+                            <div class="mb-3">
+                                <label>דיסקורד משתמש:</label>
+                                <input type="text" class="form-control" placeholder='כתובת דיסקורד' id="gDiscorduserTB" pattern=".{2,20}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                        <label for="file">תמונה: </label>
+                                        <br />
+                                        <div class="img-circle">
+                                            <div id="gph">
+                                                <img src="https://e7.pngegg.com/pngimages/672/63/png-clipart-discord-computer-icons-online-chat-cool-discord-icon-logo-smiley.png" class="rounded-circle" alt="Cinque Terre" width="100" height="100">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <input type="file" id="gfiles" name="files" multiple="multiple" />
+                            </div>
+
+
+
+                        </div>
+
+                        <!--Need to fix it to be responsive Down*-->
+
+                        <div id="btnsubmit" class="mb-3">
+                            <input type="submit" class="btn btn-success" value="עדכן פרטים" />
+                            <input type="button" class="btn btn-danger" value="ביטול" id="cancel_edit_gamer" />
+
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="row" id="Orgenzierrow">
+                <form id="oForm" class="was-validated">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>כינוי:</label>
+                                        <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="onicknameTB"
+                                               pattern="^[a-zA-Z]{2,15}$"
+                                               oninvalid="this.setCustomValidity('כינוי לא חוקי')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label>מספר משתמש:</label>
+                                            <input type="number" class="form-control" placeholder='מספר משתמש במערכת' id="usernumTB" oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="fname">שם פרטי:</label>
+                                        <input type="text" class="form-control" placeholder="שם פרטי" id="ofirstnameTB" pattern=".{2,15}"
+                                               oninvalid="this.setCustomValidity('שם חייב להכיל בין 2-15 תווים.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+
+                                </div>
+
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>שם משפחה:</label>
+                                        <input type="text" class="form-control" placeholder="שם משפחה" id="olastnameTB" pattern=".{2,15}"
+                                               oninvalid="this.setCustomValidity('שם משפחה חייב להכיל בין 2-15 תווים.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label>כתובת דוא"ל:</label>
+                                        <input type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="oemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <label>תעודת זהות:</label>
+                                        <input type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="oidTB" pattern=".{8,9}"
+                                               oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
+                                               oninput="this.setCustomValidity('')" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>תאריך לידה:</label>
+                                <input type="date" class="form-control" id="odobTB" oninvalid="this.setCustomValidity('תאריך לידה שגוי')" oninput="this.setCustomValidity('')" required>
+                            </div>
+
+
+                            <div style="margin-bottom:10px;"></div>
+
+
+                            <label>מגדר:</label>
+                            <div class="mb-3">
+                                <input type="radio" class="form-check-input" id="oMale" name="radio-gender-o" value="Male" required>
+                                <label class="form-check-label">זכר</label>
+                            </div>
+                            <div class="mb-3">
+                                <input type="radio" class="form-check-input" id="oFemale" name="radio-gender-o" value="Female" required>
+                                <label class="form-check-label">נקבה</label>
+                            </div>
+                            <div class="mb-3">
+                                <input type="radio" class="form-check-input" id="oNone" name="radio-gender-o" value="None" required>
+                                <label class="form-check-label">מעדיף לא לומר</label>
+                            </div>
+
+                        </div>
+                        <div class="col">
+
+                            <div class="mb-3">
+                                <label>כתובת מגורים:</label>
+                                <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="oaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                            </div>
+                            <div class="mb-3">
+                                <label>מספר נייד:</label>
+                                <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="oPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>שם הקהילה אליה שייך:</label>
+                                <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="ocomunitynameTB" pattern=".{2,20}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="mb-3">
+                                <label>לינק לאתר הקהילה:</label>
+                                <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3">
+                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                        <label for="file">תמונה: </label>
+                                        <br />
+                                        <div class="img-circle">
+                                            <div id="oph">
+                                                <img src="https://e7.pngegg.com/pngimages/672/63/png-clipart-discord-computer-icons-online-chat-cool-discord-icon-logo-smiley.png" class="rounded-circle" alt="Cinque Terre" width="100" height="100">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <input type="file" id="ofiles" name="files" multiple="multiple" />
+                            </div>
+
+
+
+                        </div>
+
+                        <!--Need to fix it to be responsive Down*-->
+
+                        <div id="btnsubmit" class="mb-3">
+                           <p id="ForSwitch">סטאטוס</p>
+                            <!-- Rounded switch -->
+                            <label class="switch">
+                               
+                                <input type="checkbox">
+
+                                <span class="slider round"></span>
+                            </label>
+                            <!-- Rounded switch -->
+                            <input type="submit" class="btn btn-primary" value="עדכן פרטים" />
+                            <input type="button" class="btn btn-danger" value="ביטול" id="cancel_edit_orgenaizer" />
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>
