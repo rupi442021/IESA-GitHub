@@ -1436,7 +1436,19 @@
                     columns: [
                         { data: "Competitionname", className: "uniqueClassName" },
                         { data: "Body", className: "uniqueClassName" },
-                        { data: "Address1", className: "uniqueClassName" },
+
+                        {
+                            render: function (data, type, row, meta) {
+                                let nickname = row.Address1;
+                                let image = row.Linkforregistration;
+
+                                imgStr = "<img src='../" + image + "' class='rounded-circle' style='margin-right: 3px;' alt='Image' width='25' height='25'/>";
+
+                                return nickname + " " + imgStr;
+                            }
+                            , className: "uniqueClassName"
+                        },
+
                         { data: "Isiesa", className: "uniqueClassName" },
                         {
                             render: function (data, type, row, meta) {
@@ -1740,7 +1752,7 @@
                                     <thead>
                                         <tr>
                                             <th style="max-width: 70px;">שם קטגוריה</th>
-                                            <th style="max-width: 70px;">שם מלא</th>
+                                            <th style="max-width: 70px;">שם השחקן</th>
                                             <th style="max-width: 70px;">כינוי</th>
                                             <th style="max-width: 70px;">ניקוד</th>
                                             <th style="max-width: 50px;">פעולות</th>
