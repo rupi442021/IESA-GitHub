@@ -346,9 +346,10 @@
             }
 
         #caForm > div.dataTables_wrapper div.dataTables_filter label {
-            position: absolute;
+            display: none;
+            /*position: absolute;
             top: -46px;
-            right: 41.3%;
+            right: 41.3%;*/
         }
 
         #caForm > div.dataTables_wrapper div.dataTables_paginate {
@@ -509,13 +510,30 @@
             width: 75px;
         }
 
+        #divfilterrank {
+            color: #2b2626;
+            position: absolute;
+            top: 32.15%;
+            right: 55%;
+        }
+
+        #divfiltercategory {
+            color: #2b2626;
+            position: absolute;
+            top: 32.15%;
+            right: 43%;
+        }
+
+        select {
+            height: 30px;
+        }
     </style>
 
     <script>
 
 
 
-        //tbl1 = gamers | tbl2 = orgenaizers | tbl3 = posts | tbl4 = competitions | tbl5 = managers | tbl6 = categoies |tblX = ranks (to be added later)*
+        //tbl1 = gamers | tbl2 = orgenaizers | tbl3 = posts | tbl4 = competitions | tbl5 = managers | tbl6 = categoies |tbl7 = ranks
 
         $(document).ready(function () {
 
@@ -583,6 +601,14 @@
 
             //---Ranks Table--- *Open*
 
+            ajaxCall("GET", "../api/Competitions/tableRdb", "", getRanksSuccess, Error); //Database.html - method OD12
+
+            //#Update it when gamer card done or Modal
+            $(document).on("click", ".R_viewBTN", function () {
+                var userId3 = this.getAttribute('data-rankgamerid');
+
+                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId3)
+            });
 
             //---Ranks Table--- *Close*
 
@@ -757,7 +783,7 @@
                     CategoryObj = {
                         Categoryname: newcategoryadd,
                     }
-                    
+
                     ajaxCall("POST", "../api/GamesCategories", JSON.stringify(CategoryObj), UpdateSuccessCa, Error); //Database.html - method OD11
                 }
                 else {
@@ -932,7 +958,7 @@
 
         function UpdateSuccessC(data) {
 
-            ajaxCall("GET", "../api/Competitions/tablecdb", "", UpdateSuccessC2, Error); //Manager_Main_Page.html - method OD4
+            ajaxCall("GET", "../api/Competitions/tablecdb", "", UpdateSuccessC2, Error); //Database.html - method OD4
         }
 
         function UpdateSuccessC2(competitionsdata) {
@@ -1352,6 +1378,101 @@
                         }
 
                     ],
+                    "initComplete": function () {
+                        var column = this.api().column(0);
+
+                        var values = [];
+                        column.data().each(function (d, j) {
+                            d.split(",").forEach(function (data) {
+                                data = data.trim();
+
+                                if (values.indexOf(data) === -1) {
+                                    values.push(data);
+                                }
+                            });
+                        });
+
+                        $('<select class="filter"><option value=""></option></select>')
+                            .append(values.sort().map(function (o) {
+                                return '<option value="' + o + '">' + o + '</option>';
+                            }))
+                            .on('change', function () {
+                                column.search(this.value ? '\\b' + this.value + '\\b' : "", true, false).draw();
+                            })
+                            .appendTo('#selectCategoryFilter');
+                    }
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function getRanksSuccess(ranksdata) {
+            console.log(ranksdata);
+
+            ranks = ranksdata;
+
+            try {
+                tbl7 = $('#RanksTable').DataTable({
+                    data: ranksdata,
+                    "order": [[0, "asc"], [3, "desc"]],
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 10,
+                    columns: [
+                        { data: "Competitionname", className: "uniqueClassName" },
+                        { data: "Body", className: "uniqueClassName" },
+                        { data: "Address1", className: "uniqueClassName" },
+                        { data: "Isiesa", className: "uniqueClassName" },
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataRanksGamer = "data-rankgamerid='" + row.Numofparticipants + "'"; //User id for buttons
+
+                                R_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='R_viewBTN bi bi-eye' " + dataRanksGamer + "></i></a>";
+
+                                return R_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
+                    ],
+                    "initComplete": function () {
+                        var column = this.api().column(0);
+
+                        var values = [];
+                        column.data().each(function (d, j) {
+                            d.split(",").forEach(function (data) {
+                                data = data.trim();
+
+                                if (values.indexOf(data) === -1) {
+                                    values.push(data);
+                                }
+                            });
+                        });
+
+                        $('<select class="filter"><option value=""></option></select>')
+                            .append(values.sort().map(function (o) {
+                                return '<option value="' + o + '">' + o + '</option>';
+                            }))
+                            .on('change', function () {
+                                column.search(this.value ? '\\b' + this.value + '\\b' : "", true, false).draw();
+                            })
+                            .appendTo('#selectRankFilter');
+                    }
                 });
 
             }
@@ -1596,8 +1717,14 @@
                 </div>
 
                 <div class="tab-pane fade" id="nav-ranks" role="tabpanel" aria-labelledby="nav-ranks-tab">
-                    <!--#X-->
-                    <!--Competitions Table-->
+
+                    <div id="divfilterrank">
+                        <span style="margin:4px;">קטגוריה:</span><span id="selectRankFilter"></span>
+                    </div>
+
+
+                    <!--#7-->
+                    <!--Ranks Table-->
                     <div class="row">
                         <div class="col">
 
@@ -1609,16 +1736,14 @@
                                         </tr>
                                     </thead>
                                 </table>
-                                <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                <table id="RanksTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th style="max-width: 70px;">כותרת 1</th>
-                                            <th style="max-width: 50px;">כותרת 2</th>
-                                            <th style="max-width: 100px;">כותרת 3</th>
-                                            <th style="max-width: 50px;">כותרת 4</th>
-                                            <th style="max-width: 60px;">כותרת 5</th>
-                                            <th style="max-width: 65px;">כותרת 6</th>
-
+                                            <th style="max-width: 70px;">שם קטגוריה</th>
+                                            <th style="max-width: 70px;">שם מלא</th>
+                                            <th style="max-width: 70px;">כינוי</th>
+                                            <th style="max-width: 70px;">ניקוד</th>
+                                            <th style="max-width: 50px;">פעולות</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -1740,6 +1865,12 @@
                 </div>
 
                 <div class="tab-pane fade" id="nav-categories" role="tabpanel" aria-labelledby="nav-categories-tab">
+
+                    <div id="divfiltercategory">
+                        <span style="margin:4px;">קטגוריה:</span><span id="selectCategoryFilter"></span>
+                    </div>
+
+
                     <!--#6-->
                     <!--Categories Table-->
                     <div class="row">
@@ -1773,8 +1904,6 @@
                 </div>
 
             </div> <!--End of tabs-->
-
-
             <!-- The Modal Create-->
             <div id="Modal_C_Create" class="modal">
 
@@ -1799,8 +1928,6 @@
                 </div>
 
             </div> <!-- The Modal Create-->
-
-
             <!-- The Modal Edit-->
             <div id="Modal_C_Edit" class="modal">
 
