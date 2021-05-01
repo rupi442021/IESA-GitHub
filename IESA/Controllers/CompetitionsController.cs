@@ -12,6 +12,7 @@ namespace IESA.Controllers
     public class CompetitionsController : ApiController
     {
         static public Competitions Pcompetitions;
+
         public int Get() //Add_New_Competitions.html - method OO1
         {
             Competitions newid = new Competitions();
@@ -155,13 +156,23 @@ namespace IESA.Controllers
             comp1.DeleteCompetition(todeleteid);
         }
 
-        [HttpGet] //Manager_Main_Page.html - method OD4
+        [HttpGet] //Database.html - method OD4
         [Route("api/Competitions/tablecdb")]
         public List<Competitions> GetCompetitionsDB()
         {
             Competitions competitionslist = new Competitions();
             return competitionslist.ReadCompetitionsDB();
         }
+
+        [HttpGet] //Database.html - method OD12
+        [Route("api/Competitions/tableRdb")]
+        public List<Competitions> GetRanks()
+        {
+            Competitions rankslist = new Competitions();
+            return rankslist.GetRanks();
+        }
+
+
 
         //---Database.html--- *Close*
 

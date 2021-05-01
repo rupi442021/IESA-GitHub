@@ -209,12 +209,15 @@
     <Content Include="Pages\Competition_Preview.html" />
     <Content Include="Pages\Edit_Personal_By_Manager.html" />
     <Content Include="Pages\Edit_Post.html" />
+    <Content Include="Pages\DatatableFilter.html" />
+    <Content Include="Pages\Gamer_Card_View.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Gamer_Card.html" />
     <Content Include="Pages\ProfileTry.html" />
     <Content Include="Pages\Project_Menu.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Post_Archive.html" />
+    <Content Include="Pages\Ranks.html" />
     <Content Include="Pages\Sign_Up.html" />
     <Content Include="Pages\Add_New_Competition.html" />
     <Content Include="Pages\Orgenaizer_Main_Page.html" />

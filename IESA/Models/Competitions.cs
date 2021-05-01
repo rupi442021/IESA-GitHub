@@ -168,6 +168,13 @@ namespace IESA.Models
             return clist;
         }
 
+        public List<Competitions> GetRanks() //Database.html - method OD12
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> rankslist = dbs.GetRanksSQL();
+            return rankslist;
+        }
+
         //---Database.html--- *Close*
 
 

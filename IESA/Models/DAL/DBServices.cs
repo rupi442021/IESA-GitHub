@@ -2122,6 +2122,54 @@ namespace IESA.Models.DAL
 
         }
 
+        public List<Competitions> GetRanksSQL() //Database.html - method OD12
+        {
+
+            SqlConnection con = null;
+            List<Competitions> RanksList = new List<Competitions>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT GamesCategories.categoryid, GamesCategories.categoryname, Gamers.firstname + ' ' + Gamers.lastname AS 'fullname', Gamers.nickname, Gamers.userid, Gamers.picture, SUM(Gamer_Competition.score) as 'score' FROM Gamer_Competition inner join Gamers ON Gamer_Competition.gamerid = Gamers.userid inner join Competitions ON Gamer_Competition.competitionid = Competitions.competitionid inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid where Gamer_Competition.status1 = 1 and GamesCategories.status1 = 1 GROUP BY Gamers.userid, GamesCategories.categoryid , GamesCategories.categoryname , Gamers.firstname , Gamers.lastname ,  Gamers.nickname , Gamers.picture order by categoryid, score desc";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Competitions rank = new Competitions();
+
+                    rank.Competitionid = (dr["categoryid"] != DBNull.Value) ? Convert.ToInt32(dr["categoryid"]) : default; //categoryid
+                    rank.Competitionname = (dr["categoryname"] != DBNull.Value) ? (string)dr["categoryname"] : default; //categoryname
+                    rank.Body = (dr["fullname"] != DBNull.Value) ? (string)dr["fullname"] : default; //fullname
+                    rank.Address1 = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default; //nickname
+                    rank.Linkforregistration = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default; //picture
+                    rank.Numofparticipants = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default; //userid
+                    rank.Isiesa = (dr["score"] != DBNull.Value) ? Convert.ToInt32(dr["score"]) : default; //score
+
+                    RanksList.Add(rank);
+                }
+
+                return RanksList;
+            }
+            catch (Exception)
+            {
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
         //---Database.html--- *Close*
 
 
