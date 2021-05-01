@@ -2841,6 +2841,68 @@ namespace IESA.Models.DAL
             return command;
         }
 
+        public void addscore(List<Gamer_Competition> scorearr) //Add_New_Post.html - method OP2 (Insert: Post (1))
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception)
+            {
+                // write to log
+
+                throw new Exception("Problem inserting to the server, please try again later");
+            }
+
+            String cStr = BuildInsertCommandscore(scorearr);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommandscore(List<Gamer_Competition> scorearr) //Add_New_Post.html - method OP2 (Insert: Post (2))
+        {
+            String command;
+            
+            // use a string builder to create the dynamic string
+            StringBuilder sa = new StringBuilder();
+
+            for (int i = 0; i < scorearr.Count; i++)
+            {
+                sa.Append(" UPDATE Gamer_Competition set managerid = 10000001, date1 = getdate(), time1 = getdate(), score = " + scorearr[i].Score + ", status1 = 1 where gamerid = " + scorearr[i].Gamerid + " and competitionid = " + scorearr[i].Competitionid + " update competitions set competitionstatus='7' where competitionid= " + scorearr[i].Competitionid);
+            }
+
+
+            command = sa.ToString() ;
+
+            return command;
+        }
+
+
 
         //---Edit_Competition.html--- *Close*
 
