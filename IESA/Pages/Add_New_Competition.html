@@ -386,6 +386,8 @@
         function CompetitionBuilder() {
 
             var tradio = $('input[name=radio-type]:checked'); //get competition type (Pro or Amateurs)
+            var kradio = $('input[name=radio-kind]:checked'); //get competition type (Pro or Amateurs)
+            var ckind = kradio.attr('value');
             var ctype = tradio.attr('id');
             if (ctype == "cPro")
                 ctype = 1;
@@ -434,11 +436,12 @@
                 Competitionstatus: 'S',
                 Ispayment: cpayment,
                 Startcheckin: $("#checkin1TB").val(),
-                Endcheckin: $("#checkin2TB").val()
+                Endcheckin: $("#checkin2TB").val(),
+                Kind: ckind
             }
+            console.log("ckind" , ckind)
 
-
-            ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessC, postErrorC)
+           ajaxCall("POST", "../api/Competitions", JSON.stringify(c1), postSuccessC, postErrorC)
             return false;
 
         }
@@ -676,7 +679,24 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> <!--radio buttons (online, payment, ispro)-->
+                            <div class="col">
+                                <label>אופי התחרות:</label>
+                                <div class="mb-3">
+                                    <div class="mb-3">
+                                        <input type="radio" class="form-check-input" id="cOn" name="radio-kind" value="1" required>
+                                        <label class="form-check-label" for="validationFormCheck1">אונליין</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="radio" class="form-check-input" id="cCF" name="radio-kind" value="2" required>
+                                        <label class="form-check-label" for="validationFormCheck2">משולב גמר</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="radio" class="form-check-input" id="cCHF" name="radio-kind" value="3" required>
+                                        <label class="form-check-label" for="validationFormCheck3">משולב חצי<br>גמר/אופליין</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!--radio buttons (online, payment, ispro, kind)-->
 
                         <div class="mb-3" id="addressDIV">
                         </div> <!--address-->
