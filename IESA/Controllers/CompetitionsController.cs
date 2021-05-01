@@ -186,6 +186,20 @@ namespace IESA.Controllers
         //---Database.html--- *Close*
 
 
+        //---Gamer_Main_Page.html--- *Open*
+                
+        [HttpGet] 
+        [Route("api/Competitions/GetRelevantCompetitionForGamer")]
+        public List<Competitions> GetRelevantCompetitionForGamer(int GID)
+        {
+            Competitions RelevantCompetitionsListForGamer = new Competitions();
+            return RelevantCompetitionsListForGamer.GetRelevantCompetitionsForGamer(GID);
+        }
+
+
+        //---Gamer_Main_Page.html--- *Close*
+
+
         //---ReactClientSide---*Open*
 
         [HttpGet]
