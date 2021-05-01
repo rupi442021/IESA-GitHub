@@ -216,6 +216,7 @@
     <Content Include="Pages\Project_Menu.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Post_Archive.html" />
+    <Content Include="Pages\Ranks.html" />
     <Content Include="Pages\Sign_Up.html" />
     <Content Include="Pages\Add_New_Competition.html" />
     <Content Include="Pages\Orgenaizer_Main_Page.html" />
