@@ -113,6 +113,11 @@
             right: 77%;
         }
 
+        #rForm > div.dataTables_wrapper div.dataTables_filter label {
+            position: absolute;
+            top: -46px;
+            right: 62.5%;
+        }
 
         @media only screen and (max-width: 1040px) {
             div.dataTables_wrapper div.dataTables_filter input {
@@ -276,6 +281,24 @@
         }
 
             .add-post-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        .reset-rank-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+            position: absolute;
+            bottom: 65.5%;
+            right: 84.9%;
+        }
+
+            .reset-rank-button:hover {
                 background-color: #e0e0e0;
             }
 
@@ -513,8 +536,8 @@
         #divfilterrank {
             color: #2b2626;
             position: absolute;
-            top: 32.15%;
-            right: 55%;
+            top: 32.1%;
+            right: 42.3%;
         }
 
         #divfiltercategory {
@@ -1760,6 +1783,8 @@
                                     </thead>
                                 </table>
                             </form>
+
+                            <button class="reset-rank-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> איפוס דירוגים</span><i class="bi bi-dash-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
 
                         </div>
 
