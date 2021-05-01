@@ -345,13 +345,6 @@
 
             ajaxCall("GET", "../api/Competitions/tableRdb", "", getRanksSuccess, Error); //(#) Database.html - method OD12
 
-            //#Update it when gamer card done or Modal
-            $(document).on("click", ".R_viewBTN", function () {
-                var userId3 = this.getAttribute('data-rankgamerid');
-
-                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId3)
-            });
-
             //---Ranks Table--- *Close*
 
 
@@ -401,9 +394,9 @@
                         { data: "Isiesa", className: "uniqueClassName" },
                         {
                             render: function (data, type, row, meta) {
-                                let dataRanksGamer = "data-rankgamerid='" + row.Numofparticipants + "'"; //User id for buttons
+                                let dataRanksGamer = row.Numofparticipants; //User id for buttons
 
-                                R_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='R_viewBTN bi bi-person-circle' " + dataRanksGamer + "></i></a>";
+                                R_viewBtn = "<a href='Gamer_Card_View.html?userid=" + dataRanksGamer + "' target='_blank' class='view' title='צפה'><i class='R_viewBTN bi bi-person-circle' " + dataRanksGamer + "></i></a>";
 
                                 return R_viewBtn;
                             }
