@@ -142,6 +142,15 @@ namespace IESA.Controllers
             dbs.decideNewC(CId, statusvalue);
         }
 
+        
+        [HttpPut]
+        [Route("api/Competitions/addscore")]
+        public void addscore(List<Gamer_Competition> scorearr) //Orgenaizer_Main_Page.html - method SC2
+        {
+            DBServices dbs = new DBServices();
+            dbs.addscore(scorearr);
+        }
+
 
         //---Edit_Competition.html--- *Close*
 
@@ -175,6 +184,20 @@ namespace IESA.Controllers
 
 
         //---Database.html--- *Close*
+
+
+        //---Gamer_Main_Page.html--- *Open*
+                
+        [HttpGet] 
+        [Route("api/Competitions/GetRelevantCompetitionForGamer")]
+        public List<Competitions> GetRelevantCompetitionForGamer(int GID)
+        {
+            Competitions RelevantCompetitionsListForGamer = new Competitions();
+            return RelevantCompetitionsListForGamer.GetRelevantCompetitionsForGamer(GID);
+        }
+
+
+        //---Gamer_Main_Page.html--- *Close*
 
 
         //---ReactClientSide---*Open*

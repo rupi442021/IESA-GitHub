@@ -127,6 +127,9 @@
             background-color: #F0FFFF;
             width: 100%;
         }
+        .modal-header {
+            background-color: #dd163b;
+        }
 
         /*Template Style*/
 
@@ -147,7 +150,8 @@
         var Pro;
         var proCmultiplier;
         var participants = 0;
-
+        var gamersarray = [];
+        var gamersids = [];
         
 
 
@@ -156,6 +160,10 @@
             GetAllGameCategories();
 
             $("#rankEdit").click(GetRanksForC);
+            $("#ParticipentsBTN").click(ShowParticipents);
+
+            
+
 
             $("#cancelEdit").click(function () {
                 swal({
@@ -219,16 +227,71 @@
                 event.preventDefault();
                 addBanner();
             });
-
+             
 
             $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').trigger('focus')
             });
 
-            
+            $('#acceptranks').click(function () {
 
+                var Scorearr = [];
+                var score = 0;
+
+                for (var i = 0; i < participants; i++) {
+                    if (i == 0)
+                        score = $('#rank' + 1).val()
+                    else if (i == 1)
+                        score = $('#rank' + 2).val()
+                    else if (i == 2 || i == 3)
+                        score = $('#rank' + 3).val()
+                    else if (i > 3 && i < 8)
+                        score = $('#rank' + 4).val()
+                    else
+                        score = $('#rank' + 5).val()
+
+
+                    console.log("CHeck: ", gamersarray)
+
+                    ScoresObj = {
+                        Competitionid: CId,
+                        Gamerid: gamersids[i],
+                        Score: score
+                    }
+                    Scorearr.push(ScoresObj)
+                }
+                console.log("scorearr: ", Scorearr)
+
+                ajaxCall("PUT", "../api/Competitions/addscore", JSON.stringify(Scorearr), SuccessInsertRanks, ErrorInsertRanks); //Orgenaizer_Main_Page.html - method SC2
+
+
+
+            });
 
         });
+
+        function SuccessInsertRanks(data) {
+            console.log("SuccessInsertRanks", data);
+
+            
+
+            swal({
+                title: "מצויין!",
+                text: "דירוגים נוספו בהצלחה",
+                icon: "success",
+                button: "אישור",
+            });
+
+            setTimeout(function () {
+                location.replace("Manager_Main_Page.html");
+            }, 2500);
+            
+
+        }
+
+        function ErrorInsertRanks(err) {
+            console.log("ErrorInsertRanks", err)
+        }
 
         function GetRanksForC() {
             ajaxCall("GET", "../api/Competitions/mark5?CId=" + CId + "&statusval=" + 0, "", getSuccessRanks, getErrorRanks); //Edit_Competitions.html - method SC6
@@ -242,19 +305,20 @@
             $("#modal-body").text('')
             $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
 
-            var gamersarray = data;
+            gamersarray = data;
             
             var base = 0;
+            var counter = 0;
 
 
             for (let key in gamersarray) {
                 $("#partisipantstbl").append('<tr id="' + key + '"><td>' + key + '</td></tr>')
                 participants = participants + 1;
+                gamersids[counter] = key;
+                counter = counter + 1;
                 for (var i = 0; i < gamersarray[key].length; i++) {
 
                     $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
-                    
-
                 } 
 
             } 
@@ -271,36 +335,37 @@
             else if (participants > 3 && participants < 6) {
                 base = 10
                 trstr = "<tr><td>אחוז מבסיס</td><td><input type='text' value='0.5' size='1' id='basePercent1' onchange='changeRank(1)'/></td><td><input type='text' value='0.22' size='1' id='basePercent2' onchange='changeRank(2)'/></td><td><input type='text' value='0.08' size='1' id='basePercent3' onchange='changeRank(3)'/></td><td><input type='text' value='0.03' size='1'id='basePercent4' onchange='changeRank(4)'/></td><td><input type='text' value='0' size='1'id='basePercent5' onchange='changeRank(5)'/></td></tr>";
-                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 1 + "' size='1' id='rank1'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier  + "' size='1' id='rank2'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier + "' size='1' id='rank3'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier  + "' size='1' id='rank4'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier + "' size='1' id='rank5'/></td></tr>"
+                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 1) + "' size='1' id='rank1'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank2'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank3'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank4'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank5'/></td></tr>"
             }
             else if (participants > 5 && participants < 9) {
                 base = 20
                 trstr = "<tr><td>אחוז מבסיס</td><td><input type='text' value='0.5' size='1' id='basePercent1' onchange='changeRank(1)'/></td><td><input type='text' value='0.22' size='1' id='basePercent2' onchange='changeRank(2)'/></td><td><input type='text' value='0.08' size='1' id='basePercent3' onchange='changeRank(3)'/></td><td><input type='text' value='0.03' size='1'id='basePercent4' onchange='changeRank(4)'/></td><td><input type='text' value='0' size='1'id='basePercent5' onchange='changeRank(5)'/></td></tr>";
-                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.7 + "' size='1' id='rank1'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.3 + "' size='1' id='rank2'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier  + "' size='1' id='rank3'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier  + "' size='1' id='rank4'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier + "' size='1' id='rank5'/></td></tr>"
+                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.7) + "' size='1' id='rank1'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.3) + "' size='1' id='rank2'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank3'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank4'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank5'/></td></tr>"
             }
             else if (participants > 8 && participants < 17) {
                 base = 30
                 trstr = "<tr><td>אחוז מבסיס</td><td><input type='text' value='0.5' size='1' id='basePercent1' onchange='changeRank(1)'/></td><td><input type='text' value='0.22' size='1' id='basePercent2' onchange='changeRank(2)'/></td><td><input type='text' value='0.08' size='1' id='basePercent3' onchange='changeRank(3)'/></td><td><input type='text' value='0.03' size='1'id='basePercent4' onchange='changeRank(4)'/></td><td><input type='text' value='0' size='1'id='basePercent5' onchange='changeRank(5)'/></td></tr>";
-                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.5 + "' size='1' id='rank1'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.22 + "' size='1' id='rank2'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.08 + "' size='1' id='rank3'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.03 + "' size='1' id='rank4'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier + "' size='1' id='rank5'/></td></tr>"
+                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.5) + "' size='1' id='rank1'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.22) + "' size='1' id='rank2'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.08) + "' size='1' id='rank3'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.03) + "' size='1' id='rank4'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank5'/></td></tr>"
             }
             else if (participants > 16 && participants < 25) {
                 base = 40
                 trstr = "<tr><td>אחוז מבסיס</td><td><input type='text' value='0.5' size='1' id='basePercent1' onchange='changeRank(1)'/></td><td><input type='text' value='0.22' size='1' id='basePercent2' onchange='changeRank(2)'/></td><td><input type='text' value='0.08' size='1' id='basePercent3' onchange='changeRank(3)'/></td><td><input type='text' value='0.03' size='1'id='basePercent4' onchange='changeRank(4)'/></td><td><input type='text' value='0' size='1'id='basePercent5' onchange='changeRank(5)'/></td></tr>";
-                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.5 + "' size='1' id='rank1'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.22 + "' size='1' id='rank2'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.08 + "' size='1' id='rank3'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.03 + "' size='1' id='rank4'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier + "' size='1' id='rank5'/></td></tr>"
+                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.5) + "' size='1' id='rank1'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.22) + "' size='1' id='rank2'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.08) + "' size='1' id='rank3'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.03) + "' size='1' id='rank4'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank5'/></td></tr>"
             }
             else if (participants > 24 && participants < 33) {
                 base = 50
                 trstr = "<tr><td>אחוז מבסיס</td><td><input type='text' value='0.5' size='1' id='basePercent1' onchange='changeRank(1)'/></td><td><input type='text' value='0.22' size='1' id='basePercent2' onchange='changeRank(2)'/></td><td><input type='text' value='0.08' size='1' id='basePercent3' onchange='changeRank(3)'/></td><td><input type='text' value='0.03' size='1'id='basePercent4' onchange='changeRank(4)'/></td><td><input type='text' value='0' size='1'id='basePercent5' onchange='changeRank(5)'/></td></tr>";
-                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.5 + "' size='1' id='rank1'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.22 + "' size='1' id='rank2'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.08 + "' size='1' id='rank3'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.03 + "' size='1' id='rank4'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier + "' size='1' id='rank5'/></td></tr>"
+                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.5) + "' size='1' id='rank1'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.22) + "' size='1' id='rank2'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.08) + "' size='1' id='rank3'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.03) + "' size='1' id='rank4'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank5'/></td></tr>"
             }
             else if (participants > 32) {
                 base = 60
                 trstr = "<tr><td>אחוז מבסיס</td><td><input type='text' value='0.5' size='1' id='basePercent1' onchange='changeRank(1)'/></td><td><input type='text' value='0.22' size='1' id='basePercent2' onchange='changeRank(2)'/></td><td><input type='text' value='0.08' size='1' id='basePercent3' onchange='changeRank(3)'/></td><td><input type='text' value='0.03' size='1'id='basePercent4' onchange='changeRank(4)'/></td><td><input type='text' value='0' size='1'id='basePercent5' onchange='changeRank(5)'/></td></tr>"; 
-                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.5 + "' size='1' id='rank1'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.22 + "' size='1' id='rank2'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.08 + "' size='1' id='rank3'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier * base * 0.03 + "' size='1' id='rank4'/></td><td><input type='text' value='" + proCmultiplier * Cmultiplier + "' size='1' id='rank5'/></td></tr>"
+                trstr += "<tr><td>ניקוד</td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.5) + "' size='1' id='rank1'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.22) + "' size='1' id='rank2'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.08) + "' size='1' id='rank3'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier * base * 0.03) + "' size='1' id='rank4'/></td><td><input type='text' value='" + Math.round(proCmultiplier * Cmultiplier) + "' size='1' id='rank5'/></td></tr>"
                 
 
             }
 
+            
 
             $("#modal-body").append("<h5>ניקוד התחרות<h5>");
             $("#modal-body").append("<label for='participants'>משתתפים:</label> <input type = 'text' id='participants' name='participants' value='" + participants + "' size='4' disabled ><label for='Cmultiplier'>בסיס:</label> <input type = 'text' id='base' name='Cmultiplier' value='" + base + "'size='2' onchange='changeBase()' > <br><br>" );
@@ -311,18 +376,49 @@
             $("#percentage").append(trstr)
 
 
+
         }
-           
-          
-        
+
+        function ShowParticipents() {
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + CId + "&statusval=" + 1, "", getSuccessParticipents, getErrorRanks); //Edit_Competitions.html - method SC6
+
+        }
+
+        function getSuccessParticipents(data) {
+            $("#exampleModalLongTitle").text("משתתפים:");
+            $("#modal-body").text('')
+            $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
+            $("#saverank").hide();
+            $("#rejectranks").hide()
+            $("#acceptranks").hide()
+            $("#closeModal").show()
+
+
+            var gamersarray = data;
+
+
+            for (let key in gamersarray) {
+                $("#partisipantstbl").append('<tr id="' + key + '"><td>' + key + '</td></tr>')
+
+                for (var i = 0; i < gamersarray[key].length; i++) {
+                    $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
+                }
+
+            }
+
+
+        }
+
         function changeRank(num) {
             var rank = $('#basePercent' + num).val() * $('#Cmultiplier').val() * $('#proCmultiplier').val() * $('#base').val();
-                $('#rank' + num).val(rank)
+            rank = Math.round(rank)
+            $('#rank' + num).val(rank)
         }
 
         function changeBase() {
             for (var i = 0; i < 5; i++) {
                 var rank = $('#basePercent' + i).val() * $('#Cmultiplier').val() * $('#proCmultiplier').val() * $('#base').val();
+                rank = Math.round(rank)
                 $('#rank' + i).val(rank)
             } 
         }
@@ -363,61 +459,67 @@
                 $("#previewC").show();
                 $("#rejectC").show();
                 $("#acceptC").show();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").hide();
                 $("#submitedit").show();
-
+                $("#ParticipentsBTN").hide();
             }
             else if (data.Competitionstatus == '2') {
                 $("#previewC").show();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").hide();
                 $("#submitedit").show();
+                $("#ParticipentsBTN").hide();
 
             }
             else if (data.Competitionstatus == '3') {
                 $("#previewC").hide();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").hide();
-                $("#submitedit").show();
+                $("#submitedit").hide();
+                $("#ParticipentsBTN").hide();
 
             }
             else if (data.Competitionstatus == '4') {
-                $("#previewC").hide();
+                $("#previewC").show();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
-                $("#rankEdit").show();
+                $("#cancelEdit").hide();
+                $("#rankEdit").hide();
                 $("#submitedit").show();
+                $("#ParticipentsBTN").hide();
 
             }
             else if (data.Competitionstatus == '5') {
-                $("#previewC").hide();
+                $("#previewC").show();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").show();
                 $("#submitedit").show();
+                $("#ParticipentsBTN").hide();
             }
             else if (data.Competitionstatus == '6') {
                 $("#previewC").hide();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
-                $("#rankEdit").show();
-                $("#submitedit").show();
+                $("#cancelEdit").hide();
+                $("#rankEdit").hide();
+                $("#submitedit").hide();
+                $("#ParticipentsBTN").hide();
             }
             else if (data.Competitionstatus == '7') {
                 $("#previewC").hide();
-                $("#rejectC").show();
+                $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
-                $("#rankEdit").show();
-                $("#submitedit").show();
+                $("#cancelEdit").hide();
+                $("#rankEdit").hide();
+                $("#submitedit").hide();
+                $("#ParticipentsBTN").show();
             }
             else if (data.Competitionstatus == '8') {
                 $("#previewC").hide();
@@ -614,8 +716,6 @@
 
         }
 
-
-
         function addBanner() {
 
             var data = new FormData();
@@ -705,8 +805,6 @@
             console.log(err);
 
         }
-
-
 
         function CompetitionBuilder() { //PUT
 
@@ -1134,6 +1232,8 @@
                                 <input type="submit" class="btn btn-success" value="עדכון טופס" id="submitedit" onsubmit="return false" />
                                 <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
                                 <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />
+                                <input type="button" value="משתתפים" id="ParticipentsBTN" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" />
+
 
                             </div>
                         </div> <!--buttons-->
@@ -1157,7 +1257,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal" id="rejectranks">דחיית דירוגים</button>
                             <button type="button" class="btn btn-success" id="acceptranks">אישור דירוגים</button>
-
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal">סגור</button>
                         </div>
                     </div>
                 </div>

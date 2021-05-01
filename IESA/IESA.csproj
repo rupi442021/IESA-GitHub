@@ -224,6 +224,7 @@
     <Content Include="Pages\Edit_Personal_Details.html" />
     <Content Include="Pages\Sign_In.html" />
     <Content Include="Pages\Modal_Check_Page.html" />
+    <Content Include="Pages\Gamer_Main_Page.html" />
     <Content Include="Pages\TemplatePage.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\bootstrap.js" />
