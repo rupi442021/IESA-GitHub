@@ -127,6 +127,9 @@
             background-color: #F0FFFF;
             width: 100%;
         }
+        .modal-header {
+            background-color: #dd163b;
+        }
 
         /*Template Style*/
 
@@ -157,6 +160,10 @@
             GetAllGameCategories();
 
             $("#rankEdit").click(GetRanksForC);
+            $("#ParticipentsBTN").click(ShowParticipents);
+
+            
+
 
             $("#cancelEdit").click(function () {
                 swal({
@@ -261,9 +268,6 @@
 
             });
 
-            
-
-
         });
 
         function SuccessInsertRanks(data) {
@@ -288,7 +292,6 @@
         function ErrorInsertRanks(err) {
             console.log("ErrorInsertRanks", err)
         }
-
 
         function GetRanksForC() {
             ajaxCall("GET", "../api/Competitions/mark5?CId=" + CId + "&statusval=" + 0, "", getSuccessRanks, getErrorRanks); //Edit_Competitions.html - method SC6
@@ -316,8 +319,6 @@
                 for (var i = 0; i < gamersarray[key].length; i++) {
 
                     $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
-                    
-
                 } 
 
             } 
@@ -364,6 +365,7 @@
 
             }
 
+            
 
             $("#modal-body").append("<h5>ניקוד התחרות<h5>");
             $("#modal-body").append("<label for='participants'>משתתפים:</label> <input type = 'text' id='participants' name='participants' value='" + participants + "' size='4' disabled ><label for='Cmultiplier'>בסיס:</label> <input type = 'text' id='base' name='Cmultiplier' value='" + base + "'size='2' onchange='changeBase()' > <br><br>" );
@@ -374,10 +376,39 @@
             $("#percentage").append(trstr)
 
 
+
         }
-           
-          
-        
+
+        function ShowParticipents() {
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + CId + "&statusval=" + 1, "", getSuccessParticipents, getErrorRanks); //Edit_Competitions.html - method SC6
+
+        }
+
+        function getSuccessParticipents(data) {
+            $("#exampleModalLongTitle").text("משתתפים:");
+            $("#modal-body").text('')
+            $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
+            $("#saverank").hide();
+            $("#rejectranks").hide()
+            $("#acceptranks").hide()
+            $("#closeModal").show()
+
+
+            var gamersarray = data;
+
+
+            for (let key in gamersarray) {
+                $("#partisipantstbl").append('<tr id="' + key + '"><td>' + key + '</td></tr>')
+
+                for (var i = 0; i < gamersarray[key].length; i++) {
+                    $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
+                }
+
+            }
+
+
+        }
+
         function changeRank(num) {
             var rank = $('#basePercent' + num).val() * $('#Cmultiplier').val() * $('#proCmultiplier').val() * $('#base').val();
             rank = Math.round(rank)
@@ -428,61 +459,67 @@
                 $("#previewC").show();
                 $("#rejectC").show();
                 $("#acceptC").show();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").hide();
                 $("#submitedit").show();
-
+                $("#ParticipentsBTN").hide();
             }
             else if (data.Competitionstatus == '2') {
                 $("#previewC").show();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").hide();
                 $("#submitedit").show();
+                $("#ParticipentsBTN").hide();
 
             }
             else if (data.Competitionstatus == '3') {
                 $("#previewC").hide();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").hide();
-                $("#submitedit").show();
+                $("#submitedit").hide();
+                $("#ParticipentsBTN").hide();
 
             }
             else if (data.Competitionstatus == '4') {
-                $("#previewC").hide();
+                $("#previewC").show();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
-                $("#rankEdit").show();
+                $("#cancelEdit").hide();
+                $("#rankEdit").hide();
                 $("#submitedit").show();
+                $("#ParticipentsBTN").hide();
 
             }
             else if (data.Competitionstatus == '5') {
-                $("#previewC").hide();
+                $("#previewC").show();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
+                $("#cancelEdit").hide();
                 $("#rankEdit").show();
                 $("#submitedit").show();
+                $("#ParticipentsBTN").hide();
             }
             else if (data.Competitionstatus == '6') {
                 $("#previewC").hide();
                 $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
-                $("#rankEdit").show();
-                $("#submitedit").show();
+                $("#cancelEdit").hide();
+                $("#rankEdit").hide();
+                $("#submitedit").hide();
+                $("#ParticipentsBTN").hide();
             }
             else if (data.Competitionstatus == '7') {
                 $("#previewC").hide();
-                $("#rejectC").show();
+                $("#rejectC").hide();
                 $("#acceptC").hide();
-                $("#cancelEdit").show();
-                $("#rankEdit").show();
-                $("#submitedit").show();
+                $("#cancelEdit").hide();
+                $("#rankEdit").hide();
+                $("#submitedit").hide();
+                $("#ParticipentsBTN").show();
             }
             else if (data.Competitionstatus == '8') {
                 $("#previewC").hide();
@@ -679,8 +716,6 @@
 
         }
 
-
-
         function addBanner() {
 
             var data = new FormData();
@@ -770,8 +805,6 @@
             console.log(err);
 
         }
-
-
 
         function CompetitionBuilder() { //PUT
 
@@ -1199,6 +1232,8 @@
                                 <input type="submit" class="btn btn-success" value="עדכון טופס" id="submitedit" onsubmit="return false" />
                                 <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
                                 <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />
+                                <input type="button" value="משתתפים" id="ParticipentsBTN" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" />
+
 
                             </div>
                         </div> <!--buttons-->
@@ -1222,7 +1257,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal" id="rejectranks">דחיית דירוגים</button>
                             <button type="button" class="btn btn-success" id="acceptranks">אישור דירוגים</button>
-
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal">סגור</button>
                         </div>
                     </div>
                 </div>
