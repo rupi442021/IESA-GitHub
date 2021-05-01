@@ -626,13 +626,6 @@
 
             ajaxCall("GET", "../api/Competitions/tableRdb", "", getRanksSuccess, Error); //Database.html - method OD12
 
-            //#Update it when gamer card done or Modal
-            $(document).on("click", ".R_viewBTN", function () {
-                var userId3 = this.getAttribute('data-rankgamerid');
-
-                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId3)
-            });
-
             //---Ranks Table--- *Close*
 
 
@@ -658,20 +651,6 @@
 
             });
 
-
-            $(document).on("click", ".G_editBTN", function () {
-                var userId2 = this.getAttribute('data-gamerid');
-
-                swal("פעולה זו תפתח דף חדש העורך את פרטי המשתמש: " + userId2)
-            });
-
-
-            //###Update it when gamer card done or Modal
-            $(document).on("click", ".G_viewBTN", function () {
-                var userId2 = this.getAttribute('data-gamerid');
-
-                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId2)
-            });
 
 
             //---Gamers Table--- *Close*
@@ -700,20 +679,6 @@
             });
 
 
-            $(document).on("click", ".O_editBTN", function () {
-                var userId4 = this.getAttribute('data-orgenaizerid');
-
-                swal("פעולה זו תפתח דף חדש העורך את פרטי המשתמש: " + userId4)
-            });
-
-
-            $(document).on("click", ".O_viewBTN", function () {
-                var userId4 = this.getAttribute('data-orgenaizerid');
-
-                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId4)
-            });
-
-
             //---Orgenaizers Table--- *Close*
 
 
@@ -721,12 +686,6 @@
 
             ajaxCall("GET", "../api/Managers/tableMdb", "", getManagersSuccess, Error); //Database.html - method OD7
 
-
-            $(document).on("click", ".M_viewBTN", function () {
-                var userId5 = this.getAttribute('data-managerid');
-
-                swal("פעולה זו תפתח דף חדש המציג את פרטי המשתמש: " + userId5)
-            });
 
             //---Managers Table--- *Close*
 
@@ -904,8 +863,8 @@
                                 let dataGamers = "data-gamerid='" + row.Userid + "'"; //User id for buttons
 
                                 G_deleteBtn = "<a href='javascript:;' class='delete' title='מחק'><i class='G_deleteBTN bi bi-trash' " + dataGamers + "></i></a>";
-                                G_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='G_editBTN bi bi-pencil' " + dataGamers + "></i></a>";
-                                G_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='G_viewBTN bi bi-eye' " + dataGamers + "></i></a>";
+                                G_editBtn = "<a href='Edit_Personal_By_Manager.html?userid=" + row.Userid + "' target='_blank' class='edit' title='ערוך'><i class='G_editBTN bi bi-pencil' " + dataGamers + "></i></a>";
+                                G_viewBtn = "<a href='Profile_View_Manager.html?userid=" + row.Userid + "' target='_blank' class='view' title='צפה'><i class='G_viewBTN bi bi-eye' " + dataGamers + "></i></a>";
 
                                 return G_deleteBtn + G_editBtn + G_viewBtn;
                             }
@@ -1038,8 +997,8 @@
                                 let dataOrgenaizers = "data-orgenaizerid='" + row.Userid + "'"; //User id for buttons
 
                                 O_deleteBtn = "<a href='javascript:;' class='delete' title='מחק'><i class='O_deleteBTN bi bi-trash' " + dataOrgenaizers + "></i></a>";
-                                O_editBtn = "<a href='javascript:;' class='edit' title='ערוך'><i class='O_editBTN bi bi-pencil' " + dataOrgenaizers + "></i></a>";
-                                O_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='O_viewBTN bi bi-eye' " + dataOrgenaizers + "></i></a>";
+                                O_editBtn = "<a href='Edit_Personal_By_Manager.html?userid=" + row.Userid + "' target='_blank' class='edit' title='ערוך'><i class='O_editBTN bi bi-pencil' " + dataOrgenaizers + "></i></a>";
+                                O_viewBtn = "<a href='Profile_View_Manager.html?userid=" + row.Userid + "' target='_blank' class='view' title='צפה'><i class='O_viewBTN bi bi-eye' " + dataOrgenaizers + "></i></a>";
 
                                 return O_deleteBtn + O_editBtn + O_viewBtn;
                             }
@@ -1322,7 +1281,7 @@
                             render: function (data, type, row, meta) {
                                 let dataManagers = "data-managerid='" + row.Userid + "'"; //User id for buttons
 
-                                M_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='M_viewBTN bi bi-eye' " + dataManagers + "></i></a>";
+                                M_viewBtn = "<a href='Profile_View_Manager.html?userid=" + row.Userid + "' target='_blank' class='view' title='צפה'><i class='M_viewBTN bi bi-eye' " + dataManagers + "></i></a>";
 
                                 return M_viewBtn;
                             }
@@ -1477,7 +1436,7 @@
                             render: function (data, type, row, meta) {
                                 let dataRanksGamer = "data-rankgamerid='" + row.Numofparticipants + "'"; //User id for buttons
 
-                                R_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='R_viewBTN bi bi-eye' " + dataRanksGamer + "></i></a>";
+                                R_viewBtn = "<a href='Profile_View_Manager.html?userid=" + row.Numofparticipants + "' target='_blank' class='view' title='צפה'><i class='R_viewBTN bi bi-eye' " + dataRanksGamer + "></i></a>";
 
                                 return R_viewBtn;
                             }
