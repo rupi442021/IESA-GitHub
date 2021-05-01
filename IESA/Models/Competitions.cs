@@ -37,8 +37,9 @@ namespace IESA.Models
         TimeSpan endcheckin;
         string gamecategory;
         List<Gamers> glist;
+        string kind;
 
-        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment, TimeSpan startcheckin, TimeSpan endcheckin, string gamecategory, List<Gamers> glist)
+        public Competitions(int competitionid, string competitionname, int isonline, string address1, string banner, string logo, string prize1, string prize2, string price3, string linkforregistration, DateTime lastdateforregistration, string body, DateTime startdate, DateTime enddate, TimeSpan startime, TimeSpan endtime, int ispro, string discord, string console, int isiesa, string linkforstream, int numofparticipants, string competitionstatus, int status1, int isPayment, TimeSpan startcheckin, TimeSpan endcheckin, string gamecategory, List<Gamers> glist , string kind)
         {
             Competitionid = competitionid;
             Competitionname = competitionname;
@@ -69,6 +70,7 @@ namespace IESA.Models
             Endcheckin = endcheckin;
             Gamecategory = gamecategory;
             Glist = glist;
+            Kind = kind;
         }
 
         public int Competitionid { get => competitionid; set => competitionid = value; }
@@ -100,6 +102,7 @@ namespace IESA.Models
         public TimeSpan Endcheckin { get => endcheckin; set => endcheckin = value; }
         public string Gamecategory { get => gamecategory; set => gamecategory = value; }
         public List<Gamers> Glist { get => glist; set => glist = value; }
+        public string Kind { get => kind; set => kind = value; }
 
         public Competitions() { }
 
