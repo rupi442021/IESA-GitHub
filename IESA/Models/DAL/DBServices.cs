@@ -3287,7 +3287,53 @@ namespace IESA.Models.DAL
             }
         }
 
+        public List<Competitions> GetCompetitionsSQL(int GID) //Database.html - method OD12
+        {
 
+            SqlConnection con = null;
+            List<Competitions> RanksList = new List<Competitions>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = " SELECT  Competitions.competitionid 'Competition ID', competitions.competitionname 'Competition Name', competitions.startdate 'Start Date', competitions.console 'Console', Gamer_Competition.rank1 'Rank', Gamer_Competition.score 'Score' from competitions inner join gamer_competition on competitions.competitionid=gamer_competition.competitionid inner join gamers on Gamer_Competition.gamerid=gamers.userid where competitions.status1=1 and gamer_competition.status1=1 and gamerid= " + GID;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Competitions rank = new Competitions();
+
+                    rank.Competitionid = (dr["Competition ID"] != DBNull.Value) ? Convert.ToInt32(dr["Competition ID"]) : default; //categoryid
+                    rank.Competitionname = (dr["Competition Name"] != DBNull.Value) ? (string)dr["Competition Name"] : default; //categoryname
+                    rank.Startdate = Convert.ToDateTime(dr["Start Date"]); //start date
+                    rank.Console = (dr["Console"] != DBNull.Value) ? (string)dr["Console"] : default; //console
+                    rank.Isonline = (dr["Rank"] != DBNull.Value) ? Convert.ToInt32(dr["Rank"]) : default; //Rank
+                    rank.Numofparticipants = (dr["Score"] != DBNull.Value) ? Convert.ToInt32(dr["Score"]) : default; //score
+
+                    RanksList.Add(rank);
+                }
+
+                return RanksList;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+                //throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
 
         //Gamer_Main_Page.html --*Close*
 

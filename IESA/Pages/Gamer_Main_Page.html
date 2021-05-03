@@ -9,7 +9,7 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
-    <title>&#x202E; אזור אישי – ASEI</title>
+    <title>&#x202E; אזור אישי – ASEI - שחקן</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
     <!--Data Tables-->
@@ -293,10 +293,6 @@
 
         var GID = 0;
 
-
- 
-
-
         $(document).ready(function () {
 
             if (localStorage["user_type"] != 3) {
@@ -304,9 +300,6 @@
             }
 
             getGamerData();
-
-
-
 
         });
 
@@ -316,14 +309,19 @@
             GID = JSON.parse(localStorage.getItem("user_info")).Userid;
 
 
-            ajaxCall("GET", "../api/Competitions/GetRelevantCompetitionForGamer?GID=" + GID, "", getSuccessCompetitions, getErrCompetitions); //Orgenaizer_Main_Page.html - method SC1
-            ajaxCall("GET", "../api/Competitions/tableRdb", "", getRanksSuccess, Error); //Database.html - method OD12
+            ajaxCall("GET", "../api/Competitions/GetRelevantCompetitionForGamer?GID=" + GID, "", getSuccessCompetitions, getErrCompetitions); //Gamer_Main_Page.html - method SG08
+            ajaxCall("GET", "../api/Competitions/GamerCompetitionsTable?GID=" + GID, "", getRanksSuccess, Error); //Gamer_Main_Page.html - method SG09
 
         }
 
         function getSuccessCompetitions(data) {
             console.log("In Get Success: ", data)
-
+            if (data.length == 0) {
+                $("#FutureCompetitions").append("</br><h6>*לא מתקיימות כרגע תחרויות בקטגוריית המשחק שלך</h6>");
+                var moreCompetitionsBTN = "<button class='btn btn-outline-danger' onclick='alertformorecompetitions()'>חיפוש תחרויות נוספות</button>"
+                $("#FutureCompetitions").append(moreCompetitionsBTN);
+            }
+            else { 
             for (var i = 0; i < data.length; i++) {
 
                 let edat = data[i].Enddate.split("T");
@@ -352,11 +350,18 @@
                 cardstr += '<div class="card-text"><a href=' + data[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-1">להרשמה לתחרות</button></a></div ></div ></div ></div >';
 
             }
-
-
-
             $("#FutureCompetitions").append(cardstr);
+            }
+        }
 
+        function alertformorecompetitions() {
+            swal();
+            swal({
+                title: "IESA",
+                text: "צריך להעביר לדף עם תחרויות אחרות שלא בכותר של שחקן זה",
+                icon: "success",
+                button: "עבור לעוד תחרויות",
+            });
         }
 
         function getErrCompetitions(err) {
@@ -364,10 +369,10 @@
         }
 
         function getRanksSuccess(ranksdata) {
-            console.log(ranksdata);
+            console.log("Gamer Table data: " , ranksdata);
 
             ranks = ranksdata;
-
+            
             try {
                 tbl7 = $('#RanksTable').DataTable({
                     data: ranksdata,
@@ -458,12 +463,13 @@
             </section>
 
             <div class="row">
-                <h3>תחרויות קרובות בעמותה:</h3>
+                <h3>תחרויות קרובות עבורך בעמותה:</h3>
                 <div class="col-9" id="FutureCompetitions"></div>
             </div>
 
             <div class="row mt-5">
                 <h3>תוצאות:</h3>
+                <p>אנא בחר עבור איזה כותר ברצונך להציג </p>
                 <div class="col">
                     <form id="rForm">
                         <table id="RedTitle" class="nk-table" style="width:100%">

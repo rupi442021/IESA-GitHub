@@ -182,12 +182,21 @@ namespace IESA.Models
 
         
 
-        public List<Competitions> GetRelevantCompetitionsForGamer(int GID) //Database.html - method OD12
+        public List<Competitions> GetRelevantCompetitionsForGamer(int GID) //Gamer_Main_Page.html - SG08
         {
             DBServices dbs = new DBServices();
             List<Competitions> RelevantCompetitionsList = dbs.GetRelevantCompetitions(GID);
             return RelevantCompetitionsList;
         }
+
+        public List<Competitions> GetCompetitionsForGamer(int GID) //Gamer_Main_Page.html - method SG09
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> CompetitionsListForGamer = dbs.GetCompetitionsSQL(GID);
+            return CompetitionsListForGamer;
+        }
+
+
         //---Gamer_Main_Page.html--- *Close*
 
         public Competitions ReadOneCompetition(int CId)

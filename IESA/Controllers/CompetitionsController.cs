@@ -180,21 +180,31 @@ namespace IESA.Controllers
             Competitions rankslist = new Competitions();
             return rankslist.GetRanks();
         }
-
+        
 
 
         //---Database.html--- *Close*
 
 
         //---Gamer_Main_Page.html--- *Open*
-                
-        [HttpGet] 
+
+        [HttpGet] //Gamer_Main_Page.html - method SG08
         [Route("api/Competitions/GetRelevantCompetitionForGamer")]
         public List<Competitions> GetRelevantCompetitionForGamer(int GID)
         {
             Competitions RelevantCompetitionsListForGamer = new Competitions();
             return RelevantCompetitionsListForGamer.GetRelevantCompetitionsForGamer(GID);
         }
+
+        [HttpGet] //Gamer_Main_Page.html - method SG09
+        [Route("api/Competitions/GamerCompetitionsTable")]
+        public List<Competitions> GetFinishedCompetitionsForGamer(int GID)
+        {
+            Competitions competitionsListForGamer = new Competitions();
+            return competitionsListForGamer.GetCompetitionsForGamer(GID);
+        }
+        
+
 
 
         //---Gamer_Main_Page.html--- *Close*
