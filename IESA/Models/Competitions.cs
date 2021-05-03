@@ -195,6 +195,12 @@ namespace IESA.Models
             List<Competitions> CompetitionsListForGamer = dbs.GetCompetitionsSQL(GID);
             return CompetitionsListForGamer;
         }
+        public List<Competitions> GetCompetitionsBystatus(string Cstatus) //Gamer_Main_Page.html - method SG10
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> CompetitionsListForGamer = dbs.GetCompetitionsByStatus(Cstatus);
+            return CompetitionsListForGamer;
+        }
 
 
         //---Gamer_Main_Page.html--- *Close*
