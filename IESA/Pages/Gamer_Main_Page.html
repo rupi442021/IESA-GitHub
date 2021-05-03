@@ -412,42 +412,7 @@
             $("#FutureCompetitions").text(" ");
 
 
-            if (data.length == 0) {
-                $("#FutureCompetitions").append("<h6>*לא מתקיימות כרגע תחרויות בקטגוריית המשחק שלך</h6>");
-                var moreCompetitionsBTN = "<button class='btn btn-outline-danger' onclick='alertformorecompetitions()'>חיפוש תחרויות נוספות</button>"
-                $("#FutureCompetitions").append(moreCompetitionsBTN);
-            }
-            else { 
-            for (var i = 0; i < data.length; i++) {
 
-                let edat = data[i].Enddate.split("T");
-                edat = edat[0].split("-");
-                let edat1;
-                edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]);
-                edat = edat[2] + '/' + edat[1] + '/' + edat[0]
-
-                let Stardate = data[i].Startdate.split("T");
-                Stardate = Stardate[0].split("-");
-                Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
-
-
-                var cardstr = '<div class="col-4 .mx-auto <div class="card" style="width: 18rem;">';
-                cardstr += '<a href=Competition_View.html?Competitions=' + data[i].Competitionid + '> <img src="../' + data[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
-                cardstr += '<div class="card-body">';
-                cardstr += '<h5 class="card-title"></br>' + data[i].Competitionname + '</h5>';
-                if (data[i].Isonline == 0)
-                    cardstr += '<p class="card-text"> כתובת : ' + data[i].Address + '</p>';
-                else
-                    cardstr += '<p class="card-text">תחרות אונליין</p>';
-
-                cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-
-                cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
-                cardstr += '<div class="card-text"><a href=' + data[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-1">להרשמה לתחרות</button></a></div ></div ></div ></div >';
-
-            }
-            $("#FutureCompetitions").append(cardstr);
-            }
         }
 
         function alertformorecompetitions() {
@@ -483,7 +448,7 @@
                 Stardate = Stardate[0].split("-");
                 Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
                 cardstrG = '<div class="col-3 .mx-auto" <div class="card" style="margin-left: 20px;">';
-                cardstrG += '<a href=Competition_View.html?Competitions=' + Competitions[i].Competitionid + '> </a>';
+                cardstrG += '<a href=Competition_View.html?Competitions=' + Competitions[i].Competitionid + '> <img src="../' + Competitions[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstrG += '<div class="card-body">';
                 cardstrG += '<h5 class="card-title"></br>' + Competitions[i].Competitionname + '</h5>';
                 //if (data[i].Isonline == 0)
@@ -492,7 +457,7 @@
                 //    cardstrG += '<p class="card-text">תחרות אונליין</p>';
                 cardstrG += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
                 cardstrG += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
-                cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-1">להרשמה לתחרות</button></a></div ></div ></div ></div >';
+                cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-2">להרשמה לתחרות</button></a></div ></div ></div ></div >';
                 $("#FutureCompetitionsGeneral").append(cardstrG);
             }
         
@@ -611,7 +576,21 @@
                 <div class="divdown"></div>
             </section>
 
+
+
             <div class="row">
+                <h3>תחרויות קרובות עבורך בעמותה:</h3>
+                <div class="col-9 mt-3" id="FutureCompetitions"></div>
+                <div class="col-3"></div>
+
+            </div>
+
+            <div class="row mt-5">
+                <h3>תחרויות קרובות כללי:</h3>
+                <div class="col-9" id="FutureCompetitionsGeneral"></div>
+                <div class="col-3"></div>
+            </div>
+            <div class="row mt-5">
                 <h3>דירוגים ארציים:</h3>
                 <div id="moreTheOneCategory">
                     <div id="divfiltercategory">
@@ -644,21 +623,7 @@
                 </div>
 
             </div>
-
-            <div class="row">
-                <h3>תחרויות קרובות עבורך בעמותה:</h3>
-                <div class="col-9 mt-3" id="FutureCompetitions"></div>
-                <div class="col-3"></div>
-
-            </div>
-
-            <div class="row mt-5">
-                <h3>תחרויות קרובות כללי:</h3>
-                <div class="col-9" id="FutureCompetitionsGeneral"></div>
-                <div class="col-3"></div>
-            </div>
-
-            <div class="row mt-5">
+            <div class="row mt-3">
                 <h3>תוצאות:</h3>
                 <p>בטבלה זו מוצגים התוצאות הסופיות מכל התחרויות שלקחת בהן חלק: </p>
                 <div class="col">
