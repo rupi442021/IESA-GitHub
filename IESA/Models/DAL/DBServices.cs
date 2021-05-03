@@ -3342,11 +3342,57 @@ namespace IESA.Models.DAL
         //Gamer_Main_Page.html --*Close*
 
 
+        //---Profile_View_Manager.html--- *Open*
+
+        public List<Competitions> Read_View_CompetitionsSQL(int idtoserver) //Profile_View_Manager.html - method OC1
+        {
+
+            SqlConnection con2 = null;
+            List<Competitions> CompetitionsList = new List<Competitions>();
+
+            try
+            {
+                con2 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR2 = "SELECT Competitions.competitionid, GamesCategories.categoryname, Competitions.isiesa, Competitions.ispro, Gamer_Competition.score FROM Gamer_Competition inner join Gamers ON Gamer_Competition.gamerid = Gamers.userid inner join Competitions ON Gamer_Competition.competitionid = Competitions.competitionid inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid where Gamer_Competition.status1 = 1 and GamesCategories.status1 = 1 and Gamer_Competition.gamerid = " + idtoserver;
+
+                SqlCommand cmd2 = new SqlCommand(selectSTR2, con2);
+
+                // get a reader
+                SqlDataReader dr2 = cmd2.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr2.Read())
+                {
+                    Competitions competition = new Competitions();
+
+                    competition.Competitionid = (dr2["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr2["competitionid"]) : default;
+                    competition.Gamecategory = (dr2["categoryname"] != DBNull.Value) ? (string)dr2["categoryname"] : default;
+                    competition.Isiesa = (dr2["isiesa"] != DBNull.Value) ? Convert.ToInt32(dr2["isiesa"]) : default;
+                    competition.Ispro = (dr2["ispro"] != DBNull.Value) ? Convert.ToInt32(dr2["ispro"]) : default;
+                    competition.Isonline = (dr2["score"] != DBNull.Value) ? Convert.ToInt32(dr2["score"]) : default;
+
+                    CompetitionsList.Add(competition);
+                }
+
+                return CompetitionsList;
+            }
+            catch (Exception)
+            {
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            }
+            finally
+            {
+                if (con2 != null)
+                {
+                    con2.Close();
+                }
+
+            }
+
+        }
 
 
-
-
-
+        //---Profile_View_Manager.html--- *Close*
 
 
     }

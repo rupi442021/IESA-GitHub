@@ -33,7 +33,7 @@ namespace IESA.Controllers
 
         [HttpGet] //Sign_In.html - method OL3
         [Route("api/Orgenaizers/login2")]
-        public Orgenaizers GetOrgenaizer(int idtoserver) //Edit_Personal_Details.html - method SO2
+        public Orgenaizers GetOrgenaizer(int idtoserver) //Sign_In.html - method OL3
         {
             Orgenaizers userin = new Orgenaizers();
             return userin.getUserInfo(idtoserver);

@@ -1,15 +1,29 @@
 ﻿<!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
 
-   <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-replace-svg="nest"></script>
+    <!--Data Tables-->
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <!--Data Tables-->
 
     <title>&#x202E; תצוגת משתמש – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
@@ -154,18 +168,98 @@
             background-color: #e2e6ef;
         }
 
+        div.dataTables_wrapper div.dataTables_filter label {
+            display: none;
+        }
+
+        div.dataTables_wrapper div.dataTables_length label {
+            display: none;
+        }
+
+        table.dataTable thead th, table.dataTable thead td {
+            padding: 10px 18px;
+            border-bottom: 1px solid #b5aeae !important;
+        }
+
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+            display: none;
+        }
+
+        .dataTables_paginate {
+            float: left !important;
+        }
+
+        .Bordertable {
+            border: solid #e1e5e8 !important;
+            border-width: 1px 0px 1px 1px !important;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+            /*font-family: arial;*/
+        }
+
+            a:hover {
+                color: #2b2626;
+                transition: .15s color;
+            }
+
+        #divfilterrank {
+            color: #2b2626;
+            position: absolute;
+            top: 45.3%;
+            right: 78%;
+        }
+
+        .uniqueClassName {
+            text-align: center;
+        }
+
+        #tableheight {
+            height: 255px;
+        }
+
 
     </style>
 
 
     <script>
 
+        $(document).ready(function () {
+
+
+        });
+
         function init() {
 
             var split = window.location.href.split('=');
             var user_id = split[1];
 
-            ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + user_id, "", renderGamer, Error); //(#) Sign_In.html - method OL2
+            if (user_id[0] == 3) {
+                $("#orgenaizer").hide();
+                $("#manager").hide();
+
+                ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + user_id, "", renderGamer, Error); //(#) Sign_In.html - method OL2
+                ajaxCall("GET", "../api/Competitions/trackcomp?idtoserver=" + user_id, "", getCompetitions_GSuccess, Error); //Profile_View_Manager.html - method OC1
+            }
+            else if (user_id[0] == 2) {
+                $("#gamer").hide();
+                $("#manager").hide();
+
+                ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + user_id, "", renderOrgenaizer, Error); //Sign_In.html - method OL3
+                //ajaxCall("GET", "../api/Competitions/trackcomp?idtoserver=" + user_id, "", getCompetitions_OSuccess, Error);
+            }
+            else {
+                $("#gamer").hide();
+                $("#orgenaizer").hide();
+
+                ajaxCall("GET", "../api/Managers/login1?idtoserver=" + user_id, "", renderManager, Error); //Sign_In.html - method OL4
+                //ajaxCall("GET", "../api/Competitions/trackcomp?idtoserver=" + user_id, "", getCompetitions_OSuccess, Error);
+            }
+
+
+
         }
 
 
@@ -173,9 +267,9 @@
 
             let image = gamerobj.Picture;
             let imgStr = "<img src='../" + image + "' class='rounded-circle' style='margin-right: 3px;' alt='Image' width='150' height='150'/>";
-            document.getElementById("imageph").innerHTML = imgStr;
+            document.getElementById("g_imageph").innerHTML = imgStr;
 
-            document.getElementById("nicknameph").innerHTML = gamerobj.Nickname;
+            document.getElementById("g_nicknameph").innerHTML = gamerobj.Nickname;
 
             if (gamerobj.License == 1) {
                 gamertype = "שחקן מקצועי";
@@ -184,16 +278,16 @@
                 gamertype = "שחקן חובבן";
             }
 
-            document.getElementById("gamertypeph").innerHTML = gamertype;
+            document.getElementById("g_gamertypeph").innerHTML = gamertype;
 
-            document.getElementById("useridph").innerHTML = "מספר משתמש: " + gamerobj.Userid;
+            document.getElementById("g_useridph").innerHTML = "מספר משתמש: " + gamerobj.Userid;
 
             let fullname = gamerobj.Firstname + " " + gamerobj.Lastname;
 
-            document.getElementById("fullnameph").innerHTML = fullname;
-            document.getElementById("emailph").innerHTML = gamerobj.Email;
-            document.getElementById("phoneph").innerHTML = gamerobj.Phone;
-            document.getElementById("addressph").innerHTML = gamerobj.Address1;
+            document.getElementById("g_fullnameph").innerHTML = fullname;
+            document.getElementById("g_emailph").innerHTML = gamerobj.Email;
+            document.getElementById("g_phoneph").innerHTML = gamerobj.Phone;
+            document.getElementById("g_addressph").innerHTML = gamerobj.Address1;
 
             var day = gamerobj.Dob.substring(8, 10);
             var month = gamerobj.Dob.substring(5, 7);
@@ -201,8 +295,8 @@
 
             datestring = day + "/" + month + "/" + year;
 
-            document.getElementById("birthdayph").innerHTML = datestring;
-            document.getElementById("idph").innerHTML = gamerobj.Id;
+            document.getElementById("g_birthdayph").innerHTML = datestring;
+            document.getElementById("g_idph").innerHTML = gamerobj.Id;
 
             if (gamerobj.Gender == "gMale") {
                 strgn = "<i class='fas fa-mars'></i>"
@@ -214,9 +308,264 @@
                 strgn = "<i class='fas fa-genderless'></i>"
             }
 
-            document.getElementById("genderph").innerHTML = strgn;
+            document.getElementById("g_genderph").innerHTML = strgn;
         }
 
+        function getCompetitions_GSuccess(compdata) {
+            console.log(compdata);
+
+
+            try {
+                tbl = $('#CompetitionsTable').DataTable({
+                    data: compdata,
+                    "order": [0, "asc"],
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 3,
+                    columns: [
+                        { data: "Competitionid", className: "uniqueClassName" },
+                        { data: "Gamecategory", className: "uniqueClassName" },
+                        {
+                            "data": "Isiesa",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "קהילה";
+                                }
+                                else {
+                                    return "עמותה";
+                                }
+
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        {
+                            "data": "Ispro",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "פתוחה";
+                                }
+                                else {
+                                    return "מקצועית";
+                                }
+
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        { data: "Isonline", className: "uniqueClassName" }
+                    ],
+                    "initComplete": function () {
+                        var column = this.api().column(1);
+
+                        var values = [];
+                        column.data().each(function (d, j) {
+                            d.split(",").forEach(function (data) {
+                                data = data.trim();
+
+                                if (values.indexOf(data) === -1) {
+                                    values.push(data);
+                                }
+                            });
+                        });
+
+                        $('<select class="filter"><option value=""></option></select>')
+                            .append(values.sort().map(function (o) {
+                                return '<option value="' + o + '">' + o + '</option>';
+                            }))
+                            .on('change', function () {
+                                column.search(this.value ? '\\b' + this.value + '\\b' : "", true, false).draw();
+                            })
+                            .appendTo('#selectCompFilter');
+                    }
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function renderOrgenaizer(orgenaizerobj) {
+
+            let image = orgenaizerobj.Picture;
+            let imgStr = "<img src='../" + image + "' class='rounded-circle' style='margin-right: 3px;' alt='Image' width='150' height='150'/>";
+            document.getElementById("o_imageph").innerHTML = imgStr;
+
+            document.getElementById("o_nicknameph").innerHTML = orgenaizerobj.Nickname;
+
+                orgenaizertype = "קהילת: " + orgenaizerobj.Comunityname;
+
+            document.getElementById("o_orgenaizertypeph").innerHTML = orgenaizertype;
+
+            document.getElementById("o_useridph").innerHTML = "מספר משתמש: " + orgenaizerobj.Userid;
+
+            let fullname = orgenaizerobj.Firstname + " " + orgenaizerobj.Lastname;
+
+            document.getElementById("o_fullnameph").innerHTML = fullname;
+            document.getElementById("o_emailph").innerHTML = orgenaizerobj.Email;
+            document.getElementById("o_phoneph").innerHTML = orgenaizerobj.Phone;
+            document.getElementById("o_addressph").innerHTML = orgenaizerobj.Address1;
+
+            var day = orgenaizerobj.Dob.substring(8, 10);
+            var month = orgenaizerobj.Dob.substring(5, 7);
+            var year = orgenaizerobj.Dob.substring(0, 4);
+
+            datestring = day + "/" + month + "/" + year;
+
+            document.getElementById("o_birthdayph").innerHTML = datestring;
+            document.getElementById("o_idph").innerHTML = orgenaizerobj.Id;
+
+            if (orgenaizerobj.Gender == "gMale") {
+                strgn = "<i class='fas fa-mars'></i>"
+            }
+            else if (orgenaizerobj.Gender == "gFemale") {
+                strgn = "<i class='fas fa-venus'></i>"
+            }
+            else {
+                strgn = "<i class='fas fa-genderless'></i>"
+            }
+
+            document.getElementById("o_genderph").innerHTML = strgn;
+        }
+
+        function getCompetitions_OSuccess(compdata) {
+            console.log(compdata);
+
+
+            try {
+                tbl = $('#CompetitionsTable').DataTable({
+                    data: compdata,
+                    "order": [0, "asc"],
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 3,
+                    columns: [
+                        { data: "Competitionid", className: "uniqueClassName" },
+                        { data: "Gamecategory", className: "uniqueClassName" },
+                        {
+                            "data": "Isiesa",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "קהילה";
+                                }
+                                else {
+                                    return "עמותה";
+                                }
+
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        {
+                            "data": "Ispro",
+                            "render": function (data) {
+                                if (data == 0) {
+                                    return "פתוחה";
+                                }
+                                else {
+                                    return "מקצועית";
+                                }
+
+                            }
+                            , className: "uniqueClassName"
+                        },
+                        { data: "Isonline", className: "uniqueClassName" }
+                    ],
+                    "initComplete": function () {
+                        var column = this.api().column(1);
+
+                        var values = [];
+                        column.data().each(function (d, j) {
+                            d.split(",").forEach(function (data) {
+                                data = data.trim();
+
+                                if (values.indexOf(data) === -1) {
+                                    values.push(data);
+                                }
+                            });
+                        });
+
+                        $('<select class="filter"><option value=""></option></select>')
+                            .append(values.sort().map(function (o) {
+                                return '<option value="' + o + '">' + o + '</option>';
+                            }))
+                            .on('change', function () {
+                                column.search(this.value ? '\\b' + this.value + '\\b' : "", true, false).draw();
+                            })
+                            .appendTo('#selectCompFilter');
+                    }
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
+        }
+
+        function renderManager(managerobj) {
+
+            let image = managerobj.Picture;
+            let imgStr = "<img src='../" + image + "' class='rounded-circle' style='margin-right: 3px;' alt='Image' width='150' height='150'/>";
+            document.getElementById("m_imageph").innerHTML = imgStr;
+
+            document.getElementById("m_nicknameph").innerHTML = managerobj.Nickname;
+
+            managerrule = "תפקיד: " + managerobj.Role1;
+
+            document.getElementById("m_ruleph").innerHTML = managerrule;
+
+            document.getElementById("m_useridph").innerHTML = "מספר משתמש: " + managerobj.Userid;
+
+            let fullname = managerobj.Firstname + " " + managerobj.Lastname;
+
+            document.getElementById("m_fullnameph").innerHTML = fullname;
+            document.getElementById("m_emailph").innerHTML = managerobj.Email;
+            document.getElementById("m_phoneph").innerHTML = managerobj.Phone;
+            document.getElementById("m_addressph").innerHTML = managerobj.Address1;
+
+            var day = managerobj.Dob.substring(8, 10);
+            var month = managerobj.Dob.substring(5, 7);
+            var year = managerobj.Dob.substring(0, 4);
+
+            datestring = day + "/" + month + "/" + year;
+
+            document.getElementById("m_birthdayph").innerHTML = datestring;
+            document.getElementById("m_idph").innerHTML = managerobj.Id;
+
+            if (managerobj.Gender == "gMale") {
+                strgn = "<i class='fas fa-mars'></i>"
+            }
+            else if (managerobj.Gender == "gFemale") {
+                strgn = "<i class='fas fa-venus'></i>"
+            }
+            else {
+                strgn = "<i class='fas fa-genderless'></i>"
+            }
+
+            document.getElementById("m_genderph").innerHTML = strgn;
+        }
 
 
         function Error(err) {
@@ -241,14 +590,14 @@
 
         <div class="container">
 
+            <section id="page_title">
+                <h2 class="headh2">תצוגת משתמש</h2>
+                <div class="divdown"></div>
+            </section>
+
             <div id="gamer">
 
-                <section id="page_title">
-                    <h2 class="headh2">תצוגת משתמש</h2>
-                    <div class="divdown"></div>
-                </section>
-
-                <div id="genderph">
+                <div id="g_genderph">
                     <!--<i class="fas fa-mars"></i>-->
                     <!--<i class="fas fa-venus"></i>-->
                 </div>
@@ -260,20 +609,20 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <div id="imageph">
+                                        <div id="g_imageph">
                                             <!--<img src="https://i.ibb.co/xGcTF7C/6.jpg" alt="Admin" class="rounded-circle" width="150" height="150">-->
                                         </div>
                                         <div class="mt-3">
-                                            <h4 id="nicknameph"><!--OmerBetzalel24--></h4>
-                                            <p id="gamertypeph" class="text-secondary mb-1"><!--שחקן מקצועי--></p>
-                                            <p id="useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
+                                            <h4 id="g_nicknameph"><!--OmerBetzalel24--></h4>
+                                            <p id="g_gamertypeph" class="text-secondary mb-1"><!--שחקן מקצועי--></p>
+                                            <p id="g_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
                                             <button class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
                                             <button class="btn btn-outline-primary" style="color: #2c3a38; border-color: #04b8a5;">שליחת מייל</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mt-3">
+                            <div class="card mt-3" id="tableheight">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>אתר </h6>
@@ -310,7 +659,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">שם מלא</h6>
                                         </div>
-                                        <div id="fullnameph" class="col-sm-9 text-secondary">
+                                        <div id="g_fullnameph" class="col-sm-9 text-secondary">
                                             <!--עומר בצלאל-->
                                         </div>
                                     </div>
@@ -319,7 +668,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">אימייל</h6>
                                         </div>
-                                        <div id="emailph" class="col-sm-9 text-secondary">
+                                        <div id="g_emailph" class="col-sm-9 text-secondary">
                                             <!--betzalelgrp@gmail.com-->
                                         </div>
                                     </div>
@@ -328,7 +677,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">טלפון</h6>
                                         </div>
-                                        <div id="phoneph" class="col-sm-9 text-secondary">
+                                        <div id="g_phoneph" class="col-sm-9 text-secondary">
                                             <!--052-874-1173-->
                                         </div>
                                     </div>
@@ -337,7 +686,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">כתובת</h6>
                                         </div>
-                                        <div id="addressph" class="col-sm-9 text-secondary">
+                                        <div id="g_addressph" class="col-sm-9 text-secondary">
                                             <!--יוסף שכטר 37, חיפה-->
                                         </div>
                                     </div>
@@ -346,7 +695,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">תאריך לידה</h6>
                                         </div>
-                                        <div id="birthdayph" class="col-sm-9 text-secondary">
+                                        <div id="g_birthdayph" class="col-sm-9 text-secondary">
                                             <!--13/11/1992-->
                                         </div>
                                     </div>
@@ -355,7 +704,7 @@
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">תעודת זהות</h6>
                                         </div>
-                                        <div id="idph" class="col-sm-9 text-secondary">
+                                        <div id="g_idph" class="col-sm-9 text-secondary">
                                             <!--204195929-->
                                         </div>
                                     </div>
@@ -363,134 +712,298 @@
                                 </div>
                             </div>
                             <div class="row gutters-sm">
-                                <div class="col-sm-6 mb-3">
+                                <div class="col-sm-12 mb-3">
                                     <div class="card h-100">
-                                        <div class="card-body">
+                                        <div class="card-body" id="tableheight">
                                             <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">מעקב</b></i>תחרויות</h6>
 
-                                            <table id="RanksTable" class="display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>מס' תחרות</th>
-                                                        <th>שיוך</th>
-                                                        <th>סוג</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>עמותה</td>
-                                                        <td>מקצועית</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>125</td>
-                                                        <td>קהילה</td>
-                                                        <td>פתוחה</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>435</td>
-                                                        <td>קהילה</td>
-                                                        <td>מקצועית</td>
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-
+                                            <form id="g_cForm">
+                                                <table id="CompetitionsTable" class="Bordertable display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="max-width: 60px;">מספר תחרות</th>
+                                                            <th style="max-width: 80px;">קטגוריה</th>
+                                                            <th style="max-width: 45px;">שיוך</th>
+                                                            <th style="max-width: 45px;">סוג</th>
+                                                            <th style="max-width: 50px;">ניקוד</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
-                                        <div class="card-body">
-                                            <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">מעקב</b></i>דירוגים</h6>
 
-                                            <table id="RanksTable" class="display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>מס' תחרות</th>
-                                                        <th>קטגוריה</th>
-                                                        <th>ניקוד</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>435</td>
-                                                        <td>FIFA</td>
-                                                        <td>0</td>
+                            </div>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td>133</td>
-                                                        <td>PES</td>
-                                                        <td>7</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4355</td>
-                                                        <td>PRO EVO..</td>
-                                                        <td>20</td>
-
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                            <div id="divfilterrank">
+                                <span style="margin:4px;">קטגוריה:</span><span id="selectCompFilter"></span>
+                            </div>
 
 
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+            <div id="orgenaizer">
+
+                <div id="o_genderph">
+                    <!--<i class="fas fa-mars"></i>-->
+                    <!--<i class="fas fa-venus"></i>-->
+                </div>
+
+                <div class="main-body" style="color: #1a202c;">
+
+                    <div class="row gutters-sm">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <div id="o_imageph">
+                                            <!--<img src="https://i.ibb.co/xGcTF7C/6.jpg" alt="Admin" class="rounded-circle" width="150" height="150">-->
+                                        </div>
+                                        <div class="mt-3">
+                                            <h4 id="o_nicknameph"><!--OmerBetzalel24--></h4>
+                                            <p id="o_orgenaizertypeph" class="text-secondary mb-1"><!--שם קהילה: ..--></p>
+                                            <p id="o_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
+                                            <button class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
+                                            <button class="btn btn-outline-primary" style="color: #2c3a38; border-color: #04b8a5;">שליחת מייל</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="card mt-3" id="tableheight">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>אתר </h6>
+                                        <span class="text-secondary">https://bootdey.com</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>פייסבוק</h6>
+                                        <span class="text-secondary">bootdey</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>אינסטגרם</h6>
+                                        <span class="text-secondary">bootdey</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>דיסקורד</h6>
+                                        <span class="text-secondary">@bootdey</span>
+                                    </li>
+                                </ul>
+
+
+                                <p>...</p>
+                                <p>...</p>
+
+
+                            </div>
+
+
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">שם מלא</h6>
+                                        </div>
+                                        <div id="o_fullnameph" class="col-sm-9 text-secondary">
+                                            <!--עומר בצלאל-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">אימייל</h6>
+                                        </div>
+                                        <div id="o_emailph" class="col-sm-9 text-secondary">
+                                            <!--betzalelgrp@gmail.com-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">טלפון</h6>
+                                        </div>
+                                        <div id="o_phoneph" class="col-sm-9 text-secondary">
+                                            <!--052-874-1173-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">כתובת</h6>
+                                        </div>
+                                        <div id="o_addressph" class="col-sm-9 text-secondary">
+                                            <!--יוסף שכטר 37, חיפה-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">תאריך לידה</h6>
+                                        </div>
+                                        <div id="o_birthdayph" class="col-sm-9 text-secondary">
+                                            <!--13/11/1992-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">תעודת זהות</h6>
+                                        </div>
+                                        <div id="o_idph" class="col-sm-9 text-secondary">
+                                            <!--204195929-->
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row gutters-sm">
+                                <div class="col-sm-12 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body" id="tableheight">
+                                            <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">מעקב</b></i>תחרויות</h6>
+
+                                            <form id="o_cForm">
+                                                <table id="CompetitionsTable" class="Bordertable display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="max-width: 60px;">מספר תחרות</th>
+                                                            <th style="max-width: 80px;">קטגוריה</th>
+                                                            <th style="max-width: 45px;">שיוך</th>
+                                                            <th style="max-width: 45px;">סוג</th>
+                                                            <th style="max-width: 50px;">ניקוד</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="divfilterrank">
+                                <span style="margin:4px;">קטגוריה:</span><span id="selectCompFilter"></span>
+                            </div>
+
+
                         </div>
                     </div>
 
 
-                    <!--<div class="row gutters-sm">
+                </div>
 
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
 
-                            <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">מעקב</b></i>תחרויות</h6>
-                            <p>טקסט</p>
-                            <p>טקסט</p>
-                            <p>טקסט</p>
-                            <p>טקסט</p>
+            </div>
+
+            <div id="manager">
+
+                <div id="m_genderph">
+                    <!--<i class="fas fa-mars"></i>-->
+                    <!--<i class="fas fa-venus"></i>-->
+                </div>
+
+                <div class="main-body" style="color: #1a202c;">
+
+                    <div class="row gutters-sm">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <div id="m_imageph">
+                                            <!--<img src="https://i.ibb.co/xGcTF7C/6.jpg" alt="Admin" class="rounded-circle" width="150" height="150">-->
+                                        </div>
+                                        <div class="mt-3">
+                                            <h4 id="m_nicknameph"><!--OmerBetzalel24--></h4>
+                                            <p id="m_ruleph" class="text-secondary mb-1"><!--שם קהילה: ..--></p>
+                                            <p id="m_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
+                                            <button class="btn btn-outline-primary" style="color: #2c3a38; border-color: #04b8a5;">שליחת מייל</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">שם מלא</h6>
+                                        </div>
+                                        <div id="m_fullnameph" class="col-sm-9 text-secondary">
+                                            <!--עומר בצלאל-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">אימייל</h6>
+                                        </div>
+                                        <div id="m_emailph" class="col-sm-9 text-secondary">
+                                            <!--betzalelgrp@gmail.com-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">טלפון</h6>
+                                        </div>
+                                        <div id="m_phoneph" class="col-sm-9 text-secondary">
+                                            <!--052-874-1173-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">כתובת</h6>
+                                        </div>
+                                        <div id="m_addressph" class="col-sm-9 text-secondary">
+                                            <!--יוסף שכטר 37, חיפה-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">תאריך לידה</h6>
+                                        </div>
+                                        <div id="m_birthdayph" class="col-sm-9 text-secondary">
+                                            <!--13/11/1992-->
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">תעודת זהות</h6>
+                                        </div>
+                                        <div id="m_idph" class="col-sm-9 text-secondary">
+                                            <!--204195929-->
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
 
-                </div>
-
-                <div class="col-md-6">
-                    <div class="card mb-3">
-                        <div class="card-body">
-
-                            <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">מעקב</b></i>תחרויות</h6>
-                            <p>טקסט</p>
-                            <p>טקסט</p>
-                            <p>טקסט</p>
-                            <p>טקסט</p>
-
-                        </div>
-                    </div>
 
                 </div>
 
 
-            </div>-->
-
-
-
-
-                </div>
-
-
-            </div> <!--End of gamer-->
-
-
-
+            </div>
 
 
 

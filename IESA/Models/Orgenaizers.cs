@@ -88,7 +88,7 @@ namespace IESA.Models
         //---Sign_In.html--- *Open*
 
 
-        public Orgenaizers getUserInfo(int id_toserver) //Sign_In.html - method OL3 + Edit_Personal_Details.html - method SO2
+        public Orgenaizers getUserInfo(int id_toserver) //Sign_In.html - method OL3
         {
             DBServices dbs = new DBServices();
             return dbs.getOrgenaizerSQL(id_toserver);

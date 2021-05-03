@@ -223,6 +223,20 @@ namespace IESA.Models
         //---Edit_Competition.html--- *Close*
 
 
+        //---Profile_View_Manager.html--- *Open*
+
+
+        public List<Competitions> Read_View_Competitions(int idtoserver) //Profile_View_Manager.html - method OC1
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> clist = dbs.Read_View_CompetitionsSQL(idtoserver);
+            return clist;
+        }
+
+
+        //---Profile_View_Manager.html--- *Close*
+
+
         //---ReactClientSide---*Open*
 
         public List<Competitions> GetCompetitonL() //Manager_Main_Page.html - method OM8

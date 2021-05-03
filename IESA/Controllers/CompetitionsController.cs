@@ -203,10 +203,25 @@ namespace IESA.Controllers
             Competitions competitionsListForGamer = new Competitions();
             return competitionsListForGamer.GetCompetitionsForGamer(GID);
         }
-        
+
 
 
         //---Gamer_Main_Page.html--- *Close*
+
+
+        //---Profile_View_Manager.html--- *Open*
+
+
+        [HttpGet] //Profile_View_Manager.html - method OC1
+        [Route("api/Competitions/trackcomp")]
+        public List<Competitions> GetCompetitionsDB(int idtoserver)
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.Read_View_Competitions(idtoserver);
+        }
+
+
+        //---Profile_View_Manager.html--- *Close*
 
 
         //---ReactClientSide---*Open*
