@@ -2135,7 +2135,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT GamesCategories.categoryid, GamesCategories.categoryname, Gamers.firstname + ' ' + Gamers.lastname AS 'fullname', Gamers.nickname, Gamers.userid, Gamers.picture, SUM(Gamer_Competition.score) as 'score' FROM Gamer_Competition inner join Gamers ON Gamer_Competition.gamerid = Gamers.userid inner join Competitions ON Gamer_Competition.competitionid = Competitions.competitionid inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid where Gamer_Competition.status1 = 1 and GamesCategories.status1 = 1 GROUP BY Gamers.userid, GamesCategories.categoryid , GamesCategories.categoryname , Gamers.firstname , Gamers.lastname ,  Gamers.nickname , Gamers.picture order by categoryid, score desc";
+                String selectSTR = "SELECT GamesCategories.categoryid, GamesCategories.categoryname, Gamers.firstname + ' ' + Gamers.lastname AS 'fullname', Gamers.nickname, Gamers.userid, Gamers.picture, SUM(Gamer_Competition.score) as 'score' FROM Gamer_Competition inner join Gamers ON Gamer_Competition.gamerid = Gamers.userid inner join Competitions ON Gamer_Competition.competitionid = Competitions.competitionid inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid where Gamer_Competition.status1 = 1 and GamesCategories.status1 = 1 and Competitions.ispro=1 GROUP BY Gamers.userid, GamesCategories.categoryid , GamesCategories.categoryname , Gamers.firstname , Gamers.lastname ,  Gamers.nickname , Gamers.picture order by categoryid, score desc";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -3222,7 +3222,7 @@ namespace IESA.Models.DAL
         
 
 
-        public List<Competitions> GetRelevantCompetitions(int GID)
+        public List<Competitions> GetRelevantCompetitions(int GID) //Gamer_Main_Page.html - SG08
         {
             SqlConnection con = null;
             List<Competitions> cList = new List<Competitions>();
@@ -3231,7 +3231,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT * FROM competitions inner join competition_game on competitions.competitionid =  competition_game.competitionid inner join gamer_competition on competitions.competitionid = Gamer_Competition.competitionid WHERE gamerid = "+ GID + " and competitionstatus = '2'";
+                String selectSTR = " SELECT * FROM competitions inner join gamer_competition on competitions.competitionid = Gamer_Competition.competitionid WHERE gamerid = " + GID + " and competitionstatus = '2'";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -3290,7 +3290,7 @@ namespace IESA.Models.DAL
             }
         }
 
-        public List<Competitions> GetCompetitionsSQL(int GID) //Database.html - method OD12
+        public List<Competitions> GetCompetitionsSQL(int GID) //Gamer_Main_Page.html - method SG09
         {
 
             SqlConnection con = null;
@@ -3338,6 +3338,76 @@ namespace IESA.Models.DAL
             }
 
         }
+
+        public List<Competitions> GetCompetitionsByStatus(string Cstatus) //Gamer_Main_Page.html - method SG10
+        {
+
+            SqlConnection con = null;
+            List<Competitions> RanksList = new List<Competitions>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = " SELECT * FROM Competitions WHERE status1=1 and competitionstatus = '"+ Cstatus + "' " ;
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Competitions c = new Competitions();
+
+                    c.Competitionid = Convert.ToInt32(dr["competitionid"]);
+                    c.Competitionname = (string)dr["competitionname"];
+                    c.Isonline = Convert.ToInt32(dr["isonline"]);
+                    c.Address1 = (string)dr["address1"];
+                    c.Banner = (string)dr["banner"];
+                    c.Logo = (string)dr["logo"];
+                    c.Prize1 = (string)dr["prize1"];
+                    c.Prize2 = (string)dr["prize2"];
+                    c.Price3 = (string)dr["prize3"];
+                    c.Linkforregistration = (string)dr["linkforregistration"];
+                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    c.Body = (string)dr["body"];
+                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
+                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    c.Startime = ((TimeSpan)dr["starttime"]);
+                    c.Endtime = ((TimeSpan)dr["endtime"]);
+                    c.Ispro = Convert.ToInt32(dr["ispro"]);
+                    c.Discord = (string)dr["discord"];
+                    c.Console = (string)dr["console"];
+                    c.Isiesa = Convert.ToInt32(dr["isiesa"]);
+                    c.Linkforstream = (string)dr["linkforstream"];
+                    c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
+                    c.Competitionstatus = (string)dr["competitionstatus"];
+                    c.Status1 = Convert.ToInt32(dr["status1"]);
+                    c.IsPayment = Convert.ToInt32(dr["ispayment"]);
+                    c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
+                    c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
+                    RanksList.Add(c);
+                }
+
+                return RanksList;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+                //throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+
 
         //Gamer_Main_Page.html --*Close*
 

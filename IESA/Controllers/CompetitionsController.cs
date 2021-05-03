@@ -203,6 +203,16 @@ namespace IESA.Controllers
             Competitions competitionsListForGamer = new Competitions();
             return competitionsListForGamer.GetCompetitionsForGamer(GID);
         }
+<<<<<<< HEAD
+=======
+        [HttpGet] //Gamer_Main_Page.html - method SG10
+        [Route("api/Competitions/GamerCompetitionsByStatus")]
+        public List<Competitions> GetFinishedCompetitionsForGamer(string Cstatus)
+        {
+            Competitions competitionsListForGamer = new Competitions();
+            return competitionsListForGamer.GetCompetitionsBystatus(Cstatus);
+        }
+>>>>>>> 0b837b26d68a9d26d433954664e336b755f82a8e
 
 
 
