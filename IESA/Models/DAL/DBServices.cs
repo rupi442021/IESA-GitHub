@@ -1499,7 +1499,7 @@ namespace IESA.Models.DAL
             {
                 con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR4 = "SELECT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
+                String selectSTR4 = "SELECT DISTINCT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
 
                 SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
 
@@ -3297,7 +3297,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT  Competitions.competitionid 'Competition ID', competitions.competitionname 'Competition Name', competitions.startdate 'Start Date', competitions.console 'Console', Gamer_Competition.rank1 'Rank', Gamer_Competition.score 'Score' from competitions inner join gamer_competition on competitions.competitionid=gamer_competition.competitionid inner join gamers on Gamer_Competition.gamerid=gamers.userid where competitions.status1=1 and gamer_competition.status1=1 and gamerid= " + GID;
+                String selectSTR = " SELECT Competitions.competitionid 'Competition ID', competitions.competitionname 'Competition Name', competitions.startdate 'Start Date', competitions.console 'Console', Gamer_Competition.rank1 'Rank', Gamer_Competition.score 'Score', gamesCategories.categoryname 'Category Name' from competitions inner join gamer_competition on competitions.competitionid=gamer_competition.competitionid inner join gamers on Gamer_Competition.gamerid=gamers.userid inner join competition_game on competitions.competitionid = competition_game.competitionid inner join GamesCategories on gamesCategories.categoryid = Competition_Game.categoryid where competitions.status1=1 and gamer_competition.status1=1 and gamerid=" + GID;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -3313,6 +3313,7 @@ namespace IESA.Models.DAL
                     rank.Console = (dr["Console"] != DBNull.Value) ? (string)dr["Console"] : default; //console
                     rank.Isonline = (dr["Rank"] != DBNull.Value) ? Convert.ToInt32(dr["Rank"]) : default; //Rank
                     rank.Numofparticipants = (dr["Score"] != DBNull.Value) ? Convert.ToInt32(dr["Score"]) : default; //score
+                    rank.Body = (dr["Category Name"] != DBNull.Value) ? (string)dr["Category Name"] : default; //category name
 
                     RanksList.Add(rank);
                 }

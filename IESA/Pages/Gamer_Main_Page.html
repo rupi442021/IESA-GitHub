@@ -308,14 +308,100 @@
             console.log(JSON.parse(localStorage.getItem("user_info")).Userid)
             GID = JSON.parse(localStorage.getItem("user_info")).Userid;
 
-
+            ajaxCall("GET", "../api/Competitions/tableRdb", "", getNationalRanksSuccess, getErrCompetitions); //Database.html - method OD12
             ajaxCall("GET", "../api/Competitions/GetRelevantCompetitionForGamer?GID=" + GID, "", getSuccessCompetitions, getErrCompetitions); //Gamer_Main_Page.html - method SG08
-            ajaxCall("GET", "../api/Competitions/GamerCompetitionsTable?GID=" + GID, "", getRanksSuccess, Error); //Gamer_Main_Page.html - method SG09
+            ajaxCall("GET", "../api/Competitions/GamerCompetitionsTable?GID=" + GID, "", getRanksSuccess, getErrCompetitions); //Gamer_Main_Page.html - method SG09
+            ajaxCall("GET", "../api/Competitions/tableC", "", getCompetitionsSuccess, getErrCompetitions); //Manager_Main_Page.html - method OM8
+
+        }
+
+        function getNationalRanksSuccess(ranksdata) {
+            console.log("In National: ", ranksdata);
+            var GamerLeague = [];
+            for (var i = 0; i < ranksdata.length; i++) {
+                if (ranksdata[i].Numofparticipants == GID)
+                    GamerLeague.push(ranksdata[i])
+            }
+            console.log("Filter: ", GamerLeague);
+            ranks = GamerLeague;
+
+            try {
+                tbl7 = $('#NationalRanks').DataTable({
+                    data: ranks,
+                    "order": [[0, "asc"], [3, "desc"]],
+                    "language": {
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "",
+                        "emptyTable": "אין נתונים זמינים בטבלה",
+                        "zeroRecords": "לא נמצאו תוצאות",
+                        "search": "חפש: ",
+                        "paginate": {
+                            "previous": "הקודם",
+                            "next": "הבא",
+                        },
+                    },
+                    responsive: true,
+                    pageLength: 10,
+                    columns: [
+                        { data: "Body", className: "uniqueClassName" },
+                        { data: "Competitionname", className: "uniqueClassName" },
+                        { data: "Startdate", className: "uniqueClassName" },
+                        { data: "Console", className: "uniqueClassName" },
+                        { data: "Isonline", className: "uniqueClassName" },
+                        { data: "Numofparticipants", className: "uniqueClassName" },
+
+
+                        //{
+                        //    render: function (data, type, row, meta) {
+                        //        let dataRanksGamer = "data-rankgamerid='" + row.Numofparticipants + "'"; //User id for buttons
+
+                        //        R_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='R_viewBTN bi bi-eye' " + dataRanksGamer + "></i></a>";
+
+                        //        return R_viewBtn;
+                        //    }
+                        //    , className: "uniqueClassName"
+                        //}
+
+                    ],
+                    "initComplete": function () {
+                        var column = this.api().column(0);
+
+                        var values = [];
+                        column.data().each(function (d, j) {
+                            d.split(",").forEach(function (data) {
+                                data = data.trim();
+
+                                if (values.indexOf(data) === -1) {
+                                    values.push(data);
+                                }
+                            });
+                        });
+
+                        $('<select class="filter"><option value=""></option></select>')
+                            .append(values.sort().map(function (o) {
+                                return '<option value="' + o + '">' + o + '</option>';
+                            }))
+                            .on('change', function () {
+                                column.search(this.value ? '\\b' + this.value + '\\b' : "", true, false).draw();
+                            })
+                            .appendTo('#selectCategoryFilter');
+                    }
+                });
+
+            }
+
+            catch (err) {
+                alert(err);
+            }
 
         }
 
         function getSuccessCompetitions(data) {
             console.log("In Get Success: ", data)
+            $("#FutureCompetitions").text(" ");
+
+
             if (data.length == 0) {
                 $("#FutureCompetitions").append("</br><h6>*לא מתקיימות כרגע תחרויות בקטגוריית המשחק שלך</h6>");
                 var moreCompetitionsBTN = "<button class='btn btn-outline-danger' onclick='alertformorecompetitions()'>חיפוש תחרויות נוספות</button>"
@@ -364,8 +450,39 @@
             });
         }
 
-        function getErrCompetitions(err) {
-            consoloe.log("In ERR: ", err);
+        function getCompetitionsSuccess(data) {
+            console.log("Get General Competitions: ", data)
+
+            for (var i = 0; i < data.length; i++) {
+
+                let edat = data[i].Enddate.split("T");
+                edat = edat[0].split("-");
+                let edat1;
+                edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]);
+                edat = edat[2] + '/' + edat[1] + '/' + edat[0]
+
+                let Stardate = data[i].Startdate.split("T");
+                Stardate = Stardate[0].split("-");
+                Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
+
+
+                var cardstr = '<div class="col-4 .mx-auto <div class="card" style="width: 18rem;">';
+                cardstr += '<a href=Competition_View.html?Competitions=' + data[i].Competitionid + '> <img src="../' + data[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
+                cardstr += '<div class="card-body">';
+                cardstr += '<h5 class="card-title"></br>' + data[i].Competitionname + '</h5>';
+                if (data[i].Isonline == 0)
+                    cardstr += '<p class="card-text"> כתובת : ' + data[i].Address + '</p>';
+                else
+                    cardstr += '<p class="card-text">תחרות אונליין</p>';
+
+                cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
+
+                cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
+                cardstr += '<div class="card-text"><a href=' + data[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-1">להרשמה לתחרות</button></a></div ></div ></div ></div >';
+
+            }
+            $("#FutureCompetitionsGeneral").append(cardstr);
+        
         }
 
         function getRanksSuccess(ranksdata) {
@@ -392,20 +509,35 @@
                     responsive: true,
                     pageLength: 10,
                     columns: [
-                        { data: "Competitionname", className: "uniqueClassName" },
                         { data: "Body", className: "uniqueClassName" },
-                        { data: "Address1", className: "uniqueClassName" },
-                        { data: "Isiesa", className: "uniqueClassName" },
+                        { data: "Competitionname", className: "uniqueClassName" },
                         {
-                            render: function (data, type, row, meta) {
-                                let dataRanksGamer = "data-rankgamerid='" + row.Numofparticipants + "'"; //User id for buttons
+                            data: "Startdate",
+                            "render": function (data) {
+                                var date = new Date(data);
+                                var month = date.getMonth() + 1;
+                                var day = date.getDate();
+                                day = day.toString().length > 1 ? day : "0" + day;
+                                return day + "/" + (month.toString().length > 1 ? month : "0" + month) + "/" + date.getFullYear();
+                            },
+                            className: "uniqueClassName"
 
-                                R_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='R_viewBTN bi bi-eye' " + dataRanksGamer + "></i></a>";
+                        },
+                        { data: "Console", className: "uniqueClassName" },
+                        { data: "Isonline", className: "uniqueClassName" },
+                        { data: "Numofparticipants", className: "uniqueClassName" },
 
-                                return R_viewBtn;
-                            }
-                            , className: "uniqueClassName"
-                        }
+
+                        //{
+                        //    render: function (data, type, row, meta) {
+                        //        let dataRanksGamer = "data-rankgamerid='" + row.Numofparticipants + "'"; //User id for buttons
+
+                        //        R_viewBtn = "<a href='javascript:;' class='view' title='צפה'><i class='R_viewBTN bi bi-eye' " + dataRanksGamer + "></i></a>";
+
+                        //        return R_viewBtn;
+                        //    }
+                        //    , className: "uniqueClassName"
+                        //}
 
                     ],
                     "initComplete": function () {
@@ -440,6 +572,10 @@
             }
         }
 
+        function getErrCompetitions(err) {
+            consoloe.log("In ERR: ", err);
+        }
+
 
     </script>
 
@@ -456,37 +592,78 @@
         <div class="container">
 
             <section id="page_title">
-                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <a class="titlelink" href="Gamer_Main_Page.html">ראשי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <h2 class="headh2">איזור אישי</h2>
                 <div class="divdown"></div>
             </section>
 
             <div class="row">
-                <h3>תחרויות קרובות עבורך בעמותה:</h3>
-                <div class="col-9" id="FutureCompetitions"></div>
-            </div>
-
-            <div class="row mt-5">
-                <h3>תוצאות:</h3>
-                <p>אנא בחר עבור איזה כותר ברצונך להציג </p>
+                <h3>דירוגים ארציים:</h3>
+                <div id="moreTheOneCategory">
+                    <div id="divfiltercategory">
+                        <span style="margin:4px;">קטגוריה:</span><span id="selectCategoryFilter"></span>
+                    </div>
+                </div>
                 <div class="col">
                     <form id="rForm">
                         <table id="RedTitle" class="nk-table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="background: #dd163b">דירוגים</th>
+                                    <th style="background: #dd163b">-</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table id="NationalRanks" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th style="max-width: 50px;">כותר</th>
+                                    <th style="max-width: 70px;">שם התחרות</th>
+                                    <th style="max-width: 70px;">תאריך</th>
+                                    <th style="max-width: 70px;">קונסולה</th>
+                                    <th style="max-width: 50px;">דירוג</th>
+                                    <th style="max-width: 50px;">ניקוד</th>
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <h3>תחרויות קרובות עבורך בעמותה:</h3>
+                <div class="col-9" id="FutureCompetitions"></div>
+            </div>
+
+            <div class="row">
+                <h3>תחרויות קרובות כללי:</h3>
+                <div class="col-9" id="FutureCompetitionsGeneral"></div>
+            </div>
+
+            <div class="row mt-5">
+                <h3>תוצאות:</h3>
+                <p>בטבלה זו מוצגים התוצאות הסופיות מכל התחרויות שלקחת בהן חלק: </p>
+                <div class="col">
+                    <form id="rForm">
+                        <table id="RedTitle" class="nk-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="background: #dd163b">תחרויות עבר:</th>
                                 </tr>
                             </thead>
                         </table>
                         <table id="RanksTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 70px;">שם קטגוריה</th>
-                                    <th style="max-width: 70px;">שם מלא</th>
-                                    <th style="max-width: 70px;">כינוי</th>
-                                    <th style="max-width: 70px;">ניקוד</th>
-                                    <th style="max-width: 50px;">פעולות</th>
+                                    <th style="max-width: 50px;">כותר</th>
+                                    <th style="max-width: 70px;">שם התחרות</th>
+                                    <th style="max-width: 70px;">תאריך</th>
+                                    <th style="max-width: 70px;">קונסולה</th>
+                                    <th style="max-width: 50px;">דירוג</th>
+                                    <th style="max-width: 50px;">ניקוד</th>
+
                                 </tr>
                             </thead>
                         </table>
@@ -495,6 +672,7 @@
                 </div>
 
             </div>
+
 
         </div>
 
