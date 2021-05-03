@@ -341,14 +341,14 @@
             ajaxCall("GET", "../api/Competitions/tableRdb", "", getNationalRanksSuccess, getErrCompetitions); //Database.html - method OD12
             ajaxCall("GET", "../api/Competitions/GetRelevantCompetitionForGamer?GID=" + GID, "", getSuccessCompetitions, getErrCompetitions); //Gamer_Main_Page.html - method SG08
             ajaxCall("GET", "../api/Competitions/GamerCompetitionsTable?GID=" + GID, "", getRanksSuccess, getErrCompetitions); //Gamer_Main_Page.html - method SG09
-            ajaxCall("GET", "../api/Competitions/GamerCompetitionsByStatus?Cstatus=2", "", getCompetitionsSuccess, getErrCompetitions); //Manager_Main_Page.html - method OM8
 
         }
 
 
         function getSuccessCompetitions(data) {
             GamerSuggestions = data;
-            
+            ajaxCall("GET", "../api/Competitions/GamerCompetitionsByStatus?Cstatus=2", "", getCompetitionsSuccess, getErrCompetitions); //Manager_Main_Page.html - method OM8
+            return false;
 
         }
 
@@ -362,61 +362,7 @@
             $("#FutureCompetitionsGeneral").text(cardstrG);
 
             for (var i = 0; i < Competitions.length; i++) {
-                for (var j = 0; j < GamerSuggestions.length; j++) {
-                    if (GamerSuggestions[j].Competitionid == Competitions[i].Competitionid) {
-                        icon = '<i class="bi bi-star" title="מומלץ עבורך"></i>';
-                        let edat = Competitions[i].Enddate.split("T");
-                        edat = edat[0].split("-");
-                        let edat1;
-                        edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]);
-                        edat = edat[2] + '/' + edat[1] + '/' + edat[0]
 
-                        let Stardate = Competitions[i].Startdate.split("T");
-                        Stardate = Stardate[0].split("-");
-                        Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
-                        cardstrG = '<div class="col-3 .mx-auto" <div class="card" style="margin-left: 20px;">';
-                        cardstrG += icon;
-                        cardstrG += '<a href=Competition_View.html?Competitions=' + Competitions[i].Competitionid + '> <img src="../' + Competitions[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
-                        cardstrG += '<div class="card-body">';
-
-                        cardstrG += '<h5 class="card-title"></br>' + Competitions[i].Competitionname + '</h5>';
-                        if (Competitions[i].Isonline == 0)
-                            cardstrG += '<p class="card-text"> כתובת : ' + Competitions[i].Address + '</p>';
-                        else
-                            cardstrG += '<p class="card-text">תחרות אונליין</p>';
-                        cardstrG += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
-                        cardstrG += '<p class="card-text"> סיום תחרות:' + edat + '</p>';
-                        cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-2">להרשמה לתחרות</button></a></div ></div ></div ></div >';
-
-                        $("#FutureCompetitionsGeneral").append(cardstrG);
-                    }
-                    else {
-                        icon = ' ';
-                        let edat = Competitions[i].Enddate.split("T");
-                        edat = edat[0].split("-");
-                        let edat1;
-                        edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]);
-                        edat = edat[2] + '/' + edat[1] + '/' + edat[0]
-
-                        let Stardate = Competitions[i].Startdate.split("T");
-                        Stardate = Stardate[0].split("-");
-                        Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
-                        cardstrG = '<div class="col-3 .mx-auto" <div class="card" style="margin-left: 20px;">';
-                        cardstrG += icon;
-                        cardstrG += '<a href=Competition_View.html?Competitions=' + Competitions[i].Competitionid + '> <img src="../' + Competitions[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
-                        cardstrG += '<div class="card-body">';
-
-                        cardstrG += '<h5 class="card-title"></br>' + Competitions[i].Competitionname + '</h5>';
-                        if (Competitions[i].Isonline == 0)
-                            cardstrG += '<p class="card-text"> כתובת : ' + Competitions[i].Address + '</p>';
-                        else
-                            cardstrG += '<p class="card-text">תחרות אונליין</p>';
-                        cardstrG += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
-                        cardstrG += '<p class="card-text"> סיום תחרות:' + edat + '</p>';
-                        cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-2">להרשמה לתחרות</button></a></div ></div ></div ></div >';
-
-                        $("#FutureCompetitionsGeneral").append(cardstrG);}
-                }
                 let edat = Competitions[i].Enddate.split("T");
                 edat = edat[0].split("-");
                 let edat1;
@@ -427,6 +373,14 @@
                 Stardate = Stardate[0].split("-");
                 Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
                 cardstrG = '<div class="col-3 .mx-auto" <div class="card" style="margin-left: 20px;">';
+                for (var j = 0; j < GamerSuggestions.length; j++) {
+                    if (GamerSuggestions[j].Competitionid == Competitions[i].Competitionid) {
+                        icon = '<i class="bi bi-star" title="מומלץ עבורך"></i>';
+                        break;
+                    }
+                    else
+                        icon = ' ';
+            }
                 cardstrG += icon;
                 cardstrG += '<a href=Competition_View.html?Competitions=' + Competitions[i].Competitionid + '> <img src="../' + Competitions[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstrG += '<div class="card-body">';
@@ -441,8 +395,8 @@
                 cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-2">להרשמה לתחרות</button></a></div ></div ></div ></div >';
                 
                 $("#FutureCompetitionsGeneral").append(cardstrG);
-
             }
+            
         
         }
 
@@ -644,8 +598,10 @@
 
             <div class="row mt-5">
                 <h3>תחרויות עתידיות בעמותה:</h3>
-                <div class="col-9" id="FutureCompetitionsGeneral"></div>
-                <div class="col-3">
+                <div class="col-10">
+                    <div class="row" id="FutureCompetitionsGeneral"></div>
+                </div>
+                <div class="col-2">
                     
                 </div>
             </div>
