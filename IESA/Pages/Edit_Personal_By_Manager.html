@@ -195,18 +195,24 @@
 
 
     <script>
+
         userType = '';
-        IdUser = '';
+
         var counterimage = 2300;
         // when we will get to this page(threw manager page) we will take the specific id of the orgenaizer/gamer  and get all his details and will render them here.
         // כאן אביא את ה-איי די על פי מה שהמנהל לחץ ואשאל האם ה-איי די גדול או קטן מ-30000.
-        IdUser = 20000000;
+
+        var split = window.location.href.split('=');
+        IdUser = split[1];
+
+
         // אם הוא גדול אז הגט יהיה מעמוד שחקן ואם הוא קטן אז מעמוד מארגן
         //ואז ארנדר כל נתון למקום המתאים לו
         // כמובן שבעת עריכה אצטרך לעשות פקודת פוט
 
         $(document).ready(function () {
             console.log(IdUser)
+
             if (IdUser< 30000000) {//for orgenziers
                 userType=2
                 ajaxCall("GET", "../api/Orgenaizers/" + IdUser, "", getSuccessOrgDetails, ErrorOrg); //Edit_Personal_By_Manager.html - method MU1
@@ -222,8 +228,8 @@
 
             else {
 
-                swal("עריכת פרטים אישיים מתבצעת במאגר הנתונים")
-                window.location("Sign_In.html")
+                window.location("Sign_In.html");
+
                   }
 
 

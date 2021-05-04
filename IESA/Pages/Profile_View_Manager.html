@@ -232,13 +232,20 @@
 
         $(document).ready(function () {
 
+            $("#g_edit_btn").click(function () {
+                location.replace("Edit_Personal_By_Manager.html?userid=" + user_id);
+            });
+
+            $("#o_edit_btn").click(function () {
+                location.replace("Edit_Personal_By_Manager.html?userid=" + user_id);
+            });
 
         });
 
         function init() {
 
             var split = window.location.href.split('=');
-            var user_id = split[1];
+            user_id = split[1];
 
             if (user_id[0] == 3) {
                 $("#orgenaizer").hide();
@@ -664,7 +671,7 @@
                                             <h4 id="g_nicknameph"><!--OmerBetzalel24--></h4>
                                             <p id="g_gamertypeph" class="text-secondary mb-1"><!--שחקן מקצועי--></p>
                                             <p id="g_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
-                                            <button class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
+                                            <button id="g_edit_btn" class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
                                             <button class="btn btn-outline-primary" style="color: #2c3a38; border-color: #04b8a5;">שליחת מייל</button>
                                         </div>
                                     </div>
@@ -816,7 +823,7 @@
                                             <h4 id="o_nicknameph"><!--OmerBetzalel24--></h4>
                                             <p id="o_orgenaizertypeph" class="text-secondary mb-1"><!--שם קהילה: ..--></p>
                                             <p id="o_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
-                                            <button class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
+                                            <button id="o_edit_btn" class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
                                             <button class="btn btn-outline-primary" style="color: #2c3a38; border-color: #04b8a5;">שליחת מייל</button>
                                         </div>
                                     </div>
