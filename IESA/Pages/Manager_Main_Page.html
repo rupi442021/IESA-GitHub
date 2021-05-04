@@ -368,11 +368,23 @@
             color: #fbf5f5;
         }
 
+        #tstats {
+            width: 100%;
+            font-family: Montserrat,sans-serif;
+            font-weight: 600;
+        }
+
+            #tstats td {
+                padding: 6px 15px;
+            }
+
         /*        #box {
             -webkit-box-shadow: 0 10px 6px -6px #292e38;
             -moz-box-shadow: 0 10px 6px -6px #292e38;
             box-shadow: 0 10px 6px -6px #292e38;
         }*/
+
+        
 
     </style>
 
@@ -1002,30 +1014,52 @@
             <div class="row">
 
                 <div class="col-lg-3" id="services_block" style="text-align:center;">
+
                     <h4 style="margin-top:3px;">סטטסטיקה</h4>
+
                     <br />
-                    <span>מספר שחקנים רשומים: <span id="num_gamers"></span></span>
-                    <div style="padding:5px;"></div>
-                    <span>מספר מארגנים רשומים: <span id="num_orgenaizers"></span></span>
-                    <div style="padding:5px;"></div>
-                    <span>מספר תחרויות עתידיות: <span id="num_futurecomp"></span></span>
-                    <div style="padding:5px;"></div>
-                    <span>מספר תחרויות שהתקיימו: <span id="num_pastcomp"></span></span>
+
+                    <table id="tstats">
+                        <tr style="background-color: #3c4250;">
+                            <td>
+                                <strong class="h4"><span id="num_gamers"></span></strong>
+                            </td>
+                            <td>
+                                <strong class="h5">שחקנים רשומים</strong>
+                            </td>
+                        </tr>
+
+                        <tr style="background-color: #3c4250;">
+                            <td>
+                                <strong class="h4"><span id="num_orgenaizers"></span></strong>
+                            </td>
+                            <td>
+                                <strong class="h5">מארגנים רשומים</strong>
+                            </td>
+                        </tr>
+
+                        <tr style="background-color: #3c4250;">
+                            <td>
+                                <strong class="h4"><span id="num_futurecomp"></span></strong>
+                            </td>
+                            <td>
+                                <strong class="h5">תחרויות עתידיות</strong>
+                            </td>
+                        </tr>
+
+                        <tr style="background-color: #3c4250;">
+                            <td>
+                                <strong class="h4"><span id="num_pastcomp"></span></strong>
+                            </td>
+                            <td>
+                                <strong class="h5">תחרויות שהתקיימו</strong>
+                            </td>
+                        </tr>
+
+
+                    </table>
+
                     <div style="padding:16px;"></div>
-
-
-                    <br />
-
-
-                    <!--<div id="box" style="background-color: #4a5163; font-size:14px;">
-                        <div style="padding:2px;"></div>
-                        <span>מספר תחרויות ממתינות לאישור: 0</span>
-                        <div style="padding:1px;"></div>
-                        <span>מספר שחקנים ממתינים לאישור: 2</span>
-                        <div style="padding:1px;"></div>
-                        <span>מספר מארגנים ממתינים לאישור: 1</span>
-                        <div style="padding:2px;"></div>
-                    </div>-->
 
 
                 </div>
