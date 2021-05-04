@@ -222,11 +222,19 @@ namespace IESA.Controllers
 
 
         [HttpGet] //Profile_View_Manager.html - method OC1
-        [Route("api/Competitions/trackcomp")]
-        public List<Competitions> GetCompetitionsDB(int idtoserver)
+        [Route("api/Competitions/g_trackcomp")]
+        public List<Competitions> G_GetCompetitions(int idtoserver)
         {
             Competitions competitionslist = new Competitions();
-            return competitionslist.Read_View_Competitions(idtoserver);
+            return competitionslist.G_Read_View_Competitions(idtoserver);
+        }
+
+        [HttpGet] //Profile_View_Manager.html - method OC2
+        [Route("api/Competitions/o_trackcomp")]
+        public List<Competitions> O_GetCompetitions(int idtoserver)
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.O_Read_View_Competitions(idtoserver);
         }
 
 

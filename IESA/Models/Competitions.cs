@@ -232,10 +232,17 @@ namespace IESA.Models
         //---Profile_View_Manager.html--- *Open*
 
 
-        public List<Competitions> Read_View_Competitions(int idtoserver) //Profile_View_Manager.html - method OC1
+        public List<Competitions> G_Read_View_Competitions(int idtoserver) //Profile_View_Manager.html - method OC1
         {
             DBServices dbs = new DBServices();
-            List<Competitions> clist = dbs.Read_View_CompetitionsSQL(idtoserver);
+            List<Competitions> clist = dbs.G_Read_View_CompetitionsSQL(idtoserver);
+            return clist;
+        }
+
+        public List<Competitions> O_Read_View_Competitions(int idtoserver) //Profile_View_Manager.html - method OC2
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> clist = dbs.O_Read_View_CompetitionsSQL(idtoserver);
             return clist;
         }
 

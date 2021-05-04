@@ -209,7 +209,7 @@
             color: #2b2626;
             position: absolute;
             top: 45.3%;
-            right: 78%;
+            right: 77%;
         }
 
         .uniqueClassName {
@@ -218,6 +218,10 @@
 
         #tableheight {
             height: 255px;
+        }
+
+        i {
+            font-size: 1.1em;
         }
 
 
@@ -241,14 +245,14 @@
                 $("#manager").hide();
 
                 ajaxCall("GET", "../api/Gamers/login3?idtoserver=" + user_id, "", renderGamer, Error); //(#) Sign_In.html - method OL2
-                ajaxCall("GET", "../api/Competitions/trackcomp?idtoserver=" + user_id, "", getCompetitions_GSuccess, Error); //Profile_View_Manager.html - method OC1
+                ajaxCall("GET", "../api/Competitions/g_trackcomp?idtoserver=" + user_id, "", getCompetitions_GSuccess, Error); //Profile_View_Manager.html - method OC1
             }
             else if (user_id[0] == 2) {
                 $("#gamer").hide();
                 $("#manager").hide();
 
                 ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + user_id, "", renderOrgenaizer, Error); //Sign_In.html - method OL3
-                //ajaxCall("GET", "../api/Competitions/trackcomp?idtoserver=" + user_id, "", getCompetitions_OSuccess, Error);
+                ajaxCall("GET", "../api/Competitions/o_trackcomp?idtoserver=" + user_id, "", getCompetitions_OSuccess, Error); //Profile_View_Manager.html - method OC2
             }
             else {
                 $("#gamer").hide();
@@ -311,12 +315,12 @@
             document.getElementById("g_genderph").innerHTML = strgn;
         }
 
+
         function getCompetitions_GSuccess(compdata) {
             console.log(compdata);
 
-
             try {
-                tbl = $('#CompetitionsTable').DataTable({
+                tbl1 = $('#G_CompetitionsTable').DataTable({
                     data: compdata,
                     "order": [0, "asc"],
                     "language": {
@@ -362,7 +366,17 @@
                             }
                             , className: "uniqueClassName"
                         },
-                        { data: "Isonline", className: "uniqueClassName" }
+                        { data: "Isonline", className: "uniqueClassName" },
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataCompId = row.Competitionid;
+
+                                GC_viewBtn = "<a href='Competition_View.html?competitionid=" + dataCompId + "' target='_blank' class='view' title='צפה'><i class='GC_viewBtn bi bi-eye' " + dataCompId + "></i></a>";
+
+                                return GC_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
                     ],
                     "initComplete": function () {
                         var column = this.api().column(1);
@@ -385,7 +399,7 @@
                             .on('change', function () {
                                 column.search(this.value ? '\\b' + this.value + '\\b' : "", true, false).draw();
                             })
-                            .appendTo('#selectCompFilter');
+                            .appendTo('#g_selectCompFilter');
                     }
                 });
 
@@ -437,14 +451,16 @@
             }
 
             document.getElementById("o_genderph").innerHTML = strgn;
+
+            document.getElementById("o_site").innerHTML = orgenaizerobj.Linktocommunity;
         }
+
 
         function getCompetitions_OSuccess(compdata) {
             console.log(compdata);
 
-
             try {
-                tbl = $('#CompetitionsTable').DataTable({
+                tbl2 = $('#O_CompetitionsTable').DataTable({
                     data: compdata,
                     "order": [0, "asc"],
                     "language": {
@@ -465,14 +481,36 @@
                         { data: "Competitionid", className: "uniqueClassName" },
                         { data: "Gamecategory", className: "uniqueClassName" },
                         {
-                            "data": "Isiesa",
+                            "data": "Competitionstatus",
                             "render": function (data) {
-                                if (data == 0) {
-                                    return "קהילה";
+
+                                switch (data) {
+                                    case '1':
+                                        status = "הוגשה";
+                                        break;
+                                    case '2':
+                                        status = "אושרה";
+                                        break;
+                                    case '3':
+                                        status = "נדחתה";
+                                        break;
+                                    case '4':
+                                        status = "הזנת דירוגים";
+                                        break;
+                                    case '5':
+                                        status = "אישור דירוגים";
+                                        break;
+                                    case '6':
+                                        status = "דירוגים נדחו";
+                                        break;
+                                    case '7':
+                                        status = "דירוגים אושרו";
+                                        break;
+                                    case '8':
+                                        status = "דירוגים שונו";
                                 }
-                                else {
-                                    return "עמותה";
-                                }
+
+                                return status;
 
                             }
                             , className: "uniqueClassName"
@@ -490,7 +528,17 @@
                             }
                             , className: "uniqueClassName"
                         },
-                        { data: "Isonline", className: "uniqueClassName" }
+                        {
+                            render: function (data, type, row, meta) {
+                                let dataCompId = row.Competitionid; 
+
+                                OC_viewBtn = "<a href='Competition_View.html?competitionid=" + dataCompId + "' target='_blank' class='view' title='צפה'><i class='OC_viewBtn bi bi-eye' " + dataCompId + "></i></a>";
+
+                                return OC_viewBtn;
+                            }
+                            , className: "uniqueClassName"
+                        }
+
                     ],
                     "initComplete": function () {
                         var column = this.api().column(1);
@@ -513,7 +561,7 @@
                             .on('change', function () {
                                 column.search(this.value ? '\\b' + this.value + '\\b' : "", true, false).draw();
                             })
-                            .appendTo('#selectCompFilter');
+                            .appendTo('#o_selectCompFilter');
                     }
                 });
 
@@ -643,10 +691,6 @@
                                 </ul>
 
 
-                                <p>...</p>
-                                <p>...</p>
-
-
                             </div>
 
 
@@ -718,14 +762,15 @@
                                             <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">מעקב</b></i>תחרויות</h6>
 
                                             <form id="g_cForm">
-                                                <table id="CompetitionsTable" class="Bordertable display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
+                                                <table id="G_CompetitionsTable" class="Bordertable display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
                                                     <thead>
                                                         <tr>
-                                                            <th style="max-width: 60px;">מספר תחרות</th>
-                                                            <th style="max-width: 80px;">קטגוריה</th>
-                                                            <th style="max-width: 45px;">שיוך</th>
-                                                            <th style="max-width: 45px;">סוג</th>
-                                                            <th style="max-width: 50px;">ניקוד</th>
+                                                            <th style="max-width: 50px;">מס' תחרות</th>
+                                                            <th style="max-width: 55px;">קטגוריה</th>
+                                                            <th style="max-width: 35px;">שיוך</th>
+                                                            <th style="max-width: 35px;">סוג</th>
+                                                            <th style="max-width: 40px;">ניקוד</th>
+                                                            <th style="max-width: 30px;">פעולות</th>
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -737,7 +782,7 @@
                             </div>
 
                             <div id="divfilterrank">
-                                <span style="margin:4px;">קטגוריה:</span><span id="selectCompFilter"></span>
+                                <span style="margin:4px;">קטגוריה:</span><span id="g_selectCompFilter"></span>
                             </div>
 
 
@@ -780,26 +825,11 @@
                             <div class="card mt-3" id="tableheight">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>אתר </h6>
-                                        <span class="text-secondary">https://bootdey.com</span>
+                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>אתר קהילה </h6>
+                                        <span class="text-secondary" id="o_site"></span>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>פייסבוק</h6>
-                                        <span class="text-secondary">bootdey</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>אינסטגרם</h6>
-                                        <span class="text-secondary">bootdey</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>דיסקורד</h6>
-                                        <span class="text-secondary">@bootdey</span>
-                                    </li>
+
                                 </ul>
-
-
-                                <p>...</p>
-                                <p>...</p>
 
 
                             </div>
@@ -873,14 +903,14 @@
                                             <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">מעקב</b></i>תחרויות</h6>
 
                                             <form id="o_cForm">
-                                                <table id="CompetitionsTable" class="Bordertable display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
+                                                <table id="O_CompetitionsTable" class="Bordertable display compact Bordertable nowrap table table-bordered table table-striped" style="width:100%;">
                                                     <thead>
                                                         <tr>
-                                                            <th style="max-width: 60px;">מספר תחרות</th>
-                                                            <th style="max-width: 80px;">קטגוריה</th>
-                                                            <th style="max-width: 45px;">שיוך</th>
-                                                            <th style="max-width: 45px;">סוג</th>
-                                                            <th style="max-width: 50px;">ניקוד</th>
+                                                            <th style="max-width: 50px;">מס' תחרות</th>
+                                                            <th style="max-width: 60px;">קטגוריה</th>
+                                                            <th style="max-width: 60px;">סטאטוס</th>
+                                                            <th style="max-width: 40px;">סוג</th>
+                                                            <th style="max-width: 30px;">פעולות</th>
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -892,7 +922,7 @@
                             </div>
 
                             <div id="divfilterrank">
-                                <span style="margin:4px;">קטגוריה:</span><span id="selectCompFilter"></span>
+                                <span style="margin:4px;">קטגוריה:</span><span id="o_selectCompFilter"></span>
                             </div>
 
 

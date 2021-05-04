@@ -838,7 +838,41 @@
                             }
                             , className: "uniqueClassName"
                         },
-                        { data: "Competitionstatus", className: "uniqueClassName" },
+                        {
+                            "data": "Competitionstatus",
+                            "render": function (data) {
+
+                                switch (data) {
+                                    case '1':
+                                        status = "הוגשה";
+                                        break;
+                                    case '2':
+                                        status = "אושרה";
+                                        break;
+                                    case '3':
+                                        status = "נדחתה";
+                                        break;
+                                    case '4':
+                                        status = "הזנת דירוגים";
+                                        break;
+                                    case '5':
+                                        status = "אישור דירוגים";
+                                        break;
+                                    case '6':
+                                        status = "דירוגים נדחו";
+                                        break;
+                                    case '7':
+                                        status = "דירוגים אושרו";
+                                        break;
+                                    case '8':
+                                        status = "דירוגים שונו";
+                                }
+
+                                return status;
+
+                            }
+                            , className: "uniqueClassName"
+                        },
                         {
                             "data": "Ispro",
                             "render": function (data) {
@@ -1088,9 +1122,9 @@
                                 <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th style="max-width: 70px;">מספר תחרות</th>
-                                            <th style="max-width: 100px;">כותרת</th>
-                                            <th style="max-width: 50px;">סטאטוס</th>
+                                            <th style="max-width: 60px;">מספר תחרות</th>
+                                            <th style="max-width: 80px;">כותרת</th>
+                                            <th style="max-width: 60px;">סטאטוס</th>
                                             <th style="max-width: 50px;">סוג</th>
                                             <th style="max-width: 60px;">שם מארגן</th>
                                             <th style="max-width: 65px;">תאריך התחלה</th>

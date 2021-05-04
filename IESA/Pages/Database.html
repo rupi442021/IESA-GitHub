@@ -1164,7 +1164,43 @@
                             }
                             , className: "uniqueClassName"
                         },
-                        { data: "Competitionstatus", className: "uniqueClassName" },
+
+                        {
+                            "data": "Competitionstatus",
+                            "render": function (data) {
+
+                                switch (data) {
+                                    case '1':
+                                        status = "הוגשה";
+                                        break;
+                                    case '2':
+                                        status = "אושרה";
+                                        break;
+                                    case '3':
+                                        status = "נדחתה";
+                                        break;
+                                    case '4':
+                                        status = "הזנת דירוגים";
+                                        break;
+                                    case '5':
+                                        status = "אישור דירוגים";
+                                        break;
+                                    case '6':
+                                        status = "דירוגים נדחו";
+                                        break;
+                                    case '7':
+                                        status = "דירוגים אושרו";
+                                        break;
+                                    case '8':
+                                        status = "דירוגים שונו";
+                                }
+
+                                return status;
+
+                            }
+                            , className: "uniqueClassName"
+                        },
+
                         {
                             "data": "Isiesa",
                             "render": function (data) {
@@ -1400,7 +1436,7 @@
             try {
                 tbl7 = $('#RanksTable').DataTable({
                     data: ranksdata,
-                    "order": [[0, "asc"], [3, "desc"]],
+                    "order": [[0, "asc"], [1, "asc"], [4, "desc"]],
                     "language": {
                         "info": "",
                         "infoEmpty": "",
@@ -1416,7 +1452,8 @@
                     responsive: true,
                     pageLength: 10,
                     columns: [
-                        { data: "Competitionname", className: "uniqueClassName" },
+                        { data: "Competitionname", className: "uniqueClassName" }, //categoryname
+                        { data: "Ispro", className: "uniqueClassName" }, //rank
                         { data: "Body", className: "uniqueClassName" },
 
                         {
@@ -1688,12 +1725,12 @@
                                 <table id="CompetitionsTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th style="max-width: 75px;">מספר תחרות</th>
-                                            <th style="max-width: 100px;">כותרת</th>
-                                            <th style="max-width: 40px;">סטאטוס</th>
-                                            <th style="max-width: 45px;">שיוך</th>
-                                            <th style="max-width: 45px;">סוג</th>
-                                            <th style="max-width: 60px;">שם המארגן</th>
+                                            <th style="max-width: 55px;">מס' תחרות</th>
+                                            <th style="max-width: 73px;">כותרת</th>
+                                            <th style="max-width: 60px;">סטאטוס</th>
+                                            <th style="max-width: 35px;">שיוך</th>
+                                            <th style="max-width: 35px;">סוג</th>
+                                            <th style="max-width: 50px;">שם מארגן</th>
                                             <th style="max-width: 75px;">תאריך התחלה</th>
                                             <th style="max-width: 75px;">תאריך סיום</th>
                                             <th style="max-width: 60px;">פעולות</th>
@@ -1733,10 +1770,11 @@
                                 <table id="RanksTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th style="max-width: 70px;">שם קטגוריה</th>
-                                            <th style="max-width: 70px;">שם השחקן</th>
-                                            <th style="max-width: 70px;">כינוי</th>
-                                            <th style="max-width: 70px;">ניקוד</th>
+                                            <th style="max-width: 60px;">שם קטגוריה</th>
+                                            <th style="max-width: 50px;">דירוג</th>
+                                            <th style="max-width: 70px;">שם שחקן</th>
+                                            <th style="max-width: 100px;">כינוי</th>
+                                            <th style="max-width: 50px;">ניקוד עונתי</th>
                                             <th style="max-width: 50px;">פעולות</th>
                                         </tr>
                                     </thead>

@@ -2135,7 +2135,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT GamesCategories.categoryid, GamesCategories.categoryname, Gamers.firstname + ' ' + Gamers.lastname AS 'fullname', Gamers.nickname, Gamers.userid, Gamers.picture, SUM(Gamer_Competition.score) as 'score' FROM Gamer_Competition inner join Gamers ON Gamer_Competition.gamerid = Gamers.userid inner join Competitions ON Gamer_Competition.competitionid = Competitions.competitionid inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid where Gamer_Competition.status1 = 1 and GamesCategories.status1 = 1 and Competitions.ispro=1 GROUP BY Gamers.userid, GamesCategories.categoryid , GamesCategories.categoryname , Gamers.firstname , Gamers.lastname ,  Gamers.nickname , Gamers.picture order by categoryid, score desc";
+                String selectSTR = "SELECT RANK() OVER (Partition by categoryname Order by Gamer_Competition.score desc) as rank, GamesCategories.categoryid, GamesCategories.categoryname, Gamers.firstname + ' ' + Gamers.lastname AS 'fullname', Gamers.nickname, Gamers.userid, Gamers.picture, SUM(Gamer_Competition.score) as 'score' FROM Gamer_Competition inner join Gamers ON Gamer_Competition.gamerid = Gamers.userid inner join Competitions ON Gamer_Competition.competitionid = Competitions.competitionid inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid where Gamer_Competition.status1 = 1 and GamesCategories.status1 = 1 and Competitions.ispro=1 GROUP BY Gamers.userid, GamesCategories.categoryid , GamesCategories.categoryname , Gamers.firstname , Gamers.lastname ,  Gamers.nickname , Gamers.picture , Gamer_Competition.score order by categoryname, rank, score desc";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -2145,6 +2145,7 @@ namespace IESA.Models.DAL
                 {
                     Competitions rank = new Competitions();
 
+                    rank.Ispro = (dr["rank"] != DBNull.Value) ? Convert.ToInt32(dr["rank"]) : default; //rank
                     rank.Competitionid = (dr["categoryid"] != DBNull.Value) ? Convert.ToInt32(dr["categoryid"]) : default; //categoryid
                     rank.Competitionname = (dr["categoryname"] != DBNull.Value) ? (string)dr["categoryname"] : default; //categoryname
                     rank.Body = (dr["fullname"] != DBNull.Value) ? (string)dr["fullname"] : default; //fullname
@@ -3414,7 +3415,7 @@ namespace IESA.Models.DAL
 
         //---Profile_View_Manager.html--- *Open*
 
-        public List<Competitions> Read_View_CompetitionsSQL(int idtoserver) //Profile_View_Manager.html - method OC1
+        public List<Competitions> G_Read_View_CompetitionsSQL(int idtoserver) //Profile_View_Manager.html - method OC1
         {
 
             SqlConnection con2 = null;
@@ -3455,6 +3456,52 @@ namespace IESA.Models.DAL
                 if (con2 != null)
                 {
                     con2.Close();
+                }
+
+            }
+
+        }
+
+        public List<Competitions> O_Read_View_CompetitionsSQL(int idtoserver) //Profile_View_Manager.html - method OC2
+        {
+
+            SqlConnection con3 = null;
+            List<Competitions> CompetitionsList = new List<Competitions>();
+
+            try
+            {
+                con3 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR3 = "SELECT Competitions.competitionid, GamesCategories.categoryname, Competitions.competitionstatus, Competitions.ispro FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid inner join Competition_Game ON Orgenaizer_Competition.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid WHERE Orgenaizer_Competition.orgenaizerid = " + idtoserver;
+
+                SqlCommand cmd3 = new SqlCommand(selectSTR3, con3);
+
+                // get a reader
+                SqlDataReader dr3 = cmd3.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr3.Read())
+                {
+                    Competitions competition = new Competitions();
+
+                    competition.Competitionid = (dr3["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr3["competitionid"]) : default;
+                    competition.Gamecategory = (dr3["categoryname"] != DBNull.Value) ? (string)dr3["categoryname"] : default;
+                    competition.Competitionstatus = (dr3["competitionstatus"] != DBNull.Value) ? (string)dr3["competitionstatus"] : default;
+                    competition.Ispro = (dr3["ispro"] != DBNull.Value) ? Convert.ToInt32(dr3["ispro"]) : default;
+
+                    CompetitionsList.Add(competition);
+                }
+
+                return CompetitionsList;
+            }
+            catch (Exception)
+            {
+                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+            }
+            finally
+            {
+                if (con3 != null)
+                {
+                    con3.Close();
                 }
 
             }
