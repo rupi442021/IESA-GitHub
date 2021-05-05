@@ -288,7 +288,10 @@
             margin-left:10px;
         }
         .bi-star:hover {
-            color: red;
+            color: yellow;
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Safari 3-8 */
+            transform: scale(1.5);
         }
         .bi-star {
             position: absolute;
@@ -355,7 +358,7 @@
 
         function getSuccessCompetitions(data) {
             GamerSuggestions = data;
-            ajaxCall("GET", "../api/Competitions/GamerCompetitionsByStatus?Cstatus=2", "", getCompetitionsSuccess, getErrCompetitions); //Manager_Main_Page.html - method OM8
+            ajaxCall("GET", "../api/Competitions/GamerCompetitionsByStatus?Cstatus=2", "", getCompetitionsSuccess, getErrCompetitions); 
             return false;
 
         }
@@ -382,7 +385,7 @@
                 Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
                 cardstrG = '<div class="col-3 .mx-auto" <div class="card" style="margin-left: 20px;">';
                 for (var j = 0; j < GamerSuggestions.length; j++) {
-                    if (GamerSuggestions[j].Competitionid == Competitions[i].Competitionid) {
+                    if (GamerSuggestions[j].Competitionid == Competitions[i].IsPayment) {
                         icon = '<i class="bi bi-star" title="מומלץ עבורך"></i>';
                         break;
                     }
@@ -639,8 +642,8 @@
                                 <tr>
                                     <th style="max-width: 30px;">דירוג</th>
                                     <th style="max-width: 70px;">כותר</th>
-                                    <th style="max-width: 70px;">כינוי-שחקן</th>
                                     <th style="max-width: 70px;">שם מלא</th>
+                                    <th style="max-width: 70px;">כינוי-שחקן</th>
                                     <th style="max-width: 70px;">ניקוד</th>
                                     <th style="max-width: 50px;">פעולות</th>
                                 </tr>

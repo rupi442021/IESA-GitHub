@@ -3232,7 +3232,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT * FROM competitions inner join gamer_competition on competitions.competitionid = Gamer_Competition.competitionid WHERE gamerid = " + GID + " and competitionstatus = '2'";
+                String selectSTR = " SELECT GamesCategories.categoryid, GamesCategories.categoryname FROM competitions inner join Competition_Game on competitions.competitionid = Competition_Game .competitionid inner join Gamer_Competition on Competitions.competitionid=Gamer_Competition.competitionid inner join GamesCategories on Competition_Game.categoryid=GamesCategories.categoryid WHERE gamerid = "+ GID;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -3241,37 +3241,10 @@ namespace IESA.Models.DAL
                 while (dr.Read())
                 {   // Read till the end of the data into a row
                     Competitions c = new Competitions();
-                    c.Competitionid = Convert.ToInt32(dr["competitionid"]);
-                    c.Competitionname = (string)dr["competitionname"];
-                    c.Isonline = Convert.ToInt32(dr["isonline"]);
-                    c.Address1 = (string)dr["address1"];
-                    c.Banner = (string)dr["banner"];
-                    c.Logo = (string)dr["logo"];
-                    c.Prize1 = (string)dr["prize1"];
-                    c.Prize2 = (string)dr["prize2"];
-                    c.Price3 = (string)dr["prize3"];
-                    c.Linkforregistration = (string)dr["linkforregistration"];
-                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
-                    c.Body = (string)dr["body"];
-                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
-                    c.Startime = ((TimeSpan)dr["starttime"]);
-                    c.Endtime = ((TimeSpan)dr["endtime"]);
-                    c.Ispro = Convert.ToInt32(dr["ispro"]);
-                    c.Discord = (string)dr["discord"];
-                    c.Console = (string)dr["console"];
-                    c.Isiesa = Convert.ToInt32(dr["isiesa"]);
-                    c.Linkforstream = (string)dr["linkforstream"];
-                    c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
-                    c.Competitionstatus = (string)dr["competitionstatus"];
-                    c.Status1 = Convert.ToInt32(dr["status1"]);
-                    c.IsPayment = Convert.ToInt32(dr["ispayment"]);
-                    c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
-                    c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
+                    c.Competitionid = Convert.ToInt32(dr["categoryid"]);
+                    c.Competitionname = (string)dr["categoryname"];
 
-
-                    if (c.Status1 == 1)
-                        cList.Add(c);
+                    cList.Add(c);
                 }
 
                 return cList;
@@ -3350,7 +3323,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT * FROM Competitions WHERE status1=1 and competitionstatus = '"+ Cstatus + "' " ;
+                String selectSTR = " SELECT * FROM Competitions inner join Competition_Game on Competitions.competitionid=Competition_Game.competitionid WHERE status1=1 and competitionstatus = '" + Cstatus + "' or competitionstatus ='4'";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -3384,7 +3357,7 @@ namespace IESA.Models.DAL
                     c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
                     c.Competitionstatus = (string)dr["competitionstatus"];
                     c.Status1 = Convert.ToInt32(dr["status1"]);
-                    c.IsPayment = Convert.ToInt32(dr["ispayment"]);
+                    c.IsPayment = Convert.ToInt32(dr["categoryid"]);
                     c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
                     c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
                     RanksList.Add(c);

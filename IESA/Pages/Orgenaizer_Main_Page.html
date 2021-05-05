@@ -31,7 +31,7 @@
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            height: 1800px;
+            height: 2500px;
             padding-top: 30px;
             align-content: center;
         }
@@ -290,7 +290,7 @@
                 var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
                 cardstr += '<a href=Competition_View.html?Competitions=' + fList[i].Competitionid +'> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"> </a>';
                 cardstr += '<div class="card-body">';
-                cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
+                cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname.substring(0,20)  + '</h5>';
                 cardstr += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
                 cardstr += '<p class="card-text"> סיום תחרות: ' + edat + '</p>';
               
@@ -331,12 +331,12 @@
                         timetorank = Math.ceil(Math.abs(edat1 - today ) / (1000 * 60 * 60 * 24)) 
 
 
-                    var cardstr = '<div class="col-4 .mx-auto <div class="card " style="width: 18rem;">';
+                    var cardstr = '<div class="col-4 .mx-auto mt-2"<div class="card " style="width: 18rem;">';
                     cardstr += '<a href=Competition_View.html?Competitions=' + fList[i].Competitionid +'> <img src="../' + fList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                     cardstr += '<div class="card-body">';
-                    cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname + '</h5>';
-                    cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-                    cardstr += '<p class="card-text"> סיום תחרות :' + edat + '</p>';
+                    cardstr += '<h5 class="card-title"></br>' + fList[i].Competitionname.substring(0, 20) + '</h5>';
+                    cardstr += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
+                    cardstr += '<p class="card-text"> סיום תחרות:' + edat + '</p>';
                     if (fList[i].Competitionstatus == 1)
                         cardstr += '<button type="button" class="btn btn-success" disabled>תחרות בבדיקת המערכת</button><p id="iconp"><i class="bi bi-hourglass-split" style="font-size: 2rem ; color:yellow"></i></p> </div > </div ></div >';
                     else if (fList[i].Competitionstatus == 2)
@@ -367,9 +367,9 @@
                 var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
                 cardstr += '<a href=Competition_View.html?Competitions=' + pList[i].Competitionid +'><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstr += '<div class="card-body">';
-                cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
-                cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-                cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
+                cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname.substring(0, 20) + '</h5>';
+                cardstr += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
+                cardstr += '<p class="card-text"> סיום תחרות:' + Enddate + ' </p>';
                  if (pList[i].Competitionstatus == 3)
                      cardstr += '<button type="button" class="btn btn-danger" disabled>תחרות נדחתה</button><p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
                 else if (pList[i].Competitionstatus == 6)
@@ -398,9 +398,9 @@
                     var cardstr = '<div class="col-3 .mx-auto " <div class="card " style="width: 18rem;">';
                     cardstr += '<a href=Competition_View.html?Competitions=' + pList[i].Competitionid +'><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                     cardstr += '<div class="card-body">';
-                    cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname + '</h5>';
-                    cardstr += '<p class="card-text"> תחילת תחרות : ' + Stardate + '</p>';
-                    cardstr += '<p class="card-text"> סיום תחרות :' + Enddate + ' </p>';
+                    cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname.substring(0, 20) + '</h5>';
+                    cardstr += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
+                    cardstr += '<p class="card-text"> סיום תחרות:' + Enddate + ' </p>';
                     if (pList[i].Competitionstatus == 3)
                         cardstr += '<button type="button" class="btn btn-danger" disabled>תחרות נדחתה</button><p id="iconp"><i class="bi bi-x-square" style="font-size: 2rem ;color:red"></i></p> </div > </div ></div >';
                     else if (pList[i].Competitionstatus == 6)
@@ -656,7 +656,9 @@
             <br />
             <div class="row" id="AllFCcards">
 
-                <div class="col-9" id="AllFutureC"></div>
+                <div class="col-9" >
+                    <div class="row" id="AllFutureC"></div>
+                </div>
                 <div class="col-3"></div>
             </div>
 
