@@ -2591,7 +2591,7 @@ namespace IESA.Models.DAL
         private String BuildUpdateCommandEditOrgenzier(int OId, Orgenaizers o1)
         {
             String command;
-            command = " UPDATE Orgenaizers set firstname = '" + o1.Firstname + "' , lastname = '" + o1.Lastname + "' , gender = '" + o1.Gender + "' , phone = '" + o1.Phone + "', dob = '" + o1.Dob + "' , address1 = '" + o1.Address1 + "' , picture = '" + o1.Picture + "' , communityname = '" + o1.Comunityname + "', linktocommunity = '" + o1.Linktocommunity + "' where userid = " + OId + " ";
+            command = " UPDATE Orgenaizers set firstname = '" + o1.Firstname + "' , lastname = '" + o1.Lastname + "' , gender = '" + o1.Gender + "' , phone = '" + o1.Phone + "', dob = '" + o1.Dob + "' , address1 = '" + o1.Address1 + "' , picture = '" + o1.Picture + "' , communityname = '" + o1.Comunityname + "', linktocommunity = '" + o1.Linktocommunity +"', status1 ='" +o1.Status1 + "' where userid = " + OId + " ";
 
             return command;
         }
@@ -3126,7 +3126,7 @@ namespace IESA.Models.DAL
                     orgenaizer.Picture = (dr2["picture"] != DBNull.Value) ? (string)dr2["picture"] : default;
                     orgenaizer.Address1 = (dr2["address1"] != DBNull.Value) ? (string)dr2["address1"] : default;
                     orgenaizer.Linktocommunity = (dr2["linktocommunity"] != DBNull.Value) ? (string)dr2["linktocommunity"] : default;
-
+                    orgenaizer.Status1 = (dr2["status1"] != DBNull.Value) ? Convert.ToInt32(dr2["status1"]) : default;
                     OrgenaizersList.Add(orgenaizer);
                 }
 
@@ -3157,7 +3157,7 @@ namespace IESA.Models.DAL
         //Edit_Personal_By_Manager.html - method MU2---*Open*
 
 
-        public List<Gamers> ReadGamerDetails(int IdUser) //Manager_Main_Page.html - method OM1
+        public List<Gamers> ReadGamerDetails(int IdUser) 
         {
 
             SqlConnection con = null;
@@ -3190,7 +3190,7 @@ namespace IESA.Models.DAL
                     gamer.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
                     gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
-
+                    gamer.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
                     GamersList.Add(gamer);
                 }
 
