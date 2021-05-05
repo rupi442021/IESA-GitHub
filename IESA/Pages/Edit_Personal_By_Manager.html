@@ -98,11 +98,11 @@
         /*Start of For Switch Button*/
         #ForSwitch {
             position: relative;
-            left: 93%;
-            bottom:-8%;
-            font:bold;
+            left: 89%;
+            bottom: -8%;
+            font: bold;
             /*font-family:David;*/
-            font-size:16px;
+            font-size: 16px;
             /*text-decoration:underline;*/
         }
         /*End of For Switch Button*/
@@ -110,70 +110,17 @@
         .switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
             position: relative;
-            left: 75%
+            left: 74%;
+            border-radius: 25px;
         }
 
 
-            /* Hide default HTML checkbox */
-            .switch input {
-                opacity: 0;
-                width: 0;
-                height: 0;
-            }
-
-        /* The slider */
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-            .slider:before {
-                position: absolute;
-                content: "";
-                height: 26px;
-                width: 26px;
-                left: 4px;
-                bottom: 4px;
-                background-color: white;
-                -webkit-transition: .4s;
-                transition: .4s;
-            }
-
-        input:checked + .slider {
-            background-color: #2196F3;
-        }
-
-        input:focus + .slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
-
-        input:checked + .slider:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
-
-        /* Rounded sliders */
-        .slider.round {
-            border-radius: 34px;
-        }
-
-            .slider.round:before {
-                border-radius: 50%;
-            }
 
 
-        /*end color-profile switch rounded button*/
+
+
+
 
 
 
@@ -195,32 +142,57 @@
 
 
     <script>
-
         userType = '';
-
+        IdUser = '';
         var counterimage = 2300;
-        // when we will get to this page(threw manager page) we will take the specific id of the orgenaizer/gamer  and get all his details and will render them here.
-        // כאן אביא את ה-איי די על פי מה שהמנהל לחץ ואשאל האם ה-איי די גדול או קטן מ-30000.
-
-        var split = window.location.href.split('=');
+       
+       var split = window.location.href.split('=');
         IdUser = split[1];
-
-
-        // אם הוא גדול אז הגט יהיה מעמוד שחקן ואם הוא קטן אז מעמוד מארגן
-        //ואז ארנדר כל נתון למקום המתאים לו
-        // כמובן שבעת עריכה אצטרך לעשות פקודת פוט
-
+      
         $(document).ready(function () {
-            console.log(IdUser)
 
-            if (IdUser< 30000000) {//for orgenziers
-                userType=2
+            $(".switch").on('change', function () {
+
+
+                if (IdUser < 30000000) {
+
+                    OrgStatVal = $("#myvalorg").val();
+                    console.log(OrgStatVal)
+                    if (OrgStatVal == "פעיל") { OrgStatVal = 1 }
+                    else { OrgStatVal = 0 };
+
+
+                }
+
+
+
+
+                else if (IdUser >= 30000000) {
+
+                    GamerStatVal = $("#myval").val();
+                    console.log(GamerStatVal)
+                    if (GamerStatVal == "פעיל") { GamerStatVal = 1 }
+                    else { GamerStatVal = 0 };
+
+
+
+
+                }
+
+
+
+
+
+
+            });
+            console.log(IdUser)
+            if (IdUser < 30000000) {//for orgenziers
+                userType = 2
                 ajaxCall("GET", "../api/Orgenaizers/" + IdUser, "", getSuccessOrgDetails, ErrorOrg); //Edit_Personal_By_Manager.html - method MU1
             }
 
 
-            else if (IdUser >= 30000000)
-            {
+            else if (IdUser >= 30000000) {
                 userType = 3
                 ajaxCall("GET", "../api/Gamers/" + IdUser, "", getSuccessGamerDetails, ErrorGamer); //Edit_Personal_By_Manager.html - method MU2
 
@@ -228,14 +200,16 @@
 
             else {
 
-                window.location("Sign_In.html");
+                swal("עריכת פרטים אישיים מתבצעת במאגר הנתונים")
+                window.location("Sign_In.html")
+            }
 
-                  }
 
 
-            function getSuccessGamerDetails(det)
-            {
-                Userid=det[0].Userid
+
+
+            function getSuccessGamerDetails(det) {
+                Userid = det[0].Userid
                 Gamerrender(det)
 
                 console.log(det)
@@ -260,13 +234,13 @@
                 });
 
 
-              
+
+
 
 
             }
 
-            function ErrorGamer(det)
-            {
+            function ErrorGamer(det) {
 
                 alert("ErrorGamer")
 
@@ -276,8 +250,7 @@
             }
 
 
-            function getSuccessOrgDetails(det)
-            {
+            function getSuccessOrgDetails(det) {
 
 
                 console.log(det)
@@ -313,8 +286,7 @@
 
             }
 
-            function ErrorOrg(det)
-            {
+            function ErrorOrg(det) {
                 alert("ErrorOrg")
 
 
@@ -348,7 +320,7 @@
 
             $("#main_page").click(function () {
 
-                    $("#main_page").attr("href", "Manager_Main_Page.html")
+                $("#main_page").attr("href", "Manager_Main_Page.html")
 
             })
 
@@ -390,21 +362,34 @@
             $('#olinktocommunityTB').val(det[0].Linktocommunity);
 
 
+            if (det[0].Status1 == 1) { $('#myvalorg').val("פעיל"), OrgStatVal=1 }
+            else { $('#myvalorg').val("מושבת"),  OrgStatVal = 0 }
+                
+
+
             if (det[0].Picture == null) { }
 
             else {
-                 imgstr = '<img src="../' + det[0].Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
+                imgstr = '<img src="../' + det[0].Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
                 $('#oph').html(imgstr);
             }
             $('#usernumTB').val(det[0].Userid);
-
+            localStorage["Orginaizer_img"] = JSON.stringify(det[0].Picture);
 
 
         }
 
 
 
+
+
+
+
+
+
+
         function Gamerrender(det) {
+
             $("#Gamerrow").show()
             $("#Orgenzierrow").hide()
 
@@ -427,17 +412,24 @@
             $('#gDiscorduserTB').val(det[0].Discorduser);
             //$('#glinktocommunityTB').val(Odetails.Linktocommunity);
 
+            if (det[0].Status1 == 1) { $('#myval').val("פעיל"), GamerStatVal = 1 }
+            else { $('#myval').val("מושבת"), GamerStatVal = 0 }
 
             if (det[0].Picture == null) { }
 
             else {
-                 imgstr = '<img src="../' + det[0].Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
+                imgstr = '<img src="../' + det[0].Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
                 $('#gph').html(imgstr);
             }
 
-
+            localStorage["Gamer_img"] = JSON.stringify(det[0].Picture);
 
             $('#gusernumTB').val(det[0].Userid);
+
+
+
+
+
 
         }
 
@@ -445,7 +437,7 @@
 
 
 
-            //end of render
+        //end of render
 
 
 
@@ -483,7 +475,7 @@
                     data.append("UploadedImage", files[f]);
                 }
 
-                data.append("userid",Userid); //append what ever data you want to send along with the files.
+                data.append("userid", Userid); //append what ever data you want to send along with the files.
             }
 
             // Ajax upload
@@ -518,7 +510,7 @@
             var ggender = gradio.attr('id');
 
             if ($("#gfiles").val() == "" || $("#gfiles").val() == null)
-                ImgUrl = imgstr;
+                ImgUrl = JSON.parse(localStorage.getItem("user_img2"));
 
             GamerObj = {
 
@@ -529,9 +521,10 @@
                 Dob: $("#gdobTB").val(),
                 Address1: $("#gaddressTB").val(),
                 Discorduser: $("#gDiscorduserTB").val(),
-                Picture: ImgUrl
+                Picture: ImgUrl,
+                Status1: GamerStatVal
             }
-
+            console.log(GamerObj);
             ajaxCall("PUT", "../api/Gamers/updatedetails?GId=" + Userid, JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Edit_Personal_Details.html - method SG1
 
             return false;
@@ -552,9 +545,11 @@
             var oradio = $('input[name=radio-gender-o]:checked'); //get gender
             var ogender = oradio.attr('id');
 
+            
+
 
             if ($("#ofiles").val() == "" || $("#ofiles").val() == null)
-                ImgUrl = imgstr;
+                ImgUrl = JSON.parse(localStorage.getItem("Orginaizer_img"));
 
             OrgenaizerObj = {
                 Firstname: $("#ofirstnameTB").val(),
@@ -565,33 +560,38 @@
                 Address1: $("#oaddressTB").val(),
                 Picture: ImgUrl,
                 Comunityname: $("#ocomunitynameTB").val(),
-                Linktocommunity: $("#olinktocommunityTB").val()
+                Linktocommunity: $("#olinktocommunityTB").val(),
+                Status1: OrgStatVal
+
+
+
+
             }
 
-            ajaxCall("PUT", "../api/Orgenaizers/updatedetails?OId=" + Userid, JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer); //Edit_Personal_Details.html - method SO1
-
+            console.log(OrgenaizerObj)
+            ajaxCall("PUT", "../api/Orgenaizers/updatedetails?OId=" + Userid, JSON.stringify(OrgenaizerObj), SuccessOrgenaizer, ErrorOrgenaizer);
             return false;
         }
 
         function SuccessOrgenaizer(data) {
-            ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Userid, "", GetOrgenaizer, ErrorGetOrgenaizer); //Edit_Personal_Details.html - method SO2
+            ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Userid, "", GetOrgenaizer, ErrorGetOrgenaizer);
         }
 
         function GetGamerS(user) {
             console.log("In get G: ", user);
             console.log("In get G: ", user);
 
-            localStorage["user_info"] = JSON.stringify(user);
-            localStorage["user_type"] = "3";
+            //localStorage["user_info"] = JSON.stringify(user);
+            //localStorage["user_type"] = "3";
 
             redirectPage();
         }
 
         function GetOrgenaizer(user) {
             console.log("In get O: ", user);
-            localStorage.clear();
-            localStorage["user_info"] = JSON.stringify(user);
-            localStorage["user_type"] = "2";
+            //localStorage.clear();
+            //localStorage["user_info"] = JSON.stringify(user);
+            //localStorage["user_type"] = "2";
 
             redirectPage();
         }
@@ -719,7 +719,7 @@
 
 
 
-         //add Preview photo---end
+        //add Preview photo---end
 
 
 
@@ -753,7 +753,7 @@
                                 <div class="col">
                                     <div class="mb-3">
                                         <label>כינוי:</label>
-                                        <input  class="form-control" placeholder='הכינוי שלך בעמותה' id="gnicknameTB"
+                                        <input disabled type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="gnicknameTB"
                                                pattern="^[a-zA-Z]{2,15}$"
                                                oninvalid="this.setCustomValidity('כינוי לא חוקי')"
                                                oninput="this.setCustomValidity('')" required>
@@ -763,7 +763,7 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label>מספר משתמש:</label>
-                                            <input  class="form-control" placeholder='מספר משתמש במערכת' id="gusernumTB" oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
+                                            <input disabled type="number" class="form-control" placeholder='מספר משתמש במערכת' id="gusernumTB" oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
                                         </div>
                                     </div>
                                 </div>
@@ -796,13 +796,13 @@
                                 <div class="col">
                                     <div class="mb-3">
                                         <label>כתובת דוא"ל:</label>
-                                        <input  class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="gemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                                        <input disabled type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="gemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div>
                                         <label>תעודת זהות:</label>
-                                        <input  class="form-control" placeholder="מכיל 8-9 ספרות" id="gidTB" pattern=".{8,9}"
+                                        <input disabled type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="gidTB" pattern=".{8,9}"
                                                oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
                                                oninput="this.setCustomValidity('')" required>
                                     </div>
@@ -856,6 +856,8 @@
                                             </div>
                                         </div>
 
+
+
                                     </div>
                                 </div>
                             </div>
@@ -871,6 +873,15 @@
                         <!--Need to fix it to be responsive Down*-->
 
                         <div id="btnsubmit" class="mb-3">
+                            <p id="ForSwitch">סטאטוס שחקן</p>
+                            <select id="myval" class="switch">
+                                <option></option>
+                                <option value="פעיל">פעיל</option>
+                                <option value="מושבת">מושבת</option>
+
+                            </select>
+
+
                             <input type="submit" class="btn btn-success" value="עדכן פרטים" />
                             <input type="button" class="btn btn-danger" value="ביטול" id="cancel_edit_gamer" />
 
@@ -878,6 +889,7 @@
 
 
                     </div>
+
                 </form>
             </div>
 
@@ -890,7 +902,7 @@
                                 <div class="col">
                                     <div class="mb-3">
                                         <label>כינוי:</label>
-                                        <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="onicknameTB"
+                                        <input disabled type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="onicknameTB"
                                                pattern="^[a-zA-Z]{2,15}$"
                                                oninvalid="this.setCustomValidity('כינוי לא חוקי')"
                                                oninput="this.setCustomValidity('')" required>
@@ -900,7 +912,7 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label>מספר משתמש:</label>
-                                            <input type="number" class="form-control" placeholder='מספר משתמש במערכת' id="usernumTB" oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
+                                            <input disabled type="number" class="form-control" placeholder='מספר משתמש במערכת' id="usernumTB" oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
                                         </div>
                                     </div>
                                 </div>
@@ -933,13 +945,13 @@
                                 <div class="col">
                                     <div class="mb-3">
                                         <label>כתובת דוא"ל:</label>
-                                        <input type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="oemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                                        <input disabled type="email" class="form-control" placeholder='הכנס כתובת דוא"ל כאן' id="oemailTB" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div>
                                         <label>תעודת זהות:</label>
-                                        <input type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="oidTB" pattern=".{8,9}"
+                                        <input disabled type="text" class="form-control" placeholder="מכיל 8-9 ספרות" id="oidTB" pattern=".{8,9}"
                                                oninvalid="this.setCustomValidity('מספר תעודת זהות חייב להכיל 8 או 9 ספרות.')"
                                                oninput="this.setCustomValidity('')" required>
                                     </div>
@@ -1016,15 +1028,15 @@
                         <!--Need to fix it to be responsive Down*-->
 
                         <div id="btnsubmit" class="mb-3">
-                           <p id="ForSwitch">סטאטוס</p>
-                            <!-- Rounded switch -->
-                            <label class="switch">
-                               
-                                <input type="checkbox">
+                            <p id="ForSwitch">סטאטוס מארגן</p>
 
-                                <span class="slider round"></span>
-                            </label>
-                            <!-- Rounded switch -->
+                            <select id="myvalorg" class="switch">
+                                <option></option>
+                                <option value="פעיל">פעיל</option>
+                                <option value="מושבת">מושבת</option>
+
+                            </select>
+
                             <input type="submit" class="btn btn-primary" value="עדכן פרטים" />
                             <input type="button" class="btn btn-danger" value="ביטול" id="cancel_edit_orgenaizer" />
                         </div>
