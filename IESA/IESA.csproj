@@ -209,7 +209,6 @@
     <Content Include="Pages\Competition_Preview.html" />
     <Content Include="Pages\Edit_Personal_By_Manager.html" />
     <Content Include="Pages\Edit_Post.html" />
-    <Content Include="Pages\DatatableFilter.html" />
     <Content Include="Pages\Gamer_Card_View.html" />
     <Content Include="Pages\Manager_Main_Page.html" />
     <Content Include="Pages\Gamer_Card.html" />

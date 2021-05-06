@@ -25,8 +25,8 @@
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            height: 2000px;
             padding-top: 30px;
+            padding-bottom: 400px;
             position: relative;
         }
 
@@ -142,6 +142,7 @@
 
 
     <script>
+
         userType = '';
         IdUser = '';
         var counterimage = 2300;
@@ -153,7 +154,6 @@
 
             $(".switch").on('change', function () {
 
-
                 if (IdUser < 30000000) {
 
                     OrgStatVal = $("#myvalorg").val();
@@ -161,26 +161,16 @@
                     if (OrgStatVal == "פעיל") { OrgStatVal = 1 }
                     else { OrgStatVal = 0 };
 
-
                 }
 
-
-
-
                 else if (IdUser >= 30000000) {
-
                     GamerStatVal = $("#myval").val();
                     console.log(GamerStatVal)
                     if (GamerStatVal == "פעיל") { GamerStatVal = 1 }
                     else { GamerStatVal = 0 };
 
 
-
-
                 }
-
-
-
 
 
 
@@ -203,9 +193,6 @@
                 swal("עריכת פרטים אישיים מתבצעת במאגר הנתונים")
                 window.location("Sign_In.html")
             }
-
-
-
 
 
             function getSuccessGamerDetails(det) {
@@ -234,18 +221,11 @@
                 });
 
 
-
-
-
-
             }
 
             function ErrorGamer(det) {
 
                 alert("ErrorGamer")
-
-
-
 
             }
 
@@ -281,9 +261,6 @@
 
 
 
-
-
-
             }
 
             function ErrorOrg(det) {
@@ -291,17 +268,6 @@
 
 
             }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -329,8 +295,6 @@
         });
 
 
-
-
         //render by id
 
 
@@ -339,18 +303,15 @@
             $("#Orgenaizerrow").show()
             console.log(det[0].Firstname)
 
-
-
-
             $("#ofirstnameTB").val(det[0].Firstname);
             $("#olastnameTB").val(det[0].Lastname);
             $("#onicknameTB").val(det[0].Nickname);
             let dob = det[0].Dob.split("T")
             $('#odobTB').val(dob[0]);
             $('#oidTB').val(det[0].Id);
-            if (det[0].Gender == 'זכר' || det[0].Gender == 'oMale')
+            if (det[0].Gender == 'זכר' || det[0].Gender == 'gMale')
                 $('input[name=radio-gender-o][value=Male]').prop('checked', true);
-            else if ((det[0].Gender == 'נקבה' || det[0].Gender == 'oFemale'))
+            else if ((det[0].Gender == 'נקבה' || det[0].Gender == 'gFemale'))
                 $('input[name=radio-gender-o][value=Female]').prop('checked', true);
             else
                 $('input[name=radio-gender-o][value=None]').prop('checked', true);
@@ -378,13 +339,6 @@
 
 
         }
-
-
-
-
-
-
-
 
 
 
@@ -427,10 +381,6 @@
             $('#gusernumTB').val(det[0].Userid);
 
 
-
-
-
-
         }
 
 
@@ -438,14 +388,6 @@
 
 
         //end of render
-
-
-
-
-
-
-
-
 
 
 
@@ -598,15 +540,15 @@
 
         function redirectPage() {
 
-            swal("הפרטים עודכנו בהצלחה"); //save only the is in + id of user to render the info later in each page
+            swal("הפרטים עודכנו בהצלחה", "", "success");
 
             if (userType == 2)
                 setTimeout(function () {
-                    location.replace("Manager_Main_Page.html");
+                    location.replace("Profile_View_Manager.html?userid=" + IdUser);
                 }, 2500);
             else
                 setTimeout(function () {
-                    location.replace("Manager_Main_Page.html");
+                    location.replace("Profile_View_Manager.html?userid=" + IdUser);
                 }, 2500);
 
         }
@@ -969,15 +911,15 @@
 
                             <label>מגדר:</label>
                             <div class="mb-3">
-                                <input type="radio" class="form-check-input" id="oMale" name="radio-gender-o" value="Male" required>
+                                <input type="radio" class="form-check-input" id="gMale" name="radio-gender-o" value="Male" required>
                                 <label class="form-check-label">זכר</label>
                             </div>
                             <div class="mb-3">
-                                <input type="radio" class="form-check-input" id="oFemale" name="radio-gender-o" value="Female" required>
+                                <input type="radio" class="form-check-input" id="gFemale" name="radio-gender-o" value="Female" required>
                                 <label class="form-check-label">נקבה</label>
                             </div>
                             <div class="mb-3">
-                                <input type="radio" class="form-check-input" id="oNone" name="radio-gender-o" value="None" required>
+                                <input type="radio" class="form-check-input" id="gNone" name="radio-gender-o" value="None" required>
                                 <label class="form-check-label">מעדיף לא לומר</label>
                             </div>
 
