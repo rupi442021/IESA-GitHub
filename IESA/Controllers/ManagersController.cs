@@ -58,6 +58,13 @@ namespace IESA.Controllers
             return managerslist.ReadManagersDB();
         }
 
+        [HttpGet] //Database.html - method SM4
+        [Route("api/Managers/CompetitionsToDelete")]
+        public List<Competitions> GetCompetitionsToDelete(int CategoryID)
+        {
+            Competitions CompetitionsToDelete = new Competitions();
+            return CompetitionsToDelete.GetCompetitionListToDelete(CategoryID);
+        }
 
 
         //---Database.html--- *Close*

@@ -175,12 +175,19 @@ namespace IESA.Models
             return rankslist;
         }
 
+        public List<Competitions> GetCompetitionListToDelete(int CategoryID) //DataBase.html - method SM4
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> cListToDelete = dbs.GetCompetitionsByCategoryToDelete(CategoryID);
+            return cListToDelete;
+        }
+
         //---Database.html--- *Close*
 
 
         //---Gamer_Main_Page.html--- *Open*
 
-        
+
 
         public List<Competitions> GetRelevantCompetitionsForGamer(int GID) //Gamer_Main_Page.html - SG08
         {

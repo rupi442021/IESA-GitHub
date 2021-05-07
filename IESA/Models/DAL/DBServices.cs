@@ -1145,6 +1145,7 @@ namespace IESA.Models.DAL
 
         //---Manager_Main_Page.html--- *Open*
 
+
         public List<Gamers> ReadGamersMSQL() //Manager_Main_Page.html - method OM1
         {
 
@@ -1638,6 +1639,46 @@ namespace IESA.Models.DAL
 
 
         //---Database.html--- *Open*
+
+        public List<Competitions> GetCompetitionsByCategoryToDelete(int CategoryID) //DataBase.html - method SM4
+        {
+
+            SqlConnection con = null;
+            List<Competitions> CompetitionsListToDelete = new List<Competitions>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT DISTINCT Competitions.competitionid AS 'Competition ID' FROM Competitions INNER JOIN Gamer_Competition ON Competitions.competitionid=Gamer_Competition.competitionid INNER JOIN Competition_Game ON Competition_Game.competitionid=Competitions.competitionid WHERE Competition_Game.categoryid= " + CategoryID + " AND Gamer_Competition.status1=1";
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Competitions c = new Competitions();
+                    c.Competitionid = (dr["Competition ID"] != DBNull.Value) ? Convert.ToInt32(dr["Competition ID"]) : default;
+                    CompetitionsListToDelete.Add(c);
+                }
+
+                return CompetitionsListToDelete;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+        }
+
 
         public List<Posts> ReadDBPostsSQL() //Database.html - method OD1
         {
