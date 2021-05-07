@@ -14,7 +14,6 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
     <!--Graph-->
-
     <!--Data Tables-->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -47,8 +46,8 @@
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            height: 1400px;
             padding-top: 30px;
+            padding-bottom: 400px;
             position: relative;
         }
 
@@ -279,7 +278,7 @@
             position: absolute;
             bottom: 49.2%;
             right: 81.9%;
-/*            position: relative;
+            /*            position: relative;
             bottom: 87.7%;
             right: 82.5%;*/
         }
@@ -310,8 +309,6 @@
 
 
         /*/*button add post*/
-
-        /*title try*/
 
         .nk-decorated-h, .nk-decorated-h-2 {
             display: flex;
@@ -354,6 +351,51 @@
                 padding-left: 20px;
             }
 
+        /*Stats Title*/
+
+        .nk-decorated-h4, .nk-decorated-h-4 {
+            display: flex;
+            padding-top: 5px;
+        }
+
+            .nk-decorated-h-4::after, .nk-decorated-h-4::before {
+                border-bottom-color: #353c4a !important;
+            }
+
+            .nk-decorated-h-4::before, .nk-decorated-4::before {
+                width: 20px !important;
+                min-width: 20px !important;
+            }
+
+            .nk-decorated-h-4::after, .nk-decorated-h-4::before, .nk-decorated-h4::after, .nk-decorated-h4::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-4::after, .nk-decorated-h-4::before {
+                border-bottom-color: #353c4a;
+            }
+
+            .nk-decorated-h-4::after, .nk-decorated-h-4::before, .nk-decorated-h4::after, .nk-decorated-h4::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-4 > a, .nk-decorated-h-4 > span, .nk-decorated-h4 > a, .nk-decorated-h4 > span {
+                display: block;
+                flex: auto;
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            /*Stats Title*/
+
         /*title try*/
 
 
@@ -384,7 +426,7 @@
             box-shadow: 0 10px 6px -6px #292e38;
         }*/
 
-        
+
 
     </style>
 
@@ -499,39 +541,47 @@
 
         function init() {
 
-            buildGradesGraph();
+            //Check if the user is manager
 
             ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
-
-            //Check if the user is manager
+            ajaxCall("GET", "../api/Managers/tablegraph", "", buildGradesGraph, Error); //Manager_Main_Page.html - method OM10
         }
 
-        function buildGradesGraph() {
+
+        function buildGradesGraph(graphdict) {
+            console.log(graphdict);
+
+            montharray = renderSixmonths();
+
             var chart = new CanvasJS.Chart("chartContainer",
                 {
+                    backgroundColor: "#fefbfb",
                     title: {
-                        text: "מספר כניסות לאתר שבועי - דוגמא"
-                    },
-                    axisX: {
-                        labelFormatter: function (e) {
-                            return "יום " + (e.value + 1);
-                        }
+                        text: "מספר משתמשים חדשים בעמותה לפי חודשים",
+                        fontWeight: "500",
+                        fontColor: "#2c2a2a",
+                        fontFamily: "Arial",
+                        fontSize: 22,
+                        padding: 3,
+                        margin: 1,
                     },
                     data: [
                         {
-                            type: "line",
+                            type: "stackedArea",
+                            color: "rgba(102, 153, 255,0.65)",
                             dataPoints: [
-                                { y: 17 },
-                                { y: 32 },
-                                { y: 22 },
-                                { y: 14 },
-                                { y: 25 },
-                                { y: 18 },
-                                { y: 20 }
+                                { y: parseInt(graphdict["1"]), label: montharray[0]},
+                                { y: parseInt(graphdict["2"]), label: montharray[1]},
+                                { y: parseInt(graphdict["3"]), label: montharray[2]},
+                                { y: parseInt(graphdict["4"]), label: montharray[3]},
+                                { y: parseInt(graphdict["5"]), label: montharray[4]},
+                                { y: parseInt(graphdict["6"]), label: montharray[5]}, //prior month
+                                { y: parseInt(graphdict["7"]), label: montharray[6]} //current month
                             ]
                         }
                     ]
                 });
+
             chart.render();
         }
 
@@ -960,12 +1010,12 @@
             //FIX IT TO BE HIGHER THEN 0*******************************************************************************************
             if (parseInt(statisticsdict["7"]) > 0) //Competition waithing
             {
-                
+
                 document.getElementById("competitions_waithing").style.visibility = "visible";
             }
             else {
-                
-                document.getElementById("competitions_waithing").style.visibility = "visible";
+
+                document.getElementById("competitions_waithing").style.visibility = "hidden";
             }
 
             if (parseInt(statisticsdict["5"]) > 0) //Gamers waithing
@@ -1015,7 +1065,7 @@
 
                 <div class="col-lg-3" id="services_block" style="text-align:center;">
 
-                    <h4 style="margin-top:3px;">סטטסטיקה</h4>
+                    <h4 class="nk-decorated-h-4"><span>סטטסטיקה</span></h4>
 
                     <br />
 

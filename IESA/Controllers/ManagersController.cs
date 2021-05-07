@@ -36,6 +36,14 @@ namespace IESA.Controllers
             return statisticsdict.GetStatisticsM();
         }
 
+        [HttpGet] //Manager_Main_Page.html - method OM10
+        [Route("api/Managers/tablegraph")]
+        public Dictionary<int, int> GetGraph()
+        {
+            Managers statisticsdict = new Managers();
+            return statisticsdict.GetGraph();
+        }
+
 
         //---Manager_Main_Page.html--- *Close*
 
