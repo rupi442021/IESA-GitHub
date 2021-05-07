@@ -81,6 +81,14 @@ namespace IESA.Models
             return slist;
         }
 
+        public Dictionary<int, int> GetGraph() //Manager_Main_Page.html - method OM10
+        {
+            DBServices dbs = new DBServices();
+            Dictionary<int, int> glist = dbs.GetGraphSQL();
+            return glist;
+        }
+
+
         //---Manager_Main_Page.html--- *Close*
 
         //---Database.html--- *Open*

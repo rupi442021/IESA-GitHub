@@ -65,3 +65,23 @@ function renderDate(date) {
 
     return datestring;
 }
+
+function renderSixmonths() {
+
+    montharray = [];
+
+    var monthNames = ["ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני", "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"];
+
+    var today = new Date();
+    var d;
+    var month;
+
+    for (var i = 6; i >= 0; i -= 1) {
+        d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+        month = monthNames[d.getMonth()];
+
+        montharray.push(month);
+    }
+
+    return montharray;
+}

@@ -541,17 +541,18 @@
 
         function init() {
 
-            buildGradesGraph();
+            //Check if the user is manager
 
             ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
-
-            //Check if the user is manager
+            ajaxCall("GET", "../api/Managers/tablegraph", "", buildGradesGraph, Error); //Manager_Main_Page.html - method OM10
         }
 
-        //currentmonth = 5; //Example: May
-        //nextmonth = 5;
 
-        function buildGradesGraph() {
+        function buildGradesGraph(graphdict) {
+            console.log(graphdict);
+
+            montharray = renderSixmonths();
+
             var chart = new CanvasJS.Chart("chartContainer",
                 {
                     backgroundColor: "#fefbfb",
@@ -561,55 +562,26 @@
                         fontColor: "#2c2a2a",
                         fontFamily: "Arial",
                         fontSize: 22,
-                        padding: 3
+                        padding: 3,
+                        margin: 1,
                     },
-                    axisX: {
-                        labelFormatter: function (e) {
-
-                            if (e.value == 0) {
-                                return "ינואר";
-                            }
-                            else if (e.value == 1) {
-                                return "פברואר";
-                            }
-                            else if (e.value == 2) {
-                                return "מרץ";
-                            }
-                            else if (e.value == 3) {
-                                return "אפריל";
-                            }
-                            else if (e.value == 4) {
-                                return "מאי";
-                            }
-                            else if (e.value == 5) {
-                                return "יוני";
-                            }
-                            else if (e.value == 6) {
-                                return "יולי";
-                            }
-                            else {
-                                return "חודש " + (e.value + 1);
-                            }
-
-                        }
-                    },
-
                     data: [
                         {
                             type: "stackedArea",
                             color: "rgba(102, 153, 255,0.65)",
                             dataPoints: [
-                                { y: 17 },
-                                { y: 32 },
-                                { y: 22 },
-                                { y: 14 },
-                                { y: 25 },
-                                { y: 22 },
-                                { y: 24 }
+                                { y: parseInt(graphdict["1"]), label: montharray[0]},
+                                { y: parseInt(graphdict["2"]), label: montharray[1]},
+                                { y: parseInt(graphdict["3"]), label: montharray[2]},
+                                { y: parseInt(graphdict["4"]), label: montharray[3]},
+                                { y: parseInt(graphdict["5"]), label: montharray[4]},
+                                { y: parseInt(graphdict["6"]), label: montharray[5]}, //prior month
+                                { y: parseInt(graphdict["7"]), label: montharray[6]} //current month
                             ]
                         }
                     ]
                 });
+
             chart.render();
         }
 

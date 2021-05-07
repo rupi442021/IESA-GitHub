@@ -1587,6 +1587,52 @@ namespace IESA.Models.DAL
 
         }
 
+        public Dictionary<int, int> GetGraphSQL() //Manager_Main_Page.html - method OM10
+        {
+
+            SqlConnection con6 = null;
+            Dictionary<int, int> graphdict = new Dictionary<int, int>();
+
+            try
+            {
+                con6 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR6 = "SELECT(SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 6) AS 'Month-6', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 5) AS 'Month-5', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 4) AS 'Month-4', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 3) AS 'Month-3', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 2) AS 'Month-2', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 1) AS 'Month-1', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 0) AS 'Month0';";
+
+                SqlCommand cmd6 = new SqlCommand(selectSTR6, con6);
+
+                SqlDataReader dr6 = cmd6.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr6.Read())
+                {
+
+                    graphdict.Add(1, (dr6["Month-6"] != DBNull.Value) ? Convert.ToInt32(dr6["Month-6"]) : default);
+                    graphdict.Add(2, (dr6["Month-5"] != DBNull.Value) ? Convert.ToInt32(dr6["Month-5"]) : default);
+                    graphdict.Add(3, (dr6["Month-4"] != DBNull.Value) ? Convert.ToInt32(dr6["Month-4"]) : default);
+                    graphdict.Add(4, (dr6["Month-3"] != DBNull.Value) ? Convert.ToInt32(dr6["Month-3"]) : default);
+                    graphdict.Add(5, (dr6["Month-2"] != DBNull.Value) ? Convert.ToInt32(dr6["Month-2"]) : default);
+                    graphdict.Add(6, (dr6["Month-1"] != DBNull.Value) ? Convert.ToInt32(dr6["Month-1"]) : default);
+                    graphdict.Add(7, (dr6["Month0"] != DBNull.Value) ? Convert.ToInt32(dr6["Month0"]) : default);
+
+                }
+
+                return graphdict;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            finally
+            {
+                if (con6 != null)
+                {
+                    con6.Close();
+                }
+
+            }
+
+        }
+
 
         //---Manager_Main_Page.html--- *Close*
 
