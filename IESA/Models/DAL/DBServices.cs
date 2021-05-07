@@ -1597,7 +1597,7 @@ namespace IESA.Models.DAL
             {
                 con6 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR6 = "SELECT(SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 6) AS 'Month-6', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 5) AS 'Month-5', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 4) AS 'Month-4', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 3) AS 'Month-3', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 2) AS 'Month-2', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 1) AS 'Month-1', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, registrationdate, GETDATE()) = 0) AS 'Month0';";
+                String selectSTR6 = "SELECT(SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, convert(date, registrationdate, 103), convert(date, GETDATE(), 103)) = 6) AS 'Month-6', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, convert(date, registrationdate, 103), convert(date, GETDATE(), 103)) = 5) AS 'Month-5', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, convert(date, registrationdate, 103), convert(date, GETDATE(), 103)) = 4) AS 'Month-4', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, convert(date, registrationdate, 103), convert(date, GETDATE(), 103)) = 3) AS 'Month-3', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, convert(date, registrationdate, 103), convert(date, GETDATE(), 103)) = 2) AS 'Month-2', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, convert(date, registrationdate, 103), convert(date, GETDATE(), 103)) = 1) AS 'Month-1', (SELECT COUNT(userid) FROM Gamers WHERE userid IN(SELECT userid FROM Gamers) AND DATEDIFF(MONTH, convert(date, registrationdate, 103), convert(date, GETDATE(), 103)) = 0) AS 'Month0';";
 
                 SqlCommand cmd6 = new SqlCommand(selectSTR6, con6);
 
@@ -1866,9 +1866,9 @@ namespace IESA.Models.DAL
 
                 return GamersList;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("בעיה בהתקשורת עם השרת, נא נסה שנית מאוחר יותר");
+                throw ex;
             }
             finally
             {

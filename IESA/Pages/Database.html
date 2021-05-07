@@ -1582,6 +1582,27 @@
 
         }
 
+        function ranksModal() {
+
+            str = '';
+            str += "<div style='margin-top:8px'></div>";
+            str += "<form id='ca_CreateForm' class='was-validated' onclick='return false'>";
+            str += "<div class='row'>";
+            str += "<div class='col-lg-5'>";
+            str += "<div class='mb-3'>";
+            str += "<label>שם קטגוריה:</label>";
+            str += "<input type='text' class='form-control' id='categoryaddTB' pattern='.{2,40}' oninvalid='this.setCustomValidity('מינימום 2 תויים, ועד 40')' oninput='this.setCustomValidity('')' required>";
+            str += "</div>";
+            str += "</div>";
+            str += "</div>";
+
+            str += "</form>";
+
+            str += "<div style='margin-bottom:8px'></div>";
+
+            document.getElementById("ranks_modalJS").innerHTML = str;
+
+        }
 
         function editcategoryModal(categoryname) {
 
@@ -1939,6 +1960,32 @@
                 </div>
 
             </div> <!--End of tabs-->
+            <!-- The Modal Ranks-->
+            <div id="Modal_R" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content" style="text-align:right">
+
+                    <div class="modal-header">
+                        <!--<span class="close">&times;</span>-->
+                        <h4>איפוס דירוג קטגוריה</h4>
+                    </div>
+
+                    <div id="ranks_modalJS" class="modal-body">
+                        <!--add_category_modalJS-->
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="closebtn_createc" type="button" class="btn btn-danger">סגור</button>
+                        <input type="submit" id="categoryadd" class="btn btn-success" form="ca_CreateForm" value="שמור" />
+
+                    </div>
+
+                </div>
+
+            </div> <!-- The Modal Ranks-->
+
+
             <!-- The Modal Create-->
             <div id="Modal_C_Create" class="modal">
 
