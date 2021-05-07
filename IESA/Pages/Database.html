@@ -627,6 +627,21 @@
 
             ajaxCall("GET", "../api/Competitions/tableRdb", "", getRanksSuccess, Error); //Database.html - method OD12
 
+            var modal_ranks = document.getElementById("Modal_Ranks");
+
+
+            $(document).on("click", ".reset-rank-button", function () {
+
+                ranksModal();
+                modal_ranks.style.display = "block";
+            });
+
+            $(document).on("click", "#closebtn_ranks", function () {
+
+                modal_ranks.style.display = "none";
+
+            });
+
             //---Ranks Table--- *Close*
 
 
@@ -714,6 +729,10 @@
                 else if (event.target == modal_edit) {
                     modal_edit.style.display = "none";
                 }
+                else if (event.target == modal_ranks) {
+                    modal_ranks.style.display = "none";
+                }
+
             }
 
             $(document).on("click", "#closebtn_editc", function () {
@@ -838,17 +857,6 @@
                         { data: "Email", className: "uniqueClassName" },
                         {
                             "data": "Dob",
-                            "render": function (data) {
-                                var date = new Date(data);
-                                var month = date.getMonth() + 1;
-                                var day = date.getDate();
-                                day = day.toString().length > 1 ? day : "0" + day;
-                                return day + "/" + (month.toString().length > 1 ? month : "0" + month) + "/" + date.getFullYear();
-                            }
-                            , className: "uniqueClassName"
-                        },
-                        {
-                            "data": "Registrationdate",
                             "render": function (data) {
                                 var date = new Date(data);
                                 var month = date.getMonth() + 1;
@@ -1586,12 +1594,12 @@
 
             str = '';
             str += "<div style='margin-top:8px'></div>";
-            str += "<form id='ca_CreateForm' class='was-validated' onclick='return false'>";
+            //str += "<form id='ca_CreateForm' class='was-validated' onclick='return false'>";
             str += "<div class='row'>";
             str += "<div class='col-lg-5'>";
             str += "<div class='mb-3'>";
-            str += "<label>שם קטגוריה:</label>";
-            str += "<input type='text' class='form-control' id='categoryaddTB' pattern='.{2,40}' oninvalid='this.setCustomValidity('מינימום 2 תויים, ועד 40')' oninput='this.setCustomValidity('')' required>";
+            str += "<label>סיסמא:</label>";
+            
             str += "</div>";
             str += "</div>";
             str += "</div>";
@@ -1835,7 +1843,6 @@
                                             <th style="max-width: 50px;">טלפון</th>
                                             <th style="max-width: 55px;">אימייל</th>
                                             <th style="max-width: 70px;">תאריך לידה</th>
-                                            <th style="max-width: 75px;">תאריך בקשה</th>
                                             <th style="max-width: 60px;">פעולות</th>
                                         </tr>
                                     </thead>
@@ -1961,23 +1968,23 @@
 
             </div> <!--End of tabs-->
             <!-- The Modal Ranks-->
-            <div id="Modal_R" class="modal">
+            <div id="Modal_Ranks" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content" style="text-align:right">
 
                     <div class="modal-header">
                         <!--<span class="close">&times;</span>-->
-                        <h4>איפוס דירוג קטגוריה</h4>
+                        <h4>איפוס דירוגי קטגוריה</h4>
                     </div>
 
                     <div id="ranks_modalJS" class="modal-body">
-                        <!--add_category_modalJS-->
+                        
                     </div>
-
+                    
                     <div class="modal-footer">
-                        <button id="closebtn_createc" type="button" class="btn btn-danger">סגור</button>
-                        <input type="submit" id="categoryadd" class="btn btn-success" form="ca_CreateForm" value="שמור" />
+                        <button id="closebtn_ranks" type="button" class="btn btn-danger">סגור</button>
+                        <input type="submit" id="categoryadd" class="btn btn-success" form="ca_CreateForm" value="אישור" />
 
                     </div>
 
