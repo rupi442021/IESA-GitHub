@@ -1,0 +1,595 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <!--Data Tables-->
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+
+   
+
+
+    <!--Data Tables-->
+
+    <title>national team</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+            letter-spacing: .015em;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            height: 1400px; /*position: absolute elements in page*/
+            padding-top: 30px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Page title Open*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            /*margin-bottom: 55px;*/ /*#1*/
+            font-weight: 600;
+            letter-spacing: .015em;
+            /*margin: 3px;*/ /*#2*/
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .divdown {
+            margin-bottom: 60px;
+        }
+
+        /*Page title Close*/
+
+        /*        .dataTables_filter, .dataTables_info {
+            display: none;
+        }
+
+        .dataTables_filter, .dataTables_info {
+            display: none;
+        }*/
+
+        div.dataTables_wrapper div.dataTables_length label {
+            display: none;
+        }
+
+        div.dataTables_wrapper div.dataTables_filter label {
+            position: absolute;
+            top: -45px;
+            right: 77%;
+        }
+
+
+        @media only screen and (max-width: 1040px) {
+            div.dataTables_wrapper div.dataTables_filter input {
+                width: 150px;
+            }
+
+            div.dataTables_wrapper div.dataTables_filter label {
+                right: 75%;
+            }
+        }
+
+        @media only screen and (max-width: 820px) {
+            div.dataTables_wrapper div.dataTables_filter input {
+                width: 100px;
+            }
+
+            div.dataTables_wrapper div.dataTables_filter label {
+                right: 65%;
+            }
+        }
+
+        div.dataTables_wrapper div.dataTables_filter input {
+            background: white !important;
+        }
+
+
+        .nk-table.nk-table thead td, .nk-table.nk-table thead th {
+            padding: 11px 18px;
+        }
+
+        .nk-table thead {
+            font-size: 1.32rem;
+            background-color: #dd163b;
+        }
+
+
+        table {
+            border-collapse: collapse;
+            width: 20%;
+            background-color: #363d49;
+        }
+
+        td {
+            font-size: 14px;
+            font-family: Arial;
+        }
+
+        tr:nth-child(odd) {
+            background-color: red;
+        }
+
+        tr:nth-child(even) {
+            background-color: cadetblue;
+        }
+
+        th {
+            color: #fff;
+            font-family: "Open Sans",sans-serif;
+            background: #2c3e50;
+            font-weight: bold;
+        }
+
+        .dataTables_paginate {
+            float: left !important;
+        }
+
+
+        .uniqueClassName {
+            text-align: center;
+        }
+
+        table.dataTable thead .sorting:after {
+            opacity: .0 !important;
+        }
+
+        .table > :not(:last-child) > :last-child > * {
+            border-bottom-color: #181c23;
+        }
+
+
+        .btn-link {
+            text-decoration: none;
+        }
+
+        i {
+            font-size: 1.27em;
+            padding: 5px;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            /*font-family: arial;*/
+        }
+
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+            /*            a.reject:hover {
+                color: #ed4564;
+                transition: .15s color;
+            }*/
+
+            a.delete:hover {
+                color: #ed4564;
+                transition: .15s color;
+            }
+
+            a.edit:hover {
+                color: #f3cc5b;
+                transition: .15s color;
+            }
+
+            a.view:hover {
+                color: #5c99f0;
+                transition: .15s color;
+            }
+
+
+        .table-dark {
+            --bs-table-bg: #363c4a !important;
+            --bs-table-striped-bg: #2e333e !important;
+        }
+
+        .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+            color: #2b2626;
+        }
+
+
+        tbody, td, tfoot, th, thead, tr {
+            border-color: #1d232f;
+        }
+
+
+        #RedTitle {
+            border: solid #292e38;
+            border-width: 0px 0px 1px 1px;
+        }
+
+        .Bordertable {
+            border: solid #1d232f !important;
+            border-width: 1px 0px 1px 1px !important;
+        }
+
+        .nk-decorated-h, .nk-decorated-h-2 {
+            display: flex;
+        }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a !important;
+            }
+
+            .nk-decorated-h-2::before, .nk-decorated-h::before {
+                flex: 20px !important;
+                width: 20px !important;
+                min-width: 20px !important;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+                display: block;
+                flex: auto;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+
+        div#services_block {
+            height: 355px;
+            background-color: #3c4250;
+            border-left: 6px solid #292e38;
+            border-right: 6px solid #292e38;
+        }
+
+        .nav-tabs .nav-link { /*Color of the tabs*/
+            color: #fbf5f5;
+            margin-left: 7px;
+        }
+
+        .bi-person::before { /*Person icon*/
+            font-size: 20px;
+        }
+
+        .bi-info-circle::before { /*Info icon*/
+            font-size: 17px;
+        }
+
+
+        #divfilterrank {
+            color: #2b2626;
+            position: absolute;
+            top: 29.6%;
+            right: 58%;
+        }
+
+
+        select {
+            height: 30px;
+        }
+
+
+
+        a{color:#1f94c7}
+
+        img{padding-left:2.5%;
+            border-radius:100px;
+        }
+    </style>
+
+    <script>
+
+
+      
+
+           
+
+           
+                //tbl7 = $('#RanksTable').DataTable({
+                //    data: ranksdata,
+                //    "order": [[0, "asc"], [1, "asc"], [4, "desc"]],
+                //    "language": {
+                //        "info": "",
+                //        "infoEmpty": "",
+                //        "infoFiltered": "",
+                //        "emptyTable": "אין נתונים זמינים בטבלה",
+                //        "zeroRecords": "לא נמצאו תוצאות",
+                //        "search": "חפש: ",
+                //        "paginate": {
+                //            "previous": "הקודם",
+                //            "next": "הבא",
+                //        },
+                //    },
+                //    responsive: true,
+                //    pageLength: 10,
+                //    columns: [
+                //        { data: "Competitionname", className: "uniqueClassName" }, //categoryname
+                //        { data: "Ispro", className: "uniqueClassName" }, //rank
+                //        { data: "Body", className: "uniqueClassName" },
+
+                       
+
+                //    ],
+                    
+                //});
+
+          
+       
+
+
+
+
+    </script>
+
+
+</head>
+<body>
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+        <div class="container">
+
+
+
+            <section id="page_title">
+                <a class="titlelink" href="Project_Menu.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">ברוכים הבאים לאתר העמותה לגיימינג תחרותי (ע"ר)</h2>
+                <div class="divdown"></div>
+            </section>
+
+
+
+
+            <h3 class="nk-decorated-h-2"><span>על הנבחרת</span></h3>
+
+
+
+            <br />
+
+
+            <div class="row">
+
+                <div class="col" style="margin:3px;">
+
+                    <p>· נבחרת ישראל בגיימינג תחרותי היא הנבחרת הלאומית של ישראל לאליפות העולם בספורט אלקטרוני של הפדרציה הבינ"ל לספורט אלקטרוני. האליפות העולמית מתקיימת על בסיס שנתי בערים ומדינות שונות. </p>
+                    <!--<i class="bi bi-info-circle"></i><span>הדירוג ניתן לשחקנים רשומים בעמותה בלבד, ומחולק לכותרים</span>
+            <br />
+            <i class="bi bi-info-circle"></i><span>הדירוג ניתן לשחקנים רשומים שהשתתפו בתחרויות בארגון העמותה או בתחרויות פרטיות הנתמכות על ידי העמותה</span>
+            <br />
+            <i class="bi bi-info-circle"></i><span>הניקוד מתאפס בסוף העונה לקראת תחילת העונה הבאה</span>-->
+
+                    <div style="margin-bottom: 40px">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <br />
+
+            <div id="divfilterrank">
+                <!--<span style="margin:4px;">קטגוריה:</span><span id="selectRankFilter"></span>-->
+            </div>
+
+
+            <!--#7-->
+            <!--Ranks Table-->
+            <div class="row">
+                <div class="col">
+
+                    <form id="rForm">
+                        <table id="RedTitle" class="nk-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="background: #dd163b">נבחרת ישראל לאורך השנים</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table id="RanksTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th style="max-width: 60px;">שנה</th>
+                                    <th style="max-width: 40px;">מדינה מארחת</th>
+                                    <th style="max-width: 70px;">נבחרת</th>
+                                    <th style="max-width: 100px;">מקום</th>
+
+                                    <tr style="max-width: 100px;">
+
+                                    <td style="max-width: 100px;">2010</td>
+                                    <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                    <td style="max-width: 100px;">נבחרת ישראל ל-IeSF Grand Final</td>
+                                    <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                    </tr> 
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                        <td style="max-width: 100px;">2011</td>
+                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                        <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                        <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                    </tr>  
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                        <td style="max-width: 100px;">2012</td>
+                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                        <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                        <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                    </tr> 
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                        <td style="max-width: 100px;">2013</td>
+                                        <td style="max-width: 100px;"><img src="../uploadedFiles/ro.png" />רומניה</td>
+                                        <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                        <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                    </tr>
+                                
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                    <td style="max-width: 100px;">2014</td>
+                                    <td style="max-width: 100px;"><img src="../uploadedFiles/az.png" />אייזרבייג'ן</td>
+                                    <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                    <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                    </tr> 
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                        <td style="max-width: 100px;">2015</td>
+                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                    <td style="max-width: 100px;"><a href="Plarium_Israel_Team.html">נבחרת Plarium ישראל</a></td>
+                                    <td style="max-width: 100px;">20 מתוך 24</td>
+
+                                    </tr>  
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                        <td style="max-width: 100px;">2016</td>
+                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                    <td style="max-width: 100px;"><a href="Playtika_Israel_Team.html">נבחרת playtika ישראל</a></td>
+                                    <td style="max-width: 100px;">9 מתוך 28</td>
+
+                                    </tr> 
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                    <td style="max-width: 100px;">2017</td>
+                                    <td style="max-width: 100px;"><img src="../uploadedFiles/tw.png" />טיוואן</td>
+                                    <td style="max-width: 100px;"><a href="National_Israel_Team.html">נבחרת ישראל בגיימינג</a></td>
+                                    <td style="max-width: 100px;">11 מתוך 37</td>
+
+                                    </tr> 
+                                
+                                
+                                    <tr style="max-width: 100px;">
+
+                                    <td style="max-width: 100px;">2020</td>
+                                    <td style="max-width: 100px;"><img src="../uploadedFiles/il.png" />ישראל(אונליין)</td>
+                                    <td style="max-width: 100px;"><a href="Lenovo_Israel_Team.html">נבחרת Lenovo ישראל</a></td>
+                                    <td style="max-width: 100px;">	3 מתוך 25 (אירופה)</td>
+
+                                    </tr>
+
+
+
+
+                                    <!--<th style="max-width: 50px;">ניקוד עונתי</th>-->
+                                    <!--<th style="max-width: 50px;">פעולות</th>-->  <!--בגלל שהורדתי את שתי העמודות הוא עושה לי שגיאה באלרט של לא יכול לקרוא סטייל של אנדיפיינד-->
+
+                                <!--</trstyle="max-width:>-->
+                            </thead>
+                        </table>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>
