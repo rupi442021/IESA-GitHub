@@ -118,7 +118,7 @@
             margin-bottom: 5px;
         }
 
-        #FutureC, #PastC, #AllPastC, #AllFutureC {
+        #FutureC, #PastC, #AllPastC, #AllFutureC, #AllPastC {
             text-align: -webkit-center;
             display: flex;
         }
@@ -364,7 +364,7 @@
 
                 let Enddate = edat[2] + '/' + edat[1] + '/' + edat[0];
 
-                var cardstr = '<div class="col-4 .mx-auto " <div class="card " style="width: 18rem;">';
+                var cardstr = '<div class="col-4 .mx-auto mt-2" <div class="card " style="width: 18rem;">';
                 cardstr += '<a href=Competition_View.html?Competitions=' + pList[i].Competitionid +'><img src="../' + pList[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstr += '<div class="card-body">';
                 cardstr += '<h5 class="card-title"></br>' + pList[i].Competitionname.substring(0, 20) + '</h5>';
@@ -656,7 +656,7 @@
             <br />
             <div class="row" id="AllFCcards">
 
-                <div class="col-9" >
+                <div class="col-9">
                     <div class="row" id="AllFutureC"></div>
                 </div>
                 <div class="col-3"></div>
@@ -672,10 +672,12 @@
                 </div>
             </div>
 
-            <br />
             <div class="row" id="AllPCcards">
-                <div class="row" id="AllPastC"></div>
 
+                <div class="col-9">
+                    <div class="row" id="AllPastC"></div>
+                </div>
+                <div class="col-3"></div>
             </div>
 
             <!-- Modal -->
