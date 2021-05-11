@@ -203,17 +203,19 @@
                         + 'oninvalid="this.setCustomValidity("הכנס כתובת לתחרות")' + 'oninput="this.setCustomValidity("")" required>';
                 }
             });
-            document.getElementById("ldfrDB").setAttribute("min", today);
 
-            $("#ldfrDB").change(function () {
-                document.getElementById("startdDB").setAttribute("min", $("#ldfrDB").val());
+            //Validation For Dates Canceld in EDIT !!
+            //document.getElementById("ldfrDB").setAttribute("min", today);
 
-            });
+            //$("#ldfrDB").change(function () {
+            //    document.getElementById("startdDB").setAttribute("min", $("#ldfrDB").val());
 
-            $("#startdDB").change(function () {
-                document.getElementById("enddDB").setAttribute("min", $("#startdDB").val());
+            //});
 
-            });
+            //$("#startdDB").change(function () {
+            //    document.getElementById("enddDB").setAttribute("min", $("#startdDB").val());
+
+            //});
 
 
             var split = window.location.href.split('=');
@@ -463,6 +465,8 @@
                 $("#rankEdit").hide();
                 $("#submitedit").show();
                 $("#ParticipentsBTN").hide();
+                $("#CancelC").hide();
+
             }
             else if (data.Competitionstatus == '2') {
                 $("#previewC").show();
@@ -472,6 +476,8 @@
                 $("#rankEdit").hide();
                 $("#submitedit").show();
                 $("#ParticipentsBTN").hide();
+                $("#CancelC").hide();
+
 
             }
             else if (data.Competitionstatus == '3') {
@@ -482,6 +488,8 @@
                 $("#rankEdit").hide();
                 $("#submitedit").hide();
                 $("#ParticipentsBTN").hide();
+                $("#CancelC").hide();
+
 
             }
             else if (data.Competitionstatus == '4') {
@@ -492,6 +500,8 @@
                 $("#rankEdit").hide();
                 $("#submitedit").show();
                 $("#ParticipentsBTN").hide();
+                $("#CancelC").hide();
+
 
             }
             else if (data.Competitionstatus == '5') {
@@ -502,6 +512,8 @@
                 $("#rankEdit").show();
                 $("#submitedit").show();
                 $("#ParticipentsBTN").hide();
+                $("#CancelC").hide();
+
             }
             else if (data.Competitionstatus == '6') {
                 $("#previewC").hide();
@@ -511,6 +523,8 @@
                 $("#rankEdit").hide();
                 $("#submitedit").hide();
                 $("#ParticipentsBTN").hide();
+                $("#CancelC").hide();
+
             }
             else if (data.Competitionstatus == '7') {
                 $("#previewC").hide();
@@ -520,6 +534,8 @@
                 $("#rankEdit").hide();
                 $("#submitedit").hide();
                 $("#ParticipentsBTN").show();
+                $("#CancelC").show();
+
             }
             else if (data.Competitionstatus == '8') {
                 $("#previewC").hide();
@@ -528,6 +544,7 @@
                 $("#cancelEdit").show();
                 $("#rankEdit").show();
                 $("#submitedit").show();
+                $("#CancelC").show();
             }
 
             console.log(data)
@@ -1233,6 +1250,7 @@
                                 <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
                                 <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />
                                 <input type="button" value="משתתפים" id="ParticipentsBTN" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" />
+                                <input type="button" class="btn btn-danger" value="ביטול תחרות" id="CancelC" onclick="swal('צריך לבטל את התחרות ואת הניקוד שניתן לכל המשתתפים בה')" />
 
 
                             </div>
