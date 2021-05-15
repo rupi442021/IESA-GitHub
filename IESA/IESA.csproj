@@ -226,6 +226,7 @@
     <Content Include="Pages\Gamer_Main_Page.html" />
     <Content Include="Pages\NavBar Template.html" />
     <Content Include="Pages\TemplatePage.html" />
+    <Content Include="Pages\TemplatePage_Site.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
