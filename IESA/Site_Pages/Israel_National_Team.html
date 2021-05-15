@@ -23,9 +23,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
 
-   
-
-
     <!--Data Tables-->
 
     <title>&#x202E; נבחרת ישראל – ASEI</title>
@@ -45,8 +42,8 @@
         .container {
             background-color: #292e38;
             max-width: 1110px;
-            height: 1400px; /*position: absolute elements in page*/
             padding-top: 30px;
+            padding-bottom: 250px;
             position: relative;
         }
 
@@ -96,6 +93,7 @@
         .divdown {
             margin-bottom: 60px;
         }
+
 
         /*Page title Close*/
 
@@ -340,51 +338,101 @@
 
 
 
-        a{color:#1f94c7}
 
-        img{padding-left:2.5%;
-            border-radius:100px;
+        img {
+            padding-left: 2.5%;
+            border-radius: 100px;
         }
+
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
+        }
+
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+
     </style>
 
     <script>
 
 
-      
 
-           
 
-           
-                //tbl7 = $('#RanksTable').DataTable({
-                //    data: ranksdata,
-                //    "order": [[0, "asc"], [1, "asc"], [4, "desc"]],
-                //    "language": {
-                //        "info": "",
-                //        "infoEmpty": "",
-                //        "infoFiltered": "",
-                //        "emptyTable": "אין נתונים זמינים בטבלה",
-                //        "zeroRecords": "לא נמצאו תוצאות",
-                //        "search": "חפש: ",
-                //        "paginate": {
-                //            "previous": "הקודם",
-                //            "next": "הבא",
-                //        },
-                //    },
-                //    responsive: true,
-                //    pageLength: 10,
-                //    columns: [
-                //        { data: "Competitionname", className: "uniqueClassName" }, //categoryname
-                //        { data: "Ispro", className: "uniqueClassName" }, //rank
-                //        { data: "Body", className: "uniqueClassName" },
 
-                       
 
-                //    ],
-                    
-                //});
 
-          
-       
+                    //tbl7 = $('#RanksTable').DataTable({
+                    //    data: ranksdata,
+                    //    "order": [[0, "asc"], [1, "asc"], [4, "desc"]],
+                    //    "language": {
+                    //        "info": "",
+                    //        "infoEmpty": "",
+                    //        "infoFiltered": "",
+                    //        "emptyTable": "אין נתונים זמינים בטבלה",
+                    //        "zeroRecords": "לא נמצאו תוצאות",
+                    //        "search": "חפש: ",
+                    //        "paginate": {
+                    //            "previous": "הקודם",
+                    //            "next": "הבא",
+                    //        },
+                    //    },
+                    //    responsive: true,
+                    //    pageLength: 10,
+                    //    columns: [
+                    //        { data: "Competitionname", className: "uniqueClassName" }, //categoryname
+                    //        { data: "Ispro", className: "uniqueClassName" }, //rank
+                    //        { data: "Body", className: "uniqueClassName" },
+
+
+
+                    //    ],
+
+                    //});
+
+
+
 
 
 
@@ -400,187 +448,214 @@
         </div>
     </section>
 
-    <section id="content">
 
-        <div class="container">
+    <div class="container">
 
+        <section id="page_title">
+            <a class="titlelink" href="Project_Menu.html">ראשי </a>
+            <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+            <h2 class="headh2">נבחרת ישראל</h2>
+            <div class="divdown"></div>
+        </section>
 
-
-            <section id="page_title">
-                <a class="titlelink" href="Project_Menu.html">ראשי </a>
-                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-                <h2 class="headh2">נבחרת ישראל</h2>
-                <div class="divdown"></div>
-            </section>
-
-
-            <h3 class="nk-decorated-h-2"><span>אודות הנבחרת</span></h3>
-
-
-            <br />
-
-
+        <section id="page_content">
             <div class="row">
+                <div class="col-lg-9">
 
-                <div class="col" style="margin:3px;">
+                    <h3 class="nk-decorated-h-2"><span>אודות הנבחרת</span></h3>
 
-                    <span>· <b style="font-weight: 600;">נבחרת ישראל בגיימינג תחרותי</b> היא הנבחרת הלאומית של ישראל לאליפות העולם בספורט אלקטרוני של הפדרציה הבינ"ל לספורט אלקטרוני.</span>
-                    <p>האליפות העולמית מתקיימת על בסיס שנתי בערים ומדינות שונות.</p>
+                    <br />
 
-                    <!--<i class="bi bi-info-circle"></i><span>הדירוג ניתן לשחקנים רשומים בעמותה בלבד, ומחולק לכותרים</span>
-            <br />
-            <i class="bi bi-info-circle"></i><span>הדירוג ניתן לשחקנים רשומים שהשתתפו בתחרויות בארגון העמותה או בתחרויות פרטיות הנתמכות על ידי העמותה</span>
-            <br />
-            <i class="bi bi-info-circle"></i><span>הניקוד מתאפס בסוף העונה לקראת תחילת העונה הבאה</span>-->
 
-                    <div style="margin-bottom: 40px">
+                    <div class="row">
+
+                        <div class="col" style="margin:3px;">
+
+                            <span><b style="font-weight: 600;">נבחרת ישראל בגיימינג תחרותי</b> היא הנבחרת הלאומית של ישראל לאליפות העולם בספורט אלקטרוני של הפדרציה הבינ"ל לספורט אלקטרוני. האליפות העולמית מתקיימת על בסיס שנתי בערים ומדינות שונות.</span>
+
+                            <div style="margin-bottom: 25px">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <br />
+
+
+                    <div class="row">
+                        <div class="col">
+
+                            <form id="rForm">
+                                <table id="RedTitle" class="nk-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="background: #3e76ca">נבחרת ישראל לאורך השנים</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <table id="RanksTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="max-width: 60px;">שנה</th>
+                                            <th style="max-width: 40px;">מדינה מארחת</th>
+                                            <th style="max-width: 70px;">נבחרת</th>
+                                            <th style="max-width: 100px;">מקום</th>
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2010</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                            <td style="max-width: 100px;">נבחרת ישראל ל-IeSF Grand Final</td>
+                                            <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                        </tr>
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2011</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                            <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                            <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                        </tr>
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2012</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                            <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                            <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                        </tr>
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2013</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/ro.png" />רומניה</td>
+                                            <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                            <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                        </tr>
+
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2014</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/az.png" />אייזרבייג'ן</td>
+                                            <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
+                                            <td style="max-width: 100px;">14 מתוך 26</td>
+
+                                        </tr>
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2015</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                            <td style="max-width: 100px;"><a href="Plarium_Israel_Team.html" style="color:#5085e6;">נבחרת Plarium ישראל</a></td>
+                                            <td style="max-width: 100px;">20 מתוך 24</td>
+
+                                        </tr>
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2016</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
+                                            <td style="max-width: 100px;"><a href="Playtika_Israel_Team.html" style="color:#5085e6;">נבחרת playtika ישראל</a></td>
+                                            <td style="max-width: 100px;">9 מתוך 28</td>
+
+                                        </tr>
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2017</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/tw.png" />טיוואן</td>
+                                            <td style="max-width: 100px;"><a href="National_Israel_Team.html" style="color:#5085e6;">נבחרת ישראל בגיימינג</a></td>
+                                            <td style="max-width: 100px;">11 מתוך 37</td>
+
+                                        </tr>
+
+
+                                        <tr style="max-width: 100px;">
+
+                                            <td style="max-width: 100px;">2020</td>
+                                            <td style="max-width: 100px;"><img src="../uploadedFiles/il.png" />ישראל(אונליין)</td>
+                                            <td style="max-width: 100px;"><a href="Lenovo_Israel_Team.html" style="color:#5085e6;">נבחרת Lenovo ישראל</a></td>
+                                            <td style="max-width: 100px;">	3 מתוך 25 (אירופה)</td>
+
+                                        </tr>
+
+
+                                    </thead>
+                                </table>
+                            </form>
+
+                        </div>
+
                     </div>
 
                 </div>
 
-            </div>
+
+                <div class="col-lg-3">
+
+                    <div class="row">
+                        <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                    </div>
+
+                    <div style="margin-bottom:18px;">
+                    </div>
+
+                    <div class="row" id="anotherpostsbox">
+
+                        <div class="row" id="headeranotherpost">
+
+                            <h4 class="headh4">סקר<span style="color:white"><span style="color:transparent">.</span>גולשים</span></h4>
+
+                        </div>
+
+                        <div class="row" id="anotherpimg" style="margin-top:11px; height:297px">
+
+                            <section id="polls-widget-2" class="widget widget_polls-widget">
+                                <div class="widget-inner">
+                                    <div id="polls-6" class="wp-polls">
+                                        <form id="polls_form_6" class="wp-polls-form" action="/index.php" method="post">
+                                            <p style="display: none;"><input type="hidden" id="poll_6_nonce" name="wp-polls-nonce" value="769e8c24ad"></p>
+                                            <p style="display: none;"><input type="hidden" name="poll_id" value="6"></p>
+                                            <p style="text-align: center; font-size: 15px"><strong>מהי פלטפורמת הגיימינג העיקרית שלכם?</strong></p><div id="polls-6-ans" class="wp-polls-ans">
+                                                <ul class="wp-polls-ul" style="text-align: right">
+                                                    <li> <input type="radio" id="poll-answer-69" name="poll_6" value="69"> <label for="poll-answer-69">PC</label></li>
+                                                    <li> <input type="radio" id="poll-answer-70" name="poll_6" value="70"> <label for="poll-answer-70">PlayStation</label></li>
+                                                    <li> <input type="radio" id="poll-answer-71" name="poll_6" value="71"> <label for="poll-answer-71">Xbox</label></li>
+                                                    <li> <input type="radio" id="poll-answer-72" name="poll_6" value="72"> <label for="poll-answer-72">Nintendo S</label></li>
+                                                    <li> <input type="radio" id="poll-answer-73" name="poll_6" value="73"> <label for="poll-answer-73">אחר</label></li>
+                                                </ul><p style="text-align: center"><input type="button" name="vote" value="הצבעה" class="Buttons" onclick="poll_vote(6);"></p><p style="text-align: center"><a href="#ViewPollResults" onclick="poll_result(6); return false;" title="הצגת תוצאות הסקר">הצגת תוצאות</a></p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!--<div id="polls-6-loading" class="wp-polls-loading"><img src="https://iesa.org.il/wp-content/plugins/wp-polls/images/loading.gif" width="16" height="16" alt="Loading ..." title="Loading ..." class="wp-polls-image">&nbsp;Loading ...</div>-->
+                                </div>
+                            </section>
 
 
-            <br />
-
-            <div id="divfilterrank">
-                <!--<span style="margin:4px;">קטגוריה:</span><span id="selectRankFilter"></span>-->
-            </div>
+                        </div>
 
 
-            <!--#7-->
-            <!--Ranks Table-->
-            <div class="row">
-                <div class="col">
-
-                    <form id="rForm">
-                        <table id="RedTitle" class="nk-table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="background: #3e76ca">נבחרת ישראל לאורך השנים</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <table id="RanksTable" class="Bordertable nowrap table table-bordered table table-dark table-striped" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th style="max-width: 60px;">שנה</th>
-                                    <th style="max-width: 40px;">מדינה מארחת</th>
-                                    <th style="max-width: 70px;">נבחרת</th>
-                                    <th style="max-width: 100px;">מקום</th>
-
-                                    <tr style="max-width: 100px;">
-
-                                    <td style="max-width: 100px;">2010</td>
-                                    <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
-                                    <td style="max-width: 100px;">נבחרת ישראל ל-IeSF Grand Final</td>
-                                    <td style="max-width: 100px;">14 מתוך 26</td>
-
-                                    </tr> 
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                        <td style="max-width: 100px;">2011</td>
-                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
-                                        <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
-                                        <td style="max-width: 100px;">14 מתוך 26</td>
-
-                                    </tr>  
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                        <td style="max-width: 100px;">2012</td>
-                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
-                                        <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
-                                        <td style="max-width: 100px;">14 מתוך 26</td>
-
-                                    </tr> 
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                        <td style="max-width: 100px;">2013</td>
-                                        <td style="max-width: 100px;"><img src="../uploadedFiles/ro.png" />רומניה</td>
-                                        <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
-                                        <td style="max-width: 100px;">14 מתוך 26</td>
-
-                                    </tr>
-                                
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                    <td style="max-width: 100px;">2014</td>
-                                    <td style="max-width: 100px;"><img src="../uploadedFiles/az.png" />אייזרבייג'ן</td>
-                                    <td style="max-width: 100px;">נבחרת ישראל בגיימינג</td>
-                                    <td style="max-width: 100px;">14 מתוך 26</td>
-
-                                    </tr> 
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                        <td style="max-width: 100px;">2015</td>
-                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
-                                    <td style="max-width: 100px;"><a href="Plarium_Israel_Team.html">נבחרת Plarium ישראל</a></td>
-                                    <td style="max-width: 100px;">20 מתוך 24</td>
-
-                                    </tr>  
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                        <td style="max-width: 100px;">2016</td>
-                                        <td style="max-width: 100px;"><img src="../uploadedFiles/kr.png" />קוראיה הדרומית</td>
-                                    <td style="max-width: 100px;"><a href="Playtika_Israel_Team.html">נבחרת playtika ישראל</a></td>
-                                    <td style="max-width: 100px;">9 מתוך 28</td>
-
-                                    </tr> 
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                    <td style="max-width: 100px;">2017</td>
-                                    <td style="max-width: 100px;"><img src="../uploadedFiles/tw.png" />טיוואן</td>
-                                    <td style="max-width: 100px;"><a href="National_Israel_Team.html">נבחרת ישראל בגיימינג</a></td>
-                                    <td style="max-width: 100px;">11 מתוך 37</td>
-
-                                    </tr> 
-                                
-                                
-                                    <tr style="max-width: 100px;">
-
-                                    <td style="max-width: 100px;">2020</td>
-                                    <td style="max-width: 100px;"><img src="../uploadedFiles/il.png" />ישראל(אונליין)</td>
-                                    <td style="max-width: 100px;"><a href="Lenovo_Israel_Team.html">נבחרת Lenovo ישראל</a></td>
-                                    <td style="max-width: 100px;">	3 מתוך 25 (אירופה)</td>
-
-                                    </tr>
-
-
-
-
-                                    <!--<th style="max-width: 50px;">ניקוד עונתי</th>-->
-                                    <!--<th style="max-width: 50px;">פעולות</th>-->  <!--בגלל שהורדתי את שתי העמודות הוא עושה לי שגיאה באלרט של לא יכול לקרוא סטייל של אנדיפיינד-->
-
-                                <!--</trstyle="max-width:>-->
-                            </thead>
-                        </table>
-                    </form>
+                    </div>
 
                 </div>
-
             </div>
+        </section>
+    </div>
+   
 
-        </div>
-
-
-
-
-
-    </section>
 
 
     <section id="site_footer">

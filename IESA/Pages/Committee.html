@@ -1,0 +1,552 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <title>&#x202E; וועדות – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+            /*additional to posts*/
+            line-height: 1.7;
+            letter-spacing: .015em;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            padding-top: 30px;
+            padding-bottom: 250px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Template Style*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 55px;
+            font-weight: 600;
+            letter-spacing: .015em;
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
+        }
+
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+        th {
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            border-right: 1px solid white;
+        }
+
+            th:first-child {
+                border-left: 2px solid white;
+            }
+
+        #page_content {
+            margin: 3px;
+        }
+
+        .alignleft {
+            float: left;
+        }
+
+        img.alignleft {
+            display: inline;
+            margin: 10px 15px 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        #bottomBTN {
+            text-align: center;
+            position: relative;
+            left: -13%;
+        }
+
+        i {
+            font-size: 1.27em;
+            padding: 5px;
+        }
+
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .more-info-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        .nav-tabs .nav-link {
+            color: #fbf5f5;
+            margin-left: 10px;
+        }
+
+        .nk-down {
+            float: left;
+            max-width: 100%;
+            font-size: 1rem;
+        }
+
+        h6 {
+           color: #04b8a5;
+        }
+
+        .nk-decorated-h, .nk-decorated-h-2 {
+            display: flex;
+        }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a !important;
+            }
+
+            .nk-decorated-h-2::before, .nk-decorated-h::before {
+                flex: 20px !important;
+                width: 20px !important;
+                min-width: 20px !important;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+                display: block;
+                flex: auto;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+    </style>
+
+    <script>
+
+
+    </script>
+
+
+</head>
+<body onload="init()">
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+
+        <div class="container">
+
+
+            <section id="page_title">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">וועדות</h2>
+                <div class="divdown"></div>
+            </section>
+
+            <section id="page_content">
+                <div class="row">
+                    <div class="col-lg-9">
+
+                        <div class="row">
+                            <div class="col" style="margin:3px;">
+                                <p>וועדות העמותה מוקמות מכוח הוועד המנהל (למעט וועדת הביקורת) בתחומי אחריות מגוונים. מטרתן לייעץ לוועד המנהל לקידום היעדים שלשמם הוקמה כל וועדה. חלק מהוועדות מקבלות גם תפקיד ביצועי על מנת לסייע בתפעול פעילויות ותכניות של העמותה.</p>
+                                <div style="margin-bottom: 40px">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="true">וועדת השחקנים</button>
+                                <button class="nav-link" id="nav-2-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-2" aria-selected="false">וועדת חוקה</button>
+                                <button class="nav-link" id="nav-3-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">וועדת קשרי חוץ</button>
+                                <button class="nav-link" id="nav-4-tab" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">וועדת הארגון</button>
+                                <button class="nav-link" id="nav-5-tab" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">וועדת הביקורת</button>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <br />
+
+                            <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <div id="elementor-tab-content-2101" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="1" role="tabpanel" aria-labelledby="elementor-tab-title-2101" tabindex="0" style="display: block;">
+                                            <p>וועדת השחקנים היא וועדה נבחרת שבה מכהנים שחקנים רשומים ותפקידה להוות הגורם המרכזי לייצוג שחקני ספורט אלקטרוני בישראל.</p>
+                                            <h6>תחומי אחריות:</h6>
+                                            <ol>
+                                                <li>גיבוש תכניות לקידום העמותה, הענף, ומעמדם של השחקנים.</li>
+                                                <li>שימוש כוועדת גישור בין שחקן ליריבו לפתרון מחלוקות, וכן בין שחקן למוסדות העמותה.</li>
+                                                <li>גיבוש המלצות לשינוי ושיפור מדיניות העמותה.</li>
+                                                <li>בחינת תהליך בחירת נבחרת ישראל אחת לשנה וגיבוש המלצות בעניין זה.</li>
+                                            </ol><h6>חברי הוועדה:</h6><ol>
+                                                <li>ארז גבאי</li>
+                                                <li>דור אליגולא</li>
+                                                <li>עמית מזרחי</li>
+                                                <li>אוראל דניאל</li>
+                                                <li>אדיר עמיאל</li>
+                                            </ol>
+
+                                            <div class="nk-down">
+                                            <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2020/07/player_rules.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">להורדת תקנון וועדת השחקנים </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                            </div>
+                                            
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <div id="elementor-tab-content-2102" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-2102" tabindex="0" style="display: block;">
+                                            <p>וועדת החוקה אחראית על בדיקה מקצועית של התקנונים והחוקים התחרותיים הרלוונטיים בעמותה, ועל מסמכים המכתיבים את אופן הטיפול שלה בעניינים תחרותיים.</p>
+                                            <h6>תחומי אחריות:</h6>
+                                            <ol>
+                                                <li>
+                                                    גיבוש המלצות, לפחות אחת לשנה, לעדכון, שינוי או ביטול <a href="https://iesa.org.il/about/regulations">התקנונים</a> הבאים:<ul>
+                                                        <li>חוקת המשחקים</li>
+                                                        <li>נוהל הכרה בתחרויות</li>
+                                                        <li>תקנון האתיקה לשופטים</li>
+                                                        <li>תקנון בין הדין העליון</li>
+                                                        <li>תקנון המשמעת</li>
+                                                        <li>תקנון נבחרת ישראל</li>
+                                                    </ul>
+                                                </li>
+                                                <li>גיבוש המלצות ליצירת תקנונים חדשים</li>
+                                            </ol><h6>חברי הוועדה:</h6>
+                                            <ol>
+                                                <li>עידו ברוש (יו"ר הוועדה)</li>
+                                                <li>גיא תומר</li>
+                                                <li>שחר בר</li>
+                                                <li>עו"ד בועז סיטי</li>
+                                                <li>נציג השחקנים</li>
+                                            </ol>
+
+                                            <div class="nk-down">
+                                                <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2020/08/תקנון-וועדת-חוקה.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">להורדת תקנון הוועדה </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <div id="elementor-tab-content-2103" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="3" role="tabpanel" aria-labelledby="elementor-tab-title-2103" tabindex="0" style="display: block;">
+                                        <p>וועדת קשרי חוץ אחראית על ניהול ופיקוח יחסי החוץ של העמותה עם ארגונים מחוץ לישראל.</p>
+                                        <h6>תחומי אחריות:</h6>
+                                        <ol>
+                                            <li>קידום שיתוף פעולה עם ארגונים הפועלים בתחום הגיימינג התחרותי לרבות איגודי ספורט אלקטרוני לאומיים, הפדרציה הבינ"ל לספורט אלקטרוני (IESF), הפדרציה האירופאית לספורט אלקטרוני (EEF), מפיצות משחקים, סוכנויות בינלאומיות וכיוצ"ב.</li>
+                                            <li>ייצוג העמותה מול ארגונים בינ"ל.</li>
+                                            </ol>
+                                        <p>בראש הוועדה עומד יו"ר העמותה מתוקף תקנון העמותה.</p>
+                                        <h6>חברי הוועדה:</h6>
+                                        <ol>
+                                            <li>עידו ברוש (יו"ר הוועדה)</li>
+                                            <li>אייל אבן צור</li>
+                                            <li>רינת הראל</li>
+                                            </ol>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <h4 class="nk-decorated-h-2" style="margin-bottom: 20px;"><span>וועדת הארגון - אליפות ישראל</span></h4>
+
+                                        <div id="elementor-tab-content-2104" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="4" role="tabpanel" aria-labelledby="elementor-tab-title-2104" tabindex="0" style="display: block;">
+                                            <p>וועדת הארגון – אליפות ישראל אחראית על יצירת התכנית לקיום משחקי אליפות ישראל השנתיים ותפעול המשחקים.</p>
+                                            <h6>תחומי אחריות:</h6>
+                                            <ol>
+                                                <li>יצירת התוכנית לקיום אירועי אליפות ישראל במסגרתם יתקיימו משחקי אליפות ישראל השנתיים והגשתה לאישור במוסדות הרלוונטיים בעמותה.</li>
+                                                <li>יצירה והפעלה של מתווה פעילות אופרטיבי ליישום התוכנית הנ"ל.</li>
+                                            </ol>
+                                            <h6>חברי הוועדה:</h6>
+                                            <ol>
+                                                <li>גיל רונן (יו"ר הוועדה)</li>
+                                                <li>רוי יהלומי</li>
+                                                <li>אייל אבן צור</li>
+                                                <li>יואב סוכן</li>
+                                            </ol>
+                                        </div>
+
+                                        <br />
+
+                                        <h4 class="nk-decorated-h-2" style="margin-bottom: 20px;"><span>וועדת הארגון - IEF</span></h4>
+
+                                        <div id="elementor-tab-content-2105" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="5" role="tabpanel" aria-labelledby="elementor-tab-title-2105" tabindex="0" style="display: block;">
+                                            <p>וועדת הארגון – הפורום הישראלי לספורט אלקטרוני (IEF) אחראית על יצירת התכנית לקיום אירוע הפורום הישראלי לספורט אלקטרוני של העמותה.</p>
+                                            <h6>תחומי אחריות:</h6>
+                                            <ol>
+                                                <li>יצירת התוכנית לקיום הפורום והגשתה לאישור הוועד.</li>
+                                                <li>לאחר אישור התכנית, יצירה והפעלה של מתווה פעילות אופרטיבי ליישום התוכנית הנ"ל.</li>
+                                            </ol>
+                                            <h6>חברי הוועדה:</h6>
+                                            <ol>
+                                                <li>יואב סוכן (יו"ר הוועדה)</li>
+                                                <li>גיא תומר</li>
+                                                <li>לירז בן נון</li>
+                                            </ol>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-5" role="tabpanel" aria-labelledby="nav-5-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <div id="elementor-tab-content-2106" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="6" role="tabpanel" aria-labelledby="elementor-tab-title-2106" tabindex="0" style="display: block;">
+                                        <p>וועדת הביקורת של העמותה פועלת מכוח התקנון ישירות ונבחרת על ידי חברי העמותה בבחירות כלליות. מטרת הוועדה לעקוב אחרי התנהלות הוועד והנהגת העמותה ולוודא את תקינות הארגון.</p>
+                                        <h6>תחומי אחריות:</h6>
+                                        <ol>
+                                            <li>מעקב אחר פעילות העמותה והוועד ווידוא עמידה בהוראות החוק, תקנון העמותה והמוסדות הרלוונטיים</li>
+                                            <li>מתן ביקורת באשר ליעילותה של העמותה</li>
+                                            <li>בדיקת ההתנהלות הכספית של העמותה</li>
+                                            <li>טיפול בתלונות של עובדי העמותה</li>
+                                            <li>בחינת עבודתו של רואה החשבון של העמותה וקביעת שכרו</li>
+                                            <li>בחינת כללית של פעילות העמותה ווידוא עמידה במטרות וביעדים המוגדרים.</li>
+                                            </ol>
+                                        <h6>חברי הוועדה:</h6>
+                                        <ol>
+                                            <li>שחר בר (יו"ר הוועדה)</li>
+                                            <li>דור שמואלי</li>
+                                            <li>אביב וטנברג</li>
+                                            </ol>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div> <!--End of tabs-->
+
+                        <br />
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="row">
+                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                        </div>
+
+                        <div style="margin-bottom:18px;">
+                        </div>
+
+                        <div class="row" id="anotherpostsbox">
+
+                            <div class="row" id="headeranotherpost">
+
+                                <h4 class="headh4">סקר<span style="color:white"><span style="color:transparent">.</span>גולשים</span></h4>
+
+                            </div>
+
+                            <div class="row" id="anotherpimg" style="margin-top:11px; height:307px">
+
+                                <section id="polls-widget-2" class="widget widget_polls-widget">
+                                    <div class="widget-inner">
+                                        <div id="polls-6" class="wp-polls">
+                                            <form id="polls_form_6" class="wp-polls-form" action="/index.php" method="post">
+                                                <p style="display: none;"><input type="hidden" id="poll_6_nonce" name="wp-polls-nonce" value="769e8c24ad"></p>
+                                                <p style="display: none;"><input type="hidden" name="poll_id" value="6"></p>
+                                                <p style="text-align: center; font-size: 15px"><strong>מהי פלטפורמת הגיימינג העיקרית שלכם?</strong></p><div id="polls-6-ans" class="wp-polls-ans">
+                                                    <ul class="wp-polls-ul" style="text-align: right">
+                                                        <li> <input type="radio" id="poll-answer-69" name="poll_6" value="69"> <label for="poll-answer-69">PC</label></li>
+                                                        <li> <input type="radio" id="poll-answer-70" name="poll_6" value="70"> <label for="poll-answer-70">PlayStation</label></li>
+                                                        <li> <input type="radio" id="poll-answer-71" name="poll_6" value="71"> <label for="poll-answer-71">Xbox</label></li>
+                                                        <li> <input type="radio" id="poll-answer-72" name="poll_6" value="72"> <label for="poll-answer-72">Nintendo S</label></li>
+                                                        <li> <input type="radio" id="poll-answer-73" name="poll_6" value="73"> <label for="poll-answer-73">אחר</label></li>
+                                                    </ul><p style="text-align: center"><input type="button" name="vote" value="הצבעה" class="Buttons" onclick="poll_vote(6);"></p><p style="text-align: center"><a href="#ViewPollResults" onclick="poll_result(6); return false;" title="הצגת תוצאות הסקר">הצגת תוצאות</a></p>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!--<div id="polls-6-loading" class="wp-polls-loading"><img src="https://iesa.org.il/wp-content/plugins/wp-polls/images/loading.gif" width="16" height="16" alt="Loading ..." title="Loading ..." class="wp-polls-image">&nbsp;Loading ...</div>-->
+                                    </div>
+                                </section>
+
+
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </section> <!--End Page Content-->
+
+        </div>
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>
