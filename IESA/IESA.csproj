@@ -259,9 +259,13 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Pages\About.html" />
     <Content Include="Site_Pages\Competition_Tree.html" />
+    <Content Include="Pages\Esports.html" />
     <Content Include="Site_Pages\Israel_National_Team.html" />
     <Content Include="Pages\Federation.html" />
+    <Content Include="Pages\Regulations.html" />
+    <Content Include="Pages\New_Referee.html" />
     <Content Include="Site_Pages\Try.html" />
+    <Content Include="Site_Pages\Volunteer.html" />
     <Content Include="Style\Style_Sign_Up.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

@@ -1,0 +1,599 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <title>&#x202E; תקנונים – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+            /*additional to posts*/
+            line-height: 1.7;
+            letter-spacing: .015em;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            padding-top: 30px;
+            padding-bottom: 120px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Template Style*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 55px;
+            font-weight: 600;
+            letter-spacing: .015em;
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
+        }
+
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+        th {
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            border-right: 1px solid white;
+        }
+
+            th:first-child {
+                border-left: 2px solid white;
+            }
+
+        #page_content {
+            margin: 3px;
+        }
+
+        .alignleft {
+            float: left;
+        }
+
+        img.alignleft {
+            display: inline;
+            margin: 10px 15px 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        #bottomBTN {
+            text-align: center;
+            position: relative;
+            left: -13%;
+        }
+
+        i {
+            font-size: 1.27em;
+            padding: 5px;
+        }
+
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .more-info-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        .nav-tabs .nav-link {
+            color: #fbf5f5;
+            margin-left: 10px;
+        }
+
+        .nk-down {
+            float: left;
+            max-width: 100%;
+            font-size: 1rem;
+        }
+
+        h6 {
+            color: #04b8a5;
+        }
+
+        .nk-decorated-h, .nk-decorated-h-2 {
+            display: flex;
+        }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a !important;
+            }
+
+            .nk-decorated-h-2::before, .nk-decorated-h::before {
+                flex: 20px !important;
+                width: 20px !important;
+                min-width: 20px !important;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+                display: block;
+                flex: auto;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+    </style>
+
+
+    <script>
+
+
+    </script>
+
+
+</head>
+<body>
+
+    <!--For facebook iframe-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=120238457987541&autoLogAppEvents=1" nonce="pnARNgWE"></script>
+    <!--For facebook iframe-->
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+
+        <div class="container">
+
+
+            <section id="page_title">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">תקנונים</h2>
+                <div class="divdown"></div>
+            </section>
+            
+            <section id="page_content">
+                <div class="row">
+                    <div class="col-lg-9">
+
+                        <div class="row">
+                            <div class="col" style="margin:3px;">
+                                <p>יש לבחור את המסמך הרצוי להלן. לעיון בתקנוני וועדות של העמותה <a href="../Pages/Committee.html" style="color: #04b8a5">ניתן למצוא אותם כאן</a>.</p>
+                                <div style="margin-bottom: 40px">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="true">חוקת המשחקים</button>
+                                <button class="nav-link" id="nav-2-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-2" aria-selected="false">נוהל הכרה בתחרויות</button>
+                                <button class="nav-link" id="nav-3-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">תקנון האתיקה לשופטים</button>
+                                <button class="nav-link" id="nav-4-tab" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">תקנון בית הדין העליון</button>
+                                <button class="nav-link" id="nav-5-tab" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">תקנון משמעת</button>
+                                <button class="nav-link" id="nav-5-tab" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">תקנון נבחרת ישראל</button>
+                                <button class="nav-link" id="nav-5-tab" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">תקנון העמותה</button>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <br />
+
+                            <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+
+                                        <p>תאריך עדכון אחרון: <strong style="font-weight:600">אוגוסט 2018</strong></p>
+
+                                        <div class="nk-down">
+                                            <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2018/08/%D7%97%D7%95%D7%A7%D7%AA-%D7%94%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%9D.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">לצפייה בתקנון חוקת המשחקים </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <p>תאריך עדכון אחרון: <strong style="font-weight:600">אוקטובר 2019</strong></p>
+
+                                        <p><span><strong>(שימו <span style="color:#dd163b">♥</span> – לצורך הגשת בקשה להכרה, יש לפנות ל</strong></span><span><strong>
+                                            <a style="color: #04b8a5;" href="https://iesa.org.il/organizers-registration">טופס המקוון</a>
+                                                         </strong></span><strong>)</strong></p>
+
+                                        <div class="nk-down">
+                                            <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2019/10/%D7%A0%D7%95%D7%94%D7%9C-%D7%94%D7%9B%D7%A8%D7%94-%D7%91%D7%AA%D7%97%D7%A8%D7%95%D7%99%D7%95%D7%AA-%D7%A2%D7%93%D7%9B%D7%A0%D7%99.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">לצפייה בנוהל הכרה בתחרויות </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <p>תאריך עדכון אחרון: <strong style="font-weight:600">אוגוסט 2018</strong></p>
+
+                                        <div class="nk-down">
+                                            <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2018/08/%D7%AA%D7%A7%D7%A0%D7%95%D7%9F-%D7%90%D7%AA%D7%99%D7%A7%D7%94-%D7%9C%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">לצפייה בתקנון אתיקה לשופטים </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <p>תאריך עדכון אחרון: <strong style="font-weight:600">אוגוסט 2018</strong></p>
+
+                                        <div class="nk-down">
+                                            <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2018/08/%D7%AA%D7%A7%D7%A0%D7%95%D7%9F-%D7%91%D7%99%D7%AA-%D7%94%D7%93%D7%99%D7%9F-%D7%94%D7%A2%D7%9C%D7%99%D7%95%D7%9F.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">לצפייה בתקנון בית הדין העליון </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-5" role="tabpanel" aria-labelledby="nav-5-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <p>תאריך עדכון אחרון: <strong style="font-weight:600">אוגוסט 2018</strong></p>
+
+                                        <div class="nk-down">
+                                            <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2018/08/תקנון-משמעת.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">לצפייה בתקנון משמעת </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-6" role="tabpanel" aria-labelledby="nav-6-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <p>תאריך עדכון אחרון: <strong style="font-weight:600">אוגוסט 2018</strong></p>
+
+                                        <div class="nk-down">
+                                            <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2018/08/תקנון-נבחרת-ישראל.pdf';" style=" float: right;"><span style="position:relative; bottom:3px; right:2px;">לצפייה בתקנון נבחרת ישראל </span><i class="bi bi-download" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="nav-7" role="tabpanel" aria-labelledby="nav-7-tab">
+
+                                <div class="row">
+                                    <div class="col">
+
+                                        <div id="elementor-tab-content-4887" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="7" role="tabpanel" aria-labelledby="elementor-tab-title-4887" tabindex="0" style="display: block;">
+                                            <h3 class="nk-decorated-h-2" style="margin-bottom: 20px;"><span>עמותה לגיימינג תחרותי (ע"ר) – תקנון התאגדות</span></h3>
+                                            <h4>סימן א':&nbsp;שם העמותה ומעמדה החוקי</h4>
+                                            <ol>
+                                                <li>שם העמותה בעברית הוא "עמותה לגיימינג תחרותי (ע"ר)" (להלן: "<strong>העמותה</strong>").</li>
+                                                <li>העמותה נוסדה ונרשמה כעמותה על-פי חוק העמותות, התש"ם-1980 (להלן: "<strong>החוק</strong>") ומספרה הוא 580528784.</li>
+                                                <li>העמותה חברה בפדרציה העולמית לספורט אלקטרוני ((The International e-Sports Federation (IeSF) (להלן: "הפדרציה"), ומחזיקה בזכויות ההשתתפות בתחרויות/ טורנירים שמארגנת או מנהלת הפדרציה.</li>
+                                            </ol><h4>סימן ב': מטרות העמותה</h4><ol start="4">
+                                                <li>
+                                                    מטרות העמותה הן:<ol>
+                                                        <li>לקדם גיימינג תחרותי בישראל;</li>
+                                                        <li>לייצג את העמותה וחבריה בפני מוסדות ופרטים בעלי העניינים הנוגעים למטרות העמותה;</li>
+                                                        <li>לאגד את חבריה ולפתח ולתמוך בהקמת מועדוני גיימינג ברחבי הארץ;</li>
+                                                        <li>לקבוע וליישם חוקות, תקנות, נהלים וסדרים אשר יחולו על חברי עמותה;</li>
+                                                        <li>לקדם מודעות לענף בישראל ולהגדיל מספר שחקנים מקצועים.</li>
+                                                    </ol>
+                                                </li>
+                                            </ol><h4>סימן ג': סמכויות העמותה</h4><ol start="5">
+                                                <li>
+                                                    לעשות כל דבר שהעמותה תמצא לנכון ושיש בו כדי לאפשר הגשמת כל מטרה ממטרותיה, לרבות אך מבלי לפגוע בכלליות האמור:<ol>
+                                                        <li>לרכוש, לבנות, לקנות, לחכור, לשכור ולקבל לרשותה או לשימושה במתנה ובכל אופן אחר, בתנאים שיסוכמו, נכסי דלא ניידי, מיטלטלין וזכויות מכל סוג;</li>
+                                                        <li>ליזום מבצעי פרסום ויחסי ציבור שיפתחו את התודעה הציבורית לגיימינג ויקדמו את מטרות העמותה;</li>
+                                                        <li>לקדם את שיתוף הפעולה עם הפדרציה העולמית לספורט אלקטרוני וארגונים, פדרציות ואגודות גיימינג ברחבי העולם;</li>
+                                                        <li>ליזום הקצאת וקבלת קצבאות, תמיכות, מלגות ומתנות מכל גוף ממשלתי, אדם ותאגיד;</li>
+                                                        <li>ליזום פעילות חינוכית ארגונית אשר תתרום ליישום מטרות העמותה;</li>
+                                                        <li>להקים, לארגן ולנהל חוגים, תחרויות וטורנירים;</li>
+                                                        <li>לארגן פעולות ארציות לשם איסוף כספים, קבלת תרומות, מגביות, ליצור קרנות, לארגן פעולות תרבותיות וחברתיות ארציות שהכנסותיהן תהיינה מוקדשות לקידום מטרות העמותה;</li>
+                                                        <li>להתקשר עם אנשים, מוסדות, ארגונים, מפעלים ומועדונים וכל גוף שהוא, בארץ ומחוצה לה, לקידום מטרות העמותה;</li>
+                                                        <li>לגייס, להפעיל מתנדבים או להעסיק עובדים במשכורת וקבלנים עצמאיים בשכר מכל סוג, בין אם יחידים ובין ארגונים, בקשר לכל עניין העשוי לסייע לקידום מטרות העמותה;</li>
+                                                        <li>להפעיל את סמכויותיה ולבצע כל פעולה משפטית וליזום ולבצע כל פעולה אחרת שהיא, בארץ ובחו"ל, לקידום מטרות העמותה.</li>
+                                                    </ol>
+                                                </li>
+                                            </ol><h4>סימן ד': חברות</h4>
+                                            <ol start="6">
+                                                <li>
+                                                    <strong>קבלת חברים</strong>
+                                                    <ol>
+                                                        <li>מייסדי העמותה הנם חברים בה מיום רישום העמותה בפנקס העמותות.</li>
+                                                        <li>אדם החפץ להיות חבר העמותה (להלן: "<strong>מועמד</strong> <strong>לחברות</strong>") יגיש לועד בקשה בלשון זו:<br>"אני (שם, מען ומספר זהות) מבקש להיות חבר בעמותה &nbsp;לגיימינג תחרותי (ע"ר). מטרות העמותה ותקנונה ידועים לי. אם אתקבל כחבר בה, אני מתחייב לקיים את הוראות התקנון ואת החלטות האסיפה הכללית של העמותה."</li>
+                                                        <li>הועד רשאי לבקש ממועמד לחברות בעמותה מידע נוסף שיצורף לבקשה, לפי צרכיו ושיקוליו.</li>
+                                                        <li>ההחלטה בדבר קבלת המבקש כחבר העמותה או אי קבלתו נתונה בידי הועד; סירב הועד לקבל את המבקש, רשאי הוא לערור על הסירוב לפני האסיפה הכללית הקרובה.</li>
+                                                    </ol>
+                                                </li>
+                                                <li>
+                                                    <strong>זכויות וחובות של חבר</strong><ol>
+                                                        <li>חבר העמותה זכאי להשתתף ולהצביע בכל אסיפה כללית ויהיה לו קול אחד בכל הצבעה; הוא זכאי לבחור ולהיבחר לועד או לועדת הביקורת.</li>
+                                                        <li>חבר העמותה זכאי להשתתף בפעולות העמותה וליהנות משירותיה.</li>
+                                                        <li>הועד, באישור האסיפה הכללית, רשאי לקבוע דמי חבר שתשלומם יהיה חובה על החברים.</li>
+                                                        <li>פקיעת החברות בעמותה אינה פוטרת מסילוק התשלומים שהגיעו לעמותה מן החבר ערב פקיעת חברותו בעד התקופה שעד לפקיעת חברותו.</li>
+                                                    </ol>
+                                                </li>
+                                                <li>
+                                                    <strong>פקיעת חברות</strong><ol>
+                                                        <li>
+                                                            החברות בעמותה פוקעת –<ol>
+                                                                <li>במות החבר, ובחבר שהוא תאגיד – בגמר פירוקו;</li>
+                                                                <li>בפרישתו מן העמותה; הודעת פרישה בכתב תינתן לועד שלושים יום מראש;</li>
+                                                                <li>בהוצאתו מן העמותה.</li>
+                                                            </ol>
+                                                        </li>
+                                                        <li>
+                                                            האסיפה הכללית רשאית, לפי הצעת הועד, להחליט על הוצאת חבר מן העמותה מאחד הטעמים הבאים:<ol>
+                                                                <li>החבר לא שילם לעמותה את המגיע לה ממנו;</li>
+                                                                <li>החבר לא קיים את הוראות התקנון או החלטה של האסיפה הכללית;</li>
+                                                                <li>החבר פועל בניגוד למטרות העמותה;</li>
+                                                                <li>החבר הורשע בעבירה שמפאת מהותה, חומרתה או נסיבותיה אין הוא ראוי לשמש כחבר עמותה.</li>
+                                                            </ol>
+                                                        </li>
+                                                        <li>לא יציע הועד לאסיפה כללית להוציא חבר מן העמותה אלא לאחר שנתן לו הזדמנות נאותה להשמיע טענותיו לפניו, ולא יציע מהטעמים האמורים בתקנת משנה (ב)(1), (2) או (3) אלא לאחר שהתרה בחבר ונתן לו זמן סביר לתיקון המעוות.</li>
+                                                    </ol>
+                                                </li>
+                                                <li>האסיפה הכללית רשאית להעניק את התואר "עמית כבוד" לאדם שהאסיפה הכללית מצאה שהוא תורם תרומה משמעותית לקידום העמותה ו/או הגיימינג התחרותי בישראל. עמית כבוד אינו חייב בתשלום דמי חבר ואינו בעל זכות הצבעה במוסדות העמותה.</li>
+                                                <li>הזמנה, דרישה, התראה והודעה אחרת של העמותה לחבר יינתנו לו בכתב שיימסר לו ביד או יישלח בדואר רגיל אל מענו הרשום בפנקס החברים; לפי בקשת החבר בכתב תשנה העמותה את מענו הרשום בפנקס החברים.</li>
+                                            </ol>
+                                            <h4>סימן ה': האסיפה הכללית</h4>
+                                            <ol start="11">
+                                                <li>יומה, שעתה ומיקומה של אסיפה כללית ייקבעו בידי הועד.</li>
+                                                <li>אסיפה כללית תכונס על ידי הודעה שתינתן לכל חבר לפחות עשרה ימים מראש ותציין יום, שעה, מקום וסדר יום לאסיפה.</li>
+                                                <li>אסיפה כללית רגילה תשמע דינים וחשבונות על פעולות הועד ועל פעולות ועדת הביקורת, תדון בהם ובדין וחשבון הכספי שהגיש לה הועד, תחליט על אישורם, ותבחר בועד ובועדת הבקורת.</li>
+                                                <li>
+                                                    <strong>מניין באסיפה הכללית</strong><ol>
+                                                        <li>אסיפה כללית לא תיפתח אם לא נכחו לפחות רבע ממספר חברי העמותה; היה מנין זה נוכח בפתיחת האסיפה, רשאית היא להמשיך בדיוניה ולקבל החלטות אף אם פחת מספר הנוכחים.</li>
+                                                        <li>לא נתכנס המניין האמור תוך שעה מהזמן הנקוב בהזמנה, יראו את האסיפה כאסיפה נדחית מידית, ללא צורך בהזמנה נוספת, ובאסיפה זו יהיו הנוכחים רשאים לדון ולהחליט ברוב רגיל, יהיה מספרם אשר יהיה.</li>
+                                                    </ol>
+                                                </li>
+                                                <li>אסיפה כללית תבחר, מבין חברי העמותה, מזכיר לאסיפה. יושב ראש העמותה יהיה יושב ראש האסיפה הכללית.</li>
+                                                <li>החלטות האסיפה הכללית (רגילה או נדחית) יתקבלו ברוב קולות של המצביעים, זולת אם החוק או תקנון זה דרשו רוב אחר לקבלתן; היו הקולות שקולים, רשאי יושב ראש האסיפה להכריע.</li>
+                                                <li>מזכיר האסיפה הכללית ינהל את פרוטוקול האסיפה.</li>
+                                            </ol><h4>סימן ו': יושב ראש העמותה וסגנו</h4><ol start="18">
+                                                <li>האסיפה הכללית תמנה לעמותה יושב ראש אחד, מבין חברי הועד.</li>
+                                                <li>יושב ראש העמותה יהיה גם יושב ראש הועד.</li>
+                                                <li>תפקידיו של יושב ראש הועד הם קביעת מועדי ההתכנסות וסדרי העבודה של ועד העמותה; ניהול ישיבות ועד העמותה וספירת הקולות בישיבות אלה; פיקוח שוטף על עבודת ועד העמותה; אחריות לקשרי החוץ והפנים של העמותה תוך ייצוג העמותה בפני גופים רלוונטיים למטרותיה בארץ ובחו"ל והאצלת תפקידי ייצוג לאחרים.</li>
+                                                <li>לשם מילוי תפקידיו, יושב ראש העמותה רשאי למנות סגן מבין חברי הוועד. הסגן ימלא את תפקידו של יושב ראש העמותה בהיעדרו.</li>
+                                                <li>יושב ראש העמותה ייבחר לתקופה של ארבע שנים. יושב ראש יוצא יכול להיבחר כיושב ראש חדש.</li>
+                                                <li>יושב ראש העמותה רשאי להתפטר בכל עת מכהונתו על ידי הודעה בכתב לועד; יושב ראש העמותה יחדל לכהן אם הוכרז פסול דין או פושט רגל או שנבצר ממנו למלא את תפקידו מכל סיבה אחרת.</li>
+                                                <li>האסיפה הכללית רשאית לסיים את כהונתו של יושב ראש הוועד המנהל בטרם סיום תקופת כהונתו ברוב של 75% מכלל המצביעים. יושב ראש הוועד המנהל שהועבר מתפקידו על ידי האסיפה הכללית ימשיך לכהן כחבר הוועד המנהל, אלא אם האסיפה הכללית סיימה את כהונתו כחבר הוועד המנהל, ברוב רגיל.</li>
+                                            </ol><h4>סימן ז': הוועד</h4><ol start="31">
+                                                <li>ועד העמותה הוא הגוף המנהל והמבצע של העמותה ותפקידו העיקרי הוא התווית מדיניות העמותה לשם הגשמת מטרותיה ואת הדרכים לביצוע מדיניות זאת, בהתאם להחלטות האסיפה הכללית ולתקנון.</li>
+                                                <li>כל סמכות וכוח שלא יוחדו במפורש למוסד אחר בעמותה בתקנון זה או &nbsp;בחוק – מסורים לועד.</li>
+                                                <li>בועד העמותה יהיו בין שניים לחמישה חברים (כולל יושב ראש הועד), כפי שייקבע בהחלטת האסיפה הכללית.</li>
+                                                <li>הועד ייבחר על ידי האסיפה הכללית ויכהן מיום היבחרו ועד לתקופה של ארבע שנים; חבר הועד היוצא יכול להיבחר לועד החדש.</li>
+                                                <li>חבר הועד רשאי להתפטר בכל עת מכהונתו על ידי הודעה בכתב לועד; חבר הועד יחדל לכהן אם הוכרז פסול דין או פושט רגל.</li>
+                                                <li>
+                                                    <strong>השלמת הועד</strong><ol>
+                                                        <li>נתפנה מקומו של חבר הועד, רשאים הנותרים או הנותר למנות חבר אחר של העמותה לכהן כחבר הועד עד לאסיפה הכללית הקרובה; עד למינוי כזה רשאים הנותרים או הנותר להמשיך לפעול כועד.</li>
+                                                        <li>חבר הועד שנבצר ממנו למלא תפקידיו, רשאים הנותרים או הנותר למנות חבר העמותה למלא מקומו עד שישוב למלא תפקידיו.</li>
+                                                    </ol>
+                                                </li>
+                                                <li>הועד רשאי להסדיר בעצמו את מועד ישיבותיו, ההזמנה להן, המניין הדרוש בהן, דרך ניהולן ואופן קבלת ההחלטות בהן.</li>
+                                                <li>החלטות הועד יתקבלו ברוב קולות המצביעים; היו הקולות שקולים, &nbsp;יהיה קולו של יושב ראש הועד הקול המכריע; החלטת כל חברי הועד פה אחד יכול שתתקבל גם שלא בישיבת הועד.</li>
+                                                <li>הועד ינהל פרוטוקול מישיבותיו והחלטותיו.</li>
+                                                <li>הועד רשאי להסמיך שניים או יותר מבין חבריו לחתום בשם העמותה על מסמכים שיחייבו אותה, ולבצע בשמה פעולות שהן בתחום סמכותו.</li>
+                                                <li>ועד העמותה רשאי להקים מוסדות עמותה נוספים ולקבוע נהלים (למשל רישום שחקנים וקבוצות) שלא פורטו בתקנון זה, ולקבוע תקנונים ונהלים לפעילותם.</li>
+                                            </ol><h4>סימן ח': ועדת הבקורת</h4><ol start="42">
+                                                <li>הוראות תקנות 33 עד 39 יחולו, בשינויים המחוייבים, גם על ועדת הבקורת.</li>
+                                            </ol><h4>סימן ט': סניפים</h4><ol start="43">
+                                                <li>העמותה רשאית, בהחלטת האסיפה הכללית, להקים סניפים ולקבוע את ארגונם ואת סדרי ניהול ענייניהם.</li>
+                                            </ol><h4>סימן י': איסור חלוקת רווחים; נכסים לאחר פירוק</h4><ol start="44">
+                                                <li>פורקה העמותה ולאחר שנפרעו חובותיה במלואם נשארו נכסים, יועברו נכסים אלה לעמותה אחרת או לחברה לתועלת הציבור אחרת הרשומה אצל רשם ההקדשות כהגדרתו בחוק החברות, התשנ"ט-1999 בעלת מטרות דומות.</li>
+                                                <li>למען הסר ספק, מובהר כי נכסי העמותה והכנסותיה ישמשו אך ורק לקידום מטרות העמותה וחלוקת רווחים או טובות הנאה בכל צורה שהיא, בין חבריה, אסורה.</li>
+                                            </ol>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div> <!--End of tabs-->
+
+                        <br />
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="row">
+                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                        </div>
+
+                        <div style="margin-bottom:18px;"></div>
+
+                        <div class="row" id="anotherpostsbox">
+
+                            <div class="row" id="headeranotherpost">
+
+                                <h4 class="headh4"><span style="color:#1cbbaa">פייסבוק</span></h4>
+
+                            </div>
+
+                            <div class="row" style="margin-top:11px; height:342px">
+
+                                <div class="fb-page" data-href="https://www.facebook.com/IsraelEsports" data-tabs="timeline" data-width="250" data-height="330" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/IsraelEsports" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/IsraelEsports">‎העמותה לגיימינג תחרותי בישראל - Israeli Esports Association‎</a></blockquote></div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section> <!--End Page Content-->
+
+        </div>
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>
