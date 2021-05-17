@@ -25,7 +25,7 @@
             background-color: #292e38;
             max-width: 1110px;
             padding-top: 30px;
-            padding-bottom: 400px;
+            padding-bottom: 200px;
             position: relative;
         }
 
@@ -111,6 +111,21 @@
         .nav-tabs .nav-link { /*Color of the tabs*/
             color: #fbf5f5;
         }
+
+        .submit-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 7px 14px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .submit-button:hover {
+                background-color: #e0e0e0;
+            }
 
     </style>
 
@@ -345,7 +360,7 @@
         function SuccessGamer(data) {
             console.log("in Success");
 
-            swal("Gamer has been created", "Please wait until admin confirm your account", "Thank you"); //Example***
+            swal("משתמש נוצר במערכת", "אנא המתן עד לקבלת אישור ממנהלי האתר", "success");
 
             setTimeout(function () {
                 location.replace("TemplatePage.html");
@@ -388,7 +403,7 @@
         function SuccessOrgenaizer(data) {
             console.log("in Success");
 
-            swal("Orgenaizer has been created", "Please wait until admin confirm your account", "Thank you"); //Example***
+            swal("משתמש נוצר במערכת", "אנא המתן עד לקבלת אישור ממנהלי האתר", "success");
 
             setTimeout(function () {
                 location.replace("TemplatePage.html");
@@ -503,6 +518,27 @@
 
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <h3 style="color:#f3113b">טופס הרשמה - שחקן</h3>
+
+                    <div>
+                        <p><b>רישום שחקן לעמותה תקף לשנה מקנה לשחקן את ההטבות הבאות:</b></p>
+                        <ul>
+                            <li>קידום ענף הגיימינג התחרותי בישראל ע"י תמיכה בארגון המקצועי הרשמי בתחום</li>
+                            <li>
+                                היכולת להשתתף בטורנירים וליגות בפיקוח העמותה, <span>
+                                    <strong>לרבות אליפות ישראל ומוקדמות אליפות העולם</strong>
+                                </span>
+                            </li>
+                            <li>קבלת הזמנות לאירועים, מבצעים מיוחדים של שותפים והטבות נוספות כשחקן רשום בעמותה</li>
+                            <li>
+                                <strong><a href="../Pages/Ranks.html" style="text-decoration: none; color: #04b8a5">צבירת ניקוד</a> לדירוג העונתי</strong>
+                            </li>
+                            <li>הטבות נוספות כפי שיקבע מעת לעת ע"י העמותה</li>
+                        </ul><p style="text-align: center;">
+
+                    </div>
+
+                    <h4 style="padding-bottom:7px; padding-top:5px;">טופס הרשמה</h4>
+
                     <form id="gForm" class="was-validated">
                         <div class="row">
                             <div class="col">
@@ -611,8 +647,8 @@
 
                             <!--Need to fix it to be responsive Down*-->
 
-                            <div class="mb-3" style="text-align:left; padding-left:115px;">
-                                <input type="submit" class="btn btn-primary" value="שליחת טופס" />
+                            <div class="mb-3" style="text-align:left; padding-left:114px;">
+                                <input type="submit" class="submit-button" value="שליחת טופס" />
                             </div>
 
                         </div>
@@ -623,6 +659,34 @@
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
                     <h3 style="color:#f3113b">טופס הרשמה - מארגן</h3>
+
+                    <div class="row">
+
+                        <div class="col-sm-4">
+                            <div>
+                                <h5>מי יכול להירשם?</h5>
+                                <p>מארגני תחרויות גיימינג (ספורט אלקטרוני) ישראליים יכולים להירשם כמארגנים מוכרים בעמותה. ניתן להירשם כאדם פרטי או כארגון רשום כחוק,<br /> ובלבד שהאדם \ הארגון רשומים בישראל.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div>
+                                <h5>מה היתרונות למארגן מוכר בעמותה?</h5>
+                                <p>רק מארגן מוכר של העמותה לגיימינג תחרותי (ע"ר) יכול לקבל הכרה ותמיכה בתחרויות פרטיות שבארגונו. עם קבלת אישור הרישום כמארגן מוכר, כל התחרויות של אותו המארגן זכאיות לקבל תמיכה מהעמותה כתחרויות מוכרות ובלבד שהן עומדות בקריטריונים הרלוונטיים המובאים ב<strong>נוהל ההכרה בתחרויות</strong>.</p><p>בנוסף, יקבל המארגן גישה למערכת התחרויות של העמותה לטובת פרסום התחרויות באתר העמותה. כמו כן, המארגן זכאי לקבל תג "מארגן מוכר" בשרת הדיסקורד של העמותה הכולל הרשאות פרסום בערוץ "אירועים ותחרויות".</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div>
+                                <h5>מה היתרונות לתחרות מוכרת?</h5>
+                                <p>תחרות של מארגן מוכר ("תחרות מוכרת") היא תחרות פרטית המקבל תמיכה מהעמותה:</p><ul><li>דף תחרות באתר העמותה;</li><li>שחקנים רשומים זכאים לקבל ניקוד רשמי בהתאם לדירוגם בתחרות המוכרת;</li><li>פרסום התחרות בערוצי המדיה החברתית השונים של העמותה –&nbsp;<strong>בהתאם לשיקול העמותה.</strong></li></ul>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h4 style="padding-bottom:7px;">טופס הרשמה</h4>
+
                     <form id="oForm" class="was-validated">
                         <div class="row">
                             <div class="col">
@@ -723,7 +787,6 @@
                                             </div>
                                         </div>
 
-                                        <br /><br />
                                     </div>
 
 
@@ -731,11 +794,23 @@
 
                             </div>
 
+                           <!--check if its "V" when sent-->
+                            <div class="row">
+                                <div class="col">
+                                    <h5>הצהרת המבקש</h5>
+                                    <div class="field-list-item">
+                                        <input type="checkbox" id="oadmit" name="oadmit" class="field size-medium" value="admit" required>
+                                        <br />
+                                        <span>במקרה שבו העמותה מכירה בי כמארגן מוכר, אני מתחייב לנהל כל תחרות המוגשת לעמותה בהתאם לחוקים ולתקנות שימסרו במועד הגשת התחרות; אני פוטר בזאת את העמותה מכל אחריות לגבי קיום כל תחרות, ובכלל זאת לא תהיה לעמותה כל חבות ביחס לחלוקת הפרס הכספי, והדבר הוא באחריותי בלבד; אני מתחייב לעמוד בכל ההוראות, החוקים והתקנות החלים על ארגון האירוע בו תתקיים כל תחרות, ובכלל זה קיום ביטוח עבור התחרות והמשתתפים בה; אם יחול שינוי כלשהוא בפרטים עליהם דיווחתי או הצהרתי, אודיע על כך מיידית לעמותה, בכתב; אני מצהיר כי השם דלעיל הוא שמי, וכי הפרטים שמסר בטופס זה הם מלאים, מדויקים ונכונים; אני מתחייב כי קראתי ואני מסכים לתנאי נוהל ההכרה בתחרויות של העמותה כפי שמפורסם באתר העמותה נכון למועד שליחת הטופס.</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!--Need to fix it to be responsive Down*-->
 
-                            <div class="mb-3" style="text-align:left; padding-left:115px;">
+                            <div class="mb-3" style="text-align:left; padding-left:114px;">
 
-                                <input type="submit" class="btn btn-primary" value="שליחת טופס" />
+                                <input type="submit" class="submit-button" value="שליחת טופס" />
                             </div>
 
 

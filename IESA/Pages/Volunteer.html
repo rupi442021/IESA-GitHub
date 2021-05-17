@@ -1,0 +1,549 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <title>&#x202E; התנדבות בעמותה – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+            /*additional to posts*/
+            line-height: 1.7;
+            letter-spacing: .015em;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            padding-top: 30px;
+            padding-bottom: 120px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Template Style*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 55px;
+            font-weight: 600;
+            letter-spacing: .015em;
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
+        }
+
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+        th {
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            border-right: 1px solid white;
+        }
+
+            th:first-child {
+                border-left: 2px solid white;
+            }
+
+        #page_content {
+            margin: 3px;
+        }
+
+        .alignleft {
+            float: left;
+        }
+
+        img.alignleft {
+            display: inline;
+            margin: 10px 15px 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        #bottomBTN {
+            position: relative;
+            left: -22%;
+        }
+
+        i {
+            font-size: 1.27em;
+            padding: 5px;
+        }
+
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .more-info-button:hover {
+                background-color: #e0e0e0;
+            }
+
+
+        /*accordion*/
+
+        .accordion {
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: right;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+            background-color: #666471;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+            .active, .accordion:hover {
+                background-color: #dd163b;
+            }
+
+            .accordion:after {
+                content: '\002B';
+                color: white;
+                font-weight: bold;
+                float: left;
+                margin-left: 5px;
+            }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: #292e38;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            width: 100%;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        /*accordion*/
+
+        .submit-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 4px 11px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .submit-button:hover {
+                background-color: #e0e0e0;
+            }
+
+
+    </style>
+
+    <script>
+
+
+
+        $(document).ready(function () {
+
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+
+         });
+
+    </script>
+
+
+</head>
+<body>
+
+    <!--For facebook iframe-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=120238457987541&autoLogAppEvents=1" nonce="pnARNgWE"></script>
+    <!--For facebook iframe-->
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+
+        <div class="container">
+
+
+            <section id="page_title">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">התנדבות בעמותה</h2>
+                <div class="divdown"></div>
+            </section>
+
+            <section id="page_content">
+                <div class="row">
+                    <div class="col-lg-9">
+
+                        <div class="elementor-text-editor elementor-clearfix">
+                            <p>רוצים לקחת חלק בפעילויות ואירועים לקידום ופיתוח הגיימינג התחרותי בישראל?<br /> ניתן להירשם כמתנדבים בעמותה בטופס שלהלן. מומלץ להתחבר לשרת ה-Discord שלנו לאחר מילוי הטופס.</p><h6>בחרו את התפקיד הרצוי:</h6>
+                        </div>
+
+                        <br />
+
+                        <section id="accordion">
+
+                            <button class="accordion">מתנדבים כלליים</button>
+                            <div class="panel">
+                                <div style="margin-bottom: 10px;"></div>
+
+                                <form id="generalForm">
+                                    <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                        <div class="col-md-6">
+                                            <strong style="margin-bottom:5px;">שם מלא</strong>
+                                            <input type="text" class="form-control required" name="name" id="nameTB1" required>
+                                        </div>
+                                    </div>
+                                    <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                        <div class="col-md-6">
+                                            <strong style="margin-bottom:5px;">מספר טלפון \ Whatsapp</strong>
+                                            <input type="text" class="form-control required" name="phone" id="phoneTB1" required>
+                                        </div>
+                                    </div>
+                                    <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                        <div class="col-md-6">
+                                            <strong style="margin-bottom:5px;">אימייל</strong>
+                                            <input type="email" class="form-control required" name="email" id="emailTB1" required>
+                                        </div>
+                                    </div>
+                                    <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                        <div class="col-md-6">
+                                            <strong style="margin-bottom:5px;">דיסקורד</strong>
+                                            <input type="text" class="form-control" placeholder="כולל טאג: Nickname#0000" name="discord" id="discordTB1">
+                                        </div>
+                                    </div>
+
+                                    <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                        <div class="col-md-6">
+                                            <strong style="margin-bottom:5px;">תאריך לידה</strong>
+                                            <input type="date" class="form-control required" name="dob" id="dobTB1" required>
+                                        </div>
+                                    </div>
+                                    <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                        <div class="col-md-6">
+
+                                            <strong style="margin-bottom:5px;">מגדר</strong>
+                                            <br />
+                                            <input type="radio" class="form-check-input" id="gMale" name="radio-gender-1" value="Male" required>
+                                            <label class="form-check-label" for="validationFormCheck1">זכר</label>
+
+                                            <span style="margin-left: 8px;"></span>
+
+                                            <input type="radio" class="form-check-input" id="gFemale" name="radio-gender-1" value="Female" required>
+                                            <label class="form-check-label" for="validationFormCheck2">נקבה</label>
+
+                                            <span style="margin-left: 8px;"></span>
+
+                                            <input type="radio" class="form-check-input" id="gNone" name="radio-gender-1" value="None" required>
+                                            <label class="form-check-label" for="validationFormCheck3">מעדיף לא לומר</label>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="nk-gap"></div>
+                                    <strong style="margin-bottom:5px;">הערות</strong>
+                                    <textarea class="form-control" name="message" rows="5" id="textareaTB1"></textarea>
+                                    <div class="nk-gap-1"></div>
+
+                                    <div class="mb-3" style="text-align:left; margin-top: 11px;">
+                                        <input type="submit" class="submit-button" value="שליחת טופס" />
+                                    </div>
+
+                                </form>
+
+
+
+                            </div>
+
+                            <div style="margin-bottom: 10px;"></div>
+
+                            <button class="accordion">מעצב\ת גרפיקה</button>
+                            <div class="panel">
+                                <div style="margin-bottom: 10px;"></div>
+
+                                <div id="elementor-tab-content-2672" class="elementor-tab-content elementor-clearfix elementor-active" data-tab="2" role="tabpanel" aria-labelledby="elementor-tab-title-2672" style="display: block;">
+                                    <p>העמותה לגיימינג תחרותי מחפשת&nbsp;<strong>מעצב גרפי</strong> שיסייע ביצירת התכנים הגרפיים הקשורים לפעילות העמותה תחת כללי המיתוג של העמותה בכל המדיות.</p>
+                                    <p><strong>מועמדים מתאימים הם:</strong></p>
+                                    <ul>
+                                        <li>גיימרים ובעלי היכרות כללית עם ענף ה- Esports בארץ ובעולם</li>
+                                        <li>אנשים המעוניינים לתרום מזמנם וכשרונם לקידום הגיימינג התחרותי בישראל</li>
+                                        <li>בעלי ניסיון בעיצוב גרפי ו\או סטונדטים בתחום</li>
+                                        <li>בעלי היכרות עם טכנולוגיות עיצוב רלוונטיות (פוטושופ, אילוסטרייטור, אינדיזיין וכו')</li>
+                                        <li>חדים ושמים דגש על אסתטיקה ו"הפרטים הקטנים"</li>
+                                        <li>בעלי יכולות תקשורת מצוינות</li>
+                                        <li>בעלי היכולת לעבוד בצורה מסודרת ולעמוד בלוחות זמנים</li>
+                                        <li>כל ניסיון קודם דומה או תואר בתחום הוא פלוס</li>
+                                    </ul><p><strong>תחומי האחריות:</strong></p><ul>
+                                        <li>יצירת חומרים גרפיים עבור המדיות השונות של העמותה (פייסבוק, לינקדאין, אתר וכו')</li>
+                                        <li>וידוא שכל החומרים הגרפיים של העמותה עומדים בהנחיות המותג</li>
+                                        <li>העלאת רעיונות והובלת התחום בעמותה לשיפור הנוכחות הגרפית שלה בכל המדיות</li>
+                                    </ul><p><strong>קצת על צוות המִנְהֶלֶת בעמותה</strong></p>
+                                    <p>צוות <a href="https://iesa.org.il/about/structure">המנהלת</a> של העמותה לגיימינג תחרותי פועל ישירות תחת יו"ר העמותה והוועד המנהל, ומהווה הזרוע הביצועית של הארגון ביישום התכניות וההחלטות של העמותה.</p>
+                                    <p><strong>שימו <span style="color: #dd163b">♥</span> – ככל התפקידים בעמותה, גם תפקיד זה הוא בהתנדבות מלאה</strong>.</p>
+
+                                    <h4>הגשת מועמדות</h4>
+
+                                    <div style="margin-bottom: 12px;"></div>
+
+                                    <form id="designerForm">
+                                        <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                            <div class="col-md-6">
+                                                <strong style="margin-bottom:5px;">שם מלא</strong>
+                                                <input type="text" class="form-control required" name="name" id="nameTB2" required>
+                                            </div>
+                                        </div>
+                                        <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                            <div class="col-md-6">
+                                                <strong style="margin-bottom:5px;">מספר טלפון \ Whatsapp</strong>
+                                                <input type="text" class="form-control required" name="phone" id="phoneTB2" required>
+                                            </div>
+                                        </div>
+                                        <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                            <div class="col-md-6">
+                                                <strong style="margin-bottom:5px;">אימייל</strong>
+                                                <input type="email" class="form-control required" name="email" id="emailTB2" required>
+                                            </div>
+                                        </div>
+                                        <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                            <div class="col-md-6">
+                                                <strong style="margin-bottom:5px;">דיסקורד</strong>
+                                                <input type="text" class="form-control" placeholder="כולל טאג: Nickname#0000" name="discord" id="discordTB2">
+                                            </div>
+                                        </div>
+
+                                        <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                            <div class="col-md-6">
+                                                <strong style="margin-bottom:5px;">קישור לאתר אישי / עמוד ברשת</strong>
+                                                <input type="text" class="form-control required" placeholder="DeviantArt, אתר אישי, פייסבוק, תיק עבודות וכו'" name="site" id="siteTB2" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                            <div class="col-md-6">
+                                                <strong style="margin-bottom:5px;">תאריך לידה</strong>
+                                                <input type="date" class="form-control required" name="dob" id="dobTB2" required>
+                                            </div>
+                                        </div>
+                                        <div class="row vertical-gap sm-gap" style="margin-bottom: 9px;">
+                                            <div class="col-md-6">
+
+                                                <strong style="margin-bottom:5px;">מגדר</strong>
+                                                <br />
+                                                <input type="radio" class="form-check-input" id="gMale" name="radio-gender-2" value="Male" required>
+                                                <label class="form-check-label" for="validationFormCheck1">זכר</label>
+
+                                                <span style="margin-left: 8px;"></span>
+
+                                                <input type="radio" class="form-check-input" id="gFemale" name="radio-gender-2" value="Female" required>
+                                                <label class="form-check-label" for="validationFormCheck2">נקבה</label>
+
+                                                <span style="margin-left: 8px;"></span>
+
+                                                <input type="radio" class="form-check-input" id="gNone" name="radio-gender-2" value="None" required>
+                                                <label class="form-check-label" for="validationFormCheck3">מעדיף לא לומר</label>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="nk-gap"></div>
+                                        <strong style="margin-bottom:5px;">אודותייך</strong>
+                                        <textarea class="form-control required" name="message" rows="5" id="textareaTB2" required></textarea>
+                                        <div class="nk-gap-1"></div>
+
+                                        <div class="mb-3" style="text-align:left; margin-top: 11px;">
+                                            <input type="submit" class="submit-button" value="שליחת טופס" />
+                                        </div>
+
+                                    </form>
+
+
+                                </div>
+
+
+
+                            </div>
+
+                            <br>
+
+
+                        </section>
+
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <div class="row">
+                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                        </div>
+
+                        <div style="margin-bottom:18px;"></div>
+
+                        <div class="row" id="anotherpostsbox">
+
+                            <div class="row" id="headeranotherpost">
+
+                                <h4 class="headh4"><span style="color:#1cbbaa">פייסבוק</span></h4>
+
+                            </div>
+
+                            <div class="row" style="margin-top:11px; height:342px">
+
+                                <div class="fb-page" data-href="https://www.facebook.com/IsraelEsports" data-tabs="timeline" data-width="250" data-height="330" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/IsraelEsports" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/IsraelEsports">‎העמותה לגיימינג תחרותי בישראל - Israeli Esports Association‎</a></blockquote></div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section> <!--End Page Content-->
+
+        </div>
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>

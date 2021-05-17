@@ -264,8 +264,9 @@
     <Content Include="Pages\Federation.html" />
     <Content Include="Pages\Regulations.html" />
     <Content Include="Pages\New_Referee.html" />
+    <Content Include="Pages\Org_Resource.html" />
     <Content Include="Site_Pages\Try.html" />
-    <Content Include="Site_Pages\Volunteer.html" />
+    <Content Include="Pages\Volunteer.html" />
     <Content Include="Style\Style_Sign_Up.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

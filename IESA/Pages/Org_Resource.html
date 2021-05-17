@@ -1,0 +1,789 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <title>&#x202E; מרכז משאבים – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+            /*additional to posts*/
+            line-height: 1.7;
+            letter-spacing: .015em;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            padding-top: 30px;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Template Style*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 55px;
+            font-weight: 600;
+            letter-spacing: .015em;
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
+        }
+
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+        th {
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            border-right: 1px solid white;
+        }
+
+            th:first-child {
+                border-left: 2px solid white;
+            }
+
+        #page_content {
+            margin: 3px;
+        }
+
+        .alignleft {
+            float: left;
+        }
+
+        img.alignleft {
+            display: inline;
+            margin: 10px 15px 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        #bottomBTN {
+            text-align: center;
+            position: relative;
+            left: -13%;
+        }
+
+        i {
+            font-size: 1.05em;
+            padding: 5px;
+        }
+
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .more-info-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        .nav-tabs .nav-link {
+            color: #fbf5f5;
+            margin-left: 10px;
+        }
+
+        .nk-down {
+            float: left;
+            max-width: 100%;
+            font-size: 1rem;
+        }
+
+        h6 {
+            color: #04b8a5;
+        }
+
+        .nk-decorated-h, .nk-decorated-h-2 {
+            display: flex;
+        }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a !important;
+            }
+
+            .nk-decorated-h-2::before, .nk-decorated-h::before {
+                flex: 20px !important;
+                width: 20px !important;
+                min-width: 20px !important;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+                display: block;
+                flex: auto;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+
+
+
+        /*accordion*/
+
+        #accordionarea .accordion {
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: right;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+            background-color: #666471;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+            #accordionarea .active, .accordion:hover {
+                background-color: #dd163b;
+            }
+
+        #accordionarea .accordion:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: left;
+            margin-left: 5px;
+        }
+
+        #accordionarea .active:after {
+            content: "\2212";
+        }
+
+        #accordionarea .panel {
+            padding: 0 18px;
+            background-color: #292e38;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            width: 100%;
+        }
+
+        #accordionarea strong {
+            font-weight: 600;
+        }
+
+        #accordionarea a {
+            color: #04b8a5;
+        }
+
+        /*accordion*/
+
+    </style>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+
+        });
+
+    </script>
+
+
+</head>
+<body>
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+
+        <div class="container">
+
+            <section id="page_title">
+                <a class="titlelink" href="../Pages/Orgenaizer_Main_Page.html">אזור אישי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">מרכז משאבים</h2>
+                <div class="divdown"></div>
+            </section>
+
+
+            <div class="row" id="accordionarea">
+                <div class="col" style="margin:3px;">
+
+                    <p>בעמוד זה ניתן למצוא מידע רב שיסייע לכם בהקמה וניהול של תחרות ספורט אלקטרוני העומדת בכלל הקריטריונים של העמותה וכזו שתוכל להתקיים בהצלחה רבה ובהשתתפות מרובה של שחקנים.</p>
+
+                    <div style="margin-bottom: 30px">
+                    </div>
+
+                    <h3 class="nk-decorated-h-2"><span>תחרות מוכרת בעמותה: מדריכים ושאלות נפוצות</span></h3>
+
+                    <div style="padding-top:27px;"></div>
+
+                    <section id="accordion">
+
+                        <button class="accordion">מה הן שיטות התחרות המקובלות בענף הגיימינג?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <div>
+                                <ol>
+                                    <li>
+                                        <strong>גביע רגיל – Single Elimination:&nbsp;</strong>השיטה הפשוטה והנפוצה ביותר. בשיטה זו המשתתף מודח מהתחרות לאחר הפסד אחד. משך הזמן הנדרש לתחרות בשיטה זו הוא בינוני, כאשר כל סיבוב מכיל חצי מהמשחקים של הסיבוב הקודם. השיטה טובה לכל כמות של משתתפים, אבל לא משאירה מקום לטעויות – הפסד בודד מדיח את המשתתף מהתחרות.<br>
+                                        <span style="color: #04b8a5;"><strong>בחרו בשיטה</strong> <strong>זו</strong></span> אם אתם מחפשים שיטה מהירה ופשוטה שכולם מכירים.
+                                    </li>
+                                    <li>
+                                        <strong>גביע כפול – Double Elimination:&nbsp;</strong>שיטת מורחבת של הגביע הרגיל, כאשר כל משתתף יכול להפסיד פעם אחת ועדיין לנצח בתחרות. השיטה הזו ארוכה יותר מפי שניים משיטת הגביע הרגיל, למרות שכמות המשחקים אינה כפולה משיטת הגביע הרגיל. היא טובה לכל כמות של משתתפים.<br>
+                                        <span style="color: #04b8a5;"><strong>בחרו בשיטה</strong> <strong>זו</strong></span> אם אתם רוצים להעניק חוויה גמישה יותר למשתתפים, ויש לכם את היכולת להסביר את השיטה ואת הזמן לנהל תחרות ארוכה יותר.
+                                    </li>
+                                    <li>
+                                        <strong>שיטת סבבים – Round Robin:</strong> בשיטה זו המשתתפים מחולקים לטבלאות (או "בתים") קטנים וכל משתתף משחק נגד כל משתתף אחר שבאותה הטבלה / הבית. שיטה זו אינה טובה ליותר מ-10 משתתפים בבית. משתמשים בה בדרך כלל על מנת לסנן משתתפים באופן אובייקטיבי או לקבוע דירוג לקראת פלייאוף בגמישות מירבית (כאשר כל בית הוא למעשה תת-תחרות בפני עצמו).<br>
+                                        <span style="color: #04b8a5;"><strong>בחרו בשיטה</strong> <strong>זו</strong></span> אם יש לכם משתתפים בכמה רמות יכולת, ואתם רוצים לקיים משחקים מקבילים על מנת לקבוע להם דירוג.
+                                    </li>
+                                    <li>
+                                        <strong>שיטת ליגה – League:</strong> שיטה זהה לשיטת סבבים, אך יש רק בית אחד. ניתן להשתמש בשיטה זו לכל מספר של משתתפים, אך כמות המשחקים תגדל באופן משמעותי עם תוספת של כל משתתף.
+                                        <br><span style="color: #04b8a5;">
+                                            <strong>בחרו בשיטה</strong> <strong>זו</strong>
+                                        </span> אם אתם רוצים ליצור רצף משחקים קבוע. בחירה טובה לתחרויות עם מספר משתתפים מועט ורמת יכולה גבוהה של המשתתפים.
+                                    </li>
+                                    <li>
+                                        <strong>השיטה השוויצרית – Swiss System:&nbsp;</strong>שיטה דומה לשיטת ליגה, אך המשתתפים לא ישחקו נגד כל משתתף אחר, אלא רק נגד חלקם. בכל סבב משחקים היריב נקבע על פי התוצאות של הסבבים הקודמים. שיטה מצוינת כאשר יש מספר רב של משתתפים ואינטרס לחיסכון בזמן.<br>
+                                        <span style="color: #04b8a5;"><strong>בחרו בשיטה</strong> <strong>זו</strong></span> אם בתחרות יש מספר רב של משתתפים, או אם התחרות פתוחה לכל הדרגות (מתחילים, מקצועיים וכו').
+                                    </li>
+                                    <li>
+                                        <strong>ניקוד חופשי – Free for All</strong><strong>:&nbsp;</strong>בשיטה זו כל השחקנים מוצבים באותה טבלה, ומשחקים כולם-נגד-כולם כאשר בכל סבב (משחק) הם צוברים ניקוד בהתאם להישגים באותו הסבב. ניתן להרחיב את השיטה לשימוש בטבלאות דומות לגביע רגיל או שיטת סבבים, על מנת לייצר מספר שלבים לתחרות.<br>
+                                        <span style="color: #04b8a5;"><strong>בחרו בשיטה</strong> <strong>זו</strong></span> אם התחרות מתקיימת בכותר באטל-רויאל או מירוצים.
+                                    </li>
+                                </ol>
+                            </div>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">היכן ניתן להגיש את התחרות שלי?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>יש לפנות לאיש הקשר שלכם בעמותה. לא רשומים כמארגנים מוכרים? <a href="../Pages/Sign_Up.html">לחצו כאן</a></p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">איך אפשר לדעת האם התחרות שהגשתי התקבלה?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>התחרות תופיע בעמוד הבית של אתר העמותה ו<a href="https://iesa.org.il/tournaments">בעמוד התחרויות</a>.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">איך אפשר לדעת אם נדרשים תיקונים להגשה שלי?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>לאחר הגשת תחרות, העמותה מקבלת את הפרטים שהוזנו ובודקת אותם בהתאם לנוהל ההכרה בתחרויות. במידה ונדרשים תיקונים או פרטים נוספים, העמותה תיצור קשר עם המארגן.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">מה קורה אם אני צריך לעדכן את פרטי התחרות לאחר שהתחרות כבר אושרה?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>יש ליצור קשר עם איש הקשר בעמותה ולהסביר את מהות השינויים. במקרים מסוימים, צוות העמותה יעדכן עבורכם את דף התחרות. במקרים שבהם השינויים הינם מקיפים, יתכן שהתחרות תבוטל ותצטרכו להגיש אותה מחדש עם הפרטים החדשים לאישור.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">האם מובטח לתחרות שלי לקבל תמיכה מהעמותה?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <div><p>תחרות מוכרת שאושרה על ידי העמותה תקבל את התמיכה הבאה:</p>
+                            <ul>
+                                <li>פרסום דף התחרות באתר העמותה</li>
+                                <li>השחקנים&nbsp;<strong>הרשומים לעמותה</strong> שישתתפו בתחרות יקבלו ניקוד לדירוג הארצי</li>
+                                </ul><p>תמיכה נוספת תינתן על פי שיקול דעת העמותה, ובהתאם לכל מקרה לגופו.</p>
+                            </div>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">איזה מידע צריך להגיש בעת הגשת התחרות?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>מעבר למידע הבסיסי שמופיע בטופס ההגשה, יש להוסיף בתיאור התחרות קישור לדף&nbsp;<strong>חוקי התחרות</strong> המפרט על החוקים ועל מבנה התחרות (שיטת גביע – Single, שיטת בתים וכו'). במקרה שבו הוגשה תחרות ללא המידע הנ"ל, היא לא תאושר.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">אני מארגן את התחרות הראשונה שלי, האם ישנן הגבלות?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>העמותה אינה מציבה הגבלות על מארגנים מתחילים, אך ממליצה לקרוא בעיון את כל החומרים המופיעים בדף זה ולוודא עמידה בנוהל ההכרה בתחרויות.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">מהו מספר המשתתפים המינימלי שנדרש לתחרות מוכרת?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>על מנת שתחרות מוכרת תהיה זכאית לניקוד בדירוג הארצי, נדרשים לפחות 4 שחקנים (תחרות יחידים) או 4 קבוצות (תחרות קבוצתית.)</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">מהו מספר המשתתפים המקסימלי לתחרות מוכרת?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>אין הגבלה מקסימלית למספר המשתתפים.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">מתי הכי מאוחר ניתן להגיש תחרות?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>לפחות שבועיים לפני מועד סגירת ההרשמה. העמותה ממליצה להגיש תחרות בהקדם האפשרי ולא לחכות לרגע האחרון, שכן יתכן ויידרשו שינויים להגשה לפני שהיא תאושר.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">כמה זמן לוקח לאישור \ דחיית הגשה?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>אנו עושים את המאמץ לאשר או לדחות הגשות תוך 3 ימים. לאור הגשות מרובות, יתכנו עיכובים ולכן מומלץ להגיש כמה שיותר מוקדם.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">התחרות שלי קיבלה אישור - האם זה אומר שהעמותה נותנת לי חסות?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>כאשר העמותה מכירה בתחרות ומעניקה את תמיכתה, היא לא "מעניקה חסות" באופן חוקי לתחרות – שכן התחרות עדיין שייכת למארגן. לאור זאת, חל איסור להציג את העמותה כמי שנותנת חסות לתחרות וכמו כן חל איסור להציג את התחרות כתחרות ה"שייכת" לעמותה. בהחלט ניתן לפרסם כי התחרות מוכרת באופן רשמי על ידי העמותה וזכאית לדירוג ארצי על מנת לעודד שחקנים להירשם.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">אילו שחקנים זכאים לקבל ניקוד דירוג ארצי בתחרות שלי?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>על המארגן לבקש מספר שחקן בעמותה מכלל השחקנים הנרשמים. ניתן לקבל שחקנים לרוב התחרויות גם ללא מספר שחקן (במידה והם לא רשומים) – אך רק שחקנים בעלי מספר שחקן בתוקף יצברו ניקוד. בסוף התחרות יש לדווח את תוצאות הדירוג לעמותה באמצעות הטופס המתאים.</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+
+                        <button class="accordion">התחרות שלי הסתיימה. כיצד מדווחים תוצאות?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <p>יש לדווח את התוצאות בטופס הדיווח המתאים (אם אין לכם את הקישור, פנו לאיש הקשר שלכם בעמותה)</p>
+
+                        </div>
+
+                        <div style="margin-bottom: 10px;"></div>
+
+                        <button class="accordion">האם יש הגבלת זמן לדיווח על תוצאות?</button>
+                        <div class="panel">
+                            <div style="margin-bottom: 20px;"></div>
+
+                            <div><p>כן, יש להגיש את התוצאות תוך שבוע מיום סיום התחרות. מארגן שלא ידווח תוצאות עשוי לקבל סירוב לתמיכה בפרסים \ בניקוד, והפרה חוזרת של הגבלה זו עשויה לגרום לביטול ההכרה במארגן.</p>
+                            <p>העמותה שואפת לאשר תוצאות ולחלק את הנקודות לשחקנים תוך 3 ימים מיום הדיווח, אך בהתאם לעומס, יכולים להיות עיכובים.</p>
+                            </div>
+
+
+                        </div>
+
+                        <div style="padding-top:40px;"></div>
+
+                    </section>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
+
+
+            <h3 class="nk-decorated-h-2"><span>קבלת רישיון תחרות מטעם בעלי הזכויות</span></h3>
+
+            <div style="padding-top:15px;"></div>
+
+            <div style="padding-bottom:20px;">
+                <p>בחלק מהכותרים בענף הספורט האלקטרוני, על תחרות לעמוד בקריטריונים שהוצבו מראש על ידי בעלת הזכויות (מפתחת או מפיצת המשחק). על מנת לקדם סביבה תחרותית בריאה העמותה לגיימינג תחרותי דורשת מכל מארגן לעמוד בכל הדרישות והתנאים של מפתחות המשחקים על מנת לקבל הכרה.</p><p>להלן תוכלו לראות הסברים המנחים כיצד לקבל רישיון לניהול תחרות בכותרים נבחרים. שימו לב, המידע המובא פה הוא לצרכי הדרכה בלבד, המידע המחייב הוא זה שמפורסם על ידי כל מפיצה. העמותה לגיימינג תחרותי אינה לוקחת אחריות על תחרויות שלא עומדות בדרישות בעלות הזכויות וכמו כן אינה לוקחת אחריות לגבי נכונות הפרטים המובאים להלן – המידע המחייב הוא זה של בעלי הזכויות.</p>
+            </div>
+
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="true">משחקי Riot</button>
+                    <button class="nav-link" id="nav-2-tab" data-bs-toggle="tab" data-bs-target="#nav-2" type="button" role="tab" aria-controls="nav-2" aria-selected="false">FIFA</button>
+                    <button class="nav-link" id="nav-3-tab" data-bs-toggle="tab" data-bs-target="#nav-3" type="button" role="tab" aria-controls="nav-3" aria-selected="false">משחקי Valve</button>
+                    <button class="nav-link" id="nav-4-tab" data-bs-toggle="tab" data-bs-target="#nav-4" type="button" role="tab" aria-controls="nav-4" aria-selected="false">משחקי Blizzard</button>
+                    <button class="nav-link" id="nav-5-tab" data-bs-toggle="tab" data-bs-target="#nav-5" type="button" role="tab" aria-controls="nav-5" aria-selected="false">Fortnite</button>
+                    <button class="nav-link" id="nav-6-tab" data-bs-toggle="tab" data-bs-target="#nav-6" type="button" role="tab" aria-controls="nav-6" aria-selected="false">Rocket League</button>
+                    <button class="nav-link" id="nav-7-tab" data-bs-toggle="tab" data-bs-target="#nav-7" type="button" role="tab" aria-controls="nav-7" aria-selected="false">PES</button>
+                    <button class="nav-link" id="nav-8-tab" data-bs-toggle="tab" data-bs-target="#nav-8" type="button" role="tab" aria-controls="nav-8" aria-selected="false">משחקים אחרים</button>
+                </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+
+                <br />
+
+                <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div>
+                            <h4 style="color:#1bb5a5">League of Legends, TFT, Legends of Runeterra</h4>
+                               <p>לא נדרש אישור מיוחד, התחרות חייבת:</p>
+                            <ul><li>במידה ונגבים דמי הרשמה, לפחות 70% מסך דמי ההרשמה יוצבו בקופת הפרסים</li>
+                                <li>חוקי העפלה וניצחון צריכים להיות ברורים ושקופים לשחקנים</li>
+                                <li>לפחות 20 שחקנים</li><li>ללא תמיכה בפעילות הימורים</li>
+                                </ul>
+                            <h4 style="color:#1bb5a5">Valorant</h4>
+                            <p>לא נדרש אישור מראש כל עוד התחרות עומדת בקריטריונים שהוצבו ב<a href="https://assets.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltef8d84e5c8284c09/5e9748f36d0d9c325b210433/VALORANT_Community_Competition_Guidelines.pdf" style="color:#04b8a5">תנאי ארגון תחרות של Riot</a>.</p></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <p>לא נדרש אישור מיוחד לניהול תחרות בכותר זה, ובלבד שהתחרות עומדת בקריטריונים של EA לתחרויות קהילתיות: <a href="https://www.ea.com/games/fifa/fifa-19/compete/events/community-tournament-guidelines" style="color:#04b8a5">לחצו כאן למעבר</a>.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-3-tab">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <p>עבור משחקי חברת Valve (הכותרים DOTA 2 ו – CS:GO) יש למלא את הטופס בשירות Steam על מנת לקבל אישור לניהול התחרות, וכמו כן לעמוד במספר קריטריונים בסיסיים. <a href="https://store.steampowered.com/tourney" style="color:#04b8a5">למעבר לאתר לחצו כאן</a></p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div>
+                            <p>לשם ניהול תחרות בכותר של חברת Blizzard מהרשימה הבאה:</p>
+                            <ul>
+                                <li>Hearthstone</li>
+                                <li>Heroes of the Storm</li>
+                                <li>Overwatch</li>
+                                <li>StarCraft</li>
+                                <li>Warcraft III</li>
+                                <li>World of Warcraft</li>
+                                </ul>
+                            <p>יש לבקש אישור מהמפיצה באמצעות <a href="https://communitytournaments.blizzardesports.com/en-us/" style="color:#04b8a5">אתר האינטרנט הזה</a>. שימו לב – לחברה ישנם מספר קריטריונים בסיסיים אשר מארגני התחרויות חייבים לעמוד בהם. הקריטריונים מופיעים באתר האינטרנט של המפיצה.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="nav-5" role="tabpanel" aria-labelledby="nav-5-tab">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <p>לא נדרש אישור מראש לכותר זה, ובלבד שהתחרות עומדת בקריטריונים המובאים <a href="https://cdn2.unrealengine.com/Fortnite+Esports%2Fevents%2FEpic---Fortnite-Event-License-Terms-%2809.13.19-updates%29_en-672840e91849a29bd8262e85290a4e6db9682c41.pdf" style="color:#04b8a5">כאן</a>, ושחומרי הפרסום של התחרות יעמדו בדרישות הגרפיקה המובאות <a href="https://cdn2.unrealengine.com/Fortnite+Esports%2Fevents%2FFortnite-Competitive---Third-Party-Style-Guide-d8ff54021c862d47bbdd4887a4c0182f3217436c.pdf" style="color:#04b8a5">כאן</a>.</p>
+
+                        </div>
+
+                    </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-6" role="tabpanel" aria-labelledby="nav-6-tab">
+
+                        <div class="row">
+                            <div class="col">
+
+                                <p>לא נדרש אישור מראש לניהול תחרות בכותר זה, אך יש לוודא שהתחרות עומדת בדרישות המובאות <a href="https://www.rocketleagueesports.com/community-tournament-guidelines/" style="color:#04b8a5">כאן</a>.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-7" role="tabpanel" aria-labelledby="nav-7-tab">
+
+                        <div class="row">
+                            <div class="col">
+
+                                <p>לכותר זה לא נדרש אישור מיוחד לניהול התחרות.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-8" role="tabpanel" aria-labelledby="nav-8-tab">
+
+                        <div class="row">
+                            <div class="col">
+
+                                <p>שכחנו משחק? שלחו לנו הודעה ב<a href="https://iesa.org.il/contact" style="color:#04b8a5">עמוד צור קשר</a> ונוסיף אותו לכאן.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+            </div> <!--End of tabs-->
+
+            <br />
+
+            <div class="row">
+
+                <h3 class="nk-decorated-h-2"><span>כלים חיצוניים למארגנים</span></h3>
+
+                <div style="padding-top:15px;"></div>
+
+                <div class="col-sm-4">
+
+                        <div>
+                            <h4>מערכת לניהול התחרות</h4>
+                        </div>
+
+                            <div>
+                                <ul>
+                                <li><a href="https://challonge.com">Challonge</a></li>
+                                <li><a href="https://battlefy.com/">Battle.Fy</a></li>
+                                <li><a href="https://www.toornament.com/">Toornament</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                </div>
+
+                <div class="col-sm-4">
+
+                        <div>
+                            <h4>פלטפורמות שידור</h4>
+                        </div>
+
+                            <div>
+                                <ul>
+                                <li><a href="https://twitch.tv">Twitch</a></li>
+                                <li><a href="https://youtube.com/?hl=iw&amp;gl=IL">YouTube</a></li>
+                                <li><a href="https://facebook.com" target="_blank" rel="noopener">Facebook Gaming</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                </div>
+
+            </div>
+
+            <br />
+
+            <div>
+                <p><span><i class="bi bi-info-circle"></i>מצאתם מידע לא מעודכן? <a href="https://iesa.org.il/contact" style="color: #04b8a5">כתבו לנו</a> ונעדכן.</span></p>
+            </div>
+
+        </div>
+
+
+            <br />
+
+
+            </section> <!--End Page Content-->
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>
