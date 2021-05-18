@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <title>&#x202E; רישום שופטים – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+            /*additional to posts*/
+            line-height: 1.7;
+            letter-spacing: .015em;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            padding-top: 30px;
+            padding-bottom: 120px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Template Style*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 55px;
+            font-weight: 600;
+            letter-spacing: .015em;
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
+        }
+
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+        th {
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            border-right: 1px solid white;
+        }
+
+            th:first-child {
+                border-left: 2px solid white;
+            }
+
+        #page_content {
+            margin: 3px;
+        }
+
+        .alignleft {
+            float: left;
+        }
+
+        img.alignleft {
+            display: inline;
+            margin: 10px 15px 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        #bottomBTN {
+
+            position: relative;
+            left: -22%;
+        }
+
+        i {
+            font-size: 1.27em;
+            padding: 5px;
+        }
+
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .more-info-button:hover {
+                background-color: #e0e0e0;
+            }
+    </style>
+
+
+</head>
+<body>
+
+    <!--For facebook iframe-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=120238457987541&autoLogAppEvents=1" nonce="pnARNgWE"></script>
+    <!--For facebook iframe-->
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+
+        <div class="container">
+
+
+            <section id="page_title">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">רישום שופטים</h2>
+                <div class="divdown"></div>
+            </section>
+
+            <section id="page_content">
+                <div class="row">
+                    <div class="col">
+
+                            <div class="entry-content">
+                                <div data-elementor-type="wp-page" data-elementor-id="2334" class="elementor elementor-2334" data-elementor-settings="[]">
+                                    <div class="elementor-inner">
+                                        <div class="elementor-section-wrap">
+                                            <section class="elementor-section elementor-top-section elementor-element elementor-element-59d63cc elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="59d63cc" data-element_type="section">
+                                                <div class="elementor-container elementor-column-gap-default">
+                                                    <div class="elementor-row">
+                                                        <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-c04f086" data-id="c04f086" data-element_type="column">
+                                                            <div class="elementor-column-wrap elementor-element-populated">
+                                                                <div class="elementor-widget-wrap">
+                                                                    <div class="elementor-element elementor-element-f142e4d elementor-widget elementor-widget-text-editor" data-id="f142e4d" data-element_type="widget" data-widget_type="text-editor.default">
+                                                                        <div class="elementor-widget-container">
+                                                                            <div class="elementor-text-editor elementor-clearfix">
+                                                                                <p>ענף הגיימינג התחרותי הוא ענף ספורט תחרותי <strong><u>יחודי</u></strong> שלו מאפיינים דומים ושונים עם ענפי ספורט אחרים (בעיקר ענפי ספורט מחשבתיים – מנטליים, אך גם ענפי ספורט מסוגים אחרים).</p><p>על מנת <strong>להגן על הגינות המשחקים, זכויות השחקנים וכללי האתיקה</strong>, נדרש שופט <strong><u>מקצועי</u></strong> שינהל את התחרויות והמשחקים המתקיימים במסגרתן, אשר לו הכלים להתמודד עם משברים ומחלוקות בתחומים חוקתיים, התנהגותיים או טכניים.</p><p>ללא שיפוט מקצועי, <strong>רמת ההגינות של התחרות מוטלת בספק</strong>. ניתן לומר, שללא השיפוט המקצועי לא ניתן להבטיח שתחרות תתקיים באופן הוגן נטול-אינטרסים כלפי כלל בעלי העניין המעורבים בתחרות (שחקנים, מועדונים וקבוצות, מארגנים, נותנות חסות ומפרסמים וכו').<br>לכן, כדי להבטיח שתחרות תתקיים באופן הוגן וניטראלי כאמור, היא חייבת להתקיים על פי חוקים ותקנות מוסכמים – שפרשנותם ואכיפתם הן תפקיד השופט בתחום הגיימינג התחרותי.</p><p>מכאן ניתן להסיק ש<strong>לשופטים בגיימינג התחרותי תפקיד מפתח בענף ממש כמו בכל ענף ספורט אחר!</strong></p>
+                                                                                <br />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="elementor-element elementor-element-935407d elementor-widget elementor-widget-image" data-id="935407d" data-element_type="widget" data-widget_type="image.default">
+                                                                        <div class="elementor-widget-container">
+                                                                            <div style="text-align:center">
+                                                                                <img class="img-fluid" width="768" height="463" src="https://iesa.org.il/wp-content/uploads/2021/04/shoftim2-768x463.png" class="attachment-medium_large size-medium_large" alt="" loading="lazy" srcset="https://iesa.org.il/wp-content/uploads/2021/04/shoftim2-768x463.png 768w, https://iesa.org.il/wp-content/uploads/2021/04/shoftim2-300x181.png 300w, https://iesa.org.il/wp-content/uploads/2021/04/shoftim2-1024x617.png 1024w, https://iesa.org.il/wp-content/uploads/2021/04/shoftim2.png 1076w" sizes="(max-width: 768px) 100vw, 768px">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        <br />
+
+                        <div class="row">
+
+                            <h1 class="elementor-heading-title elementor-size-large" style="color: #04b8a5; font-weight: 500; font-size: 29px; text-align: center; margin-bottom:35px;">קישורים רלוונטים</h1>
+
+                            <div id="bottomBTN" class="col-4">
+                                <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2018/08/%D7%AA%D7%A7%D7%A0%D7%95%D7%9F-%D7%90%D7%AA%D7%99%D7%A7%D7%94-%D7%9C%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.pdf';"><i class="bi bi-clipboard-check" style="position:relative; right:1.5px; bottom:1px;"></i><span style="position:relative; bottom:3px; right:2px;">תקנון האתיקה לשופטים <span style="font-family: Calibri; margin-left:6px;">>></span></span></button>
+                            </div>
+
+                            <div id="bottomBTN" class="col-4">
+                                <button class="more-info-button" onclick="window.location.href='https://iesa.org.il/wp-content/uploads/2018/08/%D7%AA%D7%A7%D7%A0%D7%95%D7%9F-%D7%90%D7%AA%D7%99%D7%A7%D7%94-%D7%9C%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.pdf';"><i class="bi bi-person-check" style="position:relative; right:1.5px; bottom:1px;"></i><span style="position:relative; bottom:3px; right:2px;">רישום שופטים <span style="font-family: Calibri; margin-left:6px;">>></span></span></button>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section> <!--End Page Content-->
+
+        </div>
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>
