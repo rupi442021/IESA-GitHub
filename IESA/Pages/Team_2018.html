@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <title>&#x202E; נבחרת ישראל 8102 – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+            /*additional to posts*/
+            line-height: 1.7;
+            letter-spacing: .015em;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            padding-top: 30px;
+            padding-bottom: 40px;
+            position: relative;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Template Style*/
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 55px;
+            font-weight: 600;
+            letter-spacing: .015em;
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
+        }
+
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+        #page_content {
+            margin: 3px;
+        }
+
+        .alignleft {
+            float: left;
+        }
+
+        img.alignleft {
+            display: inline;
+            margin: 10px 15px 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        #bottomBTN {
+            text-align: center;
+            position: relative;
+            left: -13%;
+        }
+
+        i {
+            font-size: 1.27em;
+            padding: 5px;
+        }
+
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .more-info-button:hover {
+                background-color: #e0e0e0;
+            }
+
+
+        .table-dark {
+            --bs-table-bg: #363c4a !important;
+            --bs-table-striped-bg: #2e333e !important;
+        }
+
+        .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+            color: #2b2626;
+        }
+
+
+        tbody, td, tfoot, th, thead, tr {
+            border-color: #1d232f;
+        }
+
+
+        #RedTitle {
+            border: solid #292e38;
+            border-width: 0px 0px 1px 1px;
+        }
+
+        .Bordertable {
+            border: solid #1d232f !important;
+            border-width: 1px 0px 1px 1px !important;
+        }
+
+        .nk-table.nk-table thead td, .nk-table.nk-table thead th {
+            padding: 11px 18px;
+        }
+
+        .nk-table thead {
+            font-size: 1.12rem !important;
+            background-color: #dd163b;
+        }
+
+        .nk-decorated-h, .nk-decorated-h-2 {
+            display: flex;
+        }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a !important;
+            }
+
+            .nk-decorated-h-2::before, .nk-decorated-h::before {
+                flex: 20px !important;
+                width: 20px !important;
+                min-width: 20px !important;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+                border-bottom-color: #353c4a;
+            }
+
+            .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+                content: "";
+                display: block;
+                flex: 100;
+                border-bottom: 4px solid;
+                transform: translateY(-10px);
+            }
+
+            .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+                display: block;
+                flex: auto;
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+    </style>
+
+
+</head>
+<body>
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+        <div class="container">
+
+            <section id="page_title">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <a class="titlelink" href="Israel_National_Team.html">נבחרת ישראל </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">נבחרת "Playtika" ישראל 2018</h2>
+                <div class="divdown"></div>
+            </section>
+
+            <section id="page_content">
+                <div class="row">
+                    <div class="col">
+
+                        <div>
+                            <p><strong>נבחרת "Playtika" ישראל 2018</strong> היא הנבחרת הישראלית לאליפות העולם בספורט אלקטרוני 2018, שהתקיימה בנובמבר בעיר קאושיונג, טאיוואן. הנבחרת השתתפה בכל המקצים באליפות העולם, ונוהלה ע"י&nbsp;<strong>העמותה לגיימינג תחרותי בישראל</strong> ובחסות&nbsp;<strong>Playtika ו- ASUS Republic of Gamers</strong>.</p>
+                            
+                            <br />
+
+                            <table id="RedTitle" class="nk-table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th style="background: #3e76ca; border-left:black;">סגל נבחרת Playtika ישראל 2018</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <table class="table table-bordered table-condensed table-dark">
+                                <tbody>
+
+                                    <tr>
+                                        <th style="text-align: center; border-bottom: solid black; border-left:2px solid black;" colspan="2">League of Legends</th>
+                                        <th style="text-align: center; border-bottom: solid black; border-left:2px solid black;" colspan="2">Counter-Strike: Global Offensive</th>
+                                        <th style="text-align: center; border-bottom: solid black;">Tekken 7</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="border-left:black;">שחקן</th>
+                                        <th style="border-left: 2px solid black;">תפקיד</th>
+                                        <th>שחקן</th>
+                                        <th style="border-left: 2px solid black">תפקיד</th>
+                                        <th>שחקן</th>
+                                    </tr>
+                                    <tr>
+                                        <td>רון "Champion" גל</td>
+                                        <td style="border-left: 2px solid black">Marksman / קפטן הקבוצה</td>
+                                        <td>שירן "shushan" שושן</td>
+                                        <td style="border-left: 2px solid black;">קפטן הקבוצה</td>
+                                        <td style=" text-align: center;" rowspan="5">
+                                            מיכאל "Solid StonE" קרקז<p></p>
+                                            <p><span style="font-weight: bold;">קפטן נבחרת ישראל</span></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>טל "Shockwave" סער</td>
+                                        <td style="border-left: 2px solid black;">Mid</td>
+                                        <td style="border-left: 2px solid black;" colspan="2">רועי "ZENCER" קמחי</td>
+                                    </tr>
+                                    <tr>
+                                        <td>אור "Mystic" אבסקר</td>
+                                        <td style="border-left: 2px solid black;">Support</td>
+                                        <td style="border-left: 2px solid black;" colspan="2">גיא "anarkez" טרכטמן</td>
+                                    </tr>
+                                    <tr>
+                                        <td>שון "Music" וישקו</td>
+                                        <td style="border-left: 2px solid black;">Jungle</td>
+                                        <td style="border-left: 2px solid black;" colspan="2">גל "Meow" שמילוביץ'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>אביב "Sapot" ראובני</td>
+                                        <td style="border-left: 2px solid black;">Top</td>
+                                        <td style="border-left: 2px solid black;" colspan="2">אנטון "hydra" סבירידון</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <br />
+
+                            <h3 class="nk-decorated-h-2"><span>שלב הבתים</span></h3>
+
+                            <p style="text-align: center;"><em><strong>הקליקו על התמונה להגדלה</strong></em></p>
+                            <div class="row">
+                                <div class="col-md-4"><a href="https://iesa.org.il/wp-content/uploads/2018/11/45344830_2036816453041164_4577541101438631936_o.jpg"><img loading="lazy" class="aligncenter wp-image-1003 size-medium" src="https://iesa.org.il/wp-content/uploads/2018/11/45344830_2036816453041164_4577541101438631936_o-300x200.jpg" alt="" width="300" height="200" srcset="https://iesa.org.il/wp-content/uploads/2018/11/45344830_2036816453041164_4577541101438631936_o-300x200.jpg 300w, https://iesa.org.il/wp-content/uploads/2018/11/45344830_2036816453041164_4577541101438631936_o-768x512.jpg 768w, https://iesa.org.il/wp-content/uploads/2018/11/45344830_2036816453041164_4577541101438631936_o-1024x682.jpg 1024w, https://iesa.org.il/wp-content/uploads/2018/11/45344830_2036816453041164_4577541101438631936_o.jpg 1985w" sizes="(max-width: 300px) 100vw, 300px"></a></div>
+                                <div class="col-md-4"><a href="https://iesa.org.il/wp-content/uploads/2018/11/45284333_2036816569707819_1522754330942242816_o.jpg"><img loading="lazy" class="aligncenter size-medium wp-image-1004" src="https://iesa.org.il/wp-content/uploads/2018/11/45284333_2036816569707819_1522754330942242816_o-300x200.jpg" alt="" width="300" height="200" srcset="https://iesa.org.il/wp-content/uploads/2018/11/45284333_2036816569707819_1522754330942242816_o-300x200.jpg 300w, https://iesa.org.il/wp-content/uploads/2018/11/45284333_2036816569707819_1522754330942242816_o-768x512.jpg 768w, https://iesa.org.il/wp-content/uploads/2018/11/45284333_2036816569707819_1522754330942242816_o-1024x682.jpg 1024w, https://iesa.org.il/wp-content/uploads/2018/11/45284333_2036816569707819_1522754330942242816_o.jpg 1985w" sizes="(max-width: 300px) 100vw, 300px"></a></div>
+                                <div class="col-md-4"><a href="https://iesa.org.il/wp-content/uploads/2018/11/45357129_2036816463041163_5579743592219410432_o.jpg"><img loading="lazy" class="aligncenter size-medium wp-image-1005" src="https://iesa.org.il/wp-content/uploads/2018/11/45357129_2036816463041163_5579743592219410432_o-300x200.jpg" alt="" width="300" height="200" srcset="https://iesa.org.il/wp-content/uploads/2018/11/45357129_2036816463041163_5579743592219410432_o-300x200.jpg 300w, https://iesa.org.il/wp-content/uploads/2018/11/45357129_2036816463041163_5579743592219410432_o-768x512.jpg 768w, https://iesa.org.il/wp-content/uploads/2018/11/45357129_2036816463041163_5579743592219410432_o-1024x682.jpg 1024w, https://iesa.org.il/wp-content/uploads/2018/11/45357129_2036816463041163_5579743592219410432_o.jpg 1985w" sizes="(max-width: 300px) 100vw, 300px"></a></div>
+                            </div>
+
+                            <br />
+
+                            <h3>תוצאות סופיות</h3>
+                            <ul>
+                                <li><strong>League of Legends – מקום 5 (רבע הגמר)</strong></li>
+                                <li><strong>CS:GO – מקום 5 (רבע הגמר)</strong></li>
+                                <li><strong>Tekken 7 – מקום 17</strong></li>
+                                <li><strong>דירוג סופי</strong> – מקום 11 עם 37 נקודות</li>
+                            </ul>
+
+                            <p style="text-align: center;"><em><strong>הקליקו על התמונה להגדלה</strong></em></p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h3 dir="ltr" style="text-align: center;">
+                                        League of Legends
+                                        <a href="https://lol.gamepedia.com/IeSF_10th_Esports_World_Championship" target="_blank" rel="noopener noreferrer">GamePedia</a>
+                                    </h3>
+
+
+                                    <a href="https://lol.gamepedia.com/IeSF_10th_Esports_World_Championship" target="_blank" rel="noopener noreferrer"></a><a href="https://iesa.org.il/wp-content/uploads/2018/11/lolsingle.jpg"><img loading="lazy" class="size-medium wp-image-1010 aligncenter" src="https://iesa.org.il/wp-content/uploads/2018/11/lolsingle-300x236.jpg" alt="" width="300" height="244" srcset="https://iesa.org.il/wp-content/uploads/2018/11/lolsingle-300x236.jpg 300w, https://iesa.org.il/wp-content/uploads/2018/11/lolsingle.jpg 750w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                </div>
+                                <div class="col-md-4">
+                                    <h3 style="text-align: center;">
+                                        Tekken 7
+                                        <br />
+                                        <br />
+
+                                        <a href="https://iesa.org.il/wp-content/uploads/2018/11/tsingle.jpg"><img loading="lazy" class="size-medium wp-image-1011 aligncenter" src="https://iesa.org.il/wp-content/uploads/2018/11/tsingle-300x253.jpg" alt="" width="300" height="244" srcset="https://iesa.org.il/wp-content/uploads/2018/11/tsingle-300x253.jpg 300w, https://iesa.org.il/wp-content/uploads/2018/11/tsingle-768x649.jpg 768w, https://iesa.org.il/wp-content/uploads/2018/11/tsingle.jpg 889w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                    </h3>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <h3 dir="ltr" style="text-align: center;">Counter-Strike: Global Offensive (<a href="https://www.hltv.org/events/3858/iesf-world-championship-2018" target="_blank" rel="noopener noreferrer">hltv</a>)</h3>
+                                    <a href="https://iesa.org.il/wp-content/uploads/2018/11/45862519_2047104648679011_3453589344516833280_n.jpg"><img loading="lazy" class="aligncenter size-medium wp-image-1012" src="https://iesa.org.il/wp-content/uploads/2018/11/45862519_2047104648679011_3453589344516833280_n-300x244.jpg" alt="" width="300" height="244" srcset="https://iesa.org.il/wp-content/uploads/2018/11/45862519_2047104648679011_3453589344516833280_n-300x244.jpg 300w, https://iesa.org.il/wp-content/uploads/2018/11/45862519_2047104648679011_3453589344516833280_n-768x624.jpg 768w, https://iesa.org.il/wp-content/uploads/2018/11/45862519_2047104648679011_3453589344516833280_n.jpg 893w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                </div>
+                            </div>
+
+
+                            <br />
+
+
+                            <h3 class="nk-decorated-h-2"><span>חסויות – נבחרת Playtika ישראל 2018</span></h3>
+
+                            <br />
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="vertical-align: top; width: 20%;"><strong><img loading="lazy" class="alignright wp-image-953 size-thumbnail" src="https://iesa.org.il/wp-content/uploads/2018/10/playtika-logo-150x150.jpg" alt="" width="150" height="150" srcset="https://iesa.org.il/wp-content/uploads/2018/10/playtika-logo-150x150.jpg 150w, https://iesa.org.il/wp-content/uploads/2018/10/playtika-logo.jpg 200w" sizes="(max-width: 150px) 100vw, 150px"></strong></td>
+                                        <td style="padding-right: 15px;">
+                                            <h4><strong>Playtika</strong></h4>
+                                            <p>החל מ-2010, Playtika נמצאת בחוד החנית של תעשיית המשחקים.</p>
+                                            <p>היינו מהחברות הראשונות להציע משחקים חברתיים חינמיים (free-to-play) ברשתות החברתיות ולאחר זמן קצר גם בפלטפורמות המובייל. גם היינו מהראשונים להתמקד ב-&nbsp;live game operations, ולהציע למשתמשים שלנו חוויות משחק מותאמות אישית על בסיס יומי עם אירועים חדשים ואפשרויות חדשות ומרגשות 365 ימים בשנה.</p>
+                                            <p>המשחקים שלנו עמדו במבחן הזמן, והובילו את טבלת המשחקים הרווחיים ביותר במשך חמש שנים רצופות.</p>
+                                            <p>בזמן שטרנדים חדשים וטכנולוגיות חדשים ממשיכים לשנות את עולם הגיימינג, שמנו לעצמנו למטרה להפוך להיות הספק המוביל בעולם של משחקים לשעות הפנאי. דרך מבחר הכותרים הרחב והמגוון שלנו, אנו מחפשים ליצור את חוויות הבידור הטובות בעולם.</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top; width: 20%;"><img loading="lazy" class="alignnone wp-image-936" src="https://iesa.org.il/wp-content/uploads/2018/10/asus-rog-logo-white-background_0.png" alt="" width="150" height="150" srcset="https://iesa.org.il/wp-content/uploads/2018/10/asus-rog-logo-white-background_0.png 195w, https://iesa.org.il/wp-content/uploads/2018/10/asus-rog-logo-white-background_0-150x150.png 150w" sizes="(max-width: 150px) 100vw, 150px"></td>
+                                        <td style="padding-right: 15px;">
+                                            <h4><strong>ASUS Republic of Gamers</strong></h4>
+                                            <p>מותג הגיימינג (Republic of Gamers (ROG של ASUS מדורג כמותג מס' 1 בקרב מדיות ומשתמשים ברחבי העולם. בעשור האחרון דורגה החברה כיצרנית לוחות-האם מס' 1 בעולם מזה 10 שנים ברציפות, עם מכירות של למעלה מ- 500 מיליון לוחות-אם מאז 1989. כרטיסי המסך של ROG מצוידים בקירור ברמה הגבוהה ביותר והמובילה בתעשייה בטכנולוגיית אוטו-אקסטרים לביצועים ואמינות מובילים. בנוסף, מסכי הגיימינג של ROG הם הראשונים שהציגו קצב ריענון של 144Hz במסכי 4K UHD ודורגו אף הם כמותג מס' 1 בתחומם.</p>
+                                            <p>המותג ROG דוגל בהובלה מתמדת ושבירת מוסכמות על מנת לייצר חומרת גיימינג חדשנית ומעצימה, המספקת ביצועים מובילים תוך הקפדה על עיצוב מסוגנן. בנוסף, החברה משלבת במוצריה את טכנולוגיית Aura Sync הבלעדית ל-ASUS, המציבה רף חדש בסנכרון תאורת RGB בין רכיבי המחשב.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>&nbsp;</p>
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section> <!--End Page Content-->
+
+        </div>
+    </section>
+
+
+    <section id="site_footer">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+            <h2>IESA</h2>
+        </div>
+    </section>
+
+
+</body>
+</html>

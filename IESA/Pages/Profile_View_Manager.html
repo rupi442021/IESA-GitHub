@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -24,6 +24,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
     <!--Data Tables-->
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:100,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">-->
 
     <title>&#x202E; תצוגת משתמש – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
@@ -255,8 +262,99 @@
         }
 
 
+        #socialnetwork > div.social-btn {
+            display: block;
+            width: 665px;
+            margin: 0 auto;
+            text-align: center;
+        }
 
+            #socialnetwork > div.social-btn a {
+                text-decoration: none;
+            }
 
+            #socialnetwork > div.social-btn div {
+                width: 110px;
+                display: inline-block;
+                float: right;
+                height: 100px;
+                line-height: 113px;
+                color: #fff;
+                margin-right: 3px;
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+                font-size: 20px;
+                text-shadow: 0px 0px 5px #000;
+                -moz-transition: all 0.3s ease-out;
+                -o-transition: all 0.3s ease-out;
+                -webkit-transition: all 0.3s ease-out;
+                transition: all 0.3s ease-out;
+                margin-bottom: 50px;
+            }
+
+            #socialnetwork > div.social-btn a:last-child div {
+                margin-right: 3px;
+            }
+
+            #socialnetwork > div.social-btn div:hover, div.social-btn div:active {
+                height: 135px;
+                padding-top: 15px;
+            }
+
+        #socialnetwork > i {
+            -moz-transition: all 0.4s ease-out;
+            -webkit-transition: all 0.4s ease-out;
+            -o-transition: all 0.4s ease-out;
+            transition: all 0.4s ease-out;
+        }
+
+        #socialnetwork > div.face span, div.twi span, div.in span, div.pin span, div.git span {
+            position: absolute;
+            left: 0;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 400;
+            padding: 0px 15px;
+            opacity: 0;
+            -moz-transition: all 0.6s ease-in;
+            -o-transition: all 0.6s ease-in;
+            -webkit-transition: all 0.6s ease-in;
+            transition: all 0.6s ease-in;
+            line-height: 110px;
+            font-size: 17px;
+        }
+
+        #socialnetwork > div.social-btn div:hover i {
+            opacity: 0;
+        }
+
+        #socialnetwork > div.social-btn div:hover span {
+            opacity: 1;
+        }
+
+        #socialnetwork > div.face {
+            background: #3A5795;
+            -moz-box-shadow: 0px 4px 0px #1e469d;
+            -webkit-box-shadow: 0px 4px 0px #1e469d;
+            box-shadow: 0px 4px 0px #3e6d8d;
+            position: relative;
+        }
+
+        #socialnetwork > div.twi {
+            background: #5EA9DD;
+            -moz-box-shadow: 0px 4px 0px #186ba4;
+            -webkit-box-shadow: 0px 4px 0px #186ba4;
+            box-shadow: 0px 4px 0px #2b95df;
+            position: relative;
+        }
+
+        #socialnetwork > div.in {
+            background: #0177B5;
+            -moz-box-shadow: 0px 4px 0px #035e8e;
+            -webkit-box-shadow: 0px 4px 0px #035e8e;
+            box-shadow: 0px 4px 0px #035e8e;
+            position: relative;
+        }
     </style>
 
 
@@ -271,7 +369,7 @@
 
 
             $("#send_email").click(function () {
-                window.open('mailto:'+gamer.Email+'?subject=התקבלה פניה מהעמותה&body=body');
+                window.open('mailto:' + gamer.Email + '?subject=פניה מהעמותה לקידום הגיימינג&body=');
             });
 
             $("#o_edit_btn").click(function () {
@@ -572,7 +670,7 @@
                         },
                         {
                             render: function (data, type, row, meta) {
-                                let dataCompId = row.Competitionid; 
+                                let dataCompId = row.Competitionid;
 
                                 OC_viewBtn = "<a href='Competition_View.html?competitionid=" + dataCompId + "' target='_blank' class='view' title='צפה'><i class='OC_viewBtn bi bi-eye' " + dataCompId + "></i></a>";
 
@@ -709,31 +807,22 @@
                                             <button id="send_email" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" style="color: #2c3a38; border-color: #04b8a5;" data-whatever="@getbootstrap">
                                                 שליחת מייל
                                             </button>
-                                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModalCenter">Open Modal</button>
+                                            <!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModalCenter">Open Modal</button>-->
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="card mt-3" id="tableheight">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>אתר </h6>
-                                        <span class="text-secondary">https://bootdey.com</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>פייסבוק</h6>
-                                        <span class="text-secondary">bootdey</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>אינסטגרם</h6>
-                                        <span class="text-secondary">bootdey</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>דיסקורד</h6>
-                                        <span class="text-secondary">@bootdey</span>
-                                    </li>
-                                </ul>
+
+                                <div class="card-body" id="socialnetwork">
+                                    <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">רשתות</b></i>חברתיות</h6>
+
+                                    <a href="https://www.facebook.com/IsraelEsports/" target="_blank"><div class="social face"><i class="fab fa-facebook"></i><span>Facebook</span></div></a>
+
+                                </div>
+
 
 
                             </div>
@@ -741,6 +830,7 @@
 
 
                         </div>
+
                         <div class="col-md-8">
                             <div class="card mb-3">
                                 <div class="card-body">
