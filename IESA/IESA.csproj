@@ -259,7 +259,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Pages\About.html" />
-    <Content Include="Site_Pages\Competitions.html" />
+    <Content Include="Pages\Competitions.html" />
     <Content Include="Site_Pages\Competition_Tree.html" />
     <Content Include="Pages\Esports.html" />
     <Content Include="Pages\Israel_National_Team.html" />
