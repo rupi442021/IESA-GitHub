@@ -35,8 +35,8 @@ namespace IESA.Controllers
         [Route("api/Competitions/mark2")]
         public void Postc([FromBody] Competitions p1) //Add_New_Competitions.html - Preview + Edit_Competitions.html - method SC8
         {
-                      Pcompetitions = new Competitions();
-                      Pcompetitions = p1;
+            Pcompetitions = new Competitions();
+            Pcompetitions = p1;
         }
 
         [HttpGet]
@@ -182,7 +182,6 @@ namespace IESA.Controllers
         }
         
 
-
         //---Database.html--- *Close*
 
 
@@ -239,6 +238,21 @@ namespace IESA.Controllers
 
 
         //---Profile_View_Manager.html--- *Close*
+
+
+        //---Competitions.html--- *Open*
+
+
+        [HttpGet] //Competitions.html - method OCS1
+        [Route("api/Competitions/getallcomp")]
+        public List<Competitions> GetSiteCompetitions(string sqlcommand)
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.GetSiteCompetitions(sqlcommand);
+        }
+
+
+        //---Competitions.html--- *Close*
 
 
         //---ReactClientSide---*Open*

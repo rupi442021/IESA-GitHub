@@ -257,7 +257,22 @@ namespace IESA.Models
         //---Profile_View_Manager.html--- *Close*
 
 
+        //---Competitions.html--- *Open*
+
+
+        public List<Competitions> GetSiteCompetitions(string sqlcommand) //Competitions.html - method OCS1
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> clist = dbs.GetSiteCompetitionsSQL(sqlcommand);
+            return clist;
+        }
+
+
+        //---Competitions.html--- *Close*
+
+
         //---ReactClientSide---*Open*
+
 
         public List<Competitions> GetCompetitonL() //Manager_Main_Page.html - method OM8
         {

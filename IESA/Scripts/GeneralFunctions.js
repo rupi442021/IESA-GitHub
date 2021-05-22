@@ -85,3 +85,14 @@ function renderSixmonths() {
 
     return montharray;
 }
+
+function renderNormalDate(date) {
+
+    var day = date.substring(8, 10);
+    var month = date.substring(5, 7);
+    var year = date.substring(0, 4);
+
+    datestring = day + "/" + month + "/" + year;
+
+    return datestring;
+}

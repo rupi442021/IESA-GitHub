@@ -3572,6 +3572,75 @@ namespace IESA.Models.DAL
         //---Profile_View_Manager.html--- *Close*
 
 
+        //---Competitions.html--- *Open*
+
+        public List<Competitions> GetSiteCompetitionsSQL(string sqlcommand) //Competitions.html - method OCS1
+        {
+
+            SqlConnection con = null;
+            List<Competitions> CompetitionsList = new List<Competitions>();
+
+            try
+            {
+                con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = sqlcommand;
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    Competitions competition = new Competitions();
+
+                    competition.Competitionid = (dr["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr["competitionid"]) : default;
+                    competition.Competitionname = (dr["competitionname"] != DBNull.Value) ? (string)dr["competitionname"] : default;
+                    competition.Body = (dr["body"] != DBNull.Value) ? (string)dr["body"] : default;
+                    competition.Competitionstatus = (dr["competitionstatus"] != DBNull.Value) ? (string)dr["competitionstatus"] : default;
+                    competition.Ispro = (dr["ispro"] != DBNull.Value) ? Convert.ToInt32(dr["ispro"]) : default;
+                    competition.Console = (dr["console"] != DBNull.Value) ? (string)dr["console"] : default;
+                    competition.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                    competition.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    competition.Logo = (dr["logo"] != DBNull.Value) ? (string)dr["logo"] : default;
+                    competition.Banner = (dr["banner"] != DBNull.Value) ? (string)dr["banner"] : default;
+                    competition.Linkforregistration = (dr["categoryname"] != DBNull.Value) ? (string)dr["categoryname"] : default; //categoryname - inner join
+
+                    CompetitionsList.Add(competition);
+                }
+
+                return CompetitionsList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+
+        //---Competitions.html--- *Close*
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }
