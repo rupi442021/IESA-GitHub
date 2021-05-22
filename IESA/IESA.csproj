@@ -217,7 +217,6 @@
     <Content Include="Pages\Profile_View_Manager.html" />
     <Content Include="Pages\Project_Menu.html" />
     <Content Include="Pages\Post.html" />
-    <Content Include="Pages\Post_Archive.html" />
     <Content Include="Pages\Ranks.html" />
     <Content Include="Pages\Sign_Up.html" />
     <Content Include="Pages\Add_New_Competition.html" />
@@ -271,6 +270,8 @@
     <Content Include="Pages\Team_2019.html" />
     <Content Include="Pages\Team_2020.html" />
     <Content Include="Pages\Volunteer.html" />
+    <Content Include="Pages\Post_Archive.html" />
+    <Content Include="Site_Pages\Structure.html" />
     <Content Include="Style\Style_Sign_Up.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

@@ -339,7 +339,7 @@
 
         function getSuccessBuildCompetitions(data) {
 
-            if (data.length === 0) {
+            if (data.length == 0) {
                 let msg = "<br /><p>אין תחרויות מוצעות נכון לרגע זה</p>";
                 document.getElementById("msgarea").innerHTML = msg;
             }
@@ -411,7 +411,7 @@
                 str += "<span class='nk-post-img'></span>";
                 str += "<span class='bg-main-4'>" + objJson[i].Linkforregistration + "</span>";
                 str += "<div>";
-                str += "<a href='/Pages/Competition_View.html?competitionid=" + objJson[i].Competitionid + "' target=_blank'>";
+                str += "<a href='/Pages/Competition_View.html?competitionid=" + objJson[i].Competitionid + "'>";
                 str += "<img src= ../" + objJson[i].Logo + " alt='Banner' class='media-object'>";
                 str += "</a>";
                 str += "</div>";
@@ -422,10 +422,10 @@
                 if (objJson[i].Competitionname.length > 29) {
                     var name_edit = objJson[i].Competitionname.substring(0, 30);
                     var name_after = name_edit + "..";
-                    str += "<h3><a href='/Pages/Competition_View.html?competitionid=" + objJson[i].Competitionid + "' target='_blank'>" + name_after + "</a></h3>";
+                    str += "<h3><a href='/Pages/Competition_View.html?competitionid=" + objJson[i].Competitionid + "'>" + name_after + "</a></h3>";
                 }
                 else {
-                    str += "<h3><a href='/Pages/Competition_View.html?competitionid=" + objJson[i].Competitionid + "' target='_blank'>" + objJson[i].Competitionname + "</a></h3>";
+                    str += "<h3><a href='/Pages/Competition_View.html?competitionid=" + objJson[i].Competitionid + "'>" + objJson[i].Competitionname + "</a></h3>";
                 }
 
                 str += "<div>";

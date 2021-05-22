@@ -1,22 +1,15 @@
 ﻿<!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html dir="rtl">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <meta charset="utf-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    <link rel="stylesheet" href=" https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 
     <title>&#x202E; פוסטים – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
@@ -29,13 +22,17 @@
         body {
             background-color: #212529;
             color: white;
+            /*additional to posts*/
+            line-height: 1.7;
+            letter-spacing: .015em;
         }
 
         .container {
             background-color: #292e38;
             max-width: 1110px;
             padding-top: 30px;
-            height: 1500px; /*position: absolute elements in page*/
+            padding-bottom: 120px;
+            position: relative;
         }
 
         .jumbotron {
@@ -46,51 +43,6 @@
         }
 
         /*Template Style*/
-
-
-        .col-md-6 {
-            padding: 20px
-        }
-
-
-        .sidebar-box {
-            max-height: 120px;
-            position: relative;
-            overflow: hidden;
-            width: 65%;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-
-            .sidebar-box .read-more {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                text-align: center;
-                margin: 0;
-                padding: 30px 0;
-            }
-
-
-        #PostImg {
-            width: 290px;
-            height: 150px;
-            border-radius: 15px;
-            padding: 1px;
-        }
-
-
-        #postDate {
-            position: relative;
-            width: 53%;
-            height: 25px;
-            font-size: 12px;
-            color: #e8dcdc;
-        }
-
-
 
         .titlelink {
             color: #FFFFFF;
@@ -125,59 +77,191 @@
                 background-color: #fff;
             }
 
-        .divdown {
-            margin-bottom: 60px;
+        .headh4 {
+            display: flex;
+            margin-top: 9px;
+            color: #04b8a5
         }
 
+            .headh4::after {
+                content: '';
+                flex: 1;
+                margin-top: 16px;
+                height: 3px;
+                background-color: #fff;
+                margin: -12px 12px 30px -12px;
+                margin-top: 15px;
+            }
+
+        #anotherpostsbox {
+            background-color: #363c4a;
+            width: 100%;
+            margin: 0px;
+        }
+
+        #headeranotherpost {
+            margin-top: 10px;
+            height: 52px;
+            text-align: right;
+            background-color: #404859;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #anotherpimg {
+            margin: 1px;
+            height: 125px;
+        }
+
+        #panotherpost {
+            font-size: 14px;
+        }
+
+        #imganotherpost {
+            width: 100%;
+            height: 80%;
+            max-height: 120px;
+            max-width: 300px;
+            margin: 2px;
+        }
+
+        th {
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            border-right: 1px solid white;
+        }
+
+            th:first-child {
+                border-left: 2px solid white;
+            }
+
+        #page_content {
+            margin: 3px;
+        }
+
+        .alignleft {
+            float: left;
+        }
+
+        img.alignleft {
+            display: inline;
+            margin: 10px 15px 10px 0;
+        }
 
         a {
-            text-decoration: none;
             color: white;
+            text-decoration: none;
         }
 
             a:hover {
-                color: white;
+                color: #04b8a5;
+                transition: .15s color;
             }
+
+        #bottomBTN {
+            text-align: center;
+            position: relative;
+            left: -13%;
+        }
+
+        i {
+            font-size: 1.10em;
+            padding: 5px;
+        }
+
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+        }
+
+            .more-info-button:hover {
+                background-color: #e0e0e0;
+            }
+
+        .image-link:before {
+            content: "";
+            display: block;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+            -webkit-transition: background .3s ease-out;
+            -o-transition: background .3s ease-out;
+            transition: background .3s ease-out;
+        }
+
+        .media-left {
+            width: 36%;
+        }
+
+
+        img {
+            /*width: 100%;*/
+            width: 252px;
+            height: 176.8px;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        img:hover {
+            opacity: 0.8;
+            transition: 300ms;
+        }
 
         .bg-main-4 {
             position: relative;
-            top: 9%;
-            left: 25%;
+            top: 18%;
             font-size: 16px;
             background-color: #119a8c;
             color: white;
-            border-radius: 15px;
+            border-radius: 1px;
             opacity: 0.9;
-            font: bold;
         }
 
+        #postDate {
+            height: 25px;
+            font-size: 12px;
+            color: #e8dcdc;
+        }
 
-            .bg-main-4:hover {
-                color: #3bebdb;
-                opacity: 1
+        .filter-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            /* padding: 4px 11px; */
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
+            height: 30px;
+        }
+
+            .filter-button:hover {
+                background-color: #e0e0e0;
             }
 
-
-        .nk-blog-grid {
-            margin: 35px;
+        .more-info-button {
+            border-radius: 3px;
+            color: #181c23;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 3px 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition-duration: 0.20s;
         }
 
-        .nk-gap {
-            margin-bottom: 6px;
-        }
-
-        .btn-info {
-            padding: 5px 15px;
-            color: white;
-            background-color: #15a092;
-            border-color: #353a3a;
-        }
-
-            .btn-info:hover {
-                background-color: #dd163b;
-                border-color: #353a3a;
-                transition: .15s all;
-                color: white;
+            .more-info-button:hover {
+                background-color: #e0e0e0;
             }
 
     </style>
@@ -187,29 +271,29 @@
 
         $(document).ready(function () {
 
+
             objJson = [];
             posts = [];
             generalposts = [];
             globalposts = [];
 
-
             ajaxCall("GET", "../api/Posts/mark9", "", getSuccessBuildPosts, Error); //Post_Archive.html - method MP1
 
 
-            $(document).on("change", "#categoryfilter", function () {
+            $(document).on("click", ".filter-button", function () {
+
+                let categorychoice = $("#categoryfilter").val();
 
                 current_page = 1;
                 page = 1;
 
-                let category = this.value;
-
-                if (category == "") {
+                if (categorychoice == "") {
                     objJson = posts;
                 }
-                else if (category == "עולמי") {
+                else if (categorychoice == "עולמי") {
                     objJson = globalposts;
                 }
-                else if (category == "כללי") {
+                else if (categorychoice == "כללי") {
                     objJson = generalposts;
                 }
 
@@ -220,10 +304,18 @@
 
         });
 
+        $(document).on("click", ".more-info-button", function () {
+
+            let postid = this.getAttribute('data-postid');
+
+            location.replace("Post.html?postid=" + postid);
+
+        });
+
 
         function getSuccessBuildPosts(data) {
 
-            posts = data; //Save as a global integer
+            posts = data; //all posts
 
             for (var i = 0; i < data.length; i++) {
                 if (data[i].Category == "עולמי") {
@@ -235,12 +327,12 @@
 
             }
 
-            objJson = posts;
+            current_page = 1;
+            page = 1;
+            objJson = data;
 
             changePage(1);
         }
-
-
 
 
         function Error(err) {
@@ -253,7 +345,7 @@
         //---Pagination Code--- *Open*
 
         current_page = 1;
-        records_per_page = 4;
+        records_per_page = 3;
 
 
         function prevPage() {
@@ -285,54 +377,63 @@
 
             listing_table.innerHTML = "";
 
+            //Render Start
+
             var str = "";
-            str += "<div class='nk-blog-grid'>";
-            str += "<div class='row'>";
 
             for (var i = (page - 1) * records_per_page; i < (page * records_per_page) && i < objJson.length; i++) {
 
-                str += "<div class='col-md-6'>";
-                str += "<span class='nk-post-img'><span class='bg-main-4'>" + objJson[i].Category + "</span>";
-                str += "<div class='nk-blog-post'>";
+                str += "<div class='row'>";
+                str += "<div class='col-lg-4'>";
+                str += "<span class='nk-post-img'></span>";
+                str += "<span class='bg-main-4'>" + objJson[i].Category + "</span>";
+                str += "<div>";
+                str += "<a href='Post.html?postid=" + objJson[i].Postid + "'>";
+                str += "<img src= ../" + objJson[i].Image1 + " alt='Image' class='media-object'>";
+                str += "</a>";
+                str += "</div>";
+                str += "</div>";
+                str += "<div class='col-lg-8'>";
+                str += "<div style='padding-top: 25px;'>";
 
-                str += "<a href='Post.html?postid=" + objJson[i].Postid + "' class='nk-post-img'></a>";
-
-                str += " <img id='PostImg' src= ../" + objJson[i].Image1 + " alt='Logo'>";
-
-                str += " <span class='nk-post-categories'>";
-
-                str += " </span>";
-
-                str += " <div class='nk-gap'></div>";
-
-                if (objJson[i].Title.length > 24) {
-                    var title_edit = objJson[i].Title.substring(0, 25);
+                if (objJson[i].Title.length > 29) {
+                    var title_edit = objJson[i].Title.substring(0, 30);
                     var title_after = title_edit + "..";
-                    str += "<h2 href='Post.html?postid=" + objJson[i].Postid + "' class='nk-post-title h4'>" + title_after + "</h2>";
+                    str += "<h3><a href='Post.html?postid=" + objJson[i].Postid + "'>" + title_after + "</a></h3>";
                 }
                 else {
-                    str += "<h2 href='Post.html?postid=" + objJson[i].Title + "' class='nk-post-title h4'>" + objJson[i].Title + "</h2>";
+                    str += "<h3><a href='Post.html?postid=" + objJson[i].Postid + "'>" + objJson[i].Title + "</a></h3>";
                 }
 
-                str += "<div class='nk-post-text'>";
+                str += "<div>";
+
+                str += "<div class='nk-post-text' style='padding-top: 3px';>";
                 str += "<div id='postDate'> נכתב על ידי<span style='color:#04b8a5'> מערכת האתר</span>, " + renderDate(objJson[i].Postdate) + "</div>"
                 str += "</div>";
-                str += "<div class='nk-post-text'>";
-                str += "<p class='sidebar-box'>" + objJson[i].Body1 + "</p>";
-                //str += " <p class='read - more'><a href='#' class='button'>Read More</a></p>"
-                str += " </div>";
-                str += " <div class='nk-gap'></div>"
 
-                str += "<a href='Post.html?postid=" + objJson[i].Postid + "' class='btn btn-info'> <span class='icon ion-paper-airplane'>קרא עוד</span></a>"
-                //str += "<div class='nk - post - date float - right'><svg class='svg - inline--fa fa - calendar - alt fa - w - 14' aria-hidden='true' focusable='false' data-prefix='fa' data-icon='calendar - alt' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' data-fa-i2svg='><path fill='currentColor' d='M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z'></path></svg><!-- <span class='fa fa-calendar'></span> Font Awesome fontawesome.com -->" + Posts[i].Postdate+"</div>"
-                str += "<br/>"
+
                 str += "</div>";
-                str += " </div>";
+
+                if (objJson[i].Body1.length > 115) {
+                    var desc_edit = objJson[i].Body1.substring(0, 116);
+                    var desc_after = desc_edit + "..";
+                    str += "<span>" + desc_after + "</span>";
+                }
+                else {
+                    str += "<span>" + objJson[i].Body1 + "</span>";
+                }
+
+                str += "<br />";
+                str += "<div style='padding-top: 13px';></div>";
+
+                str += "<button class='more-info-button' data-postid='" + objJson[i].Postid + "'> <span style='position:relative; bottom:3px; right:2px;'>קרא עוד </span> <i class='bi bi-book' style='position:relative; right:1.5px; bottom:1px;'></i></button > ";
+                    
+                str += "</div>";
+                str += "</div>";
+                str += "</div>";
+                str += "<div style='padding-top: 35px;'></div>";
 
             }
-
-            str += " </div>"
-            str += " </div>"
 
             listing_table.innerHTML += str;
 
@@ -359,12 +460,16 @@
         }
 
 
-        //---Pagination Code--- *Close*
-
     </script>
+
 
 </head>
 <body>
+
+    <!--For facebook iframe-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=120238457987541&autoLogAppEvents=1" nonce="pnARNgWE"></script>
+    <!--For facebook iframe-->
 
     <section id="Nav-bar">
         <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
@@ -373,7 +478,9 @@
 
     <section id="content">
 
+
         <div class="container">
+
 
             <section id="page_title">
                 <a class="titlelink" href="TemplatePage.html">ראשי </a>
@@ -382,44 +489,95 @@
                 <div class="divdown"></div>
             </section>
 
-
-            <label>סינון לפי קטגוריה: </label>
-            <select class="target" id="categoryfilter">
-                <option value=""></option>
-                <option value="כללי">כללי</option>
-                <option value="עולמי">עולמי</option>
-            </select>
+            <section id="page_content">
 
 
-            <!-----Pagination Html--- Open-->
+                <div class="row">
+                    <div class="col-lg-9">
 
-            <div style="text-align: center; font-size: 22px; font-weight: 600;  word-spacing: 17px; position: relative; top: 62%;">
-
-                <a href="javascript:prevPage()" id="btn_prev">הקודם</a>
-                <span id="page" style="min-width: 42px; height: 42px; padding: 8px; line-height: 28px; color: #dd163b; border: 4px solid; border-radius: 50%;"></span>
-                <a href="javascript:nextPage()" id="btn_next">הבא</a>
-
-            </div>
-
-            <div id="listingTable" style="text-align: -webkit-center;"></div>
+                        <div style="background-color: #3c4250; height: 50px;">
+                            <div style="padding-top: 7px; margin-right:15px;">
 
 
+                                <label>קטגוריה: </label>
+                                <select class="target" id="categoryfilter">
+                                    <option value=""></option>
+                                    <option value="כללי">כללי</option>
+                                    <option value="עולמי">עולמי</option>
+                                </select>
 
-            <!-----Pagination Html--- Close-->
+
+                                <button class="filter-button" style="position: relative; top: 3px; right: 15px;"><span style="position:relative; bottom:4px; right:5px;"> סינון</span><i class="bi bi-funnel-fill" style="position:relative; right:4.5px; bottom:1px;"></i></button>
+
+                            </div>
+
+
+                        </div>
+
+                        <section id="posts_area">
+
+                            <div id="listingTable"></div> <!--we will write here from javascript-->
+
+                        </section>
+
+                        <!--End of Loop-->
+                        <!-----Pagination Html--- Open-->
+
+                        <div style="text-align: center; font-size: 22px; font-weight: 600;  word-spacing: 17px;">
+
+                            <a href="javascript:prevPage()" id="btn_prev">הקודם</a>
+                            <span id="page" style="min-width: 42px; height: 42px; padding: 8px; line-height: 28px; color: #dd163b; border: 4px solid; border-radius: 50%;"></span>
+                            <a href="javascript:nextPage()" id="btn_next">הבא</a>
+
+                        </div>
+
+                        <!-----Pagination Html--- Close-->
+
+                        <br />
+
+                    </div> <!--End of col-9-->
+
+                    <div class="col-lg-3">
+
+                        <div class="row">
+                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                        </div>
+
+                        <div style="margin-bottom:18px;"></div>
+
+                        <div class="row" id="anotherpostsbox">
+
+                            <div class="row" id="headeranotherpost">
+
+                                <h4 class="headh4"><span style="color:#1cbbaa">פייסבוק</span></h4>
+
+                            </div>
+
+                            <div class="row" style="margin-top:11px; height:342px">
+
+                                <div class="fb-page" data-href="https://www.facebook.com/IsraelEsports" data-tabs="timeline" data-width="250" data-height="330" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/IsraelEsports" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/IsraelEsports">‎העמותה לגיימינג תחרותי בישראל - Israeli Esports Association‎</a></blockquote></div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div> <!--End of col-3-->
+
+
+                </div>
+
+
+            </section> <!--End Page Content-->
 
         </div>
-
     </section>
 
 
     <section id="site_footer">
-
         <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-
             <h2>IESA</h2>
-
         </div>
-
     </section>
 
 
