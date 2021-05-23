@@ -455,6 +455,22 @@
                 strgn = "<i class='fas fa-genderless'></i>"
             }
 
+            if (gamerobj.Discorduser != "") {
+                var strdisc = "<a href='" + gamerobj.Discorduser + "' target='_blank' >";
+                strdisc += "<img src='https://southportlandlibrary.com/wp-content/uploads/2020/11/discord-logo.jpg' style='width:32%;' class='img-fluid' />";
+                strdisc += "</a>";
+
+                document.getElementById("discordprofile").innerHTML = strdisc;
+            }
+            else {
+                var strdisc = "<img src='https://southportlandlibrary.com/wp-content/uploads/2020/11/discord-logo.jpg' style='width:32%; opacity: 0.5' class='img-fluid' />";
+                $("#discordspan").css("opacity", "0.5");
+
+                document.getElementById("discordprofile").innerHTML = strdisc;
+
+            }
+            
+
             document.getElementById("g_genderph").innerHTML = strgn;
         }
 
@@ -590,7 +606,23 @@
                 strgn = "<i class='fas fa-genderless'></i>"
             }
 
+
             document.getElementById("o_genderph").innerHTML = strgn;
+
+            if (orgenaizerobj.Linktocommunity != "") {
+                var strcomm = "<a href='" + orgenaizerobj.Linktocommunity + "' target='_blank' >";
+                strcomm += "<img src='https://cdn3.iconfinder.com/data/icons/software-line/32/web-browser-03-512.png' style='width:32%;' class='img-fluid' />";
+                strcomm += "</a>";
+
+                document.getElementById("communitysite").innerHTML = strcomm;
+            }
+            else {
+                var strcomm = "<img src='https://cdn3.iconfinder.com/data/icons/software-line/32/web-browser-03-512.png' style='width:32%; opacity: 0.5' class='img-fluid' />";
+                $("#sitespan").css("opacity", "0.5");
+
+                document.getElementById("communitysite").innerHTML = strcomm;
+
+            }
 
             document.getElementById("o_site").innerHTML = orgenaizerobj.Linktocommunity;
         }
@@ -819,7 +851,8 @@
                                 <div class="card-body" id="socialnetwork">
                                     <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">רשתות</b></i>חברתיות</h6>
 
-                                    <a href="https://www.facebook.com/IsraelEsports/" target="_blank"><div class="social face"><i class="fab fa-facebook"></i><span>Facebook</span></div></a>
+                                    <div id="discordprofile" style="position: relative; right: 34%; top: 10%"></div> <!--from javascript-->
+                                    <span id="discordspan" style="position:relative; right: 42.6%; top: 10.5%; font-size: 14px;">Discord</span>
 
                                 </div>
 
@@ -952,19 +985,20 @@
                                             <p id="o_orgenaizertypeph" class="text-secondary mb-1"><!--שם קהילה: ..--></p>
                                             <p id="o_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
                                             <button id="o_edit_btn" class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
-                                            <button class="btn btn-outline-primary" style="color: #2c3a38; border-color: #04b8a5;">שליחת מייל</button>
+                                            <button class="btn btn-outline-primary" style="color: #2c3a38; border-color: #04b8a5;">*לתקן*שליחת מייל</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card mt-3" id="tableheight">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>אתר קהילה </h6>
-                                        <span class="text-secondary" id="o_site"></span>
-                                    </li>
 
-                                </ul>
+                                <div class="card-body" id="socialnetwork">
+                                    <h6 class="d-flex align-items-center mb-3"><i style="color:#04b8a5"><b style="margin:4px;">קישורים</b></i>חיצוניים</h6>
+
+                                    <div id="communitysite" style="position: relative; right: 34%; top: 10%"></div> <!--from javascript-->
+                                    <span id="sitespan" style="position:relative; right: 39%; top: 10.5%; font-size: 14px;">אתר קהילה</span>
+
+                                </div>
 
 
                             </div>

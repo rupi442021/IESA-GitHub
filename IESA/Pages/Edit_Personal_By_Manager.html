@@ -277,12 +277,14 @@
 
 
             $("#cancel_edit_gamer").click(function () {
-                window.history.back();
+                location.replace("Profile_View_Manager.html?userid=" + IdUser);
             });
 
             $("#cancel_edit_orgenaizer").click(function () {
-                window.history.back();
+                location.replace("Profile_View_Manager.html?userid=" + IdUser);
             });
+
+
 
             $("#main_page").click(function () {
 

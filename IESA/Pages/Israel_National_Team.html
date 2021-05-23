@@ -324,22 +324,51 @@
         }
 
 
-        #divfilterrank {
+        #divflag {
             color: #2b2626;
             position: absolute;
-            top: 29.6%;
-            right: 58%;
+            top: 30.5%;
+            right: 66.5%;
+        }
+
+        #divflag img {
+            height: 35px;
+        }
+
+        #RanksTable img {
+            padding-left: 2.5%;
+            border-radius: 100px;
+        }
+
+        @media only screen and (max-width: 1080px) {
+
+            #divflag {
+                right: 87%;
+                top: 18.7%;
+            }
+        }
+
+        @media only screen and (max-width: 680px) {
+
+            #divflag {
+                right: 82%;
+                top: 18.3%;
+            }
+        }
+
+        @media only screen and (max-width: 820px) {
+            div.dataTables_wrapper div.dataTables_filter input {
+                width: 100px;
+            }
+
+            div.dataTables_wrapper div.dataTables_filter label {
+                right: 65%;
+            }
         }
 
 
         select {
             height: 30px;
-        }
-
-
-        img {
-            padding-left: 2.5%;
-            border-radius: 100px;
         }
 
         .headh4 {
@@ -444,6 +473,10 @@
 
                     <div class="row">
                         <div class="col">
+
+                            <div id="divflag">
+                                <img src="../uploadedFiles/Site-Photos/israelflag.jpg" class="img-fluid"/>
+                            </div>
 
                             <form id="rForm">
                                 <table id="RedTitle" class="nk-table" style="width:100%">
@@ -563,6 +596,9 @@
 
                                     </thead>
                                 </table>
+
+                                <br />
+
                             </form>
 
                         </div>
