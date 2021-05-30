@@ -271,7 +271,33 @@
                 });
             }
 
-         });
+            $("#GeneralVolenteer").submit(function (e) {
+                e.preventDefault();
+
+                sendEmail();
+                    
+
+
+            });
+
+            function sendEmail() {
+
+                var name = $("#nameTB1").val();
+                var phone = $("#phoneTB1").val();
+                var email = $("#emailTB1").val();
+                var discord = $("#discordTB1").val();
+                var dob = $("#dobTB1").val();
+
+                console.log("success. ", name, phone, email, discord, dob)
+                return false;
+
+            }
+
+
+        });
+
+
+
 
     </script>
 
@@ -377,7 +403,7 @@
                                     <div class="nk-gap-1"></div>
 
                                     <div class="mb-3" style="text-align:left; margin-top: 11px;">
-                                        <input type="submit" class="submit-button" value="שליחת טופס" />
+                                        <input type="submit" id="GeneralVolenteer" class="submit-button" value="שליחת טופס" />
                                     </div>
 
                                 </form>

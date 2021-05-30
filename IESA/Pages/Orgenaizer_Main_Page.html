@@ -301,7 +301,7 @@
                 else if (fList[i].Competitionstatus == 4)
                     cardstr += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="setrank( fList[' + i + '] )">הזנת תוצאות תחרות</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-exclamation" style="font-size: 2rem; color: red"></i> נותרו' + " " + timetorank + " " + 'ימים להזנת התוצאות </p> </div > </div ></div >';
                 else if (fList[i].Competitionstatus == 5)
-                    cardstr += '<button type="button" class="btn btn-secondary" disabled>דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> </p> </div > </div ></div >';
+                    cardstr += '<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter" onclick="showsentrank( fList[' + i + '] )">דירוגים נשלחו למנהל</button><p id="iconp" style="font-size: 0.9rem"><i class="bi bi-hourglass-split" style="font-size: 2rem; color:yellow"></i> </p> </div > </div ></div >';
                 $("#FutureC").append(cardstr);
 
             }
@@ -470,6 +470,36 @@
 
         }
 
+        function showsentrank(c) {
+
+            cID = c.Competitionid;
+            ajaxCall("GET", "../api/Competitions/mark5?CId=" + cID + "&statusval=" + 0, "", getSuccessParticipents, getErrorRanks); //Edit_Competitions.html - method SC6
+
+        }
+
+        function getSuccessParticipents(data) {
+            $("#exampleModalLongTitle").text("משתתפים:");
+            $("#modal-body").text('')
+            $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
+
+            var gamersarray = data;
+
+            for (let key in gamersarray) {
+                $("#partisipantstbl").append('<tr id="' + key + '"><td>' + key + '</td></tr>')
+
+                for (var i = 0; i < gamersarray[key].length; i++) {
+                    $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
+                }
+
+            }
+
+
+
+        }
+
+        function getErrorRanks(err) {
+            console.log(err)
+        }
         function selectrankgamers(cID) {
             numofp = $("#numofparticipants").val();
             $("#inputtbl").text("");
