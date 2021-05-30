@@ -596,6 +596,9 @@
 
             ajaxCall("GET", "../api/Competitions/tablecdb", "", getCompetitionsSuccess, Error); //Database.html - method OD4
 
+
+
+
             $(document).on("click", ".C_deleteBTN", function () {
                 var competitionId = this.getAttribute('data-competitionid');
 
@@ -669,6 +672,7 @@
 
 
             //---Gamers Table--- *Close*
+
 
 
             //---Orgenaizers Table--- *Open*
@@ -824,6 +828,38 @@
             //Check if the user is manager
         }
 
+        //ExportDataToExcel
+        function exportTableToExcel(tableID, filename = '') {
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableID.outerHTML.replace(/ /g, '%20');
+
+            // Specify file name
+            filename = filename ? filename + '.xls' : 'excel_data.xls';
+
+            // Create download link element
+            downloadLink = document.createElement("a");
+
+            document.body.appendChild(downloadLink);
+
+            if (navigator.msSaveOrOpenBlob) {
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob(blob, filename);
+            } else {
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+                // Setting the file name
+                downloadLink.download = filename;
+
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+    
 
         function getGamersSuccess(gamersdata) {
             console.log(gamersdata);
@@ -1727,12 +1763,11 @@
                                     </thead>
                                 </table>
                             </form>
-
                             <button class="add-post-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת פוסט חדש</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                            <button onclick="exportTableToExcel(PostsTable, 'Posts')"> <i class="bi bi-file-earmark-arrow-down"></i> ייצא לאקסל</button>
+
 
                         </div>
-
-                    </div>
 
                 </div>
 
@@ -1769,6 +1804,7 @@
                             </form>
 
                             <button class="add-competition-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> הוספת תחרות חדשה</span><i class="bi bi-plus-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                            <button onclick="exportTableToExcel(CompetitionsTable, 'Competitions')"> <i class="bi bi-file-earmark-arrow-down"></i> ייצא לאקסל</button>
 
                         </div>
 
@@ -1811,6 +1847,7 @@
                             </form>
 
                             <button class="reset-rank-button" onclick="return false;"><span style="position:relative; bottom:3px; right:2px;"> איפוס דירוגים</span><i class="bi bi-dash-circle" style="position:relative; right:1.5px; bottom:1px;"></i></button>
+                            <button onclick="exportTableToExcel(RanksTable, 'Ranks')"> <i class="bi bi-file-earmark-arrow-down"></i> ייצא לאקסל</button>
 
                         </div>
 
@@ -1847,6 +1884,7 @@
                                     </thead>
                                 </table>
                             </form>
+                            <button onclick="exportTableToExcel(GamersTable, 'Gamers')"> <i class="bi bi-file-earmark-arrow-down"></i> ייצא לאקסל</button>
 
                         </div>
 
@@ -1883,6 +1921,7 @@
                                     </thead>
                                 </table>
                             </form>
+                            <button onclick="exportTableToExcel(OrgenaizersTable, 'Orgenaizers')"> <i class="bi bi-file-earmark-arrow-down"></i> ייצא לאקסל</button>
 
                         </div>
 
@@ -1919,6 +1958,7 @@
                                     </thead>
                                 </table>
                             </form>
+                            <button onclick="exportTableToExcel(ManagersTable, 'Managers')"> <i class="bi bi-file-earmark-arrow-down"></i> ייצא לאקסל</button>
 
                         </div>
 
