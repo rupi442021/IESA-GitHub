@@ -8,6 +8,11 @@
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!--//Email-->
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <!--//Email-->
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Raleway:100,400' rel='stylesheet' type='text/css'>
@@ -288,9 +293,45 @@
         }
     </style>
 
+
     <script>
+        $(document).ready(function () {
 
 
+
+            $("#contactForm").submit(function (e) {
+                e.preventDefault();
+                sendEmail();
+            });
+
+
+        });
+
+        function sendEmail() {
+
+            Email.send({
+                Host: "smtp.google.com",
+                Username: "reactapptest230@gmail.com",
+                Password: "FA1278973EE70094257D1CFD15BECDBA0BDC",
+
+                To: "reactapptest230@gmail.com",
+                From: $("#emailTB").val(),
+                Subject: "פניה מצור קשר באתר",
+
+                Body: $("#textareaTB1").val()
+
+            }).then(
+                Swal.fire({
+                    icon: 'success',
+                    title: 'פניה נשלחה לעמותה בהצלחה!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            );
+            window.location.replace("Contact.html");
+
+            return false;
+        }
     </script>
 
 
@@ -371,7 +412,7 @@
                                     <div class="row vertical-gap sm-gap">
                                         <div class="col">
                                             <div class="mb-3" style="text-align:left">
-                                                <input type="submit" class="submit-button" value="שליחת טופס" />
+                                                <input id="contactsubmit" type="submit" class="submit-button" value="שליחת טופס" />
                                             </div>
                                         </div>
                                     </div>
