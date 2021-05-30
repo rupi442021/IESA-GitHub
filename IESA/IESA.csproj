@@ -273,7 +273,6 @@
     <Content Include="Pages\Volunteer.html" />
     <Content Include="Pages\Post_Archive.html" />
     <Content Include="Site_Pages\index.html" />
-    <Content Include="Site_Pages\Structure.html" />
     <Content Include="Style\Style_Sign_Up.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
