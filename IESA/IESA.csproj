@@ -219,6 +219,7 @@
     <Content Include="Pages\Project_Menu.html" />
     <Content Include="Pages\Post.html" />
     <Content Include="Pages\Ranks.html" />
+    <Content Include="Pages\Sign_In2.html" />
     <Content Include="Pages\Sign_Up.html" />
     <Content Include="Pages\Add_New_Competition.html" />
     <Content Include="Pages\Orgenaizer_Main_Page.html" />
@@ -227,6 +228,7 @@
     <Content Include="Pages\Modal_Check_Page.html" />
     <Content Include="Pages\Gamer_Main_Page.html" />
     <Content Include="Pages\NavBar Template.html" />
+    <Content Include="Pages\PasswordRestore.html" />
     <Content Include="Pages\TemplatePage.html" />
     <Content Include="Pages\TemplatePage_Site.html" />
     <Content Include="Scripts\ajaxCalls.js" />
