@@ -3635,12 +3635,62 @@ namespace IESA.Models.DAL
 
 
 
+        //---PasswordRestore.html--- *Open*
+        
 
+        public int updatePassword(string userEmail, string newPassword) //PasswordRestore.html - method SD1
+        {
 
+            SqlConnection con;
+            SqlCommand cmd;
 
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
 
+            String cStr = BuildUpdatenewPassword(userEmail, newPassword);      // helper method to build the update string
 
+            cmd = CreateCommand(cStr, con);             // create the command
 
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdatenewPassword(string userEmail, string newPassword)
+        {
+            String command;
+            command = " update Orgenaizers set password1= '" + newPassword + "' where email = '" + userEmail + "' update Managers set password1= '" + newPassword + "' where email = '" + userEmail + "' update Gamers set password1= '" + newPassword + "' where email = '" + userEmail + "' ";
+
+            return command;
+        }
+
+    
+
+        //---PasswordRestore.html--- *Close*
 
     }
 
