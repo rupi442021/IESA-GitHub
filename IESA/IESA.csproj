@@ -275,7 +275,9 @@
     <Content Include="Pages\Volunteer.html" />
     <Content Include="Pages\Post_Archive.html" />
     <Content Include="Site_Pages\index.html" />
-    <Content Include="Style\Style_Sign_Up.css" />
+    <Content Include="Site_Pages\navbar_template.html" />
+    <Content Include="Style\basic.css" />
+    <Content Include="Style\about.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
