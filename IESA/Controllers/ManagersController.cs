@@ -1,4 +1,5 @@
 ﻿using IESA.Models;
+using IESA.Models.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +69,21 @@ namespace IESA.Controllers
 
 
         //---Database.html--- *Close*
+
+        //---RestorePassword.html---- *Open*
+
+
+        [HttpPut] //RestorePassword.html - method SD1
+        [Route("api/Manager/passwordupdate")]
+        public void updatePassword(string userEmail, string newPass)
+        {
+            DBServices dbs = new DBServices();
+            dbs.updatePassword(userEmail, newPass);
+        }
+
+        //---RestorePassword.html---- *Close*
+
+
 
 
     }

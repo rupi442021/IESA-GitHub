@@ -33,7 +33,7 @@
         $(document).ready(function () {
 
         $("#ConnectBTN").click(checkInfo);
-        checkIfEmailExists();
+        
         });
 
         function init() { //If the user entered this page while was logged in
@@ -159,67 +159,7 @@
 
         }
 
-        function checkIfEmailExists() {
 
-        //need to define emailAdd by $ from modal input.
-        ajaxCall("GET", "../api/gamers/mark1?emailAdd=modi123@gmail.com", "", EmailSuccess, EmailError); //#method OG1 (Gamers Controllers)
-        return false;
-        }
-
-        function EmailSuccess(ans) {
-        console.log("In Success: ", ans)
-
-        if (ans == 'not exist' || ans == "not exist")
-        Swal.fire({
-        icon: 'error',
-        title: 'כתובת מייל לא נמצאה',
-        showConfirmButton: false,
-        timer: 2500
-        })
-        else
-        getNewPass();
-
-        }
-
-        function EmailError() {
-        console.log(err)
-        }
-
-        function getNewPass() {
-        //here we need new modal to get the new password for user;
-
-
-
-
-
-        sendEmail(ans)
-
-        }
-
-        function sendEmail(userEmail) {
-
-        Email.send({
-        Host: "smtp.google.com",
-        Username: "reactapptest230@gmail.com",
-        Password: "FA1278973EE70094257D1CFD15BECDBA0BDC",
-
-        To: "reactapptest230@gmail.com",
-        From: "reactapptest230@gmail.com",
-        Subject: "איפוס סיסמא עמותת הגיימינג",
-
-        Body: "כאן יופיע לינק לדף חדש לאיפוס סיסמא",
-
-        }).then(
-        Swal.fire({
-        icon: 'success',
-        title: 'לינק לאיפוס נשלח למייל',
-        showConfirmButton: true,
-        timer: 2500
-        })
-        );
-
-
-        }
 
 
     </script>
@@ -661,32 +601,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </svg>
         </div>
         <form id="iForm" action="" class="log-in" autocomplete="off">
@@ -705,236 +619,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </g>
                     <rect class="st0" width="100" height="100" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1030,31 +716,6 @@
 
     </div>
 
-
-    <!-- The Modal Edit-->
-    <div id="InputEmail" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content" style="text-align:right">
-
-            <div class="modal-header">
-                <!--<span class="close">&times;</span>-->
-                <h4>עריכת קטגורית משחק</h4>
-            </div>
-
-            <div id="edit_category_modalJS" class="modal-body">
-
-            </div>
-
-            <div class="modal-footer">
-                <button id="closebtn_editc" type="button">סגור</button>
-                <input type="submit" id="categoryedit" form="ca_EditForm" value="שמור" />
-
-            </div>
-
-        </div>
-
-    </div> <!-- The Modal Edit-->
 
 
 
