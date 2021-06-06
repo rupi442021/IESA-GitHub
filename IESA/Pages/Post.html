@@ -9,183 +9,87 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="../Style/basic.css" rel="stylesheet" />
+    <link href="../Style/post.css" rel="stylesheet" />
+
     <title>&#x202E; פוסט – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
-
-    <style type="text/css">
-
-        /*Template Style*/
-
-        body {
-            background-color: #212529;
-            color: white;
-
-            /*additional to posts*/
-            line-height: 1.7;
-            letter-spacing: .015em;
-        }
-
-        .container {
-            background-color: #292e38;
-            max-width: 1110px;
-            padding-top: 30px;
-            padding-bottom: 200px;
-            position: relative;
-        }
-
-        .jumbotron {
-            height: 70px;
-            text-align: center;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        /*Template Style*/
-
-        .titlelink {
-            color: #FFFFFF;
-            text-decoration: none;
-            margin: 3px;
-            font-weight: 600;
-            font-size: 1.04rem;
-            letter-spacing: .015em;
-            line-height: 2;
-        }
-
-            .titlelink:hover {
-                color: #04b8a5;
-                transition: .15s color;
-            }
-
-        .headh2 {
-            display: flex;
-            align-items: center;
-            margin-bottom: 55px;
-            font-weight: 600;
-            letter-spacing: .015em;
-        }
-
-            .headh2::after {
-                content: '';
-                flex: 1;
-                margin-right: 10px;
-                margin-top: 23px;
-                opacity: 0.84;
-                height: 2px;
-                background-color: #fff;
-            }
-
-        .postlink {
-            color: #FFFFFF;
-            text-decoration: none;
-        }
-
-            .postlink:hover {
-                color: white;
-                background-color: transparent;
-            }
-
-
-
-        .imglogo {
-            width: 100%;
-            height: 400px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 10px;
-        }
-
-        #pafter {
-            margin-bottom: 27px;
-        }
-
-
-        .nk-post-categories {
-            float: left;
-            max-width: 100%;
-            font-size: 1rem;
-        }
-
-            .nk-post-categories a, .nk-post-categories span {
-                display: inline-block;
-                padding: 2px 19px;
-                margin-top: 6px;
-                color: #fff;
-                text-decoration: none;
-                white-space: nowrap;
-                background-color: #2f3541;
-                border-radius: 4px;
-            }
-
-        .bg-category-btn {
-            background-color: #dd163b !important;
-        }
-
-        .headh4 {
-            display: flex;
-            margin-top: 9px;
-            color: #04b8a5
-        }
-
-            .headh4::after {
-                content: '';
-                flex: 1;
-                margin-top: 16px;
-                height: 3px;
-                background-color: #fff;
-                margin: -12px 12px 30px -12px;
-                margin-top: 15px;
-            }
-
-        #anotherpostsbox {
-            background-color: #363c4a;
-            width: 100%;
-            margin: 0px;
-        }
-
-        #headeranotherpost {
-            margin-top: 10px;
-            height: 52px;
-            text-align: right;
-            background-color: #404859;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        #anotherpimg {
-            margin: 1px;
-            height: 125px;
-        }
-
-        #panotherpost {
-            font-size: 14px;
-        }
-
-        #imganotherpost {
-            width: 100%;
-            height: 80%;
-            max-height: 120px;
-            max-width: 300px;
-            margin: 2px;
-        }
-
-        th {
-            border-top: 1px solid white;
-            border-bottom: 1px solid white;
-            border-right: 1px solid white;
-        }
-
-            th:first-child {
-                border-left: 2px solid white;
-            }
-
-
-
-    </style>
-
     <script>
+
+        $(document).ready(function () {
+
+            //--Navbar Script--
+            const openedMenu = document.querySelector('.opened-menu');
+            const closedMenu = document.querySelector('.closed-menu');
+            const navbarMenu = document.querySelector('.navbar');
+            const menuOverlay = document.querySelector('.overlay');
+
+            // Opened navbarMenu
+            // Closed navbarMenu
+            // Closed navbarMenu by Click Outside
+            openedMenu.addEventListener('click', toggleMenu);
+            closedMenu.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Toggle Menu Function
+            function toggleMenu() {
+                navbarMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.classList.toggle('scrolling');
+            }
+
+            navbarMenu.addEventListener('click', (event) => {
+                if (event.target.hasAttribute('data-toggle') && window.innerWidth <= 992) {
+                    // Prevent Default Anchor Click Behavior
+                    event.preventDefault();
+                    const menuItemHasChildren = event.target.parentElement;
+
+                    // If menuItemHasChildren is Expanded, Collapse It
+                    if (menuItemHasChildren.classList.contains('active')) {
+                        collapseSubMenu();
+                    } else {
+                        // Collapse Existing Expanded menuItemHasChildren
+                        if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                            collapseSubMenu();
+                        }
+                        // Expand New menuItemHasChildren
+                        menuItemHasChildren.classList.add('active');
+                        const subMenu = menuItemHasChildren.querySelector('.sub-menu');
+                        subMenu.style.maxHeight = subMenu.scrollHeight + 'px';
+                    }
+                }
+            });
+
+            // Collapse Sub Menu Function
+            function collapseSubMenu() {
+                navbarMenu.querySelector('.menu-item-has-children.active .sub-menu').removeAttribute('style');
+                navbarMenu.querySelector('.menu-item-has-children.active').classList.remove('active');
+            }
+
+            // Fixed Resize Screen Function
+            function resizeScreen() {
+                // If navbarMenu is Open, Close It
+                if (navbarMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+
+                // If menuItemHasChildren is Expanded, Collapse It
+                if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                    collapseSubMenu();
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                if (this.innerWidth > 992) {
+                    resizeScreen();
+                }
+            });
+            //--Navbar Script--
+
+        });
+
 
         function init() {
             //var post_id = localStorage["post_id"];
@@ -208,7 +112,7 @@
         function renderPost(postList) {
             console.log(postList);
 
-            
+
             strtitle = '';
             strtitle += "<a class='titlelink' href='TemplatePage.html'>ראשי </a>";
 
@@ -290,7 +194,7 @@
             str += "<h4 class='headh4'>פוסטים<span style='color: white'><span style='color: transparent'>.</span>נוספים</span></h4>";
             str += "</div>";
 
-            
+
             for (i = 0; i < postList.length; i++) {
 
                 str += "<div class='row' id='anotherpimg' style='margin-top: 19px'>";
@@ -328,19 +232,82 @@
         }
 
 
-
-
     </script>
 
 
 </head>
 <body onload="init()">
 
-    <section id="Nav-bar">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
-        </div>
-    </section>
+    <!--For facebook iframe-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=120238457987541&autoLogAppEvents=1" nonce="pnARNgWE"></script>
+    <!--For facebook iframe-->
+    <!-- Section: Header -->
+    <div class="user-nav">
+        <span style="margin-left: 9px;">שלום עומר</span>
+        <span style="margin-left: 9px;">|</span>
+        <a href="index.html"><i class="bi bi-box-arrow-right" style="position:relative; top: 1px; left: 1.5px;"></i> התנתק </a>
+    </div>
 
+    <header class="header">
+        <div class="top-navbar">
+            <section class="wrapper">
+
+                <div style="display:flex">
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
+                    </a>
+                    <span style="margin-right:9px;"></span>
+                    <span style="margin-left: 14px; border-left: 1px solid #979797;"></span>
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="height:33px; margin-top: 7px;">
+                    </a>
+                </div>
+
+                <button type="button" class="opened-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="overlay"></div>
+
+
+                <nav class="navbar">
+                    <button type="button" class="closed-menu">
+                        <img src="https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg" class="closed-icon" alt="closed">
+                    </button>
+                    <ul class="menu">
+                        <li class="menu-item"><a href="index.html" id="main-nav">ראשי</a></li>
+                        <li class="menu-item"><a href="competitions.html" id="comp-nav">תחרויות</a></li>
+                        <li class="menu-item"><a href="ranks.html" id="rank-nav">דירוגים</a></li>
+                        <li class="menu-item menu-item-has-children">
+                            <a href="#" data-toggle="sub-menu" id="info-nav">אודות ומידע<i class="expand"></i></a>
+                            <ul class="sub-menu">
+                                <li class="menu-item"><a href="about.html">אודות העמותה</a></li>
+                                <li class="menu-item"><a href="esports.html">אודות הענף</a></li>
+                                <li class="menu-item"><a href="federation.html">הפדרציה העולמית</a></li>
+                                <li class="menu-item"><a href="officials.html">בעלי תפקידים</a></li>
+                                <li class="menu-item"><a href="committee.html">וועדות</a></li>
+                                <li class="menu-item"><a href="regulations.html">תקנונים</a></li>
+                                <li class="menu-item"><a href="volunteer.html">התנדבות בעמותה</a></li>
+                                <li class="menu-item"><a href="new_referee.html">רישום שופטים</a></li>
+                                <li class="menu-item"><a href="post_archive.html">ארכיון פוסטים</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item"><a href="israel_national_team.html" id="isr-nav">נבחרת ישראל</a></li>
+                        <li class="menu-item"><a href="#" id="pers-nav">אזור אישי</a></li>
+                    </ul>
+                </nav>
+
+            </section>
+        </div>
+    </header>
+    <!-- Section: Header -->
+
+    <div class="nav-gap"></div>
+
+    <!--Section: Content-->
     <section id="content">
 
 
@@ -351,110 +318,181 @@
             <section id="page_title">
                 <!--From here javascript part 1-->
                 <!--<a class="titlelink" href="TemplatePage.html">ראשי ></a>
-        <a class="titlelink" href="TemplatePage.html">פוסטים ></a><br />
-        <h2 class="headh2">משחק הכדורגל PES חוזר לאליפות העולם</h2>-->
+                <a class="titlelink" href="TemplatePage.html">פוסטים ></a><br />
+                <h2 class="headh2">משחק הכדורגל PES חוזר לאליפות העולם</h2>-->
             </section>
 
             <section id="post_area">
                 <!--From here javascript part 2-->
                 <!--<div class="row">
-            <div class="col-lg-9">
+                    <div class="col-lg-9">
 
-                <img class="imglogo" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" />
+                        <img class="imglogo" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" />
 
-                <div class="row">
-                    <div class="nk-post-by">
-                        <span> נכתב על ידי<span style="color:#04b8a5"> מערכת האתר</span>, 15 במרץ 2021</span>
-                        <div class="nk-post-categories">
-                            <span class="bg-category-btn">עולמי</span>
-                            <span>כללי</span>
+                        <div class="row">
+                            <div class="nk-post-by">
+                                <span> נכתב על ידי<span style="color:#04b8a5"> מערכת האתר</span>, 15 במרץ 2021</span>
+                                <div class="nk-post-categories">
+                                    <span class="bg-category-btn">עולמי</span>
+                                    <span>כללי</span>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
 
-                </div>
+                        <br />
 
-                <br />
-
-                <p id="pafter">
-                    התחרותית המקצועית של הכותר, נפוצים פרסים גבוהים במיוחד בענף הממומנים על ידי המעריצים –  – ובמיוחד בטורניר "The International" שעורכת מידי שנה חברת Valve על 30 מיליון דולר, מה שהפך את DOTA2 לאחד המשחקים הרווחיים ביותר בתחרויות ספורט אלקטרוני.
-                    הכותר (Counter-Strike: Global Offensive (CS:GO, הוא משחק יריות מגוף ראשון שפותח על ידי Valve ו-Hidden Path Entertainment. זו המהדורה הרביעית בסדרת Counter-Strike הוותיקה, אשר פעילה בתחרויות הספורט האלקטרוני בעולם מזה שני עשורים.
-                    IESF מצפה לראות את מיטב השחקנים בעולם ממדינות שונות החברות ב-IESF בתחרויות ובאליפות העולם ה-13 שתתקיים באילת, ישראל.
-                    אילת נבחרה כעיר המארחת של אליפות העולם ה-13 לספורט אלקטרוני של IESF, לאחר ביטול אירוע הגמר העולמי בשנת 2020. מתכונת התחרות תהיה דומה לשנה שעברה שכן המשחקים האזוריים של אליפות העולם יתקיימו ברשת והשחקנים והקבוצות הטובים ביותר ישתתפו בגמר העולמי הלא-מקוון באילת.
-                </p>
-
-            </div>
-
-            <div class="col-lg-3">
-
-                <div class="row">
-                    <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
-                </div>
-
-                <div style="margin-bottom:18px;">
-                </div>
-
-                <div class="row" id="anotherpostsbox">
-
-                    <div class="row" id="headeranotherpost">
-
-                        <h4 class="headh4">פוסטים<span style="color:white"><span style="color:transparent">.</span>נוספים</span></h4>
+                        <p id="pafter">
+                            התחרותית המקצועית של הכותר, נפוצים פרסים גבוהים במיוחד בענף הממומנים על ידי המעריצים –  – ובמיוחד בטורניר "The International" שעורכת מידי שנה חברת Valve על 30 מיליון דולר, מה שהפך את DOTA2 לאחד המשחקים הרווחיים ביותר בתחרויות ספורט אלקטרוני.
+                            הכותר (Counter-Strike: Global Offensive (CS:GO, הוא משחק יריות מגוף ראשון שפותח על ידי Valve ו-Hidden Path Entertainment. זו המהדורה הרביעית בסדרת Counter-Strike הוותיקה, אשר פעילה בתחרויות הספורט האלקטרוני בעולם מזה שני עשורים.
+                            IESF מצפה לראות את מיטב השחקנים בעולם ממדינות שונות החברות ב-IESF בתחרויות ובאליפות העולם ה-13 שתתקיים באילת, ישראל.
+                            אילת נבחרה כעיר המארחת של אליפות העולם ה-13 לספורט אלקטרוני של IESF, לאחר ביטול אירוע הגמר העולמי בשנת 2020. מתכונת התחרות תהיה דומה לשנה שעברה שכן המשחקים האזוריים של אליפות העולם יתקיימו ברשת והשחקנים והקבוצות הטובים ביותר ישתתפו בגמר העולמי הלא-מקוון באילת.
+                        </p>
 
                     </div>
 
-                    <div class="row" id="anotherpimg" style="margin-top:19px">
+                    <div class="col-lg-3">
 
-                        <div class="col" style="padding:1px">
-                            <a class="postlink" href="TemplatePage.html"><p id="panotherpost">משחק הכדורגל PES חוזר לאליפות העולם ה-13 של ה-IESF</p></a>
+                        <div class="row">
+                            <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
                         </div>
 
-                        <div class="col">
-                            <a href="TemplatePage.html"><img id="imganotherpost" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" /></a>
+                        <div style="margin-bottom:18px;">
+                        </div>
+
+                        <div class="row" id="anotherpostsbox">
+
+                            <div class="row" id="headeranotherpost">
+
+                                <h4 class="headh4">פוסטים<span style="color:white"><span style="color:transparent">.</span>נוספים</span></h4>
+
+                            </div>
+
+                            <div class="row" id="anotherpimg" style="margin-top:19px">
+
+                                <div class="col" style="padding:1px">
+                                    <a class="postlink" href="TemplatePage.html"><p id="panotherpost">משחק הכדורגל PES חוזר לאליפות העולם ה-13 של ה-IESF</p></a>
+                                </div>
+
+                                <div class="col">
+                                    <a href="TemplatePage.html"><img id="imganotherpost" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" /></a>
+                                </div>
+
+                            </div>
+
+                            <div class="row" id="anotherpimg">
+
+                                <div class="col" style="padding:1px">
+                                    <a class="postlink" href="TemplatePage.html"><p id="panotherpost">משחק הכדורגל PES חוזר לאליפות העולם ה-13 של ה-IESF</p></a>
+                                </div>
+
+                                <div class="col">
+                                    <a href="TemplatePage.html"><img id="imganotherpost" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" /></a>
+                                </div>
+
+                            </div>
+
+                            <div class="row" id="anotherpimg">
+
+                                <div class="col" style="padding:1px">
+                                    <a class="postlink" href="TemplatePage.html"><p id="panotherpost">משחק הכדורגל PES חוזר לאליפות העולם ה-13 של ה-IESF</p></a>
+                                </div>
+
+                                <div class="col">
+                                    <a href="TemplatePage.html"><img id="imganotherpost" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" /></a>
+                                </div>
+
+                            </div>
+
+
                         </div>
 
                     </div>
-
-                    <div class="row" id="anotherpimg">
-
-                        <div class="col" style="padding:1px">
-                            <a class="postlink" href="TemplatePage.html"><p id="panotherpost">משחק הכדורגל PES חוזר לאליפות העולם ה-13 של ה-IESF</p></a>
-                        </div>
-
-                        <div class="col">
-                            <a href="TemplatePage.html"><img id="imganotherpost" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" /></a>
-                        </div>
-
-                    </div>
-
-                    <div class="row" id="anotherpimg">
-
-                        <div class="col" style="padding:1px">
-                            <a class="postlink" href="TemplatePage.html"><p id="panotherpost">משחק הכדורגל PES חוזר לאליפות העולם ה-13 של ה-IESF</p></a>
-                        </div>
-
-                        <div class="col">
-                            <a href="TemplatePage.html"><img id="imganotherpost" src="https://html.nkdev.info/goodgames/assets/images/post-2.jpg" /></a>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>-->
+                </div>-->
 
             </section> <!--End javascript-->
 
         </div>
     </section>
+    <!--Section: Content-->
 
-
+    <!-- Section: Footer -->
     <section id="site_footer">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-            <h2>IESA</h2>
+        <div class="footer">
+
+            <div class="sub-footer">
+
+                <div class="row">
+
+                    <div class="col-md-4" style="text-align:right">
+
+                        <h6 id="footer-title">אודות העמותה</h6>
+                        <div style="margin-top: 15px;"></div>
+
+                        <p>העמותה לגיימינג תחרותי (ע"ר) היא ארגון לספורט </p>
+                        <p>אלקטרוני בישראל ופועלת ללא מטרות רווח לקידום</p>
+                        <p>ענף הגיימינג התחרותי בישראל.</p>
+
+                        <p style="padding-top: 9px; "><a href="about.html">למדו עוד >></a></p>
+
+                        <div style="margin-bottom: 15px;"></div>
+
+                    </div>
+
+                    <div class="col-md-4" style="text-align:right">
+
+                        <h6 id="footer-title">יצירת קשר</h6>
+                        <div style="margin-top: 15px;"></div>
+
+                        <div class="row">
+
+                            <p>לפניה בכל נושא ניתן לשלוח הודעה בדף המיועד או פניה באמצעות הרשתות החברתיות. </p>
+
+                            <!--<p style="padding-top: 9px;"><a href="about.html">מעבר לעמוד >></a></p>-->
+
+                            <div id="social-media" style="padding-top: 10px; font-size: 21px; margin-bottom: 15px;">
+                                <a href="https://www.youtube.com/channel/UCX98q91JCtTp3gk4gvnGbUQ" target="_blank"><i class="bi bi-youtube" style="color: #f3ebeb"></i></a>
+                                <a href="https://www.linkedin.com/company/19043406" target="_blank"><i class="bi bi-linkedin" style="padding-right: 4px; color: #f3ebeb"></i></a>
+                                <a href="https://www.facebook.com/IsraelEsports" target="_blank"><i class="bi bi-facebook" style="padding-right: 4px; color: #f3ebeb"></i></a>
+                                <a href="contact.html"><i class="bi bi-info-circle-fill" style="padding-right: 4px; color: #f3ebeb"></i></a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4" style="text-align:right">
+
+                        <h6 id="footer-title">בשיתוף</h6>
+
+                        <div class="row">
+                            <div class="column_partner">
+                                <img src="https://iesa.org.il/wp-content/uploads/2019/07/iesf-1.png" style="width:60px;">
+                            </div>
+                            <div class="column_partner">
+                                <img src="https://iesa.org.il/wp-content/uploads/2019/07/maccabi.png" style="width:60px">
+                            </div>
+                            <div class="column_partner">
+                                <img src="https://iesa.org.il/wp-content/uploads/2019/07/ASA.png" style="width:60px">
+                            </div>
+                            <div class="column_partner">
+                                <img src="https://iesa.org.il/wp-content/uploads/2019/07/PC.png" style="width:60px">
+                            </div>
+                            <div class="column_partner">
+                                <img src="https://iesa.org.il/wp-content/uploads/2019/07/MI-3.png" style="width:60px">
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </section>
-
+    <!-- Section: Footer -->
 
 </body>
 </html>

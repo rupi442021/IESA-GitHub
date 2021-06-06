@@ -1,0 +1,89 @@
+﻿.card {
+    border: 0px;
+    margin-left: 0px;
+}
+
+    .card img {
+        max-height: 200px;
+        max-width: 100%;
+    }
+
+.card-body {
+    padding: 0px;
+    background-color: black;
+}
+
+.card p {
+    text-align: center;
+}
+
+.card i {
+    text-align: center;
+}
+
+.card-title {
+    text-align: center;
+}
+
+#iconp {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+#FutureC, #PastC, #AllPastC, #AllFutureC, #AllPastC {
+    text-align: -webkit-center;
+    display: flex;
+}
+
+#PCcards {
+    margin-top: 100px;
+}
+
+.card {
+    display: inline-block;
+}
+
+.container img {
+    height: 168px;
+    width: 240px;
+}
+
+
+.loadC {
+    margin-top: auto;
+}
+
+#loadFCbtn, #loadPCbtn {
+/*    bottom: 2%;*/
+    left: 20%;
+    position: absolute
+}
+
+.modal-content {
+    color: black;
+}
+
+table, tr, td {
+}
+
+#inputnumbers {
+    margin-bottom: 20px;
+}
+
+tr {
+    margin-bottom: 3px;
+}
+
+.errvalidation {
+    color: red;
+    font-size: 10px;
+    direction: rtl;
+}
+
+.modal-header {
+    background-color: #dd163b;
+}
+
+a:hover {
+    text-decoration: none;
+}

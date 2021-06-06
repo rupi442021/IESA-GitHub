@@ -1,0 +1,134 @@
+﻿#policy {
+    width: 90%;
+    padding-right: 5%;
+    padding-top: 15%;
+}
+
+
+#Load_Renewal {
+    color: white;
+    background-color: #04b8a5;
+    width: 75%;
+    margin-top: 55%;
+}
+
+
+#myBtn {
+    background-color: #555555;
+    border-radius: 5px;
+}
+
+    #myBtn:hover {
+        background-color: white
+    }
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 95%;
+    margin: auto;
+    text-align: center;
+    background-color: black;
+    position: relative;
+    right: 0%;
+    border: 5px solid white;
+    border-radius: 20px;
+}
+
+.title {
+    color: grey;
+    font-size: 18px;
+}
+/*
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }*/
+
+/*.container a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}*/
+
+/*  button:hover, a:hover {
+                opacity: 0.7;
+            }*/
+
+#titlecard {
+    position: relative;
+    right: 14%;
+    top: -45%;
+}
+
+#CardImg {
+    /*            width:12%;*/
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    margin-top: 10px;
+    position: relative;
+    right: 1.5%;
+    top: -2.5%;
+}
+
+#ColText {
+    text-align: right;
+    /* border: 5px solid red*/
+}
+
+.UnderBold1 {
+    font: bold;
+    text-decoration: underline;
+    text-align: right;
+    padding-right: 11.5%;
+}
+
+.UnderBold2 {
+    font: bold;
+    text-decoration: underline;
+    text-align: right;
+    padding-left: 10%;
+}
+
+
+.LicenceDate {
+    text-align: center;
+    padding: 2% 55% 0% 0%;
+    color: #04b8a5;
+}
+
+
+#CardImg2 {
+    position: relative;
+    right: 23%;
+}
+
+
+.RealD {
+    color: #555555;
+    text-align: right;
+}
+
+
+#miki {
+    color: #555555;
+    text-align: right;
+}
+
+.miki2 {
+    position: relative;
+    right: -5%;
+}
+
+.miki3 {
+    position: relative;
+    right: -4%;
+}

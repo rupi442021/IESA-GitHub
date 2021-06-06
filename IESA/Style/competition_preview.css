@@ -1,0 +1,59 @@
+﻿#charNum {
+    direction: ltr;
+    color: dimgray;
+    font-size: 15px;
+}
+
+
+.bannerimage > img {
+    width: 1024px;
+    height: 210px;
+}
+
+
+
+.cName {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cDisc {
+    margin-bottom: 50px;
+}
+
+.details {
+    text-align: center;
+}
+
+div {
+    text-align: center;
+}
+
+.details {
+    text-align: right;
+    font-size: 18px;
+}
+
+#cPro, #cPayment, #cOnline {
+    padding-bottom: 25px;
+}
+
+#Trophy {
+}
+
+.troph {
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+#consoleDIV, #gameCategoryDIV {
+    place-content: center;
+    margin-top: 35px;
+    margin-bottom: -10px;
+}
+
+    #consoleDIV p, #gameCategoryDIV p {
+        margin-bottom: -1px;
+    }
+

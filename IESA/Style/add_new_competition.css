@@ -1,0 +1,30 @@
+﻿#charNum {
+    direction: ltr;
+    color: dimgray;
+    font-size: 15px;
+}
+
+.logofilePH > img {
+    max-height: 250px;
+    max-width: 950px;
+}
+
+.bannerfilePH > img {
+    max-height: 350px;
+    max-width: 300px;
+}
+
+.noteforfiles {
+    font-size: 12px;
+}
+
+.ck.ck-editor {
+    color: black;
+    direction: rtl;
+}
+
+/*Template Style*/
+
+.bi-check2-circle::before { /*Info icon*/
+    font-size: 20px;
+}

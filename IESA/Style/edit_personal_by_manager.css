@@ -1,0 +1,35 @@
+﻿#oph, #gph {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#ofiles, #gfiles {
+    margin-top: 15px;
+}
+
+#btnsubmit {
+    margin-top: 50px;
+    text-align: left;
+    padding-left: 115px;
+}
+
+
+/*Start of For Switch Button*/
+#ForSwitch {
+    position: relative;
+    left: 89%;
+    bottom: -8%;
+    font: bold;
+    /*font-family:David;*/
+    font-size: 16px;
+    /*text-decoration:underline;*/
+}
+/*End of For Switch Button*/
+/*Start of Switch Button */
+.switch {
+    position: relative;
+    display: inline-block;
+    position: relative;
+    left: 74%;
+    border-radius: 25px;
+}

@@ -1,10 +1,34 @@
-﻿#bottomBTN {
+﻿
+#page_content {
+    margin: 3px;
+}
+
+.alignleft {
+    float: left;
+}
+
+img.alignleft {
+    display: inline;
+    margin: 10px 15px 10px 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #04b8a5;
+        transition: .15s color;
+    }
+
+#bottomBTN {
     text-align: center;
     position: relative;
     left: -13%;
 }
 
-i {
+#morebuttons i {
     font-size: 1.27em;
     padding: 5px;
 }
@@ -23,3 +47,7 @@ i {
     .more-info-button:hover {
         background-color: #e0e0e0;
     }
+
+.container {
+    padding-bottom: 120px !important;
+}

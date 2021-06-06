@@ -1,0 +1,255 @@
+﻿.main-body {
+    padding: 15px;
+}
+
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+    .gutters-sm > .col, .gutters-sm > [class*=col-] {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+.mb-3, .my-3 {
+    margin-bottom: 1rem !important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+
+.h-100 {
+    height: 100% !important;
+}
+
+.shadow-none {
+    box-shadow: none !important;
+}
+
+svg:not(:root).svg-inline--fa {
+    position: absolute;
+    left: 68%;
+    color: #212529;
+    top: 16%;
+    z-index: 1;
+    width: 25px;
+    height: 25px;
+}
+
+.text-secondary {
+    color: #51575d !important;
+}
+
+.text-muted {
+    color: #51575d !important;
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #e2e6ef;
+}
+
+div.dataTables_wrapper div.dataTables_filter label {
+    display: none;
+}
+
+div.dataTables_wrapper div.dataTables_length label {
+    display: none;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    padding: 10px 18px;
+    border-bottom: 1px solid #b5aeae !important;
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
+    display: none;
+}
+
+.dataTables_paginate {
+    float: left !important;
+}
+
+.Bordertable {
+    border: solid #e1e5e8 !important;
+    border-width: 1px 0px 1px 1px !important;
+}
+
+.container a {
+    color: black;
+    text-decoration: none;
+    /*font-family: arial;*/
+}
+
+    .container a:hover {
+        color: #2b2626;
+        transition: .15s color;
+    }
+
+#divfilterrank {
+    color: #2b2626;
+    position: absolute;
+    top: 56%;
+    right: 77%;
+}
+
+.uniqueClassName {
+    text-align: center;
+}
+
+#tableheight {
+    height: 255px;
+}
+
+.container i {
+    font-size: 1.1em;
+}
+
+.modal {
+    display: none; /*Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 15%; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    color: black;
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+
+#socialnetwork > div.social-btn {
+    display: block;
+    width: 665px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+    #socialnetwork > div.social-btn a {
+        text-decoration: none;
+    }
+
+    #socialnetwork > div.social-btn div {
+        width: 110px;
+        display: inline-block;
+        float: right;
+        height: 100px;
+        line-height: 113px;
+        color: #fff;
+        margin-right: 3px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        font-size: 20px;
+        text-shadow: 0px 0px 5px #000;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        -webkit-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+        margin-bottom: 50px;
+    }
+
+    #socialnetwork > div.social-btn a:last-child div {
+        margin-right: 3px;
+    }
+
+    #socialnetwork > div.social-btn div:hover, div.social-btn div:active {
+        height: 135px;
+        padding-top: 15px;
+    }
+
+#socialnetwork > i {
+    -moz-transition: all 0.4s ease-out;
+    -webkit-transition: all 0.4s ease-out;
+    -o-transition: all 0.4s ease-out;
+    transition: all 0.4s ease-out;
+}
+
+#socialnetwork > div.face span, div.twi span, div.in span, div.pin span, div.git span {
+    position: absolute;
+    left: 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    padding: 0px 15px;
+    opacity: 0;
+    -moz-transition: all 0.6s ease-in;
+    -o-transition: all 0.6s ease-in;
+    -webkit-transition: all 0.6s ease-in;
+    transition: all 0.6s ease-in;
+    line-height: 110px;
+    font-size: 17px;
+}
+
+#socialnetwork > div.social-btn div:hover i {
+    opacity: 0;
+}
+
+#socialnetwork > div.social-btn div:hover span {
+    opacity: 1;
+}
+
+#socialnetwork > div.face {
+    background: #3A5795;
+    -moz-box-shadow: 0px 4px 0px #1e469d;
+    -webkit-box-shadow: 0px 4px 0px #1e469d;
+    box-shadow: 0px 4px 0px #3e6d8d;
+    position: relative;
+}
+
+#socialnetwork > div.twi {
+    background: #5EA9DD;
+    -moz-box-shadow: 0px 4px 0px #186ba4;
+    -webkit-box-shadow: 0px 4px 0px #186ba4;
+    box-shadow: 0px 4px 0px #2b95df;
+    position: relative;
+}
+
+#socialnetwork > div.in {
+    background: #0177B5;
+    -moz-box-shadow: 0px 4px 0px #035e8e;
+    -webkit-box-shadow: 0px 4px 0px #035e8e;
+    box-shadow: 0px 4px 0px #035e8e;
+    position: relative;
+}

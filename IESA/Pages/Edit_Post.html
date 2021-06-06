@@ -11,109 +11,89 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="../Style/basic.css" rel="stylesheet" />
+    <link href="../Style/edit_post.css" rel="stylesheet" />
+
     <title>&#x202E; עריכת פוסט – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
 
-    <style type="text/css">
-
-        /*Template Style*/
-        body {
-            background-color: #212529;
-            color: white;
-        }
-
-        .container {
-            background-color: #292e38;
-            max-width: 1110px;
-            padding-top: 30px;
-            padding-bottom: 400px;
-        }
-
-        .jumbotron {
-            height: 70px;
-            text-align: center;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        /*Page title Open*/
-
-        .titlelink {
-            color: #FFFFFF;
-            text-decoration: none;
-            margin: 3px;
-            font-weight: 600;
-            font-size: 1.04rem;
-            letter-spacing: .015em;
-            line-height: 2;
-        }
-
-            .titlelink:hover {
-                color: #04b8a5;
-                transition: .15s color;
-            }
-
-        .headh2 {
-            display: flex;
-            align-items: center;
-            /*margin-bottom: 55px;*/ /*#1*/
-            font-weight: 600;
-            letter-spacing: .015em;
-            margin: 3px; /*#2*/
-        }
-
-            .headh2::after {
-                content: '';
-                flex: 1;
-                margin-right: 10px;
-                margin-top: 23px;
-                opacity: 0.84;
-                height: 2px;
-                background-color: #fff;
-            }
-
-        .divdown {
-            margin-bottom: 50px;
-        }
-
-        /*Page title Close*/
-
-        /*Template Style*/
-
-        #charNum {
-            direction: ltr;
-            color: dimgray;
-            font-size: 15px;
-        }
-
-        .logofilePH > img {
-            max-height: 250px;
-            max-width: 950px;
-        }
-
-        .bannerfilePH > img {
-            max-height: 350px;
-            max-width: 300px;
-        }
-
-        .noteforfiles {
-            font-size: 12px;
-        }
-
-        img {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 3px;
-            background-color: #F0FFFF;
-            width: 100%;
-            height: 200px !important;
-        }
-
-    </style>
 
     <script>
 
         $(document).ready(function () {
+
+
+            //--Navbar Script--
+            const openedMenu = document.querySelector('.opened-menu');
+            const closedMenu = document.querySelector('.closed-menu');
+            const navbarMenu = document.querySelector('.navbar');
+            const menuOverlay = document.querySelector('.overlay');
+
+            // Opened navbarMenu
+            // Closed navbarMenu
+            // Closed navbarMenu by Click Outside
+            openedMenu.addEventListener('click', toggleMenu);
+            closedMenu.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Toggle Menu Function
+            function toggleMenu() {
+                navbarMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.classList.toggle('scrolling');
+            }
+
+            navbarMenu.addEventListener('click', (event) => {
+                if (event.target.hasAttribute('data-toggle') && window.innerWidth <= 992) {
+                    // Prevent Default Anchor Click Behavior
+                    event.preventDefault();
+                    const menuItemHasChildren = event.target.parentElement;
+
+                    // If menuItemHasChildren is Expanded, Collapse It
+                    if (menuItemHasChildren.classList.contains('active')) {
+                        collapseSubMenu();
+                    } else {
+                        // Collapse Existing Expanded menuItemHasChildren
+                        if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                            collapseSubMenu();
+                        }
+                        // Expand New menuItemHasChildren
+                        menuItemHasChildren.classList.add('active');
+                        const subMenu = menuItemHasChildren.querySelector('.sub-menu');
+                        subMenu.style.maxHeight = subMenu.scrollHeight + 'px';
+                    }
+                }
+            });
+
+            // Collapse Sub Menu Function
+            function collapseSubMenu() {
+                navbarMenu.querySelector('.menu-item-has-children.active .sub-menu').removeAttribute('style');
+                navbarMenu.querySelector('.menu-item-has-children.active').classList.remove('active');
+            }
+
+            // Fixed Resize Screen Function
+            function resizeScreen() {
+                // If navbarMenu is Open, Close It
+                if (navbarMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+
+                // If menuItemHasChildren is Expanded, Collapse It
+                if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                    collapseSubMenu();
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                if (this.innerWidth > 992) {
+                    resizeScreen();
+                }
+            });
+            //--Navbar Script--
+
+
 
             counterimage = 3300;
             phototrigger = 0; //0 if photo didnt change
@@ -153,7 +133,7 @@
 
         function renderSuccessPost(postobj) {
             console.log(postobj);
-            
+
             globalpostid = postobj.Postid;
             globalimageurl = postobj.Image1; //if the user didnt change the photo
 
@@ -319,11 +299,58 @@
 </head>
 <body onload="init()">
 
-    <section id="Nav-bar">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
-        </div>
-    </section>
+    <!-- Section: Header -->
+    <div class="user-nav">
+        <span style="margin-left: 9px;">שלום עומר</span>
+        <span style="margin-left: 9px;">|</span>
+        <a href="index.html"><i class="bi bi-box-arrow-right" style="position:relative; top: 1px; left: 1.5px;"></i> התנתק </a>
+    </div>
 
+    <header class="header">
+        <div class="top-navbar">
+            <section class="wrapper">
+
+                <div style="display:flex">
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
+                    </a>
+                    <span style="margin-right:9px;"></span>
+                    <span style="margin-left: 14px; border-left: 1px solid #979797;"></span>
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="height:33px; margin-top: 7px;">
+                    </a>
+                </div>
+
+                <button type="button" class="opened-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="overlay"></div>
+
+
+                <nav class="navbar">
+                    <button type="button" class="closed-menu">
+                        <img src="https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg" class="closed-icon" alt="closed">
+                    </button>
+                    <ul class="menu">
+                        <li class="menu-item"><a href="manager_main_page.html" id="mang-nav">ניהול מערכת</a></li>
+                        <li class="menu-item"><a href="database.html" id="data-nav">מאגר מידע</a></li>
+                        <li class="menu-item"><a href="add_new_post.html" id="post-nav">יצירת פוסט</a></li>
+                        <li class="menu-item"><a href="edit_personal_details.html" id="edit-nav">עריכת פרטים</a></li>
+                        <li class="menu-item"><a href="index.html" id="site-nav">אתר העמותה</a></li>
+                    </ul>
+                </nav>
+
+            </section>
+        </div>
+    </header>
+    <!-- Section: Header -->
+
+    <div class="nav-gap"></div>
+
+    <!--Section: Content-->
     <section id="content">
 
         <div class="container">
@@ -436,7 +463,7 @@
                     <div class="col">
                         <label>תצוגה מקדימה: </label>
                         <div id="ph">
-                            
+
                         </div>
 
                     </div>
@@ -459,15 +486,28 @@
 
         </div>
 
+
     </section>
-
-
+    <!--Section: Content-->
+    <!-- Section: Footer -->
     <section id="site_footer">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-            <h2>IESA</h2>
+        <div class="footer-system">
+
+            <div class="sub-footer">
+                <div class="row">
+
+                    <div class="col" style="text-align:center">
+
+                        <p>לכל תקלה או שאלה על המערכת ניתן לכתוב לנו בדף יצירת קשר - למעבר לעמוד <a href="Contact.html">לחצו כאן</a></p>
+
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </section>
-
+    <!-- Section: Footer -->
 
 </body>
 </html>

@@ -1,0 +1,28 @@
+﻿#charNum {
+    direction: ltr;
+    color: dimgray;
+    font-size: 15px;
+}
+
+.logofilePH > img {
+    max-height: 250px;
+    max-width: 950px;
+}
+
+.bannerfilePH > img {
+    max-height: 350px;
+    max-width: 300px;
+}
+
+.noteforfiles {
+    font-size: 12px;
+}
+
+.container img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 3px;
+    background-color: #F0FFFF;
+    width: 100%;
+    height: 200px !important;
+}

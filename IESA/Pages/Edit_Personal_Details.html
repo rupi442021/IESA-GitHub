@@ -9,93 +9,13 @@
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="../Style/basic.css" rel="stylesheet" />
+    <link href="../Style/edit_personal_details.css" rel="stylesheet" />
+
     <title>&#x202E; עריכת פרטים אישיים – ASEI</title>
     <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
-
-
-    <style type="text/css">
-
-        /*Template Style*/
-
-        body {
-            background-color: #212529;
-            color: white;
-        }
-
-        .container {
-            background-color: #292e38;
-            max-width: 1110px;
-            padding-top: 30px;
-            padding-bottom: 400px;
-            position: relative;
-        }
-
-        .jumbotron {
-            height: 70px;
-            text-align: center;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        /*Page title Open*/
-
-        .titlelink {
-            color: #FFFFFF;
-            text-decoration: none;
-            margin: 3px;
-            font-weight: 600;
-            font-size: 1.04rem;
-            letter-spacing: .015em;
-            line-height: 2;
-        }
-
-            .titlelink:hover {
-                color: #04b8a5;
-                transition: .15s color;
-            }
-
-        .headh2 {
-            display: flex;
-            align-items: center;
-            /*margin-bottom: 55px;*/ /*#1*/
-            font-weight: 600;
-            letter-spacing: .015em;
-            margin: 3px; /*#2*/
-        }
-
-            .headh2::after {
-                content: '';
-                flex: 1;
-                margin-right: 10px;
-                margin-top: 23px;
-                opacity: 0.84;
-                height: 2px;
-                background-color: #fff;
-            }
-
-        .divdown {
-            margin-bottom: 60px;
-        }
-
-        /*Page title Close*/
-
-        #oph , #gph{
-            margin-top:10px;
-            text-align:center;
-        }
-        #ofiles, #gfiles{
-            margin-top:15px;
-        }
-        #btnsubmit {
-            margin-top: 50px;
-            text-align:left; 
-            padding-left:115px;
-        }
-
-
-        /*Template Style*/
-
-    </style>
 
 
     <script>
@@ -105,6 +25,77 @@
         var counterimage = 2300;
 
         $(document).ready(function () {
+
+
+            //--Navbar Script--
+            const openedMenu = document.querySelector('.opened-menu');
+            const closedMenu = document.querySelector('.closed-menu');
+            const navbarMenu = document.querySelector('.navbar');
+            const menuOverlay = document.querySelector('.overlay');
+
+            // Opened navbarMenu
+            // Closed navbarMenu
+            // Closed navbarMenu by Click Outside
+            openedMenu.addEventListener('click', toggleMenu);
+            closedMenu.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Toggle Menu Function
+            function toggleMenu() {
+                navbarMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.classList.toggle('scrolling');
+            }
+
+            navbarMenu.addEventListener('click', (event) => {
+                if (event.target.hasAttribute('data-toggle') && window.innerWidth <= 992) {
+                    // Prevent Default Anchor Click Behavior
+                    event.preventDefault();
+                    const menuItemHasChildren = event.target.parentElement;
+
+                    // If menuItemHasChildren is Expanded, Collapse It
+                    if (menuItemHasChildren.classList.contains('active')) {
+                        collapseSubMenu();
+                    } else {
+                        // Collapse Existing Expanded menuItemHasChildren
+                        if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                            collapseSubMenu();
+                        }
+                        // Expand New menuItemHasChildren
+                        menuItemHasChildren.classList.add('active');
+                        const subMenu = menuItemHasChildren.querySelector('.sub-menu');
+                        subMenu.style.maxHeight = subMenu.scrollHeight + 'px';
+                    }
+                }
+            });
+
+            // Collapse Sub Menu Function
+            function collapseSubMenu() {
+                navbarMenu.querySelector('.menu-item-has-children.active .sub-menu').removeAttribute('style');
+                navbarMenu.querySelector('.menu-item-has-children.active').classList.remove('active');
+            }
+
+            // Fixed Resize Screen Function
+            function resizeScreen() {
+                // If navbarMenu is Open, Close It
+                if (navbarMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+
+                // If menuItemHasChildren is Expanded, Collapse It
+                if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                    collapseSubMenu();
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                if (this.innerWidth > 992) {
+                    resizeScreen();
+                }
+            });
+            //--Navbar Script--
+
+
 
             if (Odetails.Userid < 30000000) {//for orgenziers
                 Orgenzierrender(Odetails)
@@ -150,7 +141,7 @@
             })
 
 
-                
+
 
         });
 
@@ -175,7 +166,7 @@
                 for (f = 0; f < files.length; f++) {
                     data.append("UploadedImage", files[f]);
                 }
-                
+
                 data.append("userid", Odetails.Userid); //append what ever data you want to send along with the files.
             }
 
@@ -225,7 +216,7 @@
                 Picture: ImgUrl
             }
 
-            ajaxCall("PUT", "../api/Gamers/updatedetails?GId=" + Odetails.Userid , JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Edit_Personal_Details.html - method SG1 
+            ajaxCall("PUT", "../api/Gamers/updatedetails?GId=" + Odetails.Userid, JSON.stringify(GamerObj), SuccessGamer, ErrorGamer); //Edit_Personal_Details.html - method SG1
 
             return false;
         }
@@ -248,7 +239,7 @@
 
             if ($("#ofiles").val() == "" || $("#ofiles").val() == null)
                 ImgUrl = Odetails.Picture;
-            
+
             OrgenaizerObj = {
                 Firstname: $("#ofirstnameTB").val(),
                 Lastname: $("#olastnameTB").val(),
@@ -293,10 +284,10 @@
 
             swal("הפרטים עודכנו בהצלחה"); //save only the is in + id of user to render the info later in each page
 
-            if (userType==2)
-            setTimeout(function () {
-                location.replace("Orgenaizer_Main_Page.html");
-            }, 2500);
+            if (userType == 2)
+                setTimeout(function () {
+                    location.replace("Orgenaizer_Main_Page.html");
+                }, 2500);
             else
                 setTimeout(function () {
                     location.replace("Gamer.html");
@@ -336,17 +327,16 @@
             $('#ocomunitynameTB').val(Odetails.Comunityname);
             $('#olinktocommunityTB').val(Odetails.Linktocommunity);
 
-            
-            if (Odetails.Picture == null)
-            {}
 
-            else  {
+            if (Odetails.Picture == null) { }
+
+            else {
                 let imgstr = '<img src="../' + Odetails.Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
                 $('#oph').html(imgstr);
             }
             $('#usernumTB').val(Odetails.Userid);
 
-            
+
 
         }
 
@@ -376,7 +366,8 @@
 
             if (Odetails.Picture == null) { }
 
-            else {let imgstr = '<img src="../' + Odetails.Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
+            else {
+                let imgstr = '<img src="../' + Odetails.Picture + '" class="rounded-circle" alt = "Cinque Terre" width = "100" height = "100">';
                 $('#gph').html(imgstr);
             }
 
@@ -460,17 +451,63 @@
 </head>
 <body>
 
-    <section id="Nav-bar">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
-        </div>
-    </section>
+    <!-- Section: Header -->
+    <div class="user-nav">
+        <span style="margin-left: 9px;">שלום עומר</span>
+        <span style="margin-left: 9px;">|</span>
+        <a href="index.html"><i class="bi bi-box-arrow-right" style="position:relative; top: 1px; left: 1.5px;"></i> התנתק </a>
+    </div>
 
+    <header class="header">
+        <div class="top-navbar">
+            <section class="wrapper">
+
+                <div style="display:flex">
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
+                    </a>
+                    <span style="margin-right:9px;"></span>
+                    <span style="margin-left: 14px; border-left: 1px solid #979797;"></span>
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="height:33px; margin-top: 7px;">
+                    </a>
+                </div>
+
+                <button type="button" class="opened-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="overlay"></div>
+
+
+                <nav class="navbar">
+                    <button type="button" class="closed-menu">
+                        <img src="https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg" class="closed-icon" alt="closed">
+                    </button>
+                    <ul class="menu">
+                        <li class="menu-item"><a href="#" id="main-nav">אזור אישי</a></li>
+                        <li class="menu-item"><a href="#" id="comp-nav">לבדוק מי המשתמש</a></li>
+                        <li class="menu-item"><a href="#" id="rank-nav">לבדוק מי המשתמש</a></li>
+                        <li class="menu-item"><a href="index.html" id="pers-nav">אתר העמותה</a></li>
+                    </ul>
+                </nav>
+
+            </section>
+        </div>
+    </header>
+    <!-- Section: Header -->
+
+    <div class="nav-gap"></div>
+
+    <!--Section: Content-->
     <section id="content">
 
         <div class="container">
 
             <section id="page_title">
-                <a class="titlelink" id="main_page" >אזור אישי </a>
+                <a class="titlelink" id="main_page">אזור אישי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <h2 class="headh2">עריכת פרטים אישיים</h2>
                 <div class="divdown"></div>
@@ -603,7 +640,7 @@
 
                         <div id="btnsubmit" class="mb-3">
                             <input type="submit" class="btn btn-success" value="עדכן פרטים" />
-                            <input type="button" class="btn btn-danger" value="ביטול" id="cancel_edit_gamer"/>
+                            <input type="button" class="btn btn-danger" value="ביטול" id="cancel_edit_gamer" />
 
                         </div>
 
@@ -630,7 +667,7 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label>מספר משתמש:</label>
-                                            <input disabled type="number" class="form-control" placeholder='מספר משתמש במערכת' id="usernumTB"  oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
+                                            <input disabled type="number" class="form-control" placeholder='מספר משתמש במערכת' id="usernumTB" oninvalid="this.setCustomValidity('מספר משתמש כאן')" oninput="this.setCustomValidity('')">
                                         </div>
                                     </div>
                                 </div>
@@ -720,24 +757,24 @@
                                 <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                             </div>
 
-                                <div class="row">
-                                    <div class="mb-3">
-                                        <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
-                                            <label for="file">תמונה: </label>
-                                            <br />
-                                            <div class="img-circle">
-                                                <div id="oph">
-                                                    <img src="https://e7.pngegg.com/pngimages/672/63/png-clipart-discord-computer-icons-online-chat-cool-discord-icon-logo-smiley.png" class="rounded-circle" alt="Cinque Terre" width="100" height="100">
-                                                </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                        <label for="file">תמונה: </label>
+                                        <br />
+                                        <div class="img-circle">
+                                            <div id="oph">
+                                                <img src="https://e7.pngegg.com/pngimages/672/63/png-clipart-discord-computer-icons-online-chat-cool-discord-icon-logo-smiley.png" class="rounded-circle" alt="Cinque Terre" width="100" height="100">
                                             </div>
-                                           
                                         </div>
+
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="row">
-                                    <input type="file" id="ofiles" name="files" multiple="multiple" />
-                                </div>
+                            <div class="row">
+                                <input type="file" id="ofiles" name="files" multiple="multiple" />
+                            </div>
 
 
 
@@ -758,14 +795,28 @@
         </div>
 
     </section>
-
-
+    <!--Section: Content-->
+    <!-- Section: Footer -->
     <section id="site_footer">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-            <h2>IESA</h2>
+        <div class="footer-system">
+
+            <div class="sub-footer">
+                <div class="row">
+
+                    <div class="col" style="text-align:center">
+
+                        <p>לכל תקלה או שאלה על המערכת ניתן לכתוב לנו בדף יצירת קשר - למעבר לעמוד <a href="Contact.html">לחצו כאן</a></p>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+
         </div>
     </section>
-
+    <!-- Section: Footer -->
 
 </body>
 </html>

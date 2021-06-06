@@ -24,6 +24,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="../Style/basic.css" rel="stylesheet" />
+    <link href="../Style/gamer_main_page.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -33,308 +36,81 @@
 
     <!--Data Tables-->
 
-
-    <style type="text/css">
-
-        /*Template Style*/
-
-        body {
-            background-color: #212529;
-            color: white;
-        }
-
-        .container {
-            background-color: #292e38;
-            max-width: 1110px;
-            padding-top: 30px;
-            padding-bottom: 400px;
-            position: relative;
-        }
-
-        .jumbotron {
-            height: 70px;
-            text-align: center;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        /*Page title Open*/
-
-        .titlelink {
-            color: #FFFFFF;
-            text-decoration: none;
-            margin: 3px;
-            font-weight: 600;
-            font-size: 1.04rem;
-            letter-spacing: .015em;
-            line-height: 2;
-        }
-
-            .titlelink:hover {
-                color: #04b8a5;
-                transition: .15s color;
-            }
-
-        .headh2 {
-            display: flex;
-            align-items: center;
-            /*margin-bottom: 55px;*/ /*#1*/
-            font-weight: 600;
-            letter-spacing: .015em;
-            margin: 3px; /*#2*/
-        }
-
-            .headh2::after {
-                content: '';
-                flex: 1;
-                margin-right: 10px;
-                margin-top: 23px;
-                opacity: 0.84;
-                height: 2px;
-                background-color: #fff;
-            }
-
-        .divdown {
-            margin-bottom: 60px;
-        }
-
-
-        .card {
-            border: 0px;
-            margin-left: 0px;
-            text-align: center;
-        }
-
-            .card img {
-                max-height: 200px;
-                max-width: 100%;
-            }
-
-        .card-body {
-            padding: 0px;
-            background-color: black;
-        }
-
-        .card p {
-            text-align: center;
-        }
-
-        .card i {
-            text-align: center;
-        }
-
-        .card-title, .card-text {
-            text-align: center;
-        }
-
-        div.dataTables_wrapper div.dataTables_length label {
-            display: none;
-        }
-
-        div.dataTables_wrapper div.dataTables_filter label {
-            position: absolute;
-            top: -45px;
-            right: 77%;
-        }
-
-
-        @media only screen and (max-width: 1040px) {
-            div.dataTables_wrapper div.dataTables_filter input {
-                width: 150px;
-            }
-
-            div.dataTables_wrapper div.dataTables_filter label {
-                right: 75%;
-            }
-        }
-
-        @media only screen and (max-width: 820px) {
-            div.dataTables_wrapper div.dataTables_filter input {
-                width: 100px;
-            }
-
-            div.dataTables_wrapper div.dataTables_filter label {
-                right: 65%;
-            }
-        }
-
-        div.dataTables_wrapper div.dataTables_filter input {
-            background: white !important;
-        }
-
-
-        .nk-table.nk-table thead td, .nk-table.nk-table thead th {
-            padding: 11px 18px;
-        }
-
-        .nk-table thead {
-            font-size: 1.32rem;
-            background-color: #dd163b;
-        }
-
-
-        table {
-            border-collapse: collapse;
-            width: 20%;
-            background-color: #363d49;
-        }
-
-        td {
-            font-size: 14px;
-            font-family: Arial;
-        }
-
-        tr:nth-child(odd) {
-            background-color: red;
-        }
-
-        tr:nth-child(even) {
-            background-color: cadetblue;
-        }
-
-        th {
-            color: #fff;
-            font-family: "Open Sans",sans-serif;
-            background: #2c3e50;
-            font-weight: bold;
-        }
-
-        .dataTables_paginate {
-            float: left !important;
-        }
-
-
-        .uniqueClassName {
-            text-align: center;
-        }
-
-        table.dataTable thead .sorting:after {
-            opacity: .0 !important;
-        }
-
-        .table > :not(:last-child) > :last-child > * {
-            border-bottom-color: #181c23;
-        }
-
-
-        .btn-link {
-            text-decoration: none;
-        }
-
-
-        a {
-            color: white;
-            text-decoration: none;
-            /*font-family: arial;*/
-        }
-
-            a:hover {
-                color: #04b8a5;
-                transition: .15s color;
-            }
-
-            /*            a.reject:hover {
-                color: #ed4564;
-                transition: .15s color;
-            }*/
-
-            a.delete:hover {
-                color: #ed4564;
-                transition: .15s color;
-            }
-
-            a.edit:hover {
-                color: #f3cc5b;
-                transition: .15s color;
-            }
-
-            a.view:hover {
-                color: #5c99f0;
-                transition: .15s color;
-            }
-
-
-        .table-dark {
-            --bs-table-bg: #363c4a !important;
-            --bs-table-striped-bg: #2e333e !important;
-        }
-
-        .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
-            color: #2b2626;
-        }
-
-
-        tbody, td, tfoot, th, thead, tr {
-            border-color: #1d232f;
-        }
-
-
-        #RedTitle {
-            border: solid #292e38;
-            border-width: 0px 0px 1px 1px;
-        }
-
-        .Bordertable {
-            border: solid #1d232f !important;
-            border-width: 1px 0px 1px 1px !important;
-        }
-
-        #FutureCompetitionsGeneral {
-            text-align: -webkit-center;
-            display: flex;
-        }
-        .card {
-            display: inline-block;
-            margin-left:10px;
-        }
-        .bi-star:hover {
-            color: yellow;
-            -ms-transform: scale(1.5); /* IE 9 */
-            -webkit-transform: scale(1.5); /* Safari 3-8 */
-            transform: scale(1.5);
-        }
-        .bi-star {
-            position: absolute;
-            font-size:30px;
-            margin-right:170px;
-
-
-        }
-        img {
-            height: 120px;
-            width: 240px;
-        }
-
-        .card img {
-            max-height: 200px;
-            max-width: 100%;
-        }
-        .rounded-circle {
-        height:25px;
-        width:25px;
-        }
-
-            .rounded-circle:hover {
-                -ms-transform: scale(1.5); /* IE 9 */
-                -webkit-transform: scale(1.5); /* Safari 3-8 */
-                transform: scale(1.5);
-                
-            }
-
-
-        /*Page title Close*/
-
-
-        /*Template Style*/
-
-    </style>
-
     <script>
 
         var GID = 0;
         var GamerSuggestions = [];
 
         $(document).ready(function () {
+
+            //--Navbar Script--
+            const openedMenu = document.querySelector('.opened-menu');
+            const closedMenu = document.querySelector('.closed-menu');
+            const navbarMenu = document.querySelector('.navbar');
+            const menuOverlay = document.querySelector('.overlay');
+
+            // Opened navbarMenu
+            // Closed navbarMenu
+            // Closed navbarMenu by Click Outside
+            openedMenu.addEventListener('click', toggleMenu);
+            closedMenu.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Toggle Menu Function
+            function toggleMenu() {
+                navbarMenu.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.classList.toggle('scrolling');
+            }
+
+            navbarMenu.addEventListener('click', (event) => {
+                if (event.target.hasAttribute('data-toggle') && window.innerWidth <= 992) {
+                    // Prevent Default Anchor Click Behavior
+                    event.preventDefault();
+                    const menuItemHasChildren = event.target.parentElement;
+
+                    // If menuItemHasChildren is Expanded, Collapse It
+                    if (menuItemHasChildren.classList.contains('active')) {
+                        collapseSubMenu();
+                    } else {
+                        // Collapse Existing Expanded menuItemHasChildren
+                        if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                            collapseSubMenu();
+                        }
+                        // Expand New menuItemHasChildren
+                        menuItemHasChildren.classList.add('active');
+                        const subMenu = menuItemHasChildren.querySelector('.sub-menu');
+                        subMenu.style.maxHeight = subMenu.scrollHeight + 'px';
+                    }
+                }
+            });
+
+            // Collapse Sub Menu Function
+            function collapseSubMenu() {
+                navbarMenu.querySelector('.menu-item-has-children.active .sub-menu').removeAttribute('style');
+                navbarMenu.querySelector('.menu-item-has-children.active').classList.remove('active');
+            }
+
+            // Fixed Resize Screen Function
+            function resizeScreen() {
+                // If navbarMenu is Open, Close It
+                if (navbarMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+
+                // If menuItemHasChildren is Expanded, Collapse It
+                if (navbarMenu.querySelector('.menu-item-has-children.active')) {
+                    collapseSubMenu();
+                }
+            }
+
+            window.addEventListener('resize', () => {
+                if (this.innerWidth > 992) {
+                    resizeScreen();
+                }
+            });
+            //--Navbar Script--
+
 
             if (localStorage["user_type"] != 3) {
                 location.replace("TemplatePage.html");
@@ -352,13 +128,13 @@
             ajaxCall("GET", "../api/Competitions/tableRdb", "", getNationalRanksSuccess, getErrCompetitions); //Database.html - method OD12
             ajaxCall("GET", "../api/Competitions/GetRelevantCompetitionForGamer?GID=" + GID, "", getSuccessCompetitions, getErrCompetitions); //Gamer_Main_Page.html - method SG08
             ajaxCall("GET", "../api/Competitions/GamerCompetitionsTable?GID=" + GID, "", getRanksSuccess, getErrCompetitions); //Gamer_Main_Page.html - method SG09
-            
+
         }
 
 
         function getSuccessCompetitions(data) {
             GamerSuggestions = data;
-            ajaxCall("GET", "../api/Competitions/GamerCompetitionsByStatus?Cstatus=2", "", getCompetitionsSuccess, getErrCompetitions); 
+            ajaxCall("GET", "../api/Competitions/GamerCompetitionsByStatus?Cstatus=2", "", getCompetitionsSuccess, getErrCompetitions);
             return false;
 
         }
@@ -367,7 +143,7 @@
             console.log("Get General Competitions: ", Competitions)
             console.log("Get Suggested Competitions: ", GamerSuggestions)
 
-            
+
             var icon = " ";
             var cardstrG = " ";
             $("#FutureCompetitionsGeneral").text(cardstrG);
@@ -379,7 +155,7 @@
                 let edat1;
                 edat1 = new Date(edat[0] + '-' + edat[1] + '-' + edat[2]);
                 edat = edat[2] + '/' + edat[1] + '/' + edat[0]
-                
+
                 let Stardate = Competitions[i].Startdate.split("T");
                 Stardate = Stardate[0].split("-");
                 Stardate = Stardate[2] + '/' + Stardate[1] + '/' + Stardate[0]
@@ -391,24 +167,24 @@
                     }
                     else
                         icon = ' ';
-            }
+                }
                 cardstrG += icon;
                 cardstrG += '<a href=Competition_View.html?Competitions=' + Competitions[i].Competitionid + '> <img src="../' + Competitions[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstrG += '<div class="card-body">';
 
                 cardstrG += '<h5 class="card-title"></br>' + Competitions[i].Competitionname + '</h5>';
-                    if (Competitions[i].Isonline == 0)
+                if (Competitions[i].Isonline == 0)
                     cardstrG += '<p class="card-text"> כתובת : ' + Competitions[i].Address + '</p>';
                 else
                     cardstrG += '<p class="card-text">תחרות אונליין</p>';
                 cardstrG += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
                 cardstrG += '<p class="card-text"> סיום תחרות:' + edat + '</p>';
                 cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-2">להרשמה לתחרות</button></a></div ></div ></div ></div >';
-                
+
                 $("#FutureCompetitionsGeneral").append(cardstrG);
             }
-            
-        
+
+
         }
 
         function getNationalRanksSuccess(ranksdata) {
@@ -472,7 +248,7 @@
                             d.split(",").forEach(function (data) {
                                 data = data.trim();
 
-                                if ((values.indexOf(data) === -1 )) {
+                                if ((values.indexOf(data) === -1)) {
                                     values.push(data);
                                 }
                             });
@@ -480,7 +256,7 @@
 
                         $('<select class="filter"><option value=""></option></select>')
                             .append(values.sort().map(function (o) {
-                                
+
                                 return '<option value="' + o + '">' + o + '</option>';
                             }))
                             .on('change', function () {
@@ -499,10 +275,10 @@
         }
 
         function getRanksSuccess(ranksdata) {
-            console.log("Gamer Table data: " , ranksdata);
+            console.log("Gamer Table data: ", ranksdata);
 
             ranks = ranksdata;
-            
+
             try {
                 tbl7 = $('#RanksTable').DataTable({
                     data: ranksdata,
@@ -543,7 +319,7 @@
                         {
                             render: function (data, type, row, meta) {
                                 let dataRanksGamer = "data-rankgamerid='" + row.Competitionid + "'"; //User id for buttons
-                               
+
                                 R_viewBtn = "<a target='_blank' href='Competition_View.html?competitionid=" + row.Competitionid + "' class='view' title='צפה'><i class='R_viewBTN bi bi-eye' " + dataRanksGamer + "></i></a>";
 
                                 return R_viewBtn;
@@ -594,11 +370,57 @@
 </head>
 <body>
 
-    <section id="Nav-bar">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
-        </div>
-    </section>
+    <!-- Section: Header -->
+    <div class="user-nav">
+        <span style="margin-left: 9px;">שלום עומר</span>
+        <span style="margin-left: 9px;">|</span>
+        <a href="index.html"><i class="bi bi-box-arrow-right" style="position:relative; top: 1px; left: 1.5px;"></i> התנתק </a>
+    </div>
 
+    <header class="header">
+        <div class="top-navbar">
+            <section class="wrapper">
+
+                <div style="display:flex">
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
+                    </a>
+                    <span style="margin-right:9px;"></span>
+                    <span style="margin-left: 14px; border-left: 1px solid #979797;"></span>
+                    <a href="TemplatePage_Site.html">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="height:33px; margin-top: 7px;">
+                    </a>
+                </div>
+
+                <button type="button" class="opened-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="overlay"></div>
+
+
+                <nav class="navbar">
+                    <button type="button" class="closed-menu">
+                        <img src="https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg" class="closed-icon" alt="closed">
+                    </button>
+                    <ul class="menu">
+                        <li class="menu-item"><a href="gamer_main_page.html" id="pers-nav">אזור אישי</a></li>
+                        <li class="menu-item"><a href="gamer_card.html" id="card-nav">כרטיס שחקן</a></li>
+                        <li class="menu-item"><a href="edit_personal_details.html" id="edit-nav">עריכת פרטים</a></li>
+                        <li class="menu-item"><a href="index.html" id="site-nav">אתר העמותה</a></li>
+                    </ul>
+                </nav>
+
+            </section>
+        </div>
+    </header>
+    <!-- Section: Header -->
+
+    <div class="nav-gap"></div>
+
+    <!--Section: Content-->
     <section id="content">
 
         <div class="container">
@@ -606,7 +428,7 @@
             <section id="page_title">
                 <a class="titlelink" href="Gamer_Main_Page.html">ראשי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
-                <h2 class="headh2">איזור אישי</h2>
+                <h2 class="headh2">אזור אישי</h2>
                 <div class="divdown"></div>
             </section>
 
@@ -685,17 +507,28 @@
 
         </div>
 
+
     </section>
-
-
+    <!--Section: Content-->
+    <!-- Section: Footer -->
     <section id="site_footer">
-        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
-            <h2>IESA</h2>
+        <div class="footer-system">
+
+            <div class="sub-footer">
+                <div class="row">
+
+                    <div class="col" style="text-align:center">
+
+                        <p>לכל תקלה או שאלה על המערכת ניתן לכתוב לנו בדף יצירת קשר - למעבר לעמוד <a href="Contact.html">לחצו כאן</a></p>
+
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </section>
-
-
-
+    <!-- Section: Footer -->
 
 </body>
 </html>

@@ -1,0 +1,44 @@
+﻿.alignleft {
+    float: left;
+}
+
+img.alignleft {
+    display: inline;
+    margin: 10px 15px 10px 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #04b8a5;
+        transition: .15s color;
+    }
+
+#bottomBTN {
+    text-align: center;
+    position: relative;
+    left: -13%;
+}
+
+.container i {
+    font-size: 1.27em;
+    padding: 5px;
+}
+
+.more-info-button {
+    border-radius: 3px;
+    color: #181c23;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    padding: 3px 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition-duration: 0.20s;
+}
+
+    .more-info-button:hover {
+        background-color: #e0e0e0;
+    }

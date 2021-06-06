@@ -1,0 +1,56 @@
+﻿a {
+    color: white;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #04b8a5;
+        transition: .15s color;
+    }
+
+.InsideCard {
+    background-color: #292e38;
+}
+
+h4 {
+    font-size: 24px;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+.manager {
+    text-align: center;
+    font-size: 15px
+}
+
+
+.Pinside {
+    text-align: center;
+    font-size: 12px;
+}
+
+
+#ManagerCenter col-md {
+    width: 30%
+}
+
+#zoom:hover {
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
+}
+
+
+#seperate {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+h4 {
+    margin-top: 5px;
+}
