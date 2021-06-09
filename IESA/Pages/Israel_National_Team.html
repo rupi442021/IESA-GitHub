@@ -6,7 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../Scripts/jquery-3.4.1.min.js"></script>
-    <script src="../Scripts/GeneralFunctions.js"></script>
+    <!--<script src="../Scripts/GeneralFunctions.js"></script>-->
     <script src="../Scripts/ajaxCalls.js"></script>
 
     <!--Data Tables-->
@@ -36,73 +36,25 @@
 
         $(document).ready(function () {
 
-            //--Navbar Script--
-            const openedMenu = document.querySelector('.opened-menu');
-            const closedMenu = document.querySelector('.closed-menu');
-            const navbarMenu = document.querySelector('.navbar');
-            const menuOverlay = document.querySelector('.overlay');
+            //Navbar
+            renderNavbar_Site();
+            buildNav();
 
-            // Opened navbarMenu
-            // Closed navbarMenu
-            // Closed navbarMenu by Click Outside
-            openedMenu.addEventListener('click', toggleMenu);
-            closedMenu.addEventListener('click', toggleMenu);
-            menuOverlay.addEventListener('click', toggleMenu);
+            $(document).on("click", "#disconnectBTN", function () {
 
-            // Toggle Menu Function
-            function toggleMenu() {
-                navbarMenu.classList.toggle('active');
-                menuOverlay.classList.toggle('active');
-                document.body.classList.toggle('scrolling');
-            }
+                localStorage.clear();
+                swal("מבצע התנתקות");
 
-            navbarMenu.addEventListener('click', (event) => {
-                if (event.target.hasAttribute('data-toggle') && window.innerWidth <= 992) {
-                    // Prevent Default Anchor Click Behavior
-                    event.preventDefault();
-                    const menuItemHasChildren = event.target.parentElement;
+                setTimeout(function () {
+                    location.replace("index.html");
+                }, 2000);
 
-                    // If menuItemHasChildren is Expanded, Collapse It
-                    if (menuItemHasChildren.classList.contains('active')) {
-                        collapseSubMenu();
-                    } else {
-                        // Collapse Existing Expanded menuItemHasChildren
-                        if (navbarMenu.querySelector('.menu-item-has-children.active')) {
-                            collapseSubMenu();
-                        }
-                        // Expand New menuItemHasChildren
-                        menuItemHasChildren.classList.add('active');
-                        const subMenu = menuItemHasChildren.querySelector('.sub-menu');
-                        subMenu.style.maxHeight = subMenu.scrollHeight + 'px';
-                    }
-                }
             });
 
-            // Collapse Sub Menu Function
-            function collapseSubMenu() {
-                navbarMenu.querySelector('.menu-item-has-children.active .sub-menu').removeAttribute('style');
-                navbarMenu.querySelector('.menu-item-has-children.active').classList.remove('active');
-            }
-
-            // Fixed Resize Screen Function
-            function resizeScreen() {
-                // If navbarMenu is Open, Close It
-                if (navbarMenu.classList.contains('active')) {
-                    toggleMenu();
-                }
-
-                // If menuItemHasChildren is Expanded, Collapse It
-                if (navbarMenu.querySelector('.menu-item-has-children.active')) {
-                    collapseSubMenu();
-                }
-            }
-
-            window.addEventListener('resize', () => {
-                if (this.innerWidth > 992) {
-                    resizeScreen();
-                }
+            $(document).on("click", "#connectBTN", function () {
+                location.replace("sign_in.html");
             });
-            //--Navbar Script--
+            //Navbar
 
         });
 
@@ -147,64 +99,11 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=120238457987541&autoLogAppEvents=1" nonce="pnARNgWE"></script>
     <!--For facebook iframe-->
     <!-- Section: Header -->
-    <div class="user-nav">
-        <span style="margin-left: 9px;">שלום עומר</span>
-        <span style="margin-left: 9px;">|</span>
-        <a href="index.html"><i class="bi bi-box-arrow-right" style="position:relative; top: 1px; left: 1.5px;"></i> התנתק </a>
+    <div class="user-nav" id="render-nav1">
     </div>
 
     <header class="header">
-        <div class="top-navbar">
-            <section class="wrapper">
-
-                <div style="display:flex">
-                    <a href="TemplatePage_Site.html">
-                        <img src="https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
-                    </a>
-                    <span style="margin-right:9px;"></span>
-                    <span style="margin-left: 14px; border-left: 1px solid #979797;"></span>
-                    <a href="TemplatePage_Site.html">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="height:33px; margin-top: 7px;">
-                    </a>
-                </div>
-
-                <button type="button" class="opened-menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="overlay"></div>
-
-
-                <nav class="navbar">
-                    <button type="button" class="closed-menu">
-                        <img src="https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg" class="closed-icon" alt="closed">
-                    </button>
-                    <ul class="menu">
-                        <li class="menu-item"><a href="index.html" id="main-nav">ראשי</a></li>
-                        <li class="menu-item"><a href="competitions.html" id="comp-nav">תחרויות</a></li>
-                        <li class="menu-item"><a href="ranks.html" id="rank-nav">דירוגים</a></li>
-                        <li class="menu-item menu-item-has-children">
-                            <a href="#" data-toggle="sub-menu" id="info-nav">אודות ומידע<i class="expand"></i></a>
-                            <ul class="sub-menu">
-                                <li class="menu-item"><a href="about.html">אודות העמותה</a></li>
-                                <li class="menu-item"><a href="esports.html">אודות הענף</a></li>
-                                <li class="menu-item"><a href="federation.html">הפדרציה העולמית</a></li>
-                                <li class="menu-item"><a href="officials.html">בעלי תפקידים</a></li>
-                                <li class="menu-item"><a href="committee.html">וועדות</a></li>
-                                <li class="menu-item"><a href="regulations.html">תקנונים</a></li>
-                                <li class="menu-item"><a href="volunteer.html">התנדבות בעמותה</a></li>
-                                <li class="menu-item"><a href="new_referee.html">רישום שופטים</a></li>
-                                <li class="menu-item"><a href="post_archive.html">ארכיון פוסטים</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item"><a href="israel_national_team.html" id="isr-nav">נבחרת ישראל</a></li>
-                        <li class="menu-item"><a href="#" id="pers-nav">אזור אישי</a></li>
-                    </ul>
-                </nav>
-
-            </section>
+        <div class="top-navbar" id="render-nav2">
         </div>
     </header>
     <!-- Section: Header -->
@@ -412,7 +311,6 @@
         </section>
     </div>
     <!--Section: Content-->
-
     <!-- Section: Footer -->
     <section id="site_footer">
         <div class="footer">
@@ -491,5 +389,6 @@
     </section>
     <!-- Section: Footer -->
 
+    <script src="../Scripts/GeneralFunctions.js"></script>
 </body>
 </html>

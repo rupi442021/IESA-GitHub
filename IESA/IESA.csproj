@@ -274,7 +274,8 @@
     <Content Include="Pages\Team_2020.html" />
     <Content Include="Pages\Volunteer.html" />
     <Content Include="Pages\Post_Archive.html" />
-    <Content Include="Site_Pages\index.html" />
+    <Content Include="Site_Pages\HtmlPage1.html" />
+    <Content Include="Pages\index.html" />
     <Content Include="Site_Pages\navbar_template.html" />
     <Content Include="Style\add_new_competition.css" />
     <Content Include="Style\add_new_post.css" />
