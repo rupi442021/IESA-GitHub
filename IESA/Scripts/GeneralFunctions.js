@@ -142,6 +142,155 @@ function renderNavbar_Site() {
 
 }
 
+function renderNavbar_Gamer() {
+
+        user_info = JSON.parse(localStorage["user_info"]);
+
+        strnav = "";
+        strnav += "<span style='margin-left: 9px;'>שלום " + user_info.Firstname + "</span>";
+        strnav += "<span style='margin-left: 9px;'>|</span>";
+        strnav += "<a id='disconnectBTN'><i class='bi bi-box-arrow-right' style='position: relative; top: 1px; left: 1.5px;'></i> התנתק </a>";
+
+        document.getElementById("render-nav1").innerHTML = strnav;
+
+        str = "";
+        str += "<header class='header'>";
+        str += "<div class='top-navbar'>";
+        str += "<section class='wrapper'>";
+        str += "<div style='display: flex'>";
+        str += "<a href='index.html'>";
+        str += "<img src='https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='margin-right: 1.6rem;'>";
+        str += "</a>";
+        str += "<span style='margin-right:9px;'></span>";
+        str += "<span style='margin-left: 14px; border-left: 1px solid #979797;'></span>";
+        str += "<a href='Israel_National_Team.html'>";
+        str += "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='height:33px; margin-top: 7px;'>";
+        str += "</a>";
+        str += "</div>";
+        str += "<button type='button' class='opened-menu'>";
+        str += "<span></span>";
+        str += "<span></span>";
+        str += "<span></span>";
+        str += "<span></span>";
+        str += "</button>";
+        str += "<div class='overlay'></div>";
+        str += "<nav class='navbar'>";
+        str += "<button type='button' class='closed-menu'>";
+        str += "<img src='https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg' class='closed-icon' alt='closed'>";
+        str += "</button>";
+        str += "<ul class='menu'>";
+        str += "<li class='menu-item'><a href='gamer_main_page.html' id='pers-nav'>אזור אישי</a></li>";
+        str += "<li class='menu-item'><a href='gamer_card.html' id='card-nav'>כרטיס שחקן</a></li>";
+        str += "<li class='menu-item'><a href='edit_personal_details.html' id='edit-nav'>עריכת פרטים</a></li>";
+        str += "<li class='menu-item'><a href='index.html' id='site-nav'>אתר העמותה</a></li>";
+        str += "</ul>";
+        str += "</nav>";
+        str += "</section>";
+
+        document.getElementById("render-nav2").innerHTML = str;
+
+}
+
+function renderNavbar_Orgenaizer() {
+
+    user_info = JSON.parse(localStorage["user_info"]);
+
+    strnav = "";
+    strnav += "<span style='margin-left: 9px;'>שלום " + user_info.Firstname + "</span>";
+    strnav += "<span style='margin-left: 9px;'>|</span>";
+    strnav += "<a id='disconnectBTN'><i class='bi bi-box-arrow-right' style='position: relative; top: 1px; left: 1.5px;'></i> התנתק </a>";
+
+    document.getElementById("render-nav1").innerHTML = strnav;
+
+    str = "";
+    str += "<header class='header'>";
+    str += "<div class='top-navbar'>";
+    str += "<section class='wrapper'>";
+    str += "<div style='display: flex'>";
+    str += "<a href='index.html'>";
+    str += "<img src='https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='margin-right: 1.6rem;'>";
+    str += "</a>";
+    str += "<span style='margin-right:9px;'></span>";
+    str += "<span style='margin-left: 14px; border-left: 1px solid #979797;'></span>";
+    str += "<a href='Israel_National_Team.html'>";
+    str += "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='height:33px; margin-top: 7px;'>";
+    str += "</a>";
+    str += "</div>";
+    str += "<button type='button' class='opened-menu'>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "</button>";
+    str += "<div class='overlay'></div>";
+    str += "<nav class='navbar'>";
+    str += "<button type='button' class='closed-menu'>";
+    str += "<img src='https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg' class='closed-icon' alt='closed'>";
+    str += "</button>";
+    str += "<ul class='menu'>";
+    str += "<li class='menu-item'><a href='orgenaizer_main_page.html' id='main-nav'>אזור אישי</a></li>";
+    str += "<li class='menu-item'><a href='add_new_competition.html' id='comp-nav'>יצירת תחרות</a></li>";
+    str += "<li class='menu-item'><a href='org_resource.html' id='rank-nav'>מרכז משאבים</a></li>";
+    str += "<li class='menu-item'><a href='edit_personal_details.html' id='edit-nav'>עריכת פרטים</a></li>";
+    str += "<li class='menu-item'><a href='index.html' id='site-nav'>אתר העמותה</a></li>";
+    str += "</ul>";
+    str += "</nav>";
+    str += "</section>";
+
+    document.getElementById("render-nav2").innerHTML = str;
+
+}
+
+function renderNavbar_Manager() {
+
+    user_info = JSON.parse(localStorage["user_info"]);
+
+    strnav = "";
+    strnav += "<span style='margin-left: 9px;'>שלום " + user_info.Firstname + "</span>";
+    strnav += "<span style='margin-left: 9px;'>|</span>";
+    strnav += "<a id='disconnectBTN'><i class='bi bi-box-arrow-right' style='position: relative; top: 1px; left: 1.5px;'></i> התנתק </a>";
+
+    document.getElementById("render-nav1").innerHTML = strnav;
+
+    str = "";
+    str += "<header class='header'>";
+    str += "<div class='top-navbar'>";
+    str += "<section class='wrapper'>";
+    str += "<div style='display: flex'>";
+    str += "<a href='index.html'>";
+    str += "<img src='https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='margin-right: 1.6rem;'>";
+    str += "</a>";
+    str += "<span style='margin-right:9px;'></span>";
+    str += "<span style='margin-left: 14px; border-left: 1px solid #979797;'></span>";
+    str += "<a href='Israel_National_Team.html'>";
+    str += "<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='height:33px; margin-top: 7px;'>";
+    str += "</a>";
+    str += "</div>";
+    str += "<button type='button' class='opened-menu'>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "</button>";
+    str += "<div class='overlay'></div>";
+    str += "<nav class='navbar'>";
+    str += "<button type='button' class='closed-menu'>";
+    str += "<img src='https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg' class='closed-icon' alt='closed'>";
+    str += "</button>";
+    str += "<ul class='menu'>";
+    str += "<li class='menu-item'><a href='manager_main_page.html' id='mang-nav'>ניהול מערכת</a></li>";
+    str += "<li class='menu-item'><a href='database.html' id='data-nav'>מאגר מידע</a></li>";
+    str += "<li class='menu-item'><a href='add_new_post.html' id='post-nav'>יצירת פוסט</a></li>";
+    str += "<li class='menu-item'><a href='edit_personal_details.html' id='edit-nav'>עריכת פרטים</a></li>";
+    str += "<li class='menu-item'><a href='index.html' id='site-nav'>אתר העמותה</a></li>";
+    str += "</ul>";
+    str += "</nav>";
+    str += "</section>";
+
+    document.getElementById("render-nav2").innerHTML = str;
+
+}
+
 function buildNav() {
 
     //--Navbar Script--

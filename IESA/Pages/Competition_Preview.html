@@ -22,6 +22,10 @@
 
     <script>
 
+        if (localStorage["user_type"] != 1 && localStorage["user_type"] != 2) {
+            location.replace("index.html");
+        }
+
         $(document).ready(function () {
 
             //--Navbar Script--

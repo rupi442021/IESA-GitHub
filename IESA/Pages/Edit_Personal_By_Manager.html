@@ -20,6 +20,10 @@
 
     <script>
 
+        if (localStorage["user_type"] != 1) {
+            location.replace("index.html");
+        }
+
         userType = '';
         IdUser = '';
         var counterimage = 2300;
