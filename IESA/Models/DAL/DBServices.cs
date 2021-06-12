@@ -1501,7 +1501,7 @@ namespace IESA.Models.DAL
             {
                 con4 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR4 = "SELECT DISTINCT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate,Competitions.logo, Competitions.address1, Competitions.isonline FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid and Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5' inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid";
+                String selectSTR4 = "SELECT DISTINCT Competitions.competitionid, Competitions.competitionname, Competitions.competitionstatus, Competitions.ispro, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competitions.startdate, Competitions.enddate,Competitions.logo, Competitions.address1, Competitions.isonline FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid where Competitions.competitionstatus = '1' or Competitions.competitionstatus = '5'";
 
                 SqlCommand cmd4 = new SqlCommand(selectSTR4, con4);
 
