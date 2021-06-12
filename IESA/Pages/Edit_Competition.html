@@ -930,6 +930,13 @@
                 <a class="titlelink" href="Manager_Main_Page.html">אזור אישי </a>
                 <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <h2 class="headh2">עריכת פרטי תחרות</h2>
+                <div class="row">
+                    <div class="col-10"></div>
+                    <div class="col-2">
+
+                        <button id="previewC" class="btn btn-outline-danger"> <i class="bi bi-arrow-up-right-square"></i> תצוגה מקדימה  </button>
+                    </div>
+                </div>
                 <div class="divdown"></div>
             </section>
 
@@ -1163,9 +1170,8 @@
 
                             <div class="col">
                                 <br /><br />  <br />
-                                <input type="button" class="btn btn-secondary" value="תצוגה מקדימה" id="previewC" />
-                                <input type="button" class="btn btn-danger" value="דחיית תחרות" id="rejectC" onclick="decideNewC('3')" />
-                                <input type="button" class="btn btn-primary" value="אישור תחרות" id="acceptC" onclick="decideNewC('4')" />
+                                <input type="button" class="btn btn-light" value="דחיית תחרות" id="rejectC" onclick="decideNewC('3')" />
+                                <input type="button" class="btn btn-outline-secondary" value="אישור תחרות" id="acceptC" onclick="decideNewC('4')" />
                                 <input type="submit" class="btn btn-success" value="עדכון טופס" id="submitedit" onsubmit="return false" />
                                 <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
                                 <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />

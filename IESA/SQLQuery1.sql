@@ -33,4 +33,6 @@ else
 set password1 = 'aa123456'
 
 
-update gamers
+
+select *
+from manager
