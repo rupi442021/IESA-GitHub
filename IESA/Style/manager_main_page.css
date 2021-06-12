@@ -324,6 +324,10 @@ div#services_block {
     border-left: 1px solid #211f1f !important;
 }
 
+.C_viewBTN .bi bi-eye {
+    font-size: 12px !important;
+}
+
 
 /*        #box {
             -webkit-box-shadow: 0 10px 6px -6px #292e38;
