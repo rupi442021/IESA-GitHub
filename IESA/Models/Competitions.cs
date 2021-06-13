@@ -220,7 +220,7 @@ namespace IESA.Models
 
         //---Edit_Competition.html--- *Open*
 
-        public int Getcategory(int CId) //Edit_Competitions.html - method SC5
+        public GamesCategories Getcategory(int CId) //Edit_Competitions.html - method SC6
         {
             DBServices dbs = new DBServices();
             return dbs.Getcategory(CId);
