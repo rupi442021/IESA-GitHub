@@ -114,7 +114,7 @@ namespace IESA.Controllers
 
         [HttpGet] //Edit_Competition.html
         [Route("api/Competitions/getcategory")]
-        public int Getcategory(int CompetitionId) //Edit_Competitions.html - method SC5
+        public GamesCategories Getcategory(int CompetitionId) //Edit_Competitions.html - method SC5
         {
             Competitions competitionslist = new Competitions();
             return competitionslist.Getcategory(CompetitionId);

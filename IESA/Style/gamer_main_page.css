@@ -12,6 +12,8 @@
 .card-body {
     padding: 0px;
     background-color: black;
+    width: 240px;
+    margin-bottom: 20px;
 }
 
 .card p {
