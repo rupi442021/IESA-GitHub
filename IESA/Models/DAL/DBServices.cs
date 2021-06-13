@@ -2506,7 +2506,7 @@ namespace IESA.Models.DAL
             }
         }
 
-        public Competitions ReadOneCompetition(int CId)
+        public Competitions ReadOneCompetition(int CId) //Edit_Competitions.html - method SC5
         {
             SqlConnection con = null;
             Competitions c = new Competitions();
@@ -2726,7 +2726,7 @@ namespace IESA.Models.DAL
 
         }
 
-        private String BuildUpdateCommandEditGamer(int GId, Gamers g1)
+        private String BuildUpdateCommandEditGamer(int GId, Gamers g1) 
         {
             String command;
             command = " UPDATE Gamers set firstname = '" + g1.Firstname + "' , lastname = '" + g1.Lastname + "' , gender = '" + g1.Gender + "' , phone = '" + g1.Phone + "', dob = '" + g1.Dob + "' , address1 = '" + g1.Address1 + "' , picture = '" + g1.Picture + "' , discorduser = '" + g1.Discorduser + "' where userid = " + GId + " ";
@@ -2740,18 +2740,19 @@ namespace IESA.Models.DAL
 
         //---Edit_Competition.html--- *Open*
 
-        public int Getcategory(int CId)
+        public GamesCategories Getcategory(int CId) //Edit_Competitions.html - method SC6
         {
-            var categoryId = 0;
+
             SqlConnection con = null;
-            Competitions c = new Competitions();
+            GamesCategories moreinfo = new GamesCategories();
 
 
             try
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " select categoryid from Competition_Game where competitionid = " + CId + "";
+                String selectSTR = "SELECT Competitions.competitionstatus, Orgenaizers.firstname + ' ' + Orgenaizers.lastname AS 'orgenaizername', Competition_Game.categoryid FROM Competitions inner join Orgenaizer_Competition ON Competitions.competitionid = Orgenaizer_Competition.competitionid inner join Orgenaizers ON Orgenaizer_Competition.orgenaizerid = Orgenaizers.userid inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid where Competitions.competitionid = " + CId + "";
+
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -2759,10 +2760,12 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
-                    categoryId = Convert.ToInt32(dr["categoryid"]);
-
+                    moreinfo.Categoryid = Convert.ToInt32(dr["categoryid"]);
+                    moreinfo.Categoryname = (string)dr["orgenaizername"];
+                    moreinfo.Status1 = Convert.ToInt32(dr["categoryid"]);
                 }
-                return (categoryId);
+
+                return (moreinfo);
             }
 
 

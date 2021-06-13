@@ -135,7 +135,7 @@
 
 
             ajaxCall("GET", "../api/Competitions/getcategory?CompetitionId=" + CId + "", "", getSuccessCg, getErrorCg); //Edit_Competitions.html - method SC5
-            ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + CId + "", "", getSuccessC, getErrorC);
+            ajaxCall("GET", "../api/Competitions/getone?CompetitionId=" + CId + "", "", getSuccessC, getErrorC); //Edit_Competitions.html - method SC6
 
             document.getElementById("cForm").addEventListener("submit", function (event) {
                 event.preventDefault();
