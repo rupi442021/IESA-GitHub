@@ -1,1 +1,0 @@
-﻿select * from Competitions where competitionstatus = 2

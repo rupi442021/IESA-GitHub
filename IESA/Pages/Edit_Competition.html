@@ -317,7 +317,6 @@
                 for (var i = 0; i < gamersarray[key].length; i++) {
                     $("#" + key + "").append('<td>' + gamersarray[key][i] + '</td>')
                 }
-
             }
 
 
@@ -359,6 +358,10 @@
 
             console.log("Game Category is: ", gc)
             GameCategories = gc
+
+            $("#orgenaizerName").text(gc.Categoryname)
+            $("#competitionStatus").text(gc.Status1)
+
 
         };
 
@@ -534,7 +537,7 @@
                 $("#consoleDB").val(data.Console),
                 $("#checkin1TB").val(data.Startcheckin),
                 $("#checkin2TB").val(data.Endcheckin),
-                $('#ccategoriesDB').val(GameCategories);
+                $('#ccategoriesDB').val(GameCategories.Categoryid);
             //Isiesa: 0,
             //Competitionstatus: 'S',
 
@@ -934,7 +937,6 @@
                     <div class="col-10"></div>
                     <div class="col-2">
 
-                        <button id="previewC" class="btn btn-outline-danger"> <i class="bi bi-arrow-up-right-square"></i> תצוגה מקדימה  </button>
                     </div>
                 </div>
                 <div class="divdown"></div>
@@ -1062,7 +1064,34 @@
 
                         <div class="mb-3" id="addressDIV">
                         </div> <!--address-->
+                        <div id="toolBTN" class="rounded">
+                            <div id="wrapTool" >
+                                <div class="row">
+                                    <div class="col"><b>שם המארגן:</b></div>
+                                    <div class="col" id="orgenaizerName">NO DATA</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col"><b>סטאטוס תחרות:</b></div>
+                                    <div class="col" id="competitionStatus">NO DATA</div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-2">
 
+                                    </div>
+                                    <div class="col-10" id="BTNActions">
+                                        <input type="button" class="btn btn-light" value="דחיית תחרות" id="rejectC" onclick="decideNewC('3')" />
+                                        <input type="button" class="btn btn-outline-secondary" value="אישור תחרות" id="acceptC" onclick="decideNewC('4')" />
+                                        <input type="submit" class="btn btn-success" value="עדכון טופס" id="submitedit" onsubmit="return false" />
+                                        <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
+                                        <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />
+                                        <input type="button" value="משתתפים" id="ParticipentsBTN" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" />
+                                        <input type="button" class="btn btn-danger" value="ביטול תחרות" id="CancelC" onclick="swal('צריך לבטל את התחרות ואת הניקוד שניתן לכל המשתתפים בה')" />
+
+                                        <button id="previewC" class="btn btn-outline-danger"> <i class="bi bi-arrow-up-right-square"></i> תצוגה מקדימה  </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!--Left column here: -->
@@ -1170,13 +1199,6 @@
 
                             <div class="col">
                                 <br /><br />  <br />
-                                <input type="button" class="btn btn-light" value="דחיית תחרות" id="rejectC" onclick="decideNewC('3')" />
-                                <input type="button" class="btn btn-outline-secondary" value="אישור תחרות" id="acceptC" onclick="decideNewC('4')" />
-                                <input type="submit" class="btn btn-success" value="עדכון טופס" id="submitedit" onsubmit="return false" />
-                                <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
-                                <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />
-                                <input type="button" value="משתתפים" id="ParticipentsBTN" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" />
-                                <input type="button" class="btn btn-danger" value="ביטול תחרות" id="CancelC" onclick="swal('צריך לבטל את התחרות ואת הניקוד שניתן לכל המשתתפים בה')" />
 
 
                             </div>
