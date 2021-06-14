@@ -1,4 +1,4 @@
-﻿﻿
+﻿
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
@@ -299,7 +299,7 @@
         }
 
         function getSuccessParticipents(data) {
-            $("#exampleModalLongTitle").text("משתתפים:");
+            $("#exampleModalLongTitle").text("משתתפים");
             $("#modal-body").text('')
             $("#modal-body").html('<table class="table table-striped" id="partisipantstbl"><tr><th>מספר שחקן</th><th>שם פרטי</th><th>שם משפחה</th><th>כינוי</th><th>דירוג</th><th>ניקוד</th></tr></table>')
             $("#saverank").hide();
@@ -356,12 +356,39 @@
 
         function getSuccessCg(gc) {
 
-            console.log("Game Category is: ", gc)
-            GameCategories = gc
+            console.log("Game Category is: ", gc);
+            GameCategories = gc;
+            var stringstatus;
 
-            $("#orgenaizerName").text(gc.Categoryname)
-            $("#competitionStatus").text(gc.Status1)
+            $("#orgenaizerName").text(gc.Categoryname);
 
+
+            if (gc.Status1 == 1) {
+                stringstatus = "תחרות ממתינה לאישור";
+            }
+            else if (gc.Status1 == 2) {
+                stringstatus = "תחרות מאושרת";
+            }
+            else if (gc.Status1 == 3) {
+                stringstatus = "תחרות נדחתה";
+            }
+            else if (gc.Status1 == 4) {
+                stringstatus = "ממתין להזנת דירוגים ע''י מארגן";
+            }
+            else if (gc.Status1 == 5) {
+                stringstatus = "ממתין לאישור דירוגים ע''י מנהל";
+            }
+            else if (gc.Status1 == 6) {
+                stringstatus = "דירוגים נדחו";
+            }
+            else if (gc.Status1 == 7) {
+                stringstatus = "דירוגים אושרו - תחרות הסתיימה";
+            }
+            else if (gc.Status1 == 8) {
+                stringstatus = "דירוגים שונו ע''י מנהל - תחרות הסתיימה";
+            }
+
+            $("#competitionStatus").text(stringstatus);
 
         };
 
@@ -936,7 +963,7 @@
                 <div class="row">
                     <div class="col-10"></div>
                     <div class="col-2">
-
+                        <button id="previewC" class="btn btn-outline-danger"> <i class="bi bi-arrow-up-right-square"></i> תצוגה מקדימה  </button>
                     </div>
                 </div>
                 <div class="divdown"></div>
@@ -1065,29 +1092,30 @@
                         <div class="mb-3" id="addressDIV">
                         </div> <!--address-->
                         <div id="toolBTN" class="rounded">
-                            <div id="wrapTool" >
+                            <div id="wrapTool">
                                 <div class="row">
-                                    <div class="col"><b>שם המארגן:</b></div>
-                                    <div class="col" id="orgenaizerName">NO DATA</div>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><b>סטאטוס תחרות:</b></div>
-                                    <div class="col" id="competitionStatus">NO DATA</div>
-                                </div>
-                                <div class="row mt-5">
-                                    <div class="col-2">
 
-                                    </div>
-                                    <div class="col-10" id="BTNActions">
-                                        <input type="button" class="btn btn-light" value="דחיית תחרות" id="rejectC" onclick="decideNewC('3')" />
-                                        <input type="button" class="btn btn-outline-secondary" value="אישור תחרות" id="acceptC" onclick="decideNewC('4')" />
-                                        <input type="submit" class="btn btn-success" value="עדכון טופס" id="submitedit" onsubmit="return false" />
-                                        <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
+                                    <h4 style="text-align:center; margin-bottom: 14px; color: #f3103a">בקרת ניהול</h4>
+
+                                    <div class="col-md-4"><b>שם המארגן:</b></div>
+                                    <div class="col" id="orgenaizerName">לא זמין</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"><b>סטאטוס תחרות:</b></div>
+                                    <div class="col" id="competitionStatus">לא זמין</div>
+                                </div>
+                                <div class="row" style="margin-top: 25px; margin-bottom: 20px;">
+                                    <div class="col" id="BTNActions">
+
                                         <input type="button" value="דירוגים" id="rankEdit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" />
-                                        <input type="button" value="משתתפים" id="ParticipentsBTN" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" />
+                                        <input type="button" value="משתתפים" id="ParticipentsBTN" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter" />
+                                        <input type="button" class="btn btn-danger" value="דחיית תחרות" id="rejectC" onclick="decideNewC('3')" />
                                         <input type="button" class="btn btn-danger" value="ביטול תחרות" id="CancelC" onclick="swal('צריך לבטל את התחרות ואת הניקוד שניתן לכל המשתתפים בה')" />
+                                        <input type="button" class="btn btn-danger" value="ביטול" id="cancelEdit" />
+                                        <input type="button" class="btn btn-success" value="אישור תחרות" id="acceptC" onclick="decideNewC('4')" />
+                                        <input type="submit" class="btn btn-light" value="שמירת שינויים" id="submitedit" onsubmit="return false" />
 
-                                        <button id="previewC" class="btn btn-outline-danger"> <i class="bi bi-arrow-up-right-square"></i> תצוגה מקדימה  </button>
+                                        <!--<button id="previewC" class="btn btn-outline-danger"> <i class="bi bi-arrow-up-right-square"></i> תצוגה מקדימה  </button>-->
                                     </div>
                                 </div>
                             </div>
@@ -1104,11 +1132,11 @@
                                    oninput="this.setCustomValidity('')" required />
                         </div> <!--last date for registeration-->
 
-                        <div class="mb-3">
+                        <div class="mb-3" style="padding-bottom: 9px;">
                             <label>תיאור התחרות:</label>
                             <textarea class="form-control" id="descriptionTA" placeholder="עד 1,000 תווים" onkeyup="countChar(this)"
                                       oninvalid="this.setCustomValidity('עד 1000 תווים.')"
-                                      oninput="this.setCustomValidity('')" rows="3" required></textarea>
+                                      oninput="this.setCustomValidity('')" rows="4" required></textarea>
                             <div id="charNum"></div> <!--this div show how many chars we used in textarea-->
                         </div> <!--description-->
 
@@ -1171,6 +1199,19 @@
                         </div> <!--check in-->
 
                         <div class="row">
+
+                            <div class="col">
+                                <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
+                                    <label for="file">לוגו תחרות:  </label>
+                                    <br />
+                                    <input type="file" id="logoFile" name="files" multiple="multiple" />
+                                    <p class="noteforfiles">הגודל המומלץ ללוגו 240x168</p>
+                                </div>
+                                <div>
+                                    <div class="mb-3 logofilePH" id="logoph"></div>
+                                </div>
+                            </div> <!--logo-->
+
                             <div class="col">
                                 <div class="form-group" method="post" enctype="multipart/form-data">
                                     <label for="file">באנר תחרות: </label>
@@ -1182,17 +1223,8 @@
                                     <div class="bannerfilePH" id="bannerph"></div>
                                 </div>
                             </div> <!--banner-->
-                            <div class="col">
-                                <div class="form-group" method="post" enctype="multipart/form-data" id="formUpload">
-                                    <label for="file">לוגו תחרות:  </label>
-                                    <br />
-                                    <input type="file" id="logoFile" name="files" multiple="multiple" />
-                                    <p class="noteforfiles">צריך לכתוב כאן את הגודל המומלץ ללוגו</p>
-                                </div>
-                                <div>
-                                    <div class="mb-3 logofilePH" id="logoph"></div>
-                                </div>
-                            </div> <!--logo-->
+
+
                         </div>
 
                         <div class="row" dir="ltr">
@@ -1254,7 +1286,6 @@
         </div>
     </section>
     <!-- Section: Footer -->
-
     <!--<script src="../Scripts/GeneralFunctions.js"></script>-->
 </body>
 </html>

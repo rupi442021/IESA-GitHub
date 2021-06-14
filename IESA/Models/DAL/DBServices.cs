@@ -2760,9 +2760,9 @@ namespace IESA.Models.DAL
 
                 while (dr.Read()) //1 row
                 {
+                    moreinfo.Status1 = Convert.ToInt32(dr["competitionstatus"]);
                     moreinfo.Categoryid = Convert.ToInt32(dr["categoryid"]);
                     moreinfo.Categoryname = (string)dr["orgenaizername"];
-                    moreinfo.Status1 = Convert.ToInt32(dr["categoryid"]);
                 }
 
                 return (moreinfo);

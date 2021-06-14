@@ -9,13 +9,12 @@
 
 #BTNActions {
 
-text-align:left;
+text-align:center;
 margin-bottom:1px;
 }
 
 #toolBTN {
-    border: 3px solid #198754;
-
+    border: 3px solid #eaf1ee;
 }
 
 #wrapTool {
@@ -30,14 +29,16 @@ margin-bottom:1px;
     font-size: 15px;
 }
 
-.logofilePH > img {
-    max-height: 250px;
-    max-width: 950px;
+.logofilePH img {
+/*    max-height: 250px;
+    max-width: 950px;*/
+    height: 190px;
+    width: 350px;
 }
 
-.bannerfilePH > img {
-    max-height: 350px;
-    max-width: 300px;
+.bannerfilePH img {
+    height: 200px;
+    width: 100%;
 }
 
 
@@ -55,7 +56,7 @@ margin-bottom:1px;
     border-radius: 4px;
     padding: 3px;
     background-color: #F0FFFF;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 .modal-header {

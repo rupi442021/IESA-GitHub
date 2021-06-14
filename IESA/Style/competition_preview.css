@@ -5,9 +5,9 @@
 }
 
 
-.bannerimage > img {
-    width: 1024px;
-    height: 210px;
+.bannerimage img {
+    width: 970px;
+    height: 250px;
 }
 
 
