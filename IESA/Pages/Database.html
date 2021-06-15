@@ -988,7 +988,7 @@
             try {
                 tbl7 = $('#RanksTable').DataTable({
                     data: ranksdata,
-                    "order": [[0, "asc"], [1, "asc"], [4, "desc"]],
+                    "order": [[0, "asc"], /*[1, "asc"],*/ [3, "desc"]],
                     "language": {
                         "info": "",
                         "infoEmpty": "",
@@ -1005,7 +1005,7 @@
                     pageLength: 10,
                     columns: [
                         { data: "Competitionname", className: "uniqueClassName" }, //categoryname
-                        { data: "Ispro", className: "uniqueClassName" }, //rank
+                        //{ data: "Ispro", className: "uniqueClassName" }, //rank
                         { data: "Body", className: "uniqueClassName" },
 
                         {
@@ -1391,7 +1391,7 @@
                                     <thead>
                                         <tr>
                                             <th style="max-width: 60px;">שם קטגוריה</th>
-                                            <th style="max-width: 50px;">דירוג</th>
+                                            <!--<th style="max-width: 50px;">דירוג</th>-->
                                             <th style="max-width: 70px;">שם שחקן</th>
                                             <th style="max-width: 100px;">כינוי</th>
                                             <th style="max-width: 50px;">ניקוד עונתי</th>
