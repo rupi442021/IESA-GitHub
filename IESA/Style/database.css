@@ -197,7 +197,7 @@ tbody, td, tfoot, th, thead, tr {
     font-weight: 600;
     transition-duration: 0.20s;
     position: absolute;
-    bottom: 55.8%;
+    bottom: 59%;
     right: 84.9%;
 }
 
@@ -439,7 +439,7 @@ div#services_block {
 #divfilterrank {
     color: #2b2626;
     position: absolute;
-    top: 41.1%;
+    top: 38.1%;
     right: 44.3%;
 }
 
