@@ -119,17 +119,25 @@
             $(document).on("click", ".P_deleteBTN", function () {
                 var postId = this.getAttribute('data-postid');
 
-                swal({
-                    title: "האם אתה בטוח?",
-                    text: "פעולה זו תמחק את הפוסט לצמיתות",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true
-                })
-                    .then(function (willDelete) {
-                        if (willDelete) DeletePost(postId);
-                        //else swal("פעולה לא בוצעה"); *Not needed*
-                    });
+                if (postId == 1) {
+                    swal("לא ניתן למחוק פוסט שמספרו 1 - המוגדר כהודעה מטעם העמותה");
+                }
+                else {
+
+                    swal({
+                        title: "האם אתה בטוח?",
+                        text: "פעולה זו תמחק את הפוסט לצמיתות",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true
+                    })
+                        .then(function (willDelete) {
+                            if (willDelete) DeletePost(postId);
+                            //else swal("פעולה לא בוצעה"); *Not needed*
+                        });
+
+                }
+
             });
 
             //---Posts Table--- *Close*
@@ -1198,7 +1206,7 @@
             <section class="wrapper">
 
                 <div style="display:flex">
-                    <a href="TemplatePage_Site.html">
+                    <a href="index.html">
                         <img src="https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
                     </a>
                     <span style="margin-right:9px;"></span>
