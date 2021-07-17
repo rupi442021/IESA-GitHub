@@ -150,5 +150,26 @@ namespace IESA.Models
         //---Edit_Post.html--- *Close*
 
 
+
+        //---index.html--- *Open*
+
+        public List<Posts> GetPostsIndex() //index.html - method OMI1
+        {
+            DBServices dbs = new DBServices();
+            List<Posts> postslist = dbs.GetPostsIndexSQL();
+            return postslist;
+        }
+
+        public Posts GetPostIndex() //index.html - method OMI3
+        {
+            DBServices dbs = new DBServices();
+            return dbs.GetPostIndexSQL();
+        }
+
+
+        //---index.html--- *Close*
+
+
+
     }
 }

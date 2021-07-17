@@ -125,6 +125,27 @@ namespace IESA.Controllers
         //---Edit_Post.html--- *Close*
 
 
+        //---index.html--- *Open*
+
+        [HttpGet] //index.html - method OMI1
+        [Route("api/Posts/Postsindex")]
+        public List<Posts> GetPostsIndex()
+        {
+            Posts postslist = new Posts();
+            return postslist.GetPostsIndex();
+        }
+
+        [HttpGet] //index.html - method OMI3
+        [Route("api/Posts/Announcementindex")]
+        public Posts GetPostIndex()
+        {
+            Posts post1 = new Posts();
+            return post1.GetPostIndex();
+        }
+
+        //---index.html--- *Close*
+
+
 
     }
 }

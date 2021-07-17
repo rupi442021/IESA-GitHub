@@ -277,6 +277,7 @@
     <Content Include="Site_Pages\HtmlPage1.html" />
     <Content Include="Pages\index.html" />
     <Content Include="Site_Pages\navbar_template.html" />
+    <Content Include="Site_Pages\tryposts.html" />
     <Content Include="Style\add_new_competition.css" />
     <Content Include="Style\add_new_post.css" />
     <Content Include="Style\basic.css" />
@@ -295,6 +296,7 @@
     <Content Include="Style\gamer_card.css" />
     <Content Include="Style\gamer_card_view.css" />
     <Content Include="Style\gamer_main_page.css" />
+    <Content Include="Style\index.css" />
     <Content Include="Style\israel_national_team.css" />
     <Content Include="Style\manager_main_page.css" />
     <Content Include="Style\new_referee.css" />

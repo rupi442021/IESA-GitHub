@@ -1,0 +1,426 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/GeneralFunctions.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link rel="stylesheet" href=" https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+
+    <title>&#x202E; פוסטים – ASEI</title>
+    <link rel="icon" href="https://iesa.org.il/wp-content/uploads/2020/04/cropped-favic-32x32.png">
+
+
+    <style type="text/css">
+
+        /*Template Style*/
+
+        body {
+            background-color: #212529;
+            color: white;
+        }
+
+        .container {
+            background-color: #292e38;
+            max-width: 1110px;
+            height: 1500px;
+            padding-top: 30px;
+        }
+
+        .jumbotron {
+            height: 70px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        /*Template Style*/
+
+
+        .col-md-6 {
+            padding: 20px
+        }
+
+
+        .sidebar-box {
+            max-height: 120px;
+            position: relative;
+            overflow: hidden;
+            width: 65%;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+            .sidebar-box .read-more {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 30px 0;
+            }
+
+
+        #PostImg {
+            width: 290px;
+            height: 150px;
+            border-radius: 15px;
+            padding: 1px;
+        }
+
+
+        #postDate {
+            position: relative;
+            width: 53%;
+            height: 25px;
+            font-size: 12px;
+            color: #e8dcdc;
+        }
+
+
+
+        .titlelink {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 1.04rem;
+            letter-spacing: .015em;
+            line-height: 2;
+        }
+
+            .titlelink:hover {
+                color: #04b8a5;
+                transition: .15s color;
+            }
+
+        .headh2 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 55px;
+            font-weight: 600;
+            letter-spacing: .015em;
+        }
+
+            .headh2::after {
+                content: '';
+                flex: 1;
+                margin-right: 10px;
+                margin-top: 23px;
+                opacity: 0.84;
+                height: 2px;
+                background-color: #fff;
+            }
+
+        .divdown {
+            margin-bottom: 60px;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+            a:hover {
+                color: white;
+            }
+
+        .bg-main-4 {
+            position: relative;
+            top: 9%;
+            left: 25%;
+            font-size: 16px;
+            background-color: #119a8c;
+            color: white;
+            border-radius: 15px;
+            opacity: 0.9;
+            font: bold;
+        }
+
+
+            .bg-main-4:hover {
+                color: #3bebdb;
+                opacity: 1
+            }
+
+
+        .nk-blog-grid {
+            margin: 35px;
+        }
+
+        .nk-gap {
+            margin-bottom: 6px;
+        }
+
+        .btn-info {
+            padding: 5px 15px;
+            color: white;
+            background-color: #15a092;
+            border-color: #353a3a;
+        }
+
+            .btn-info:hover {
+                background-color: #dd163b;
+                border-color: #353a3a;
+                transition: .15s all;
+                color: white;
+            }
+    </style>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            objJson = [];
+            posts = [];
+            generalposts = [];
+            globalposts = [];
+
+
+            ajaxCall("GET", "../api/Posts/mark9", "", getSuccessBuildPosts, Error); //Post_Archive.html - method MP1
+
+
+            $(document).on("change", "#categoryfilter", function () {
+
+                current_page = 1;
+                page = 1;
+
+                let category = this.value;
+
+                if (category == "") {
+                    objJson = posts;
+                }
+                else if (category == "עולמי") {
+                    objJson = globalposts;
+                }
+                else if (category == "כללי") {
+                    objJson = generalposts;
+                }
+
+                changePage(1);
+
+            });
+
+
+        });
+
+
+        function getSuccessBuildPosts(data) {
+
+            posts = data; //Save as a global integer
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].Category == "עולמי") {
+                    globalposts.push(data[i]);
+                }
+                else if (data[i].Category == "כללי") {
+                    generalposts.push(data[i]);
+                }
+
+            }
+
+            objJson = posts;
+
+            changePage(1);
+        }
+
+
+
+
+        function Error(err) {
+            console.log(err)
+
+            swal("בעיה בהתקשרות עם השרת, נא נסה שנית מאוחר יותר");
+        }
+
+
+        //---Pagination Code--- *Open*
+
+        current_page = 1;
+        records_per_page = 4;
+
+
+        function prevPage() {
+
+            if (current_page > 1) {
+                current_page--;
+                changePage(current_page);
+            }
+        }
+
+        function nextPage() {
+
+            if (current_page < numPages()) {
+                current_page++;
+                changePage(current_page);
+            }
+        }
+
+
+        function changePage(page) {
+
+            var btn_next = document.getElementById("btn_next");
+            var btn_prev = document.getElementById("btn_prev");
+            var listing_table = document.getElementById("listingTable");
+            var page_span = document.getElementById("page");
+
+            if (page < 1) page = 1;
+            if (page > numPages()) page = numPages();
+
+            listing_table.innerHTML = "";
+
+            var str = "";
+            str += "<div class='nk-blog-grid'>";
+            str += "<div class='row'>";
+
+            for (var i = (page - 1) * records_per_page; i < (page * records_per_page) && i < objJson.length; i++) {
+
+                str += "<div class='col-md-6'>";
+                str += "<span class='nk-post-img'><span class='bg-main-4'>" + objJson[i].Category + "</span>";
+                str += "<div class='nk-blog-post'>";
+
+                str += "<a href='Post.html?postid=" + objJson[i].Postid + "' class='nk-post-img'></a>";
+
+                str += " <img id='PostImg' src= ../" + objJson[i].Image1 + " alt='Logo'>";
+
+                str += " <span class='nk-post-categories'>";
+
+                str += " </span>";
+
+                str += " <div class='nk-gap'></div>";
+
+                if (objJson[i].Title.length > 24) {
+                    var title_edit = objJson[i].Title.substring(0, 25);
+                    var title_after = title_edit + "..";
+                    str += "<h2 href='Post.html?postid=" + objJson[i].Postid + "' class='nk-post-title h4'>" + title_after + "</h2>";
+                }
+                else {
+                    str += "<h2 href='Post.html?postid=" + objJson[i].Title + "' class='nk-post-title h4'>" + objJson[i].Title + "</h2>";
+                }
+
+                str += "<div class='nk-post-text'>";
+                str += "<div id='postDate'> נכתב על ידי<span style='color:#04b8a5'> מערכת האתר</span>, " + renderDate(objJson[i].Postdate) + "</div>"
+                str += "</div>";
+                str += "<div class='nk-post-text'>";
+                str += "<p class='sidebar-box'>" + objJson[i].Body1 + "</p>";
+                //str += " <p class='read - more'><a href='#' class='button'>Read More</a></p>"
+                str += " </div>";
+                str += " <div class='nk-gap'></div>"
+
+                str += "<a href='Post.html?postid=" + objJson[i].Postid + "' class='btn btn-info'> <span class='icon ion-paper-airplane'>קרא עוד</span></a>"
+                //str += "<div class='nk - post - date float - right'><svg class='svg - inline--fa fa - calendar - alt fa - w - 14' aria-hidden='true' focusable='false' data-prefix='fa' data-icon='calendar - alt' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' data-fa-i2svg='><path fill='currentColor' d='M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z'></path></svg><!-- <span class='fa fa-calendar'></span> Font Awesome fontawesome.com -->" + Posts[i].Postdate+"</div>"
+                str += "<br/>"
+                str += "</div>";
+                str += " </div>";
+
+            }
+
+            str += " </div>"
+            str += " </div>"
+
+            listing_table.innerHTML += str;
+
+            page_span.innerHTML = page;
+
+            if (page == 1) {
+                btn_prev.style.visibility = "visible";
+            }
+            else {
+                btn_prev.style.visibility = "visible";
+            }
+
+            if (page == numPages()) {
+                btn_next.style.visibility = "visible";
+            }
+            else {
+                btn_next.style.visibility = "visible";
+            }
+        }
+
+
+        function numPages() {
+            return Math.ceil(objJson.length / records_per_page);
+        }
+
+
+                   //---Pagination Code--- *Close*
+
+    </script>
+
+</head>
+<body>
+
+    <section id="Nav-bar">
+        <div class="jumbotron jumbotron-fluid" style="background-color:#04b8a5;">
+        </div>
+    </section>
+
+    <section id="content">
+
+        <div class="container">
+
+            <section id="page_title">
+                <a class="titlelink" href="TemplatePage.html">ראשי </a>
+                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
+                <h2 class="headh2">פוסטים</h2>
+                <div class="divdown"></div>
+            </section>
+
+
+            <label>סינון לפי קטגוריה: </label>
+            <select class="target" id="categoryfilter">
+                <option value=""></option>
+                <option value="כללי">כללי</option>
+                <option value="עולמי">עולמי</option>
+            </select>
+
+
+            <!-----Pagination Html--- Open-->
+
+            <div style="text-align: center; font-size: 22px; font-weight: 600;  word-spacing: 17px; position: relative; top: 62%;">
+
+                <a href="javascript:prevPage()" id="btn_prev">הקודם</a>
+                <span id="page" style="min-width: 42px; height: 42px; padding: 8px; line-height: 28px; color: #dd163b; border: 4px solid; border-radius: 50%;"></span>
+                <a href="javascript:nextPage()" id="btn_next">הבא</a>
+
+            </div>
+
+            <div id="listingTable" style="text-align: -webkit-center;"></div>
+
+
+
+            <!-----Pagination Html--- Close-->
+
+        </div>
+
+    </section>
+
+
+    <section id="site_footer">
+
+        <div class="jumbotron jumbotron-fluid" style="background-color:#1a1a1a;">
+
+            <h2>IESA</h2>
+
+        </div>
+
+    </section>
+
+
+</body>
+</html>

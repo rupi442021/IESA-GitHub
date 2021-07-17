@@ -255,6 +255,21 @@ namespace IESA.Controllers
         //---Competitions.html--- *Close*
 
 
+        //---index.html--- *Open*
+
+
+        [HttpGet] //Manager_Main_Page.html - method OMI2
+        [Route("api/Competitions/Compindex")]
+        public List<Competitions> ReadCompetitionsindex()
+        {
+            Competitions competitionslist = new Competitions();
+            return competitionslist.ReadCompetitionsindex();
+        }
+
+
+        //---index.html--- *Close*
+
+
         //---ReactClientSide---*Open*
 
         [HttpGet]

@@ -271,6 +271,20 @@ namespace IESA.Models
         //---Competitions.html--- *Close*
 
 
+        //---index.html--- *Open*
+
+
+        public List<Competitions> ReadCompetitionsindex() //index.html - method OMI2
+        {
+            DBServices dbs = new DBServices();
+            List<Competitions> comlist = dbs.ReadCompetitionsindexSQL();
+            return comlist;
+        }
+
+
+        //---index.html--- *Close*
+
+
         //---ReactClientSide---*Open*
 
 
@@ -283,6 +297,11 @@ namespace IESA.Models
 
 
         //---ReactClientSide---*Close*
+
+
+
+
+
 
 
 
