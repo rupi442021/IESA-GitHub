@@ -278,6 +278,7 @@
     <Content Include="Pages\Post_Archive.html" />
     <Content Include="Site_Pages\HtmlPage1.html" />
     <Content Include="Pages\index.html" />
+    <Content Include="Site_Pages\indexrespo.html" />
     <Content Include="Site_Pages\MainPageGuest.html" />
     <Content Include="Site_Pages\navbar_template.html" />
     <Content Include="Site_Pages\tryposts.html" />
