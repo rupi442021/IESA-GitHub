@@ -440,7 +440,7 @@ div#services_block {
     color: #2b2626;
     position: absolute;
     top: 38.1%;
-    right: 44.3%;
+    right: 46.8%;
 }
 
 #divfiltercategory {
@@ -456,4 +456,8 @@ select {
 
 #RedTitle th:first-child {
     border-left: 1px solid #211f1f !important;
+}
+
+.container {
+    height: 1242px !important;
 }

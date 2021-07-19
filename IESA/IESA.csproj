@@ -175,6 +175,7 @@
     <Compile Include="Controllers\OrgenaizersController.cs" />
     <Compile Include="Controllers\Orgenaizer_CompetitionController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +192,7 @@
     <Compile Include="Models\Orgenaizers.cs" />
     <Compile Include="Models\Orgenaizer_Competition.cs" />
     <Compile Include="Models\Posts.cs" />
+    <Compile Include="Models\Statistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -276,8 +278,10 @@
     <Content Include="Pages\Post_Archive.html" />
     <Content Include="Site_Pages\HtmlPage1.html" />
     <Content Include="Pages\index.html" />
+    <Content Include="Site_Pages\MainPageGuest.html" />
     <Content Include="Site_Pages\navbar_template.html" />
     <Content Include="Site_Pages\tryposts.html" />
+    <Content Include="Statistics\statlog.txt" />
     <Content Include="Style\add_new_competition.css" />
     <Content Include="Style\add_new_post.css" />
     <Content Include="Style\basic.css" />

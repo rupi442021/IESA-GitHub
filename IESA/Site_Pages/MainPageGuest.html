@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link href="Main.css" rel="stylesheet" />
+
+    <meta charset="utf-8" />
+    <title>GuestMainPage</title>
+    <script>
+        line = '';
+        $(document).ready(function () {
+
+            if (localStorage["customer_Id"] == null) {
+                line += "<li class='nav-item' id='Log'>" + "<a class='nav-link active' href='SignIn.html'>Sign In</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line; 
+            }
+
+
+            else {
+                line += "<li class='nav-item' >" + "<a class='nav-link active' onclick='clearLocal()' href='MainPageGuest.html'>Sign Out</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line; 
+            }
+
+            $("#clear").click(clearLocal);
+
+            $("#search").click(f1);
+
+        });
+
+        function clearLocal() {
+            localStorage.clear();
+
+        }
+
+        function f1() {
+
+            if (category = $("#category").val() != 0)
+                getr();
+            else
+                alert("please choose category first...");
+            return false;
+
+        }
+
+        function GetSuccess(data) {
+
+            var str = "";
+            document.getElementById("ph1").innerHTML = "";
+
+            str += "<div class='container'>";
+            str += "<div class='row'>";
+
+            for (var i = 0; i < data.length; i++) {
+
+                str += "<div class='card col-sm-4 ' style ='width: 18rem ;'>";
+                str += "<img class='card-img-top'  src=" + data[i].Img + " alt='Card image cap'>"
+                str += "<div class='card-body'>"
+                str += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+                str += "<ul class='list-group list-group-flush'>";
+                str += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                str += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                str += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                str += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
+                str += "</ul>";
+                str += "</div>"
+                str += "</div>";
+                str += "</br>";
+            }
+            str += "</div>";// for row
+            str += "</div>";// for container
+            $("#ph1").append(str);
+
+            GetFund()// רינודר ממומן ללא העדפות
+        }
+
+        function GetError(ex) {
+
+            console.log(ex);
+
+         }
+
+        function getr() { // for organic area
+
+            var category = $("#category").val();
+            console.log(category);
+            if (localStorage["customer_Id"] == null) {// הבאה לאורגני ללא העדפות
+                ajaxCall("GET", "../api/Business?categoryfromuser=" + category, "", GetSuccess, GetError);
+            }
+            else
+            {// הבאה לאורגני לפי העדפות
+                Id = '';
+                Id =localStorage["customer_Id"];
+                ajaxCall("GET", "../api/Business?categoryPrefer=" + category + "&id="+Id , "", GetSuccessPrefer, GetErrorPrefer);
+            }
+
+        }
+
+        function GetSuccessPrefer(data) {
+            //alert("success");
+           // console.log(data)
+            
+
+            var str = "";
+            document.getElementById("ph1").innerHTML = "";
+            console.log("data of prefer not funded");
+            console.log(data);
+
+            //Rander Otta- רנדר אותה
+            str += "<div class='container'>";
+            str += "<div class='row'>";
+
+            for (var i = 0; i < data.length; i++) {
+
+                if (data.length <= 2) {
+                    str += "<div class='card col-sm-6 ' style ='width: 18rem ;'>";
+                }
+                else
+                {
+                    str += "<div class='card col-sm-4 ' style ='width: 18rem ;'>";
+                }
+                str += "<img class='card-img-top'  src=" + data[i].Img + " alt='Card image cap'>"
+                str += "<div class='card-body'>"
+                str += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+                str += "<ul class='list-group list-group-flush'>";
+                str += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                str += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                str += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                str += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
+                str += "</ul>";
+                str += "</div>"
+                str += "</div>";
+                str += "</br>";
+
+            }
+
+            str += "</div>";// for row
+            str += "</div>";// for container
+            $("#ph1").append(str);
+            GetFundPrefer() // רנדור ממומן לפי העדפות
+
+        }
+
+        function GetErrorPrefer(ex) {
+            alert("error");
+            console.log(ex)
+        }
+
+        // כאן יהיה הגט של הקידום הממומן ללא העדפות
+        function GetFund()
+        { 
+            var category = $("#category").val();
+            ajaxCall("GET", "../api/Business?categoryFund=" + category, "", GetSuccessFund, GetErrorFund);
+        }
+
+        function GetSuccessFund(data)
+            {
+                console.log("data of only funded");
+                console.log(data);
+
+                var str2 = "";
+                document.getElementById("ph2").innerHTML = "";
+
+                //Rander Otta- רנדר אותה
+                str2 += "<div class='container'>";
+                str2 += "<div class='row'>";
+
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data.length <= 2) {
+                        str2 += "<div class='card col-sm-6 ' style ='width: 18rem ;'>";
+                    }
+                    else {
+                        str2 += "<div class='card col-sm-4 ' style ='width: 18rem ;'>";
+                    }
+                    str2 += "<img class='card-img-top'  src=" + data[i].Img + " alt='Card image cap'>"
+                    str2 += "<div class='card-body'>"
+                    str2 += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+                    str2 += "<ul class='list-group list-group-flush'>";
+                    str2 += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                    str2 += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                    str2 += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                    str2 += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
+                    str2 += "</ul>";
+                    str2 += "<input type='button' class='btn btn-outline-primary' onclick='UpdateClickCounter(" + data[i].Id+")' id='" + data[i].Id + "' value='Go To Resturant Site'>"
+                    str2 += "</div>"
+                    str2 += "</div>";
+                    str2 += "</br>";
+
+                    ajaxCall("PUT", "../api/Campaign/view?id=" + data[i].Id  , "", updateSuccessFunded, updaterrorFunded);
+
+                }
+                str2 += "</div>";// for row
+                str2 += "</div>";// for container
+                $("#ph2").append(str2);
+            }
+
+        function GetErrorFund(data) {
+
+            console.log("Error in Founded without prefernces");
+
+        }
+
+        function updateSuccessFunded() {
+            console.log("Funded Put success")
+        }
+
+        function updaterrorFunded() {
+
+            console.log("Funded Put failed")
+        }
+
+         // כאן יהיה הגט של הקידום הממומן עם העדפות!!
+
+        function GetFundPrefer()
+        {
+            var category = $("#category").val();
+            Id = '';
+            Id = localStorage["customer_Id"];
+            ajaxCall("GET", "../api/Business?categoryPreferFund=" + category + "&id=" + Id, "", GetSuccessPreferFund, GetErrorPreferFund);
+
+        }
+
+        function GetSuccessPreferFund(data)
+        {
+            console.log("success funded")
+            
+            console.log("data of prefer funded");
+            console.log(data);
+
+            var str2 = "";
+            document.getElementById("ph2").innerHTML = "";
+
+            //Rander Otta- רנדר אותה
+            str2 += "<div class='container'>";
+            str2 += "<div class='row'>";
+
+            for (var i = 0; i < data.length; i++) {
+                if (data.length <= 2) {
+                    str2 += "<div class='card col-sm-6 ' style ='width: 18rem ;'>";
+                }
+                else {
+                    str2 += "<div class='card col-sm-4 ' style ='width: 18rem ;'>";
+                }
+                str2 += "<img class='card-img-top'  src=" + data[i].Img + " alt='Card image cap'>"
+                str2 += "<div class='card-body'>"
+                str2 += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+                str2 += "<ul class='list-group list-group-flush'>";
+                str2 += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                str2 += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                str2 += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                str2 += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
+                str2 += "</ul>";
+                str2 += "<input type='button' class='btn btn-outline-primary' onclick='UpdateClickCounter(" + data[i].Id + ")' id='" + data[i].Id + "' value='Go To Resturant Site'>"
+                str2 += "</div>"
+                str2 += "</div>";
+                str2 += "</br>";
+
+                ajaxCall("PUT", "../api/Campaign/view?id=" + data[i].Id , "", updateSuccessFunded, updaterrorFunded);
+
+            }
+
+            str2 += "</div>";// for row
+            str2 += "</div>";// for container
+            $("#ph2").append(str2);
+
+
+
+
+            }
+
+        function GetErrorPreferFund(data)
+        { console.log("error in funded"); }
+
+            //click counter
+
+        function UpdateClickCounter(id)
+            {
+                console.log(id);
+                ajaxCall("Put", "../api/Campaign/click?id=" + id , "", updateSuccessFundedClick, updaterrorFundedClick);
+
+            }
+
+        function updateSuccessFundedClick(data) { console.log("clickCounter of funded not prefer success") }
+
+        function updaterrorFundedClick(data) { console.log("clickCounter of funded not prefer Fail") }
+
+
+    </script>
+
+
+</head>
+<body>
+
+    <section>
+        <header>
+            <!-- Navbar -->
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="MainPageGuest.html">Restuarants</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav" id="navbar-nav2">
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="Preferences.html">Preferences</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar -->
+            <!-- Background image -->
+            <div class="p-5 text-center bg-image"
+                 style=" background-image: url('https://i.pinimg.com/originals/c2/c6/4b/c2c64b930af48a341c3adef7c659d36e.png'); height: 400px; margin-top: 58px; ">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0); margin-top:100px">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="text-white">
+                            <h1 class="display-4 font-weight-bold fonting">Restaurants</h1>
+                            <h4 class="font-italic mb-4 fonting">By Adam Uzan&ShayDavid&ShirHertzman</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br /><br />
+            <!-- Background image -->
+        </header>
+    </section>
+
+    <div class="CatSearch">
+
+        <label class="lbl"><b>Please Choose a Category: </b></label>
+        <select class="drop" name="cuisine" id="category">
+            <option value="0">---</option>
+            <option value="American">American</option>
+            <option value="Asian">Asian</option>
+            <option value="Italian">Italian</option>
+            <option value="Lebanese">Lebanese</option>
+            <option value="Filipino">Filipino</option>
+            <option value="European">European</option>
+            <option value="Indian">Indian</option>
+        </select>
+
+
+        <button type="button" class="btn btn-secondary" id="search">Search</button>
+
+    </div>
+    <br/>
+
+    <h1 class="organic">By your Request</h1>
+    <br/>
+    <div id="ph1"><!-- resturants of organic area --></div>
+
+    <div>
+
+        <br />
+        <hr />
+        <h1 class="funded">VIP</h1>
+        <br />
+        <br />
+        <div id="ph2">
+
+            <!-- resturants of funded area -->
+        </div>
+
+    </div>
+   
+</body>
+</html>

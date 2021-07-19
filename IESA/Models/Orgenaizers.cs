@@ -137,6 +137,7 @@ namespace IESA.Models
 
 
         //---Edit_Personal_Details.html--- *Open*
+
         public void UpdateOrgenaizerDetails(int OId, Orgenaizers o1) //Manager_Main_Page.html - method OM6 + Edit_Personal_Details.html - method SO1
         {
             DBServices dbs = new DBServices();

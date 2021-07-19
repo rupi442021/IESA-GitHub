@@ -70,6 +70,7 @@ namespace IESA.Controllers
 
         //---Database.html--- *Close*
 
+
         //---RestorePassword.html---- *Open*
 
 
@@ -81,7 +82,23 @@ namespace IESA.Controllers
             dbs.updatePassword(userEmail, newPass);
         }
 
+
         //---RestorePassword.html---- *Close*
+
+
+        //---Edit_Personal_Details.html--- *Open*
+
+
+        [HttpPut] //Edit_Personal_Details.html - method OME1
+        [Route("api/Managers/updatedetailsm")]
+        public void updateManagerDetails(int MId, Managers m1)
+        {
+            Managers M1 = new Managers();
+            M1.updateManagerDetails(MId, m1);
+        }
+
+
+        //---Edit_Personal_Details.html--- *Close*
 
 
 

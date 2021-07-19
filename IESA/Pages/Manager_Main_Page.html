@@ -157,8 +157,6 @@
 
         function init() {
 
-            //Check if the user is manager
-
             ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
             ajaxCall("GET", "../api/Managers/tablegraph", "", buildGradesGraph, Error); //Manager_Main_Page.html - method OM10
         }

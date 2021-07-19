@@ -87,3 +87,7 @@ tr {
 a:hover {
     text-decoration: none;
 }
+
+.col-3 {
+    max-width: none !important;
+}
