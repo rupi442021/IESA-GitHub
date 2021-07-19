@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -2633,6 +2632,57 @@ namespace IESA.Models.DAL
 
 
         //---Edit_Personal_Details.html--- *Open*
+
+        public int updateManagerDetailsSQL(int MId, Managers m1)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("DBConnectionString"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildUpdateCommandEditManager(MId, m1);      // helper method to build the update string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        private String BuildUpdateCommandEditManager(int MId, Managers m1)
+        {
+            String command;
+            command = " UPDATE Managers set firstname = '" + m1.Firstname + "' , lastname = '" + m1.Lastname + "' , gender = '" + m1.Gender + "' , phone = '" + m1.Phone + "', dob = '" + m1.Dob + "' , address1 = '" + m1.Address1 + "' , picture = '" + m1.Picture + "' , role1 = '" + m1.Role1 + "' where userid = " + MId + " ";
+
+            return command;
+        }
+
 
         public int UpdateOrgenaizerDetails(int OId, Orgenaizers o1)
         {

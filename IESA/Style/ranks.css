@@ -233,10 +233,16 @@ div#services_block {
 }
 
 
+
+
 select {
     height: 30px;
 }
 
 th:first-child {
     border-left: 1px solid #1d1b1b !important;
+}
+
+.container {
+    height: 1204px !important;
 }

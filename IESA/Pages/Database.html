@@ -193,6 +193,15 @@
 
             });
 
+            $(document).on("click", "#passwordcheck", function () {
+
+                //Create a function to delete after a secured method*
+                setTimeout(function () {
+                    swal("סיסמא לא תקינה");
+                }, 1000);
+
+            });
+
             //---Ranks Table--- *Close*
 
 
@@ -1150,7 +1159,7 @@
             str += "<div class='col-lg-5'>";
             str += "<div class='mb-3'>";
             str += "<label>סיסמא:</label>";
-
+            str += "<input type='password' id='rankpass'>";
             str += "</div>";
             str += "</div>";
             str += "</div>";
@@ -1207,12 +1216,12 @@
 
                 <div style="display:flex">
                     <a href="index.html">
-                        <img src="https://iesa.org.il/wp-content/uploads/2020/04/newlogosite.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
+                        <img src="../uploadedFiles/Site-Photos/Iesaprojectlogo.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="margin-right: 1.6rem;">
                     </a>
                     <span style="margin-right:9px;"></span>
                     <span style="margin-left: 14px; border-left: 1px solid #979797;"></span>
                     <a href="TemplatePage_Site.html">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1100px-Flag_of_Israel.svg.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="height:33px; margin-top: 7px;">
+                        <img src="../uploadedFiles/Site-Photos/navbarisrael.png" alt="העמותה לגיימינג תחרותי בישראל" class="logo-img-primary" style="height:33px; margin-top: 7px;">
                     </a>
                 </div>
 
@@ -1582,7 +1591,7 @@
 
                     <div class="modal-footer">
                         <button id="closebtn_ranks" type="button" class="btn btn-danger">סגור</button>
-                        <input type="submit" class="btn btn-success" form="ca_CreateForm" value="אישור" /> <!--to edit-->
+                        <input type="submit" id="passwordcheck" class="btn btn-success" form="ca_CreateForm" value="אישור" /> <!--to edit-->
 
                     </div>
 

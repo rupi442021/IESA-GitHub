@@ -5,7 +5,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="../../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/GeneralFunctions.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
 
@@ -65,7 +65,7 @@
 
 
 
-            if (Odetails.Userid < 30000000) {//for orgenziers
+            if (Odetails.Userid < 30000000) { //Orgenzier / Manager
                 Orgenzierrender(Odetails)
             }
             else if (Odetails.Userid >= 30000000)
@@ -94,11 +94,17 @@
             });
 
             $("#cancel_edit_gamer").click(function () {
-                location.replace("Gamer.html");
+                location.replace("Gamer_Main_Page.html");
             });
 
             $("#cancel_edit_orgenaizer").click(function () {
-                location.replace("Orgenaizer_Main_Page.html");
+                if (Odetails.Userid >= 20000000) { //Orgenaizer
+                    location.replace("Orgenaizer_Main_Page.html");
+                }
+                else {
+                    location.replace("Manager_Main_Page.html"); //Manager
+                }
+
             });
 
             $("#main_page").click(function () {
@@ -155,13 +161,16 @@
         function routeImage(data) {
             console.log(data);
 
-            if (userType == 3) {
+            if (userType == 3) { //userType == 3
                 updateGamer(data[0]);
             }
-            else { //userType == 2
+            else if (userType == 2) { //userType == 2
                 updateOrgenaizer(data[0]);
             }
 
+            else { //userType == 1
+                updateManager(data[0]);
+            }
 
         }
 
@@ -225,13 +234,42 @@
             return false;
         }
 
+        function updateManager(ImgUrl) {
+            var oradio = $('input[name=radio-gender-o]:checked'); //get gender
+            var ogender = oradio.attr('id');
+
+
+            if ($("#ofiles").val() == "" || $("#ofiles").val() == null)
+                ImgUrl = Odetails.Picture;
+
+            ManagerObj = {
+                Firstname: $("#ofirstnameTB").val(),
+                Lastname: $("#olastnameTB").val(),
+                Gender: ogender,
+                Phone: $("#oPhoneTB").val(),
+                Dob: $("#odobTB").val(),
+                Address1: $("#oaddressTB").val(),
+                Picture: ImgUrl,
+                Role1: $("#mRoleTB").val(),
+            }
+
+            ajaxCall("PUT", "../api/Managers/updatedetailsm?MId=" + Odetails.Userid, JSON.stringify(ManagerObj), SuccessManager, ErrorManager); //Edit_Personal_Details.html - method OME1
+
+            return false;
+        }
+
+
         function SuccessOrgenaizer(data) {
             ajaxCall("GET", "../api/Orgenaizers/login2?idtoserver=" + Odetails.Userid, "", GetOrgenaizer, ErrorGetOrgenaizer); //Edit_Personal_Details.html - method SO2
         }
 
+        function SuccessManager(data) { 
+            ajaxCall("GET", "../api/Managers/login1?idtoserver=" + Odetails.Userid, "", GetManager, ErrorManager); // (#) Sign_In.html - method OL4
+        }
+
         function GetGamerS(user) {
             console.log("In get G: ", user);
-            console.log("In get G: ", user);
+            localStorage.clear();
 
             localStorage["user_info"] = JSON.stringify(user);
             localStorage["user_type"] = "3";
@@ -242,8 +280,19 @@
         function GetOrgenaizer(user) {
             console.log("In get O: ", user);
             localStorage.clear();
+
             localStorage["user_info"] = JSON.stringify(user);
             localStorage["user_type"] = "2";
+
+            redirectPage();
+        }
+
+        function GetManager(user) {
+            console.log("In get M: ", user);
+            localStorage.clear();
+
+            localStorage["user_info"] = JSON.stringify(user);
+            localStorage["user_type"] = "1";
 
             redirectPage();
         }
@@ -256,10 +305,15 @@
                 setTimeout(function () {
                     location.replace("Orgenaizer_Main_Page.html");
                 }, 2500);
-            else
+            else if (userType == 3)
                 setTimeout(function () {
-                    location.replace("Gamer.html");
+                    location.replace("Gamer_Main_Page.html");
                 }, 2500);
+            else { //Manager
+                setTimeout(function () {
+                    location.replace("Manager_Main_Page.html");
+                }, 2500);
+            }
 
         }
 
@@ -271,10 +325,16 @@
             console.log(err);
         }
 
-        function Orgenzierrender(Odetails) {
+        function ErrorManager(err) {
+            console.log(err);
+        }
 
-            $("#Gamerrow").hide()
-            $("#Orgenaizerrow").show()
+        function Orgenzierrender(Odetails) {
+            $("#tohideroletb").hide();
+            $("#Gamerrow").hide();
+            $("#mRoleTB").hide();
+
+            $("#Orgenaizerrow").show();
 
             $("#ofirstnameTB").val(Odetails.Firstname);
             $("#olastnameTB").val(Odetails.Lastname);
@@ -295,6 +355,18 @@
             $('#ocomunitynameTB').val(Odetails.Comunityname);
             $('#olinktocommunityTB').val(Odetails.Linktocommunity);
 
+            if (Odetails.Userid < 20000000) { //manager
+                $("#ocomunitynameTB").hide();
+                $("#olinktocommunityTB").hide();
+                $("#tohideroletb").show();
+                $("#mRoleTB").show();
+                $('#mRoleTB').val(Odetails.Role1);
+
+                $("#tohidename").hide();
+                $("#tohidelink").hide();
+
+            }
+
 
             if (Odetails.Picture == null) { }
 
@@ -309,6 +381,7 @@
         }
 
         function Gamerrender(Odetails) {
+            $("#tohideroletb").hide();
             $("#Gamerrow").show()
             $("#Orgenzierrow").hide()
 
@@ -359,7 +432,8 @@
             if (userType == 3) {
                 var files = $("#gfiles").get(0).files;
             }
-            else { //userType == 2
+
+            else { //userType == 2/3
                 var files = $("#ofiles").get(0).files;
             }
 
@@ -541,7 +615,7 @@
                             </div>
                             <div class="mb-3">
                                 <label>דיסקורד משתמש:</label>
-                                <input type="text" class="form-control" placeholder='כתובת דיסקורד' id="gDiscorduserTB" pattern=".{2,20}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                <input type="text" class="form-control" placeholder='כתובת דיסקורד' id="gDiscorduserTB" pattern=".{2,100}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                             </div>
                             <div class="row">
                                 <div class="mb-3">
@@ -679,11 +753,16 @@
                             </div>
 
                             <div class="mb-3">
-                                <label>שם הקהילה אליה שייך:</label>
+                                <label id="tohideroletb">תפקיד:</label>
+                                <input type="text" class="form-control" placeholder='שם התפקיד' id="mRoleTB" pattern=".{4,30}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')">
+                            </div>
+
+                            <div class="mb-3">
+                                <label id="tohidename">שם הקהילה אליה שייך:</label>
                                 <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="ocomunitynameTB" pattern=".{2,20}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                             </div>
                             <div class="mb-3">
-                                <label>לינק לאתר הקהילה:</label>
+                                <label id="tohidelink">לינק לאתר הקהילה:</label>
                                 <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
                             </div>
 

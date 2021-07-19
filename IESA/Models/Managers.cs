@@ -91,6 +91,7 @@ namespace IESA.Models
 
         //---Manager_Main_Page.html--- *Close*
 
+
         //---Database.html--- *Open*
 
         public List<Managers> ReadManagersDB() //Database.html - method OD7
@@ -101,8 +102,19 @@ namespace IESA.Models
         }
 
 
-
         //---Database.html--- *Close*
+
+
+        //---Edit_Personal_Details.html--- *Open*
+
+        public void updateManagerDetails(int MId, Managers m1) //Edit_Personal_Details.html - method OME1
+        {
+            DBServices dbs = new DBServices();
+            dbs.updateManagerDetailsSQL(MId, m1);
+        }
+
+
+        //---Edit_Personal_Details.html--- *Close*
 
     }
 }
