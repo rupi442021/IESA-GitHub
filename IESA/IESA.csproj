@@ -175,6 +175,7 @@
     <Compile Include="Controllers\OrgenaizersController.cs" />
     <Compile Include="Controllers\Orgenaizer_CompetitionController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
