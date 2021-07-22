@@ -17,6 +17,21 @@
     margin-bottom: 10px;
 }
 
+#footeralign {
+    text-align: right;
+}
+
+@media only screen and (max-width: 780px) {
+    
+    .imglogo {
+        height: auto !important;
+    }
+
+    #footeralign {
+        text-align:center;
+    }
+}
+
 #pafter {
     margin-bottom: 27px;
 }

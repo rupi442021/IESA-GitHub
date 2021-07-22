@@ -16,6 +16,9 @@ div.dataTables_wrapper div.dataTables_filter label {
     right: 77%;
 }
 
+#footeralign {
+    text-align: right;
+}
 
 @media only screen and (max-width: 1040px) {
     div.dataTables_wrapper div.dataTables_filter input {
@@ -29,12 +32,22 @@ div.dataTables_wrapper div.dataTables_filter label {
 
 @media only screen and (max-width: 820px) {
     div.dataTables_wrapper div.dataTables_filter input {
-        width: 100px;
+        width: 100px !important;
     }
 
     div.dataTables_wrapper div.dataTables_filter label {
         right: 65%;
     }
+
+    #divfilterrank {
+        top: 39.5% !important;
+        right: 30.2% !important;
+    }
+
+    #footeralign {
+        text-align: center;
+    }
+
 }
 
 div.dataTables_wrapper div.dataTables_filter input {

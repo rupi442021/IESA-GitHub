@@ -77,12 +77,39 @@
             console.log(posts);
 
             str1 = '';
-            str1 += "<div id='4posts' style='float: left; width: 50%; height: 100%;'>";
+            str1 += "<div class='row' style='--bs-gutter-x: none!important;'>";
+
+            str1 += "<div id='1post' class='col-sm-6' style='border-left: 1px solid #454a54 !important'>";
+            str1 += "<div class='row'>";
+            str1 += "<div class='col'>";
+            str1 += "<a href='Post.html?postid=" + posts[0].Postid + "'>";
+            str1 += "<img src='../" + posts[0].Image1 + "' alt='Post' style='width: 100%; height: 270px; border-radius: 0px 4px 0px 0px;'>";
+            str1 += "</a>";
+            str1 += "<span class='abs-span-1'>" + posts[0].Category + " </span>";
+            str1 += "</div>";
+            str1 += "</div>";
+
+            str1 += "<div class='row'>";
+            str1 += "<div class='col' style='margin: 10px;'>";
+            str1 += "<a href='Post.html?postid=" + posts[0].Postid + "'>";
+            str1 += "<h4 id='lesslines1' style='margin-top: 3px;'>" + posts[0].Title + " </h4>";
+            str1 += "</a>";
+            str1 += "<div style='margin-top: 10px;'>";
+            str1 += "<a href='Post.html?postid=" + posts[0].Postid + "'>";
+            str1 += "<p id='lesslines3' style='color: #f3f0f0'>" + posts[0].Body1 + " </p >";
+            str1 += "</a>";
+            str1 += "</div>";
+            str1 += "</div>";
+            str1 += "</div>";
+            str1 += "</div>";
+
+            str1 += "<div class='col-sm-6'>";
+            str1 += "<div id='4posts'>";
 
             for (var i = 1; i < posts.length; i++) {
 
                 if (i == 1) {
-                    str1 += "<section class='section' id='" + i + "' style = 'border-top: none !important'>";
+                    str1 += "<section class='section' id='" + i + "' style = 'border-top: none'>";
                 }
                 else {
                     str1 += "<section class='section' id='" + i + " '>";
@@ -114,27 +141,6 @@
 
             }
 
-            str1 += "</div>";
-
-            str1 += "<div id='1post' style='border-left: 1px solid #454a54; width: 50%; height: 100%;'>";
-            str1 += "<div class='row'>";
-            str1 += "<div class='col'>";
-            str1 += "<a href='Post.html?postid=" + posts[0].Postid + "'>";
-            str1 += "<img src='../" + posts[0].Image1 + "' alt='Post' style='width: 100%; height: 270px; border-radius: 0px 4px 0px 0px;'>";
-            str1 += "</a>";
-            str1 += "<span class='abs-span-1'>" + posts[0].Category + " </span>";
-            str1 += "</div>";
-            str1 += "</div>";
-            str1 += "<div class='row'>";
-            str1 += "<div class='col' style='margin: 10px;'>";
-            str1 += "<a href='Post.html?postid=" + posts[0].Postid + "'>";
-            str1 += "<h4 id='lesslines1' style='margin-top: 3px;'>" + posts[0].Title + " </h4>";
-            str1 += "</a>";
-            str1 += "<div style='margin-top: 10px;'>";
-            str1 += "<a href='Post.html?postid=" + posts[0].Postid + "'>";
-            str1 += "<p id='lesslines3' style='color: #f3f0f0'>" + posts[0].Body1 + " </p >";
-            str1 += "</a>";
-            str1 += "</div>";
             str1 += "</div>";
             str1 += "</div>";
             str1 += "</div>";
@@ -254,7 +260,7 @@
 
                         <h3 class="nk-decorated-h-2"><span style="color: #dd163b;">חדשות <span style="color: white">אחרונות</span></span></h3>
 
-                        <div id="postsrender" style="background-color: #343640; height: 425px; border-radius: 4px; margin-top: 30px; margin-bottom: 40px;">
+                        <div id="postsrender" style="background-color: #343640; border-radius: 4px; margin-top: 30px; margin-bottom: 40px;">
                             <!--from javascript-->
                         </div>
 
@@ -273,7 +279,7 @@
                         </div>
 
 
-                        <div class="row">
+                        <div class="row" id="footeralign">
                             <div class="col" style="text-align:center;">
 
                                 <h4 class="nk-decorated-h-4"><span>אודות העמותה</span></h4>
@@ -340,7 +346,7 @@
                             </div>
 
 
-                            <div class="row" style="margin-top:11px; height:147px">
+                            <div class="row" id="fbbox" style="margin-top:11px; height:147px">
 
                                 <div class="fb-page" data-href="https://www.facebook.com/IsraelEsports" data-tabs="timeline" data-width="250" data-height="132" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/IsraelEsports" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/IsraelEsports">‎העמותה לגיימינג תחרותי בישראל - Israeli Esports Association‎</a></blockquote></div>
 
@@ -365,9 +371,9 @@
 
             <div class="sub-footer">
 
-                <div class="row">
+                <div class="row" id="footeralign">
 
-                    <div class="col-md-4" style="text-align:right">
+                    <div class="col-md-4">
 
                         <h6 id="footer-title">אודות העמותה</h6>
                         <div style="margin-top: 15px;"></div>
@@ -382,7 +388,7 @@
 
                     </div>
 
-                    <div class="col-md-4" style="text-align:right">
+                    <div class="col-md-4">
 
                         <h6 id="footer-title">יצירת קשר</h6>
                         <div style="margin-top: 15px;"></div>
