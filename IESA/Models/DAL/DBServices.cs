@@ -22,6 +22,7 @@ namespace IESA.Models.DAL
         private string passInfo;
         private int idInfo;
         private int postId;
+        private string renderdate;
 
         public DBServices() { }
 
@@ -2369,7 +2370,7 @@ namespace IESA.Models.DAL
             for (int i = 0; i < rankarray.Count; i++)
             {
                 sa.Append(" INSERT INTO Gamer_Competition (gamerid, competitionid, date1, time1, rank1, score) ");
-                sa.Append(" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , getdate() , '10:00:00' , "  + rankarray[i].Rank1 + " , 0) ");
+                sa.Append(" Values(" + rankarray[i].Gamerid + " , " + rankarray[i].Competitionid + " , getdate() , '10:00:00' , " + rankarray[i].Rank1 + " , 0) ");
             }
 
             command2 = " UPDATE Competitions SET competitionstatus = 5 WHERE competitionid = " + rankarray[0].Competitionid + " ";
@@ -2729,7 +2730,7 @@ namespace IESA.Models.DAL
         private String BuildUpdateCommandEditOrgenzier(int OId, Orgenaizers o1)
         {
             String command;
-            command = " UPDATE Orgenaizers set firstname = '" + o1.Firstname + "' , lastname = '" + o1.Lastname + "' , gender = '" + o1.Gender + "' , phone = '" + o1.Phone + "', dob = '" + o1.Dob + "' , address1 = '" + o1.Address1 + "' , picture = '" + o1.Picture + "' , communityname = '" + o1.Comunityname + "', linktocommunity = '" + o1.Linktocommunity +"', status1 ='" +o1.Status1 + "' where userid = " + OId + " ";
+            command = " UPDATE Orgenaizers set firstname = '" + o1.Firstname + "' , lastname = '" + o1.Lastname + "' , gender = '" + o1.Gender + "' , phone = '" + o1.Phone + "', dob = '" + o1.Dob + "' , address1 = '" + o1.Address1 + "' , picture = '" + o1.Picture + "' , communityname = '" + o1.Comunityname + "', linktocommunity = '" + o1.Linktocommunity + "', status1 ='" + o1.Status1 + "' where userid = " + OId + " ";
 
             return command;
         }
@@ -2776,7 +2777,7 @@ namespace IESA.Models.DAL
 
         }
 
-        private String BuildUpdateCommandEditGamer(int GId, Gamers g1) 
+        private String BuildUpdateCommandEditGamer(int GId, Gamers g1)
         {
             String command;
             command = " UPDATE Gamers set firstname = '" + g1.Firstname + "' , lastname = '" + g1.Lastname + "' , gender = '" + g1.Gender + "' , phone = '" + g1.Phone + "', dob = '" + g1.Dob + "' , address1 = '" + g1.Address1 + "' , picture = '" + g1.Picture + "' , discorduser = '" + g1.Discorduser + "' where userid = " + GId + " ";
@@ -3032,7 +3033,7 @@ namespace IESA.Models.DAL
         private String BuildInsertCommandscore(List<Gamer_Competition> scorearr) //Add_New_Post.html - method OP2 (Insert: Post (2))
         {
             String command;
-            
+
             // use a string builder to create the dynamic string
             StringBuilder sa = new StringBuilder();
 
@@ -3042,7 +3043,7 @@ namespace IESA.Models.DAL
             }
 
 
-            command = sa.ToString() ;
+            command = sa.ToString();
 
             return command;
         }
@@ -3137,7 +3138,7 @@ namespace IESA.Models.DAL
 
                 // get a reader
                 SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
-                
+
                 while (dr.Read())
                 {   // Read till the end of the data into a row
                     Comments c = new Comments();
@@ -3147,7 +3148,7 @@ namespace IESA.Models.DAL
                     c.Body = (string)dr["commentbody"];
                     c.Date = Convert.ToDateTime(dr["date1"]);
 
-                     cList.Add(c);
+                    cList.Add(c);
                 }
 
                 return cList;
@@ -3167,7 +3168,7 @@ namespace IESA.Models.DAL
             }
         }
 
-        public int InsertComments(Comments comments) 
+        public int InsertComments(Comments comments)
         {
 
             SqlConnection con;
@@ -3210,15 +3211,15 @@ namespace IESA.Models.DAL
 
         }
 
-        private String BuildInsertCommandforComment(Comments comments) 
+        private String BuildInsertCommandforComment(Comments comments)
         {
             String command;
-            
+
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             sb.AppendFormat(" Values( " + comments.Postid + " , '" + comments.Name + "' , '" + comments.Body + "', getdate() )");
             String prefix = " INSERT INTO PostsComments_React ";
-          
+
             command = prefix + sb.ToString();
 
             return command;
@@ -3298,7 +3299,7 @@ namespace IESA.Models.DAL
         //Edit_Personal_By_Manager.html - method MU2---*Open*
 
 
-        public List<Gamers> ReadGamerDetails(int IdUser) 
+        public List<Gamers> ReadGamerDetails(int IdUser)
         {
 
             SqlConnection con = null;
@@ -3320,7 +3321,7 @@ namespace IESA.Models.DAL
 
                     gamer.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
                     gamer.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default;
-                    gamer.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;                   
+                    gamer.Firstname = (dr["firstname"] != DBNull.Value) ? (string)dr["firstname"] : default;
                     gamer.Discorduser = (dr["discorduser"] != DBNull.Value) ? (string)dr["discorduser"] : default;
                     gamer.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
                     gamer.Lastname = (dr["lastname"] != DBNull.Value) ? (string)dr["lastname"] : default;
@@ -3361,7 +3362,7 @@ namespace IESA.Models.DAL
 
         //Gamer_Main_Page.html --*Open*
 
-        
+
 
 
         public List<Competitions> GetRelevantCompetitions(int GID) //Gamer_Main_Page.html - SG08
@@ -3373,7 +3374,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT GamesCategories.categoryid, GamesCategories.categoryname FROM competitions inner join Competition_Game on competitions.competitionid = Competition_Game .competitionid inner join Gamer_Competition on Competitions.competitionid=Gamer_Competition.competitionid inner join GamesCategories on Competition_Game.categoryid=GamesCategories.categoryid WHERE gamerid = "+ GID;
+                String selectSTR = " SELECT GamesCategories.categoryid, GamesCategories.categoryname FROM competitions inner join Competition_Game on competitions.competitionid = Competition_Game .competitionid inner join Gamer_Competition on Competitions.competitionid=Gamer_Competition.competitionid inner join GamesCategories on Competition_Game.categoryid=GamesCategories.categoryid WHERE gamerid = " + GID;
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -3689,7 +3690,7 @@ namespace IESA.Models.DAL
 
 
         //---PasswordRestore.html--- *Open*
-        
+
 
         public int updatePassword(string userEmail, string newPassword) //PasswordRestore.html - method SD1
         {
@@ -3758,7 +3759,7 @@ namespace IESA.Models.DAL
             {
                 con1 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                
+
                 String selectSTR1 = "SELECT TOP 5 WITH TIES * FROM Posts where status1='1' ORDER BY postid desc";
 
                 SqlCommand cmd1 = new SqlCommand(selectSTR1, con1);
@@ -3871,12 +3872,26 @@ namespace IESA.Models.DAL
                 while (dr3.Read()) //1 row
                 {
 
+                    renderdate = (dr3["postdate"] != DBNull.Value) ? (string)dr3["postdate"] : default;
+
+                    string[] arrdate = renderdate.Split('/');
+                    string[] year = arrdate[2].Split(' ');
+
+                    string fix_year = year[0];
+                    string month = arrdate[1];
+                    string day = arrdate[0];
+
+
+
+
                     p.Postid = (dr3["postid"] != DBNull.Value) ? Convert.ToInt32(dr3["postid"]) : default;
                     p.Title = (dr3["title"] != DBNull.Value) ? (string)dr3["title"] : default;
                     p.Body1 = (dr3["body1"] != DBNull.Value) ? (string)dr3["body1"] : default;
                     p.Image1 = (dr3["image1"] != DBNull.Value) ? (string)dr3["image1"] : default;
                     p.Category = (dr3["category"] != DBNull.Value) ? (string)dr3["category"] : default;
                     //p.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
+                    p.Postdate = new DateTime(Int32.Parse(fix_year), Int32.Parse(month), Int32.Parse(day));
+                    //p.Postdate = new DateTime(year, month, day);
                     p.Status1 = (dr3["status1"] != DBNull.Value) ? Convert.ToInt32(dr3["status1"]) : default;
 
                 }
