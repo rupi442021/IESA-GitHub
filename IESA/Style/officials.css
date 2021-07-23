@@ -54,3 +54,23 @@ h3 {
 h4 {
     margin-top: 5px;
 }
+
+@media only screen and (max-width: 768px) {
+
+    .container img {
+        width: 40% !important;
+    }
+
+    .container #ManagerCenter {
+        text-align: center;
+    }
+
+    .container #Managment {
+        text-align: center;
+    }
+
+    .container #Inspection {
+        text-align: center;
+    }
+
+}

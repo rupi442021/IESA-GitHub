@@ -141,6 +141,7 @@ namespace IESA.Controllers
         {
             Posts post1 = new Posts();
             return post1.GetPostIndex();
+
         }
 
         //---index.html--- *Close*

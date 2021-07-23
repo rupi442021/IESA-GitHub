@@ -109,3 +109,20 @@ img:hover {
 .container {
     padding-bottom: 150px !important;
 }
+
+#footeralign {
+    text-align: right;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    #footeralign {
+        text-align: center;
+    }
+
+    #fbbox {
+        text-align: center;
+    }
+
+}

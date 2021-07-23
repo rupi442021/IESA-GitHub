@@ -109,7 +109,7 @@ a {
 
 
 #mainpost {
-/*    background-image: url(https://html.nkdev.info/goodgames/assets/images/slide-3.jpg);*/
+    /*    background-image: url(https://html.nkdev.info/goodgames/assets/images/slide-3.jpg);*/
     height: 400px;
     padding-left: 10%;
     padding-right: 10%;
@@ -242,7 +242,7 @@ a {
 }
 
 .section {
-    border-top: 1px solid #454a54 !important;
+    border-top: 1px solid #454a54;
     display: flex;
     flex-direction: row;
     font-family: sans-serif;
@@ -324,3 +324,49 @@ svg {
         margin-right: 12px;
         padding-left: 12px;
     }
+    
+    #footeralign {
+    text-align: right;
+    }
+
+/*#1post {
+    border-left: 1px solid #454a54 !important;
+}*/
+
+@media only screen and (max-width: 768px) {
+    .nk-decorated-h-4 > a, .nk-decorated-h-4 > span, .nk-decorated-h4 > a, .nk-decorated-h4 > span {
+        margin-right: 3px;
+        padding-left: 3px;
+    }
+
+    #recentcomp {
+        margin-bottom: 10px;
+    }
+
+    .more-comp-button {
+        display: none;
+    }
+
+    #footeralign {
+        text-align: center;
+    }
+
+    #fbbox {
+        text-align: center;
+    }
+
+    #1post {
+        border-left: none !important;
+    }
+
+    #firstsec {
+        border-top: 1px solid #454a54 !important;
+    }
+
+    .abs-span-1 {
+        display: none !important;
+    }
+
+}
+
+

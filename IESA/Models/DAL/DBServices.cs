@@ -3775,7 +3775,7 @@ namespace IESA.Models.DAL
                     post.Category = (dr1["category"] != DBNull.Value) ? (string)dr1["category"] : default;
                     post.Body1 = (dr1["body1"] != DBNull.Value) ? (string)dr1["body1"] : default;
                     post.Image1 = (dr1["image1"] != DBNull.Value) ? (string)dr1["image1"] : default;
-                    post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
+                    //post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
 
                     PostsList.Add(post);
                 }
@@ -3825,8 +3825,8 @@ namespace IESA.Models.DAL
                     competition.Body = (dr2["body"] != DBNull.Value) ? (string)dr2["body"] : default;
                     competition.Banner = (dr2["banner"] != DBNull.Value) ? (string)dr2["banner"] : default;
                     competition.Logo = (dr2["logo"] != DBNull.Value) ? (string)dr2["logo"] : default;
-                    competition.Startdate = (dr2["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr2["startdate"]) : default;
-                    competition.Enddate = (dr2["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr2["enddate"]) : default;
+                    //competition.Startdate = (dr2["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr2["startdate"]) : default;
+                    //competition.Enddate = (dr2["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr2["enddate"]) : default;
 
                     CompetitionsList.Add(competition);
                 }
@@ -3860,12 +3860,13 @@ namespace IESA.Models.DAL
 
                 con3 = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
+
                 String selectSTR3 = "SELECT * FROM Posts where postid='1'";
                 SqlCommand cmd3 = new SqlCommand(selectSTR3, con3);
 
                 // get a reader
                 SqlDataReader dr3 = cmd3.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
-
+                //throw new Exception("Omer1");
 
                 while (dr3.Read()) //1 row
                 {
@@ -3875,7 +3876,7 @@ namespace IESA.Models.DAL
                     p.Body1 = (dr3["body1"] != DBNull.Value) ? (string)dr3["body1"] : default;
                     p.Image1 = (dr3["image1"] != DBNull.Value) ? (string)dr3["image1"] : default;
                     p.Category = (dr3["category"] != DBNull.Value) ? (string)dr3["category"] : default;
-                    p.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
+                    //p.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
                     p.Status1 = (dr3["status1"] != DBNull.Value) ? Convert.ToInt32(dr3["status1"]) : default;
 
                 }
