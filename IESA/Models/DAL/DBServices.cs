@@ -22,7 +22,10 @@ namespace IESA.Models.DAL
         private string passInfo;
         private int idInfo;
         private int postId;
-        private string renderdate;
+        private string renderdate1;
+        private string renderdate2;
+        private string renderdate3;
+        private string renderdate4;
 
         public DBServices() { }
 
@@ -444,12 +447,71 @@ namespace IESA.Models.DAL
                     g.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
                     g.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
                     g.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
-                    g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    //g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+
+
+                    renderdate1 = (dr["dob"] != DBNull.Value) ? (string)dr["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
+
                     g.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
                     g.Discorduser = (dr["discorduser"] != DBNull.Value) ? (string)dr["discorduser"] : default;
                     g.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
-                    g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
-                    g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
+                    //g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    renderdate2 = (dr["registrationdate"] != DBNull.Value) ? (string)dr["registrationdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        g.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    }
+
+                    //g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
+
+                    renderdate3 = (dr["outofdate"] != DBNull.Value) ? (string)dr["outofdate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate3 = renderdate3.Split('/');
+                        string[] year3 = arrdate3[2].Split(' ');
+
+                        string fix_year3 = year3[0];
+                        string month3 = arrdate3[1];
+                        string day3 = arrdate3[0];
+
+                        g.Outofdate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                    }
+                    else
+                    {
+                        g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
+                    }
+
                     g.License = (dr["license"] != DBNull.Value) ? Convert.ToInt32(dr["license"]) : default;
                     g.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
 
@@ -502,7 +564,26 @@ namespace IESA.Models.DAL
                     o.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
                     o.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
                     o.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
-                    o.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    //o.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+
+                    renderdate1 = (dr["dob"] != DBNull.Value) ? (string)dr["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        o.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        o.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
                     o.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
                     o.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
                     o.Comunityname = (dr["communityname"] != DBNull.Value) ? (string)dr["communityname"] : default;
@@ -550,6 +631,7 @@ namespace IESA.Models.DAL
                 while (dr.Read()) //1 row
                 {
 
+
                     m.Userid = (dr["userid"] != DBNull.Value) ? Convert.ToInt32(dr["userid"]) : default;
                     m.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
                     m.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
@@ -558,7 +640,26 @@ namespace IESA.Models.DAL
                     m.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
                     m.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
                     m.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
-                    m.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    //m.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+
+                    renderdate1 = (dr["dob"] != DBNull.Value) ? (string)dr["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        m.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        m.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
                     m.Role1 = (dr["role1"] != DBNull.Value) ? (string)dr["role1"] : default;
                     m.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
                     m.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
@@ -933,10 +1034,69 @@ namespace IESA.Models.DAL
                     c.Prize2 = (string)dr["prize2"];
                     c.Price3 = (string)dr["prize3"];
                     c.Linkforregistration = (string)dr["linkforregistration"];
-                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    //c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+
+                    renderdate1 = (dr["Lastdateforregistration"] != DBNull.Value) ? (string)dr["Lastdateforregistration"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        c.Lastdateforregistration = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
                     c.Body = (string)dr["body"];
-                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+
+                    //c.Startdate = Convert.ToDateTime(dr["startdate"]);
+
+                    renderdate2 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                    }
+
+                    //c.Enddate = Convert.ToDateTime(dr["enddate"]);
+
+                    renderdate3 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate3 = renderdate3.Split('/');
+                        string[] year3 = arrdate3[2].Split(' ');
+
+                        string fix_year3 = year3[0];
+                        string month3 = arrdate3[1];
+                        string day3 = arrdate3[0];
+
+                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                    }
+                    else
+                    {
+                        c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    }
+
+
                     c.Startime = ((TimeSpan)dr["starttime"]);
                     c.Endtime = ((TimeSpan)dr["endtime"]);
                     c.Ispro = Convert.ToInt32(dr["ispro"]);
@@ -999,15 +1159,75 @@ namespace IESA.Models.DAL
                     g.Gender = (dr["gender"] != DBNull.Value) ? (string)dr["gender"] : default;
                     g.Id = (dr["id"] != DBNull.Value) ? Convert.ToInt32(dr["id"]) : default; //Needs to be int in SQL*
                     g.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
-                    g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    //g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+
+                    renderdate1 = (dr["dob"] != DBNull.Value) ? (string)dr["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
+
+
+
                     g.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
                     g.Discorduser = (dr["discorduser"] != DBNull.Value) ? (string)dr["discorduser"] : default;
                     g.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
-                    g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
-                    g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
+                    //g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    renderdate2 = (dr["registrationdate"] != DBNull.Value) ? (string)dr["registrationdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        g.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    }
+
+                    //g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
+
+                    renderdate3 = (dr["outofdate"] != DBNull.Value) ? (string)dr["outofdate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate3 = renderdate3.Split('/');
+                        string[] year3 = arrdate3[2].Split(' ');
+
+                        string fix_year3 = year3[0];
+                        string month3 = arrdate3[1];
+                        string day3 = arrdate3[0];
+
+                        g.Outofdate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                    }
+                    else
+                    {
+                        g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
+                    }
+
+
                     g.License = (dr["license"] != DBNull.Value) ? Convert.ToInt32(dr["license"]) : default;
                     g.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
-
 
 
                     gList.Add(g);
@@ -1064,7 +1284,27 @@ namespace IESA.Models.DAL
                     p.Body3 = (dr["body3"] != DBNull.Value) ? (string)dr["body3"] : default;
                     p.Image1 = (dr["image1"] != DBNull.Value) ? (string)dr["image1"] : default;
                     p.Category = (dr["category"] != DBNull.Value) ? (string)dr["category"] : default;
-                    p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+                    //p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+
+                    renderdate1 = (dr["postdate"] != DBNull.Value) ? (string)dr["postdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+                    }
+
+
                     p.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
 
                 }
@@ -1116,7 +1356,27 @@ namespace IESA.Models.DAL
                     post.Body3 = (dr["body3"] != DBNull.Value) ? (string)dr["body3"] : default;
                     post.Image1 = (dr["image1"] != DBNull.Value) ? (string)dr["image1"] : default;
                     post.Category = (dr["category"] != DBNull.Value) ? (string)dr["category"] : default;
-                    post.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+                    //post.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+
+                    renderdate1 = (dr["postdate"] != DBNull.Value) ? (string)dr["postdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        post.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+                    }
+
+
                     post.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
 
                     PostsList.Add(post);
@@ -1173,8 +1433,48 @@ namespace IESA.Models.DAL
                     gamer.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
                     gamer.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
                     gamer.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
-                    gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
-                    gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    //gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+
+                    renderdate1 = (dr["dob"] != DBNull.Value) ? (string)dr["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
+
+
+                    //gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    renderdate2 = (dr["registrationdate"] != DBNull.Value) ? (string)dr["registrationdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        gamer.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    }
+
 
                     GamersList.Add(gamer);
                 }
@@ -1320,7 +1620,27 @@ namespace IESA.Models.DAL
                     orgenaizer.Lastname = (dr2["lastname"] != DBNull.Value) ? (string)dr2["lastname"] : default;
                     orgenaizer.Phone = (dr2["phone"] != DBNull.Value) ? (string)dr2["phone"] : default;
                     orgenaizer.Email = (dr2["email"] != DBNull.Value) ? (string)dr2["email"] : default;
-                    orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    //orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+
+                    renderdate1 = (dr2["dob"] != DBNull.Value) ? (string)dr2["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    }
+
+
                     orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
 
                     OrgenaizersList.Add(orgenaizer);
@@ -1468,7 +1788,25 @@ namespace IESA.Models.DAL
                     post.Title = (dr3["title"] != DBNull.Value) ? (string)dr3["title"] : default;
                     post.Category = (dr3["category"] != DBNull.Value) ? (string)dr3["category"] : default;
                     post.Viewsnum = (dr3["viewsnum"] != DBNull.Value) ? Convert.ToInt32(dr3["viewsnum"]) : default;
-                    post.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
+                    //post.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
+
+                    renderdate1 = (dr3["postdate"] != DBNull.Value) ? (string)dr3["postdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        post.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
+                    }
 
                     PostsList.Add(post);
                 }
@@ -1520,8 +1858,46 @@ namespace IESA.Models.DAL
                     competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
                     competition.Isonline = (dr4["isonline"] != DBNull.Value) ? Convert.ToInt32(dr4["isonline"]) : default;
                     competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
-                    competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
-                    competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+                    //competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
+
+                    renderdate1 = (dr4["startdate"] != DBNull.Value) ? (string)dr4["startdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
+                    }
+
+                    //competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+
+
+                    renderdate2 = (dr4["enddate"] != DBNull.Value) ? (string)dr4["enddate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+                    }
 
                     CompetitionsList.Add(competition);
                 }
@@ -1706,7 +2082,25 @@ namespace IESA.Models.DAL
                     post.Title = (dr1["title"] != DBNull.Value) ? (string)dr1["title"] : default;
                     post.Category = (dr1["category"] != DBNull.Value) ? (string)dr1["category"] : default;
                     post.Viewsnum = (dr1["viewsnum"] != DBNull.Value) ? Convert.ToInt32(dr1["viewsnum"]) : default;
-                    post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
+                    //post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
+
+                    renderdate1 = (dr1["postdate"] != DBNull.Value) ? (string)dr1["postdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
+                    }
 
                     PostsList.Add(post);
                 }
@@ -1851,8 +2245,48 @@ namespace IESA.Models.DAL
                     competition.Isiesa = (dr4["isiesa"] != DBNull.Value) ? Convert.ToInt32(dr4["isiesa"]) : default;
                     competition.Ispro = (dr4["ispro"] != DBNull.Value) ? Convert.ToInt32(dr4["ispro"]) : default;
                     competition.Console = (dr4["orgenaizername"] != DBNull.Value) ? (string)dr4["orgenaizername"] : default; //'False' Console -> gets the orgenaizer name instead*
-                    competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
-                    competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+                    //competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
+
+
+                    renderdate1 = (dr4["startdate"] != DBNull.Value) ? (string)dr4["startdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
+                    }
+
+
+                    //competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+
+                    renderdate2 = (dr4["enddate"] != DBNull.Value) ? (string)dr4["enddate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
+                    }
+
 
                     CompetitionsList.Add(competition);
                 }
@@ -1900,8 +2334,45 @@ namespace IESA.Models.DAL
                     gamer.Nickname = (dr["nickname"] != DBNull.Value) ? (string)dr["nickname"] : default;
                     gamer.Phone = (dr["phone"] != DBNull.Value) ? (string)dr["phone"] : default;
                     gamer.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
-                    gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
-                    gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    //gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+
+                    renderdate1 = (dr["dob"] != DBNull.Value) ? (string)dr["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
+                    //gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    renderdate2 = (dr["registrationdate"] != DBNull.Value) ? (string)dr["registrationdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        gamer.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    }
 
                     GamersList.Add(gamer);
                 }
@@ -1948,7 +2419,27 @@ namespace IESA.Models.DAL
                     orgenaizer.Lastname = (dr2["lastname"] != DBNull.Value) ? (string)dr2["lastname"] : default;
                     orgenaizer.Phone = (dr2["phone"] != DBNull.Value) ? (string)dr2["phone"] : default;
                     orgenaizer.Email = (dr2["email"] != DBNull.Value) ? (string)dr2["email"] : default;
-                    orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    //orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+
+                    renderdate1 = (dr2["dob"] != DBNull.Value) ? (string)dr2["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    }
+
+
                     orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
 
                     OrgenaizersList.Add(orgenaizer);
@@ -1997,7 +2488,25 @@ namespace IESA.Models.DAL
                     manager.Role1 = (dr5["role1"] != DBNull.Value) ? (string)dr5["role1"] : default;
                     manager.Phone = (dr5["phone"] != DBNull.Value) ? (string)dr5["phone"] : default;
                     manager.Email = (dr5["email"] != DBNull.Value) ? (string)dr5["email"] : default;
-                    manager.Dob = (dr5["dob"] != DBNull.Value) ? Convert.ToDateTime(dr5["dob"]) : default;
+                    //manager.Dob = (dr5["dob"] != DBNull.Value) ? Convert.ToDateTime(dr5["dob"]) : default;
+
+                    renderdate1 = (dr5["dob"] != DBNull.Value) ? (string)dr5["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        manager.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        manager.Dob = (dr5["dob"] != DBNull.Value) ? Convert.ToDateTime(dr5["dob"]) : default;
+                    }
 
 
                     ManagersList.Add(manager);
@@ -2409,7 +2918,27 @@ namespace IESA.Models.DAL
                     p.Body1 = (string)dr["body1"];
                     p.Image1 = (string)dr["image1"];
                     p.Category = (string)dr["category"];
-                    p.Postdate = Convert.ToDateTime(dr["postdate"]);
+                    //p.Postdate = Convert.ToDateTime(dr["postdate"]);
+
+                    renderdate1 = (dr["postdate"] != DBNull.Value) ? (string)dr["postdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
+                    }
+
+
                     p.Status1 = Convert.ToInt32(dr["status1"]);
 
                     pList.Add(p);
@@ -2466,10 +2995,67 @@ namespace IESA.Models.DAL
                     c.Prize2 = (string)dr["prize2"];
                     c.Price3 = (string)dr["prize3"];
                     c.Linkforregistration = (string)dr["linkforregistration"];
-                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    //c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+
+                    renderdate1 = (dr["lastdateforregistration"] != DBNull.Value) ? (string)dr["lastdateforregistration"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
+                    }
+
                     c.Body = (string)dr["body"];
-                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    //c.Startdate = Convert.ToDateTime(dr["startdate"]);
+
+                    renderdate2 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                    }
+
+                    //c.Enddate = Convert.ToDateTime(dr["enddate"]);
+
+                    renderdate3 = (dr["enddate"] != DBNull.Value) ? (string)dr["enddate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate3 = renderdate3.Split('/');
+                        string[] year3 = arrdate3[2].Split(' ');
+
+                        string fix_year3 = year3[0];
+                        string month3 = arrdate3[1];
+                        string day3 = arrdate3[0];
+
+                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                    }
+                    else
+                    {
+                        c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    }
+
                     c.Startime = ((TimeSpan)dr["starttime"]);
                     c.Endtime = ((TimeSpan)dr["endtime"]);
                     c.Ispro = Convert.ToInt32(dr["ispro"]);
@@ -2533,10 +3119,67 @@ namespace IESA.Models.DAL
                     c.Prize2 = (string)dr["prize2"];
                     c.Price3 = (string)dr["prize3"];
                     c.Linkforregistration = (string)dr["linkforregistration"];
-                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    //c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+
+                    renderdate1 = (dr["lastdateforregistration"] != DBNull.Value) ? (string)dr["lastdateforregistration"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
+                    }
+
                     c.Body = (string)dr["body"];
-                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    //c.Startdate = Convert.ToDateTime(dr["startdate"]);
+
+                    renderdate2 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                    }
+
+                    //c.Enddate = Convert.ToDateTime(dr["enddate"]);
+
+                    renderdate3 = (dr["enddate"] != DBNull.Value) ? (string)dr["enddate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate3 = renderdate3.Split('/');
+                        string[] year3 = arrdate3[2].Split(' ');
+
+                        string fix_year3 = year3[0];
+                        string month3 = arrdate3[1];
+                        string day3 = arrdate3[0];
+
+                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                    }
+                    else
+                    {
+                        c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    }
+
                     c.Startime = ((TimeSpan)dr["starttime"]);
                     c.Endtime = ((TimeSpan)dr["endtime"]);
                     c.Ispro = Convert.ToInt32(dr["ispro"]);
@@ -3083,10 +3726,67 @@ namespace IESA.Models.DAL
                     c.Prize2 = (string)dr["prize2"];
                     c.Price3 = (string)dr["prize3"];
                     c.Linkforregistration = (string)dr["linkforregistration"];
-                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    //c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+
+                    renderdate1 = (dr["lastdateforregistration"] != DBNull.Value) ? (string)dr["lastdateforregistration"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
+                    }
+
                     c.Body = (string)dr["body"];
-                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    //c.Startdate = Convert.ToDateTime(dr["startdate"]);
+
+                    renderdate2 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                    }
+
+                    //c.Enddate = Convert.ToDateTime(dr["enddate"]);
+
+                    renderdate3 = (dr["enddate"] != DBNull.Value) ? (string)dr["enddate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate3 = renderdate3.Split('/');
+                        string[] year3 = arrdate3[2].Split(' ');
+
+                        string fix_year3 = year3[0];
+                        string month3 = arrdate3[1];
+                        string day3 = arrdate3[0];
+
+                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                    }
+                    else
+                    {
+                        c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    }
+
                     c.Startime = ((TimeSpan)dr["starttime"]);
                     c.Endtime = ((TimeSpan)dr["endtime"]);
                     c.Ispro = Convert.ToInt32(dr["ispro"]);
@@ -3146,7 +3846,25 @@ namespace IESA.Models.DAL
                     c.Commentid = Convert.ToInt32(dr["idcomment"]);
                     c.Name = (string)dr["commentname"];
                     c.Body = (string)dr["commentbody"];
-                    c.Date = Convert.ToDateTime(dr["date1"]);
+                    //c.Date = Convert.ToDateTime(dr["date1"]);
+
+                    renderdate1 = (dr["date1"] != DBNull.Value) ? (string)dr["date1"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        c.Date = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        c.Date = (dr["date1"] != DBNull.Value) ? Convert.ToDateTime(dr["date1"]) : default;
+                    }
 
                     cList.Add(c);
                 }
@@ -3256,11 +3974,28 @@ namespace IESA.Models.DAL
                     orgenaizer.Firstname = (dr2["firstname"] != DBNull.Value) ? (string)dr2["firstname"] : default;
                     orgenaizer.Lastname = (dr2["lastname"] != DBNull.Value) ? (string)dr2["lastname"] : default;
                     orgenaizer.Id = (dr2["id"] != DBNull.Value) ? Convert.ToInt32(dr2["id"]) : default;
-
-
                     orgenaizer.Phone = (dr2["phone"] != DBNull.Value) ? (string)dr2["phone"] : default;
                     orgenaizer.Email = (dr2["email"] != DBNull.Value) ? (string)dr2["email"] : default;
-                    orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    //orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+
+                    renderdate1 = (dr2["dob"] != DBNull.Value) ? (string)dr2["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
+                    }
+
                     orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
 
                     orgenaizer.Gender = (dr2["gender"] != DBNull.Value) ? (string)dr2["gender"] : default;
@@ -3330,8 +4065,46 @@ namespace IESA.Models.DAL
                     gamer.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
                     gamer.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
                     gamer.Email = (dr["email"] != DBNull.Value) ? (string)dr["email"] : default;
-                    gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
-                    gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    //gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+
+                    renderdate1 = (dr["dob"] != DBNull.Value) ? (string)dr["dob"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                    }
+
+                    //gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+
+                    renderdate2 = (dr["registrationdate"] != DBNull.Value) ? (string)dr["registrationdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        gamer.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
+                    }
+
                     gamer.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
                     GamersList.Add(gamer);
                 }
@@ -3428,7 +4201,26 @@ namespace IESA.Models.DAL
 
                     rank.Competitionid = (dr["Competition ID"] != DBNull.Value) ? Convert.ToInt32(dr["Competition ID"]) : default; //categoryid
                     rank.Competitionname = (dr["Competition Name"] != DBNull.Value) ? (string)dr["Competition Name"] : default; //categoryname
-                    rank.Startdate = Convert.ToDateTime(dr["Start Date"]); //start date
+                    //rank.Startdate = Convert.ToDateTime(dr["Start Date"]); //start date
+
+                    renderdate1 = (dr["Start Date"] != DBNull.Value) ? (string)dr["Start Date"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        rank.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        rank.Startdate = (dr["Start Date"] != DBNull.Value) ? Convert.ToDateTime(dr["Start Date"]) : default;
+                    }
+
                     rank.Console = (dr["Console"] != DBNull.Value) ? (string)dr["Console"] : default; //console
                     rank.Isonline = (dr["Rank"] != DBNull.Value) ? Convert.ToInt32(dr["Rank"]) : default; //Rank
                     rank.Numofparticipants = (dr["Score"] != DBNull.Value) ? Convert.ToInt32(dr["Score"]) : default; //score
@@ -3485,10 +4277,67 @@ namespace IESA.Models.DAL
                     c.Prize2 = (string)dr["prize2"];
                     c.Price3 = (string)dr["prize3"];
                     c.Linkforregistration = (string)dr["linkforregistration"];
-                    c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+                    //c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
+
+                    renderdate1 = (dr["lastdateforregistration"] != DBNull.Value) ? (string)dr["lastdateforregistration"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
+                    }
+
                     c.Body = (string)dr["body"];
-                    c.Startdate = Convert.ToDateTime(dr["startdate"]);
-                    c.Enddate = Convert.ToDateTime(dr["enddate"]);
+                    //c.Startdate = Convert.ToDateTime(dr["startdate"]);
+
+                    renderdate2 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                    }
+
+                    //c.Enddate = Convert.ToDateTime(dr["enddate"]);
+
+                    renderdate3 = (dr["enddate"] != DBNull.Value) ? (string)dr["enddate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate3 = renderdate3.Split('/');
+                        string[] year3 = arrdate3[2].Split(' ');
+
+                        string fix_year3 = year3[0];
+                        string month3 = arrdate3[1];
+                        string day3 = arrdate3[0];
+
+                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                    }
+                    else
+                    {
+                        c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    }
+
                     c.Startime = ((TimeSpan)dr["starttime"]);
                     c.Endtime = ((TimeSpan)dr["endtime"]);
                     c.Ispro = Convert.ToInt32(dr["ispro"]);
@@ -3656,8 +4505,48 @@ namespace IESA.Models.DAL
                     competition.Competitionstatus = (dr["competitionstatus"] != DBNull.Value) ? (string)dr["competitionstatus"] : default;
                     competition.Ispro = (dr["ispro"] != DBNull.Value) ? Convert.ToInt32(dr["ispro"]) : default;
                     competition.Console = (dr["console"] != DBNull.Value) ? (string)dr["console"] : default;
-                    competition.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
-                    competition.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    //competition.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+
+                    renderdate1 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        competition.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                    }
+
+
+                    //competition.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+
+                    renderdate2 = (dr["enddate"] != DBNull.Value) ? (string)dr["enddate"] : default;
+
+                    if (renderdate2 != null)
+                    {
+                        string[] arrdate2 = renderdate2.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        competition.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
+                    }
+
+
                     competition.Logo = (dr["logo"] != DBNull.Value) ? (string)dr["logo"] : default;
                     competition.Banner = (dr["banner"] != DBNull.Value) ? (string)dr["banner"] : default;
                     competition.Linkforregistration = (dr["categoryname"] != DBNull.Value) ? (string)dr["categoryname"] : default; //categoryname - inner join
@@ -3778,6 +4667,24 @@ namespace IESA.Models.DAL
                     post.Image1 = (dr1["image1"] != DBNull.Value) ? (string)dr1["image1"] : default;
                     //post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
 
+                    renderdate1 = (dr1["postdate"] != DBNull.Value) ? (string)dr1["postdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
+                    }
+
                     PostsList.Add(post);
                 }
 
@@ -3827,7 +4734,48 @@ namespace IESA.Models.DAL
                     competition.Banner = (dr2["banner"] != DBNull.Value) ? (string)dr2["banner"] : default;
                     competition.Logo = (dr2["logo"] != DBNull.Value) ? (string)dr2["logo"] : default;
                     //competition.Startdate = (dr2["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr2["startdate"]) : default;
+
+                    renderdate3 = (dr2["startdate"] != DBNull.Value) ? (string)dr2["startdate"] : default;
+
+                    if (renderdate3 != null)
+                    {
+                        string[] arrdate1 = renderdate3.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        competition.Startdate = (dr2["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr2["startdate"]) : default;
+                    }
+
+
                     //competition.Enddate = (dr2["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr2["enddate"]) : default;
+
+                    renderdate4 = (dr2["enddate"] != DBNull.Value) ? (string)dr2["enddate"] : default;
+
+                    if (renderdate4 != null)
+                    {
+                        string[] arrdate2 = renderdate4.Split('/');
+                        string[] year2 = arrdate2[2].Split(' ');
+
+                        string fix_year2 = year2[0];
+                        string month2 = arrdate2[1];
+                        string day2 = arrdate2[0];
+
+                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                    }
+                    else
+                    {
+                        competition.Enddate = (dr2["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr2["enddate"]) : default;
+                    }
+
+
+
 
                     CompetitionsList.Add(competition);
                 }
@@ -3872,26 +4820,31 @@ namespace IESA.Models.DAL
                 while (dr3.Read()) //1 row
                 {
 
-                    renderdate = (dr3["postdate"] != DBNull.Value) ? (string)dr3["postdate"] : default;
-
-                    string[] arrdate = renderdate.Split('/');
-                    string[] year = arrdate[2].Split(' ');
-
-                    string fix_year = year[0];
-                    string month = arrdate[1];
-                    string day = arrdate[0];
-
-
-
-
                     p.Postid = (dr3["postid"] != DBNull.Value) ? Convert.ToInt32(dr3["postid"]) : default;
                     p.Title = (dr3["title"] != DBNull.Value) ? (string)dr3["title"] : default;
                     p.Body1 = (dr3["body1"] != DBNull.Value) ? (string)dr3["body1"] : default;
                     p.Image1 = (dr3["image1"] != DBNull.Value) ? (string)dr3["image1"] : default;
                     p.Category = (dr3["category"] != DBNull.Value) ? (string)dr3["category"] : default;
                     //p.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
-                    p.Postdate = new DateTime(Int32.Parse(fix_year), Int32.Parse(month), Int32.Parse(day));
-                    //p.Postdate = new DateTime(year, month, day);
+
+                    renderdate1 = (dr3["postdate"] != DBNull.Value) ? (string)dr3["postdate"] : default;
+
+                    if (renderdate1 != null)
+                    {
+                        string[] arrdate1 = renderdate1.Split('/');
+                        string[] year1 = arrdate1[2].Split(' ');
+
+                        string fix_year1 = year1[0];
+                        string month1 = arrdate1[1];
+                        string day1 = arrdate1[0];
+
+                        p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                    }
+                    else
+                    {
+                        p.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
+                    }
+
                     p.Status1 = (dr3["status1"] != DBNull.Value) ? Convert.ToInt32(dr3["status1"]) : default;
 
                 }
@@ -3915,11 +4868,6 @@ namespace IESA.Models.DAL
         }
 
         //---index.html--- *Close*
-
-
-
-
-
 
 
 
