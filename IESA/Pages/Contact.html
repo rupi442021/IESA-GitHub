@@ -66,25 +66,24 @@
         function sendEmail() {
 
             Email.send({
-                Host: "smtp.google.com",
-                Username: "reactapptest230@gmail.com",
-                Password: "FA1278973EE70094257D1CFD15BECDBA0BDC",
-
-                To: "reactapptest230@gmail.com",
+                
+                Host: "smtp.elasticemail.com",
+                Username: "esports.iesa44@gmail.com",
+                Password: "8C83329F91FFDA7322143DE99D69DF86CD36",
+                To: "shaydavid2@gmail.com",
                 From: $("#emailTB").val(),
                 Subject: "פניה מצור קשר באתר",
-
-                Body: $("#textareaTB1").val()
+                Body: $("#textareaTB1").val(),
 
             }).then(
                 Swal.fire({
                     icon: 'success',
                     title: 'פניה נשלחה לעמותה בהצלחה!',
                     showConfirmButton: false,
-                    timer: 2500
+                    timer: 3500
                 })
             );
-            window.location.replace("Contact.html");
+            window.location.replace("index.html");
 
             return false;
         }
