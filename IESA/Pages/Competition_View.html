@@ -76,7 +76,7 @@
 
             buildimagestr = "<img src='../" + img + "' />";
             document.getElementById("banner").innerHTML = buildimagestr;
-            $("#title").html("<p><b>" + data.Competitionname + "<b/><p/>");
+            $("#title").html("<p id='shadowtitle'><b style='background-color: #dd163b'>" + data.Competitionname + "<b/><p/>");
 
             let title1 = data.Competitionname; //For title*
             document.getElementById("comp_name_title").innerHTML = title1;
@@ -172,6 +172,7 @@
                                 תחילת התחרות:
                             </td>
                         </tr>
+                        
                         <tr>
                             <td><i class="bi bi-clock" style="font-size: 2rem"></i></td>
                             <td id="cStartT" class="details">
@@ -188,7 +189,7 @@
                         </tr>
                         <tr>
                             <td><i class="bi bi-link" style="font-size: 2rem"></i></td>
-                            <td class="details">Linkrules</td>
+                            <td class="details"><a href="#">דיסקורד</a></td>
                             <td><i class="bi bi-geo-alt" style="font-size: 2rem"></i></td>
                             <td id="cOnline" class="details"></td>
                         </tr>
@@ -200,8 +201,10 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-lg-3">
-                    <div class="row" id="Trophy">
+
+
+                <!--<div class="col-lg-3">
+                    <div class="row" id="Trophy" style="background-color: red">
                         <p>פרסים:</p>
                         <div class="row troph">
                             <div class="col">
@@ -227,10 +230,78 @@
                     <div class="row" id="gameCategoryDIV">
                         <p>קטגוריית משחק: </p>
                     </div>
+
+
+
                     <div class="row" style="margin-top: 100px;">
                         <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
                     </div>
-                </div>
+
+                </div>--> <!--End col 3-->
+
+
+                <div class="col-lg-3">
+
+
+                    <div style="margin-bottom:18px;"></div>
+
+                    <div class="row" id="anotherpostsbox">
+
+                        <div class="row" id="fbbox" style="margin-top:11px; height:350px">
+
+                            <div id="Trophy">
+                                <h5>פרסים</h5>
+                                <div class="row troph">
+                                    <div class="col">
+                                        <i class="bi bi-trophy-fill" style="color: #FFD700"></i>
+                                    </div>
+                                    <div class="col"> 1ST </div>
+                                    <div id="prize1" class="col prize1"></div>
+                                </div>
+                                <div class="row troph">
+                                    <div class="col"><i class="bi bi-trophy-fill" style="color: #decfcf"></i></div>
+                                    <div class="col">2ND</div>
+                                    <div id="prize2" class="col prize2"></div>
+                                </div>
+                                <div class="row troph">
+                                    <div class="col"><i class="bi bi-trophy-fill" style="color: #CD7F32"></i></div>
+                                    <div class="col">3RD</div>
+                                    <div id="prize3" class="col prize3"></div>
+                                </div>
+                            </div>
+                            <div id="consoleDIV">
+                                <h5>קונסולה </h5>
+                            </div>
+                            <div id="gameCategoryDIV" style="margin-bottom: 20px;">
+                                <h5>קטגוריית משחק </h5>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row" style="margin-top: 25px;">
+                        <iframe src="https://discordapp.com/widget?id=595235006641864705&amp;theme=dark" width="350" height="400" allowtransparency="true" frameborder="0"></iframe>
+                    </div>
+
+                </div> <!--End of col-3-->
+
+
+
+
+
+
+
+
+
             </div>
 
         </div>

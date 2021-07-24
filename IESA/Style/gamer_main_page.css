@@ -13,6 +13,7 @@
     padding: 0px;
     background-color: black;
     width: 240px;
+    height: 250px;
     margin-bottom: 20px;
 }
 
@@ -200,7 +201,7 @@ tbody, td, tfoot, th, thead, tr {
 .bi-star {
     position: absolute;
     font-size: 30px;
-    margin-right: 170px;
+    margin-right: 200px;
 }
 
 .container img {
@@ -224,11 +225,69 @@ tbody, td, tfoot, th, thead, tr {
         transform: scale(1.5);
     }
 
-#RedTitle th:first-child {
-    border-left: 1px solid #211f1f !important;
-}
 
 .table img {
     height: 25px;
     width: 25px;
+}
+
+
+#divfilterrank {
+    position: absolute;
+    top: 36.9% !important;
+    right: 60.2% !important;
+    color: #313030;
+}
+
+th:first-child {
+    border-left: 1px solid black !important;
+}
+
+.nk-decorated-h, .nk-decorated-h-2 {
+    display: flex;
+}
+
+    .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+        border-bottom-color: #353c4a !important;
+    }
+
+    .nk-decorated-h-2::before, .nk-decorated-h::before {
+        flex: 20px !important;
+        width: 20px !important;
+        min-width: 20px !important;
+    }
+
+    .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+        content: "";
+        display: block;
+        flex: 100;
+        border-bottom: 4px solid;
+        transform: translateY(-10px);
+    }
+
+    .nk-decorated-h-2::after, .nk-decorated-h-2::before {
+        border-bottom-color: #353c4a;
+    }
+
+    .nk-decorated-h-2::after, .nk-decorated-h-2::before, .nk-decorated-h::after, .nk-decorated-h::before {
+        content: "";
+        display: block;
+        flex: 100;
+        border-bottom: 4px solid;
+        transform: translateY(-10px);
+    }
+
+    .nk-decorated-h-2 > a, .nk-decorated-h-2 > span, .nk-decorated-h > a, .nk-decorated-h > span {
+        display: block;
+        flex: auto;
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+#lesslines1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show (-2 always)*/
+    -webkit-box-orient: vertical;
 }

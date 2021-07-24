@@ -3101,7 +3101,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " select * from competitions where competitionid = " + CId + "";
+                String selectSTR = "SELECT *, GamesCategories.categoryname FROM Competitions inner join Competition_Game ON Competitions.competitionid = Competition_Game.competitionid inner join GamesCategories ON Competition_Game.categoryid = GamesCategories.categoryid where Competitions.competitionid = " + CId + "";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -3115,6 +3115,7 @@ namespace IESA.Models.DAL
                     c.Address1 = (string)dr["address1"];
                     c.Banner = (string)dr["banner"];
                     c.Logo = (string)dr["logo"];
+                    c.Gamecategory = (string)dr["categoryname"];
                     c.Prize1 = (string)dr["prize1"];
                     c.Prize2 = (string)dr["prize2"];
                     c.Price3 = (string)dr["prize3"];
@@ -4257,7 +4258,7 @@ namespace IESA.Models.DAL
             {
                 con = connect("DBConnectionString"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " SELECT * FROM Competitions inner join Competition_Game on Competitions.competitionid=Competition_Game.competitionid WHERE status1=1 and competitionstatus = '" + Cstatus + "' or competitionstatus ='4'";
+                String selectSTR = "SELECT * FROM Competitions inner join Competition_Game on Competitions.competitionid = Competition_Game.competitionid WHERE status1='1' and competitionstatus = '2' or competitionstatus ='4'";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -4267,16 +4268,16 @@ namespace IESA.Models.DAL
                 {
                     Competitions c = new Competitions();
 
-                    c.Competitionid = Convert.ToInt32(dr["competitionid"]);
-                    c.Competitionname = (string)dr["competitionname"];
-                    c.Isonline = Convert.ToInt32(dr["isonline"]);
-                    c.Address1 = (string)dr["address1"];
-                    c.Banner = (string)dr["banner"];
-                    c.Logo = (string)dr["logo"];
-                    c.Prize1 = (string)dr["prize1"];
-                    c.Prize2 = (string)dr["prize2"];
-                    c.Price3 = (string)dr["prize3"];
-                    c.Linkforregistration = (string)dr["linkforregistration"];
+                    c.Competitionid = (dr["competitionid"] != DBNull.Value) ? Convert.ToInt32(dr["competitionid"]) : default;
+                    c.Competitionname = (dr["competitionname"] != DBNull.Value) ? (string)dr["competitionname"] : default;
+                    c.Isonline = (dr["isonline"] != DBNull.Value) ? Convert.ToInt32(dr["isonline"]) : default;
+                    c.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
+                    c.Banner = (dr["banner"] != DBNull.Value) ? (string)dr["banner"] : default;
+                    c.Logo = (dr["logo"] != DBNull.Value) ? (string)dr["logo"] : default;
+                    c.Prize1 = (dr["prize1"] != DBNull.Value) ? (string)dr["prize1"] : default;
+                    c.Prize2 = (dr["prize2"] != DBNull.Value) ? (string)dr["prize2"] : default;
+                    c.Price3 = (dr["prize3"] != DBNull.Value) ? (string)dr["prize3"] : default;
+                    c.Linkforregistration = (dr["linkforregistration"] != DBNull.Value) ? (string)dr["linkforregistration"] : default;
                     //c.Lastdateforregistration = Convert.ToDateTime(dr["lastdateforregistration"]);
 
                     renderdate1 = (dr["lastdateforregistration"] != DBNull.Value) ? (string)dr["lastdateforregistration"] : default;
@@ -4297,7 +4298,7 @@ namespace IESA.Models.DAL
                         c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
                     }
 
-                    c.Body = (string)dr["body"];
+                    c.Body = (dr["body"] != DBNull.Value) ? (string)dr["body"] : default;
                     //c.Startdate = Convert.ToDateTime(dr["startdate"]);
 
                     renderdate2 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
@@ -4338,19 +4339,20 @@ namespace IESA.Models.DAL
                         c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
                     }
 
-                    c.Startime = ((TimeSpan)dr["starttime"]);
-                    c.Endtime = ((TimeSpan)dr["endtime"]);
-                    c.Ispro = Convert.ToInt32(dr["ispro"]);
-                    c.Discord = (string)dr["discord"];
-                    c.Console = (string)dr["console"];
-                    c.Isiesa = Convert.ToInt32(dr["isiesa"]);
-                    c.Linkforstream = (string)dr["linkforstream"];
+                    c.Startime = (dr["starttime"] != DBNull.Value) ? ((TimeSpan)dr["starttime"]) : default;
+                    c.Endtime = (dr["endtime"] != DBNull.Value) ? ((TimeSpan)dr["endtime"]) : default;
+                    c.Ispro = (dr["ispro"] != DBNull.Value) ? Convert.ToInt32(dr["ispro"]) : default;
+                    c.Discord = (dr["discord"] != DBNull.Value) ? (string)dr["discord"] : default;
+                    c.Console = (dr["console"] != DBNull.Value) ? (string)dr["console"] : default;
+                    c.Isiesa = (dr["isiesa"] != DBNull.Value) ? Convert.ToInt32(dr["isiesa"]) : default;
+                    c.Linkforstream = (dr["linkforstream"] != DBNull.Value) ? (string)dr["linkforstream"] : default;
                     c.Numofparticipants = (dr["numofparticipants"] != DBNull.Value) ? Convert.ToInt32(dr["numofparticipants"]) : default;
-                    c.Competitionstatus = (string)dr["competitionstatus"];
-                    c.Status1 = Convert.ToInt32(dr["status1"]);
-                    c.IsPayment = Convert.ToInt32(dr["categoryid"]);
-                    c.Startcheckin = ((TimeSpan)dr["startcheckin"]);
-                    c.Endcheckin = ((TimeSpan)dr["endcheckin"]);
+                    c.Competitionstatus = (dr["competitionstatus"] != DBNull.Value) ? (string)dr["competitionstatus"] : default;
+                    c.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
+                    c.IsPayment = (dr["categoryid"] != DBNull.Value) ? Convert.ToInt32(dr["categoryid"]) : default;
+                    c.Startcheckin = (dr["startcheckin"] != DBNull.Value) ? ((TimeSpan)dr["startcheckin"]) : default;
+                    c.Endcheckin = (dr["endcheckin"] != DBNull.Value) ? ((TimeSpan)dr["endcheckin"]) : default;
+
                     RanksList.Add(c);
                 }
 

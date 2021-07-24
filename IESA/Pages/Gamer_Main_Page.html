@@ -77,13 +77,14 @@
         });
 
         function getGamerData() {
-            console.log(localStorage["user_type"])
-            console.log(JSON.parse(localStorage.getItem("user_info")).Userid)
+            console.log(localStorage["user_type"]);
+            console.log(JSON.parse(localStorage.getItem("user_info")).Userid);
+
             GID = JSON.parse(localStorage.getItem("user_info")).Userid;
 
-            ajaxCall("GET", "/../api/Competitions/tableRdb", "", getNationalRanksSuccess, getErrCompetitions); //Database.html - method OD12
-            ajaxCall("GET", "/../api/Competitions/GetRelevantCompetitionForGamer?GID=" + GID, "", getSuccessCompetitions, getErrCompetitions); //Gamer_Main_Page.html - method SG08
-            ajaxCall("GET", "/../api/Competitions/GamerCompetitionsTable?GID=" + GID, "", getRanksSuccess, getErrCompetitions); //Gamer_Main_Page.html - method SG09
+            ajaxCall("GET", "../api/Competitions/tableRdb", "", getNationalRanksSuccess, getErrCompetitions); //Database.html - method OD12
+            ajaxCall("GET", "../api/Competitions/GetRelevantCompetitionForGamer?GID=" + GID, "", getSuccessCompetitions, getErrCompetitions); //Gamer_Main_Page.html - method SG08
+            ajaxCall("GET", "../api/Competitions/GamerCompetitionsTable?GID=" + GID, "", getRanksSuccess, getErrCompetitions); //Gamer_Main_Page.html - method SG09
 
         }
 
@@ -128,14 +129,15 @@
                 cardstrG += '<a href=Competition_View.html?Competitions=' + Competitions[i].Competitionid + '> <img src="../' + Competitions[i].Logo + '" class="card-img-top" alt="LogoCompetitionMissed"></a>';
                 cardstrG += '<div class="card-body">';
 
-                cardstrG += '<h5 class="card-title"></br>' + Competitions[i].Competitionname + '</h5>';
+                cardstrG += '<h5 class="card-title" id="lesslines1"></br>' + Competitions[i].Competitionname + '</h5>';
                 if (Competitions[i].Isonline == 0)
                     cardstrG += '<p class="card-text"> כתובת : ' + Competitions[i].Address + '</p>';
                 else
                     cardstrG += '<p class="card-text">תחרות אונליין</p>';
                 cardstrG += '<p class="card-text"> תחילת תחרות: ' + Stardate + '</p>';
                 cardstrG += '<p class="card-text"> סיום תחרות:' + edat + '</p>';
-                cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-2">להרשמה לתחרות</button></a></div ></div ></div ></div >';
+                //cardstrG += '<div class="card-text"><a href=' + Competitions[i].Linkforregistration + ' target="_blank" ><button class="btn btn-primary mb-2">להרשמה לתחרות</button></a></div ></div ></div ></div >';
+                cardstrG += "<a href='Competition_View.html?competitionid=" + Competitions[i].Competitionid + "' class='btn btn-primary mb-2'>לעמוד התחרות</a>";
 
                 $("#FutureCompetitionsGeneral").append(cardstrG);
             }
@@ -344,21 +346,24 @@
         <div class="container">
 
             <section id="page_title">
-                <a class="titlelink" href="Gamer_Main_Page.html">ראשי </a>
-                <svg style="width: .5em; transform: rotate(180deg); vertical-align: -.17em;" svg-inline--fa fa-angle-right fa-w-8" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path></svg>
                 <h2 class="headh2">אזור אישי</h2>
                 <div class="divdown"></div>
             </section>
 
-            <div class="row mt-3">
-                <h3>תוצאות:</h3>
-                <p>בטבלה זו מוצגים התוצאות הסופיות מכל התחרויות שלקחת בהן חלק: </p>
-                <div class="col">
+            
+
+            <div class="row">
+                <h3 class="nk-decorated-h-2" style="margin-bottom: 30px;"><span>סטטסטיקה</span></h3>
+
+                <span style="margin-bottom: 10px;"> * בטבלה זו מוצגים התוצאות הסופיות מכל התחרויות שלקחת בהן חלק</span>
+
+
+                <div class="col" style="height: 370px;">
                     <form id="rForm">
                         <table id="RedTitle" class="nk-table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="background: #dd163b">תחרויות עבר:</th>
+                                    <th style="background: #dd163b">תחרויות עבר</th>
                                 </tr>
                             </thead>
                         </table>
@@ -381,18 +386,19 @@
                 </div>
 
             </div>
-            <div class="row mt-5">
-                <h3>דירוגים ארציים:</h3>
+
+            <div id="divfilterrank">
+                <span style="margin:4px;">קטגוריה:</span><span id="selectRankFilter"></span>
+            </div>
+
+            <div class="row">
                 <div class="col">
+
                     <form id="nForm">
                         <table id="RedTitle" class="nk-table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="background: #dd163b">
-                                        <div id="divfilterrank">
-                                            <span style="margin:4px;">בחר ליגה:</span><span id="selectRankFilter"></span>
-                                        </div>
-                                    </th>
+                                    <th style="background: #dd163b">דירוגים ארציים</th>
                                 </tr>
                             </thead>
                         </table>
@@ -409,12 +415,20 @@
                             </thead>
                         </table>
                     </form>
+
                 </div>
 
             </div>
+
+
+
+
+
+
             <div class="row mt-5">
-                <h3>תחרויות עתידיות בעמותה:</h3>
-                <h6>*תחרויות כוכב: תחרויות מומלצות עבורך</h6>
+                <h3 class="nk-decorated-h-2" style="margin-bottom: 30px;"><span>תחרויות עתידיות בעמותה</span></h3>
+                <span style="margin-bottom: 20px;">* תחרויות כוכב: תחרויות מומלצות עבורך </span>
+
                 <div class="col-10">
                     <div class="row" id="FutureCompetitionsGeneral"></div>
                 </div>
