@@ -367,15 +367,21 @@ function buildNav() {
 
 
 function getDate() {
+
     var today = new Date();
+
     if (today.getDate() > 9 && today.getMonth() + 1 > 9)
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+
     else if (today.getDate() > 9 && today.getMonth() + 1 < 10)
-        var date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-' + today.getDate();
+          var date = today.getDate() + '/0' + (today.getMonth() + 1) + '/' + today.getFullYear();
+
     else if (today.getDate() < 10 && today.getMonth() + 1 > 9)
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-0' + today.getDate();
+        var date = '0' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+
     else if (today.getDate() < 10 && today.getMonth() + 1 < 10)
-        var date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-0' + today.getDate();
+        var date = '0' + today.getDate() + '/0' + (today.getMonth() + 1) + '/' + today.getFullYear();
+
 
     return date;
 }
