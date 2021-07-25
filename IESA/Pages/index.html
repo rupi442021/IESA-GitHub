@@ -49,14 +49,13 @@
 
         });
 
-
         function init() {
 
             ajaxCall("GET", "../api/Posts/Announcementindex", "", getAnnouncSuccess, Error); //index.html - method OMI3
             ajaxCall("GET", "../api/Posts/Postsindex", "", getPostsSuccess, Error); //index.html - method OMI1
             ajaxCall("GET", "../api/Competitions/Compindex", "", getCompetitionsSuccess, Error); //index.html - method OMI2
 
-        }
+        } 
 
         function getAnnouncSuccess(post) {
             console.log(post);

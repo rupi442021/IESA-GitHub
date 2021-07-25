@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -26,6 +27,8 @@ namespace IESA.Models.DAL
         private string renderdate2;
         private string renderdate3;
         private string renderdate4;
+        private string month1;
+        private string day1;
 
         public DBServices() { }
 
@@ -454,14 +457,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -478,19 +515,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        g.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            g.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            g.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
                     }
+
 
                     //g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
 
@@ -498,14 +570,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate3 = renderdate3.Split('/');
-                        string[] year3 = arrdate3[2].Split(' ');
 
-                        string fix_year3 = year3[0];
-                        string month3 = arrdate3[1];
-                        string day3 = arrdate3[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        g.Outofdate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            g.Outofdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            g.Outofdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -570,19 +676,55 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        o.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            o.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            o.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         o.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     }
+
+
 
                     o.Address1 = (dr["address1"] != DBNull.Value) ? (string)dr["address1"] : default;
                     o.Picture = (dr["picture"] != DBNull.Value) ? (string)dr["picture"] : default;
@@ -646,14 +788,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        m.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            m.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            m.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -1040,18 +1216,52 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
-                        c.Lastdateforregistration = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
+                        c.Lastdateforregistration = (dr["Lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["Lastdateforregistration"]) : default;
                     }
 
                     c.Body = (string)dr["body"];
@@ -1062,34 +1272,103 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
-                        c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
+                       c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
                     }
+
 
                     //c.Enddate = Convert.ToDateTime(dr["enddate"]);
 
-                    renderdate3 = (dr["startdate"] != DBNull.Value) ? (string)dr["startdate"] : default;
+                    renderdate3 = (dr["enddate"] != DBNull.Value) ? (string)dr["enddate"] : default;
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate3 = renderdate3.Split('/');
-                        string[] year3 = arrdate3[2].Split(' ');
 
-                        string fix_year3 = year3[0];
-                        string month3 = arrdate3[1];
-                        string day3 = arrdate3[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -1165,19 +1444,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            g.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         g.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     }
+
 
 
 
@@ -1191,19 +1505,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        g.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            g.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            g.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         g.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
                     }
+
 
                     //g.Outofdate = (dr["outofdate"] != DBNull.Value) ? Convert.ToDateTime(dr["outofdate"]) : default;
 
@@ -1211,14 +1560,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate3 = renderdate3.Split('/');
-                        string[] year3 = arrdate3[2].Split(' ');
 
-                        string fix_year3 = year3[0];
-                        string month3 = arrdate3[1];
-                        string day3 = arrdate3[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        g.Outofdate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            g.Outofdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            g.Outofdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -1290,19 +1673,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
                     }
+
 
 
                     p.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
@@ -1359,22 +1777,56 @@ namespace IESA.Models.DAL
                     //post.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
 
                     renderdate1 = (dr["postdate"] != DBNull.Value) ? (string)dr["postdate"] : default;
-
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         post.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
                     }
+
 
 
                     post.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
@@ -1439,19 +1891,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     }
+
 
 
 
@@ -1461,19 +1948,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        gamer.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            gamer.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            gamer.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
                     }
+
 
 
                     GamersList.Add(gamer);
@@ -1626,19 +2148,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
                     }
+
 
 
                     orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
@@ -1794,19 +2351,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         post.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
                     }
+
 
                     PostsList.Add(post);
                 }
@@ -1864,19 +2456,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         competition.Startdate = (dr4["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr4["startdate"]) : default;
                     }
+
 
                     //competition.Enddate = (dr4["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr4["enddate"]) : default;
 
@@ -1885,14 +2512,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -2088,14 +2749,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -2252,14 +2947,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -2273,14 +3002,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -2340,19 +3103,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     }
+
 
                     //gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
 
@@ -2360,19 +3158,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        gamer.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            gamer.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            gamer.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
                     }
+
 
                     GamersList.Add(gamer);
                 }
@@ -2425,19 +3258,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
                     }
+
 
 
                     orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
@@ -2494,19 +3362,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        manager.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            manager.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            manager.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         manager.Dob = (dr5["dob"] != DBNull.Value) ? Convert.ToDateTime(dr5["dob"]) : default;
                     }
+
 
 
                     ManagersList.Add(manager);
@@ -2924,19 +3827,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         p.Postdate = (dr["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr["postdate"]) : default;
                     }
+
 
 
                     p.Status1 = Convert.ToInt32(dr["status1"]);
@@ -3001,19 +3939,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
                     }
+
 
                     c.Body = (string)dr["body"];
                     //c.Startdate = Convert.ToDateTime(dr["startdate"]);
@@ -3022,19 +3995,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
                     }
+
 
                     //c.Enddate = Convert.ToDateTime(dr["enddate"]);
 
@@ -3042,19 +4050,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate3 = renderdate3.Split('/');
-                        string[] year3 = arrdate3[2].Split(' ');
 
-                        string fix_year3 = year3[0];
-                        string month3 = arrdate3[1];
-                        string day3 = arrdate3[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
                     }
+
 
                     c.Startime = ((TimeSpan)dr["starttime"]);
                     c.Endtime = ((TimeSpan)dr["endtime"]);
@@ -3125,20 +4168,56 @@ namespace IESA.Models.DAL
                     renderdate1 = (dr["lastdateforregistration"] != DBNull.Value) ? (string)dr["lastdateforregistration"] : default;
 
                     if (renderdate1 != null)
-                    {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
+                        if (renderdate1 != null)
+                        {
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                            if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                            {
+                                string[] arrdate1 = renderdate1.Split('/');
+                                string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
-                    }
-                    else
-                    {
-                        c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
-                    }
+                                string fix_year1 = year1[0];
+
+                                if (arrdate1[0].Length == 1)
+                                {
+                                    month1 = "0" + arrdate1[0];
+                                }
+                                else
+                                {
+                                    month1 = arrdate1[0];
+                                }
+
+                                if (arrdate1[1].Length == 1)
+                                {
+                                    day1 = "0" + arrdate1[1];
+                                }
+                                else
+                                {
+                                    day1 = arrdate1[1];
+                                }
+
+
+                                c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                            }
+                            else
+                            {
+                                string[] arrdate1 = renderdate1.Split('/');
+                                string[] year1 = arrdate1[2].Split(' ');
+
+                                string fix_year1 = year1[0];
+                                string month1 = arrdate1[1];
+                                string day1 = arrdate1[0];
+
+                                c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                            }
+                        }
+                        else
+                        {
+                            c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
+                        }
+
 
                     c.Body = (string)dr["body"];
                     //c.Startdate = Convert.ToDateTime(dr["startdate"]);
@@ -3147,19 +4226,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         c.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
                     }
+
 
                     //c.Enddate = Convert.ToDateTime(dr["enddate"]);
 
@@ -3167,19 +4281,53 @@ namespace IESA.Models.DAL
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate3 = renderdate3.Split('/');
-                        string[] year3 = arrdate3[2].Split(' ');
 
-                        string fix_year3 = year3[0];
-                        string month3 = arrdate3[1];
-                        string day3 = arrdate3[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         c.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
                     }
+
 
                     c.Startime = ((TimeSpan)dr["starttime"]);
                     c.Endtime = ((TimeSpan)dr["endtime"]);
@@ -3733,19 +4881,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
                     }
+
 
                     c.Body = (string)dr["body"];
                     //c.Startdate = Convert.ToDateTime(dr["startdate"]);
@@ -3754,14 +4937,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -3774,14 +4991,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate3 = renderdate3.Split('/');
-                        string[] year3 = arrdate3[2].Split(' ');
 
-                        string fix_year3 = year3[0];
-                        string month3 = arrdate3[1];
-                        string day3 = arrdate3[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -3983,19 +5234,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            orgenaizer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         orgenaizer.Dob = (dr2["dob"] != DBNull.Value) ? Convert.ToDateTime(dr2["dob"]) : default;
                     }
+
 
                     orgenaizer.Comunityname = (dr2["communityname"] != DBNull.Value) ? (string)dr2["communityname"] : default;
 
@@ -4072,19 +5358,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            gamer.Dob = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         gamer.Dob = (dr["dob"] != DBNull.Value) ? Convert.ToDateTime(dr["dob"]) : default;
                     }
+
 
                     //gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
 
@@ -4092,19 +5413,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        gamer.Registrationdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            gamer.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            gamer.Registrationdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         gamer.Registrationdate = (dr["registrationdate"] != DBNull.Value) ? Convert.ToDateTime(dr["registrationdate"]) : default;
                     }
+
 
                     gamer.Status1 = (dr["status1"] != DBNull.Value) ? Convert.ToInt32(dr["status1"]) : default;
                     GamersList.Add(gamer);
@@ -4208,19 +5564,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        rank.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            rank.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            rank.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         rank.Startdate = (dr["Start Date"] != DBNull.Value) ? Convert.ToDateTime(dr["Start Date"]) : default;
                     }
+
 
                     rank.Console = (dr["Console"] != DBNull.Value) ? (string)dr["Console"] : default; //console
                     rank.Isonline = (dr["Rank"] != DBNull.Value) ? Convert.ToInt32(dr["Rank"]) : default; //Rank
@@ -4284,19 +5675,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Lastdateforregistration = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         c.Lastdateforregistration = (dr["lastdateforregistration"] != DBNull.Value) ? Convert.ToDateTime(dr["lastdateforregistration"]) : default;
                     }
+
 
                     c.Body = (dr["body"] != DBNull.Value) ? (string)dr["body"] : default;
                     //c.Startdate = Convert.ToDateTime(dr["startdate"]);
@@ -4305,14 +5731,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Startdate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -4325,14 +5785,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate3 = renderdate3.Split('/');
-                        string[] year3 = arrdate3[2].Split(' ');
 
-                        string fix_year3 = year3[0];
-                        string month3 = arrdate3[1];
-                        string day3 = arrdate3[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        c.Enddate = new DateTime(Int32.Parse(fix_year3), Int32.Parse(month3), Int32.Parse(day3));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            c.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -4513,19 +6007,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         competition.Startdate = (dr["startdate"] != DBNull.Value) ? Convert.ToDateTime(dr["startdate"]) : default;
                     }
+
 
 
                     //competition.Enddate = (dr["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr["enddate"]) : default;
@@ -4534,14 +6063,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate2 != null)
                     {
-                        string[] arrdate2 = renderdate2.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -4669,18 +6232,52 @@ namespace IESA.Models.DAL
                     post.Image1 = (dr1["image1"] != DBNull.Value) ? (string)dr1["image1"] : default;
                     //post.Postdate = (dr1["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr1["postdate"]) : default;
 
-                    renderdate1 = (dr1["postdate"] != DBNull.Value) ? (string)dr1["postdate"] : default;
+                    renderdate2 = (dr1["postdate"] != DBNull.Value) ? (string)dr1["postdate"] : default;
 
-                    if (renderdate1 != null)
+                    if (renderdate2 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate2.Contains("AM") || renderdate2.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate2.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            post.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -4741,14 +6338,48 @@ namespace IESA.Models.DAL
 
                     if (renderdate3 != null)
                     {
-                        string[] arrdate1 = renderdate3.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate3.Contains("AM") || renderdate3.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate3.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Startdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
@@ -4762,20 +6393,53 @@ namespace IESA.Models.DAL
 
                     if (renderdate4 != null)
                     {
-                        string[] arrdate2 = renderdate4.Split('/');
-                        string[] year2 = arrdate2[2].Split(' ');
 
-                        string fix_year2 = year2[0];
-                        string month2 = arrdate2[1];
-                        string day2 = arrdate2[0];
+                        if (renderdate4.Contains("AM") || renderdate4.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate4.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        competition.Enddate = new DateTime(Int32.Parse(fix_year2), Int32.Parse(month2), Int32.Parse(day2));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate4.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            competition.Enddate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         competition.Enddate = (dr2["enddate"] != DBNull.Value) ? Convert.ToDateTime(dr2["enddate"]) : default;
                     }
-
 
 
 
@@ -4833,19 +6497,54 @@ namespace IESA.Models.DAL
 
                     if (renderdate1 != null)
                     {
-                        string[] arrdate1 = renderdate1.Split('/');
-                        string[] year1 = arrdate1[2].Split(' ');
 
-                        string fix_year1 = year1[0];
-                        string month1 = arrdate1[1];
-                        string day1 = arrdate1[0];
+                        if (renderdate1.Contains("AM") || renderdate1.Contains("PM"))
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
 
-                        p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+                            string fix_year1 = year1[0];
+
+                            if (arrdate1[0].Length == 1)
+                            {
+                                month1 = "0" + arrdate1[0];
+                            }
+                            else
+                            {
+                                month1 = arrdate1[0];
+                            }
+
+                            if (arrdate1[1].Length == 1)
+                            {
+                                day1 = "0" + arrdate1[1];
+                            }
+                            else
+                            {
+                                day1 = arrdate1[1];
+                            }
+                            
+
+                            p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
+                        else
+                        {
+                            string[] arrdate1 = renderdate1.Split('/');
+                            string[] year1 = arrdate1[2].Split(' ');
+
+                            string fix_year1 = year1[0];
+                            string month1 = arrdate1[1];
+                            string day1 = arrdate1[0];
+
+                            p.Postdate = new DateTime(Int32.Parse(fix_year1), Int32.Parse(month1), Int32.Parse(day1));
+
+                        }
                     }
                     else
                     {
                         p.Postdate = (dr3["postdate"] != DBNull.Value) ? Convert.ToDateTime(dr3["postdate"]) : default;
                     }
+
 
                     p.Status1 = (dr3["status1"] != DBNull.Value) ? Convert.ToInt32(dr3["status1"]) : default;
 

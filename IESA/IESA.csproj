@@ -204,7 +204,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Pages\Committee.html" />
-    <Content Include="Pages\test_smtp.html" />
     <Content Include="Pages\Contact.html" />
     <Content Include="Pages\Database.html" />
     <Content Include="Pages\Edit_Competition.html" />
