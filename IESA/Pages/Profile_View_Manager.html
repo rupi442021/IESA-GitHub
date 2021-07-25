@@ -119,8 +119,8 @@
 
         function renderGamer(gamerobj) {
             gamer = gamerobj; //variable for sending email! do not remove it
-            let image = gamerobj.Picture;
-            let imgStr = "<img src='../" + image + "' class='rounded-circle' style='margin-right: 3px;' alt='Image' width='150' height='150'/>";
+            var image = gamerobj.Picture;
+            var imgStr = "<img src='../" + image + "' class='rounded-circle' style='margin-right: 3px;' alt='Image' width='150' height='150'/>";
             document.getElementById("g_imageph").innerHTML = imgStr;
 
             document.getElementById("g_nicknameph").innerHTML = gamerobj.Nickname;
@@ -164,13 +164,13 @@
 
             if (gamerobj.Discorduser != "") {
                 var strdisc = "<a href='" + gamerobj.Discorduser + "' target='_blank' >";
-                strdisc += "<img src='https://southportlandlibrary.com/wp-content/uploads/2020/11/discord-logo.jpg' style='width:32%;' class='img-fluid' />";
+                strdisc += "<img src='../uploadedFiles/Site-Photos/discord-icon.png' style='width:32%; border-radius: 13%;' class='img-fluid' />";
                 strdisc += "</a>";
 
                 document.getElementById("discordprofile").innerHTML = strdisc;
             }
             else {
-                var strdisc = "<img src='https://southportlandlibrary.com/wp-content/uploads/2020/11/discord-logo.jpg' style='width:32%; opacity: 0.5' class='img-fluid' />";
+                var strdisc = "<img src='../uploadedFiles/Site-Photos/discord-icon.png' style='width:32%; opacity: 0.5; border-radius: 13%;' class='img-fluid' />";
                 $("#discordspan").css("opacity", "0.5");
 
                 document.getElementById("discordprofile").innerHTML = strdisc;
@@ -695,16 +695,16 @@
                                         <div id="o_imageph">
                                             <!--<img src="https://i.ibb.co/xGcTF7C/6.jpg" alt="Admin" class="rounded-circle" width="150" height="150">-->
                                         </div>
-                                        <div class="mt-3">
-                                            <h4 id="o_nicknameph"><!--OmerBetzalel24--></h4>
-                                            <p id="o_orgenaizertypeph" class="text-secondary mb-1"><!--שם קהילה: ..--></p>
-                                            <p id="o_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
-                                            <button id="o_edit_btn" class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
-                                            <button id="send_email" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" style="color: #2c3a38; border-color: #04b8a5;" data-whatever="@getbootstrap">
-                                                שליחת מייל
-                                            </button>
+                                        <div class="mt-3" style="padding-bottom:7px;">
+                                            <h4 id="o_nicknameph" style="padding-bottom:6px;"><!--OmerBetzalel24--></h4>
+                                                <p id="o_orgenaizertypeph" class="text-secondary mb-1"><!--שם קהילה: ..--></p>
+                                                <p id="o_useridph" class="text-muted font-size-sm"><!--מספר משתמש: 80000003--></p>
+                                                <button id="o_edit_btn" class="btn btn-primary" style="background-color: #04b8a5; border-color: #4d8680;">עריכה</button>
+                                                <button id="send_email" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" style="color: #2c3a38; border-color: #04b8a5;" data-whatever="@getbootstrap">
+                                                    שליחת מייל
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="card mt-3" id="tableheight">

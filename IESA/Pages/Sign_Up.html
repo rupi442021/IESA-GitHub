@@ -275,7 +275,7 @@
             swal("משתמש נוצר במערכת", "אנא המתן עד לקבלת אישור ממנהלי האתר", "success");
 
             setTimeout(function () {
-                location.replace("TemplatePage.html");
+                location.replace("index.html");
             }, 3500);
         } //Done creating Gamer User
 
@@ -318,7 +318,7 @@
             swal("משתמש נוצר במערכת", "אנא המתן עד לקבלת אישור ממנהלי האתר", "success");
 
             setTimeout(function () {
-                location.replace("TemplatePage.html");
+                location.replace("index.html");
             }, 3500);
         } //Done creating Orgenaizer User
 
@@ -478,12 +478,12 @@
                                     <label>כינוי:</label>
                                     <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="gnicknameTB"
                                            pattern="^[a-zA-Z]{2,15}$"
-                                           oninvalid="this.setCustomValidity('remark here')"
+                                           oninvalid="this.setCustomValidity('אנא הכנס כינוי בין 2-15 אותיות ללא מספרים')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>תאריך לידה:</label>
-                                    <input type="date" class="form-control" id="gdobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="date" class="form-control" id="gdobTB" oninvalid="this.setCustomValidity('אנא הכנס תאריך לידה תקין')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div>
                                     <label>תעודת זהות:</label>
@@ -524,16 +524,16 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>כתובת מגורים:</label>
-                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="gaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="gaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('אנא הכנס כתובת מגורים תקינה')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>מספר נייד:</label>
-                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="gPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="gPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('אנא הכנס מספר פלאפון תקין')" oninput="this.setCustomValidity('')" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label>קישור לפרופיל Discord:</label>
-                                    <input type="text" class="form-control" placeholder='קישור לפרופיל משתמש' id="gdiscorduserTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                    <input type="text" class="form-control" placeholder='קישור לפרופיל משתמש' id="gdiscorduserTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('אנא הכנס קישור לפרופיל הדיסקורד שלך')" oninput="this.setCustomValidity('')">
                                 </div>
 
                                 <div class="row">
@@ -626,12 +626,12 @@
                                     <label>כינוי:</label>
                                     <input type="text" class="form-control" placeholder='הכינוי שלך בעמותה' id="onicknameTB"
                                            pattern="^[a-zA-Z]{2,15}$"
-                                           oninvalid="this.setCustomValidity('remark here')"
+                                           oninvalid="this.setCustomValidity('כינוי חייב להיות 2-15 אותיות ללא מספרים')"
                                            oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>תאריך לידה:</label>
-                                    <input type="date" class="form-control" id="odobTB" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="date" class="form-control" id="odobTB" oninvalid="this.setCustomValidity('אנא הכנס תאריך לידה תקין')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div>
                                     <label>תעודת זהות:</label>
@@ -671,20 +671,20 @@
                                 </div>
                                 <div class="mb-3">
                                     <label>כתובת מגורים:</label>
-                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="oaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='עיר, רחוב, מספר' id="oaddressTB" pattern=".{2,250}" oninvalid="this.setCustomValidity('אנא הכנס כתובת מגורים תקינה')" oninput="this.setCustomValidity('')" required>
                                 </div>
                                 <div class="mb-3">
                                     <label>מספר נייד:</label>
-                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="oPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('remark here')" oninput="this.setCustomValidity('')" required>
+                                    <input type="text" class="form-control" placeholder='מספר פלאפון נייד' id="oPhoneTB" pattern=".{10,10}" oninvalid="this.setCustomValidity('אנא הכנס מספר נייד תקין')" oninput="this.setCustomValidity('')" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label>שם הקהילה אליה שייך:</label>
-                                    <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="ocomunitynameTB" pattern=".{2,20}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                    <input type="text" class="form-control" placeholder='שם הקהילה ממנה אתה מגיע' id="ocomunitynameTB" pattern=".{2,20}" oninvalid="this.setCustomValidity('אנא הכנס שם קהילה')" oninput="this.setCustomValidity('')">
                                 </div>
                                 <div class="mb-3">
                                     <label>לינק לאתר הקהילה:</label>
-                                    <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('remark for invalid here')" oninput="this.setCustomValidity('')">
+                                    <input type="text" class="form-control" placeholder='כתובת אתר האינטרנט של הקהילה שלך' id="olinktocommunityTB" pattern=".{4,}" oninvalid="this.setCustomValidity('אנא הכנס כתובת קהילה תקינה')" oninput="this.setCustomValidity('')">
                                 </div>
 
                                 <div class="row">
