@@ -2,7 +2,7 @@
 function renderNavbar_Site() {
 
     if (localStorage["user_info"] != null) { //If a user is Logged in
-        
+
         user_info = JSON.parse(localStorage["user_info"]);
         user_type = JSON.parse(localStorage["user_type"]);
 
@@ -68,7 +68,7 @@ function renderNavbar_Site() {
         else if (user_type == "1") { //Manager
             str += "<li class='menu-item'><a href='manager_main_page.html' id='pers-nav'>ניהול מערכת</a></li>";
         }
-        
+
         str += "</ul>";
         str += "</nav>";
         str += "</section>";
@@ -145,50 +145,50 @@ function renderNavbar_Site() {
 
 function renderNavbar_Gamer() {
 
-        user_info = JSON.parse(localStorage["user_info"]);
+    user_info = JSON.parse(localStorage["user_info"]);
 
-        strnav = "";
-        strnav += "<span style='margin-left: 9px;'>שלום " + user_info.Firstname + "</span>";
-        strnav += "<span style='margin-left: 9px;'>|</span>";
-        strnav += "<a id='disconnectBTN'><i class='bi bi-box-arrow-right' style='position: relative; top: 1px; left: 1.5px;'></i> התנתק </a>";
+    strnav = "";
+    strnav += "<span style='margin-left: 9px;'>שלום " + user_info.Firstname + "</span>";
+    strnav += "<span style='margin-left: 9px;'>|</span>";
+    strnav += "<a id='disconnectBTN'><i class='bi bi-box-arrow-right' style='position: relative; top: 1px; left: 1.5px;'></i> התנתק </a>";
 
-        document.getElementById("render-nav1").innerHTML = strnav;
+    document.getElementById("render-nav1").innerHTML = strnav;
 
-        str = "";
-        str += "<header class='header'>";
-        str += "<div class='top-navbar'>";
-        str += "<section class='wrapper'>";
-        str += "<div style='display: flex'>";
-        str += "<a href='index.html'>";
-        str += "<img src='../uploadedFiles/Site-Photos/Iesaprojectlogo.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='margin-right: 1.6rem;'>";
-        str += "</a>";
-        str += "<span style='margin-right:9px;'></span>";
-        str += "<span style='margin-left: 14px; border-left: 1px solid #979797;'></span>";
-        str += "<a href='Israel_National_Team.html'>";
-        str += "<img src='../uploadedFiles/Site-Photos/navbarisrael.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='height:33px; margin-top: 7px;'>";
-        str += "</a>";
-        str += "</div>";
-        str += "<button type='button' class='opened-menu'>";
-        str += "<span></span>";
-        str += "<span></span>";
-        str += "<span></span>";
-        str += "<span></span>";
-        str += "</button>";
-        str += "<div class='overlay'></div>";
-        str += "<nav class='navbar'>";
-        str += "<button type='button' class='closed-menu'>";
-        str += "<img src='https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg' class='closed-icon' alt='closed'>";
-        str += "</button>";
-        str += "<ul class='menu'>";
-        str += "<li class='menu-item'><a href='gamer_main_page.html' id='pers-nav'>אזור אישי</a></li>";
-        str += "<li class='menu-item'><a href='gamer_card.html' id='card-nav'>כרטיס שחקן</a></li>";
-        str += "<li class='menu-item'><a href='edit_personal_details.html' id='edit-nav'>עריכת פרטים</a></li>";
-        str += "<li class='menu-item'><a href='index.html' id='site-nav'>אתר העמותה</a></li>";
-        str += "</ul>";
-        str += "</nav>";
-        str += "</section>";
+    str = "";
+    str += "<header class='header'>";
+    str += "<div class='top-navbar'>";
+    str += "<section class='wrapper'>";
+    str += "<div style='display: flex'>";
+    str += "<a href='index.html'>";
+    str += "<img src='../uploadedFiles/Site-Photos/Iesaprojectlogo.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='margin-right: 1.6rem;'>";
+    str += "</a>";
+    str += "<span style='margin-right:9px;'></span>";
+    str += "<span style='margin-left: 14px; border-left: 1px solid #979797;'></span>";
+    str += "<a href='Israel_National_Team.html'>";
+    str += "<img src='../uploadedFiles/Site-Photos/navbarisrael.png' alt='העמותה לגיימינג תחרותי בישראל' class='logo-img-primary' style='height:33px; margin-top: 7px;'>";
+    str += "</a>";
+    str += "</div>";
+    str += "<button type='button' class='opened-menu'>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "<span></span>";
+    str += "</button>";
+    str += "<div class='overlay'></div>";
+    str += "<nav class='navbar'>";
+    str += "<button type='button' class='closed-menu'>";
+    str += "<img src='https://www.cssscript.com/demo/responsive-single-level-dropdown-menu/asset/closed.svg' class='closed-icon' alt='closed'>";
+    str += "</button>";
+    str += "<ul class='menu'>";
+    str += "<li class='menu-item'><a href='gamer_main_page.html' id='pers-nav'>אזור אישי</a></li>";
+    str += "<li class='menu-item'><a href='gamer_card.html' id='card-nav'>כרטיס שחקן</a></li>";
+    str += "<li class='menu-item'><a href='edit_personal_details.html' id='edit-nav'>עריכת פרטים</a></li>";
+    str += "<li class='menu-item'><a href='index.html' id='site-nav'>אתר העמותה</a></li>";
+    str += "</ul>";
+    str += "</nav>";
+    str += "</section>";
 
-        document.getElementById("render-nav2").innerHTML = str;
+    document.getElementById("render-nav2").innerHTML = str;
 
 }
 
@@ -367,21 +367,15 @@ function buildNav() {
 
 
 function getDate() {
-
     var today = new Date();
-
     if (today.getDate() > 9 && today.getMonth() + 1 > 9)
-        var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
-
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     else if (today.getDate() > 9 && today.getMonth() + 1 < 10)
-          var date = today.getDate() + '/0' + (today.getMonth() + 1) + '/' + today.getFullYear();
-
+        var date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-' + today.getDate();
     else if (today.getDate() < 10 && today.getMonth() + 1 > 9)
-        var date = '0' + today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
-
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-0' + today.getDate();
     else if (today.getDate() < 10 && today.getMonth() + 1 < 10)
-        var date = '0' + today.getDate() + '/0' + (today.getMonth() + 1) + '/' + today.getFullYear();
-
+        var date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-0' + today.getDate();
 
     return date;
 }
