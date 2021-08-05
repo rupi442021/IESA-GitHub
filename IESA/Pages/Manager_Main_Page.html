@@ -157,7 +157,8 @@
 
         function init() {
 
-            ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9
+            //ajaxCall("GET", "../api/Managers/tablestats", "", getStatisticsSuccess, Error); //Manager_Main_Page.html - method OM9 **Need to fix this***
+            getStatisticsSuccess("Need to be fixed with Ruppin Server Upload");
             ajaxCall("GET", "../api/Managers/tablegraph", "", buildGradesGraph, Error); //Manager_Main_Page.html - method OM10
         }
 
@@ -611,43 +612,46 @@
             console.log(statisticsdict);
 
             //For writing
-            var numgamers = String(statisticsdict["1"]);
-            var numorgenaizers = String(statisticsdict["2"]);
-            var numfuturecomp = String(statisticsdict["3"]);
-            var numpastcomp = String(statisticsdict["4"]);
+            //var numgamers = String(statisticsdict["1"]);
+            //var numorgenaizers = String(statisticsdict["2"]);
+            //var numfuturecomp = String(statisticsdict["3"]);
+            //var numpastcomp = String(statisticsdict["4"]);
 
-            document.getElementById("num_gamers").innerHTML = numgamers;
-            document.getElementById("num_orgenaizers").innerHTML = numorgenaizers;
-            document.getElementById("num_futurecomp").innerHTML = numfuturecomp;
-            document.getElementById("num_pastcomp").innerHTML = numpastcomp;
 
-            //FIX IT TO BE HIGHER THEN 0*******************************************************************************************
-            if (parseInt(statisticsdict["7"]) > 0) //Competition waithing
-            {
+            // ** Need to fix This: DateTime Problem in the Ruppin Server **
+            document.getElementById("num_gamers").innerHTML = 15; //numgamers
+            document.getElementById("num_orgenaizers").innerHTML = 6; //numorgenaizers
+            document.getElementById("num_futurecomp").innerHTML = 3; //numfuturecomp
+            document.getElementById("num_pastcomp").innerHTML = 12; //numpastcomp
 
-                document.getElementById("competitions_waithing").style.visibility = "visible";
-            }
-            else {
+            //FIX IT TO BE HIGHER THEN 0 **
 
-                document.getElementById("competitions_waithing").style.visibility = "hidden";
-            }
+            //if (parseInt(statisticsdict["7"]) > 0) //Competition waithing
+            //{
 
-            if (parseInt(statisticsdict["5"]) > 0) //Gamers waithing
-            {
-                document.getElementById("gamers_waithing").style.visibility = "visible";
-            }
-            else {
+            //    document.getElementById("competitions_waithing").style.visibility = "visible";
+            //}
+            //else {
 
-                document.getElementById("gamers_waithing").style.visibility = "hidden";
-            }
+            //    document.getElementById("competitions_waithing").style.visibility = "hidden";
+            //}
 
-            if (parseInt(statisticsdict["6"]) > 0) //Gamers waithing
-            {
-                document.getElementById("orgenaizers_waithing").style.visibility = "visible";
-            }
-            else {
-                document.getElementById("orgenaizers_waithing").style.visibility = "hidden";
-            }
+            //if (parseInt(statisticsdict["5"]) > 0) //Gamers waithing
+            //{
+            //    document.getElementById("gamers_waithing").style.visibility = "visible";
+            //}
+            //else {
+
+            //    document.getElementById("gamers_waithing").style.visibility = "hidden";
+            //}
+
+            //if (parseInt(statisticsdict["6"]) > 0) //Gamers waithing
+            //{
+            //    document.getElementById("orgenaizers_waithing").style.visibility = "visible";
+            //}
+            //else {
+            //    document.getElementById("orgenaizers_waithing").style.visibility = "hidden";
+            //}
 
 
 
